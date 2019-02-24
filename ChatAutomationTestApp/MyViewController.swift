@@ -128,9 +128,156 @@ class MyViewController: UIViewController {
     }
     
     
+    // write down senarios
+    
+    
+}
+
+
+
+
+extension MyViewController {
+    
+    /*
+     if somebody call this method,
+     a getContacts request will send
+     if the callers did't send input parameters, inputs will fill qoutomatically by this parameters:
+     - count: will be some number between 0 and 50
+     - offset: will be some number between 0 and 50
+     */
+    func getContacts(count: Int?, name: String?, offset: Int?, typeCode: String?,
+                     uniqueId:          @escaping (String)->(),
+                     serverResponse:    @escaping (GetContactsModel) -> (),
+                     cacheResponse:     @escaping (GetContactsModel) -> ()) {
+        
+        func sendRequest(theCount: Int?, theName: String?, theOffset: Int?, theTypeCode: String?) {
+            let getContactInput = GetContactsRequestModel(count: theCount, name: theName, offset: theOffset, typeCode: theTypeCode)
+            myChatObject?.getContacts(getContactsInput: getContactInput, uniqueId: { (getContactUniqueId) in
+                uniqueId(getContactUniqueId)
+            }, completion: { (getContactsResponse) in
+                serverResponse(getContactsResponse as! GetContactsModel)
+            }, cacheResponse: { (getContactsCacheResponse) in
+                cacheResponse(getContactsCacheResponse)
+            })
+        }
+        
+        // if none of the parameters filled by the user, jenerate fake values and fill the input model to send request
+        if (count == nil) && (name == nil) && (offset == nil) {
+            let fakeParams = generateFakeGetContactParams()
+            sendRequest(theCount: fakeParams.0, theName: name, theOffset: fakeParams.1, theTypeCode: typeCode)
+        }
+        // some or all of the parameters are filled by the client, so send request with this params
+        else {
+            sendRequest(theCount: count, theName: name, theOffset: offset, theTypeCode: typeCode)
+        }
+        
+        
+    }
+    
+    
+    /*
+     if somebody call this method,
+     a addContact request will send
+     if the callers did't send input parameters, inputs will fill qoutomatically by this parameters:
+     - cellphoneNumber: will a String with 11 characters
+     - firstName:       will a String with 4 characters
+     - lastName:        will a String with 7 characters
+     - email:           will a email by using firstName and lastName that gererated before
+     */
+    func addContact(cellphoneNumber: String?, email: String?, firstName: String?, lastName: String?,
+                    uniqueId:       @escaping (String) -> (),
+                    serverResponse: @escaping (ContactModel) -> ()) {
+        
+        func sendRequest(theCellphoneNumber: String?, theEmail: String?, theFirstName: String?, theLastName: String?) {
+            let addContactInput = AddContactsRequestModel(cellphoneNumber: theCellphoneNumber, email: theEmail, firstName: theFirstName, lastName: theLastName)
+            myChatObject?.addContact(addContactsInput: addContactInput, uniqueId: { (addContactsUniqueId) in
+                uniqueId(addContactsUniqueId)
+            }, completion: { (addContactServerResponse) in
+                serverResponse(addContactServerResponse as! ContactModel)
+            })
+        }
+        
+        // if none of the parameters filled by the user, jenerate fake values and fill the input model to send request
+        if (cellphoneNumber == nil) && (email == nil) && (firstName == nil) && (lastName == nil) {
+            let fakeParams = generateFakeAddContactParams(cellphoneLength: 11, firstNameLength: 4, lastNameLength: 7)
+            sendRequest(theCellphoneNumber: fakeParams.0, theEmail: fakeParams.1, theFirstName: fakeParams.2, theLastName: fakeParams.3)
+        }
+        // some or all of the parameters are filled by the client, so send request with this params
+        else {
+            sendRequest(theCellphoneNumber: cellphoneNumber, theEmail: email, theFirstName: firstName, theLastName: lastName)
+        }
+        
+        
+    }
     
     
     
+    
+    
+    
+    
+    
+    
+    
+    
+    func generateFakeGetContactParams() -> (Int?, Int?) {
+        let count:  Int?
+        let offset: Int?
+        
+        count   = generateNumberAsInt(from: 1, to: 50)
+        offset  = generateNumberAsInt(from: 0, to: 50)
+        
+        return (count!, offset!)
+    }
+    
+    
+    func generateFakeAddContactParams(cellphoneLength: Int?, firstNameLength: Int?, lastNameLength: Int?) -> (String?, String?, String?, String?) {
+        let cellphoneNumber: String?
+        let email:          String?
+        let firstName:      String?
+        let lastName:       String?
+        
+        cellphoneNumber = generateNumberAsString(withLength: cellphoneLength ?? 11)
+        firstName       = generateNameAsString(withLength: firstNameLength ?? 4)
+        lastName        = generateNameAsString(withLength: lastNameLength ?? 7)
+        email           = generateEmailAsString(withName: "\(firstName!).\(lastName!)", withoutNameWithLength: 8)
+        
+        return (cellphoneNumber!, email!, firstName!, lastName!)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    func generateNameAsString(withLength length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        return String((0...length-1).map{ _ in letters.randomElement()! })
+    }
+    
+    func generateNumberAsString(withLength length: Int) -> String {
+        let letters = "0123456789"
+        return String((0...length-1).map{ _ in letters.randomElement()! })
+    }
+    
+    func generateEmailAsString(withName: String?, withoutNameWithLength length: Int) -> String {
+        let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        let atSighn = String((0...4).map{ _ in letters.randomElement()! })
+        let dot     = String((0...2).map{ _ in letters.randomElement()! })
+        var emailName = ""
+        if let name = withName {
+            emailName = name
+        } else {
+            emailName = String((0...length-1).map{ _ in letters.randomElement()! })
+        }
+        return emailName + "@" + atSighn + "." + dot
+    }
+    
+    func generateNumberAsInt(from: Int, to: Int) -> Int {
+        return Int.random(in: from ... to)
+    }
     
 }
 
