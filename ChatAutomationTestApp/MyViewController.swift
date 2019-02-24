@@ -238,7 +238,7 @@ extension MyViewController {
         if let contactId = id {
             sendRequest(theId: contactId)
         }
-            // if the input parameter didn't filled by the user, first create a contact, then remove it
+        // if the input parameter didn't filled by the user, first create a contact, then remove it
         else {
             addContact(cellphoneNumber: nil, email: nil, firstName: nil, lastName: nil, uniqueId: { _ in }) { (contactModel) in
                 if let myContact = contactModel.contacts.first {
@@ -248,10 +248,63 @@ extension MyViewController {
                         // handle error that didn't get contactId in the contact model
                     }
                 } else {
-                    // handle error that didn't get Contact Model
+                    // handle error that didn't add Contact Model
                 }
             }
         }
+        
+        
+    }
+    
+    
+    
+    func createThread(description: String?, image: String?, invitees: [Invitee]?, metadata: String?, title: String?, type: String?, requestUniqueId: String?,
+                      uniqueId:       @escaping (String) -> (),
+                      serverResponse: @escaping (CreateThreadModel) -> ()) {
+        
+        func sendRequest(theDescription: String?, theImage: String?, theInvitees: [Invitee], theMetadata: String?, theTitle: String, theType: String?, theRequestUniqueId: String?) {
+            
+            let createThreadInput = CreateThreadRequestModel(description: theDescription, image: nil, invitees: theInvitees, metadata: nil, title: theTitle, type: theType, uniqueId: nil)
+            myChatObject?.createThread(createThreadInput: createThreadInput, uniqueId: { (createThreadUniqueId) in
+                uniqueId(createThreadUniqueId)
+            }, completion: { (createThreadModel) in
+                serverResponse(createThreadModel as! CreateThreadModel)
+            })
+            
+        }
+        
+        // if the input parameter didn't filled by the user, first add a contact, then create a thread with this contact
+        if (description == nil) && (invitees == nil) && (title == nil) && (type == nil) {
+            
+            addContact(cellphoneNumber: nil, email: nil, firstName: nil, lastName: nil, uniqueId: { _ in }) { (contactModel) in
+                if let myContact = contactModel.contacts.first {
+                    if let contactPhoneNumber = myContact.cellphoneNumber {
+                        
+                        let fakeParams = self.generateFakeCreateThread()
+                        let myInvitee = Invitee(id: contactPhoneNumber, idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")
+                        sendRequest(theDescription: fakeParams.description, theImage: image, theInvitees: [myInvitee], theMetadata: metadata, theTitle: fakeParams.title, theType: fakeParams.type, theRequestUniqueId: nil)
+                        
+                    } else {
+                        // handle error that didn't get contact CellphoneNumber in the contact model
+                    }
+                } else {
+                    // handle error that didn't add Contact Model
+                }
+            }
+            
+        }
+        // some or all of the parameters are filled by the caller, so send request with this params
+        else {
+            
+            if (title != nil) && (invitees != nil) {
+                sendRequest(theDescription: description, theImage: image, theInvitees: invitees!, theMetadata: metadata, theTitle: title!, theType: type, theRequestUniqueId: requestUniqueId)
+            } else {
+                // handle that you should fill all these 4 items: description , title , invitees , type
+            }
+            
+        }
+        
+        
         
         
     }
@@ -263,14 +316,20 @@ extension MyViewController {
     
     
     
+    func generateFakeCreateThread() -> (description: String, title: String, type: String) {
+        let description:    String?
+        let title:          String?
+        let type:           String?
+        
+        description = generateNameAsString(withLength: 13)
+        title       = generateNameAsString(withLength: 10)
+        type        = ThreadTypes.NORMAL.rawValue
+        
+        return (description!, title!, type!)
+    }
     
     
-    
-    
-    
-    
-    
-    func generateFakeGetContactParams() -> (Int?, Int?) {
+    func generateFakeGetContactParams() -> (count: Int?, offset: Int?) {
         let count:  Int?
         let offset: Int?
         
@@ -281,7 +340,7 @@ extension MyViewController {
     }
     
     
-    func generateFakeAddContactParams(cellphoneLength: Int?, firstNameLength: Int?, lastNameLength: Int?) -> (String?, String?, String?, String?) {
+    func generateFakeAddContactParams(cellphoneLength: Int?, firstNameLength: Int?, lastNameLength: Int?) -> (cellphoneNumber: String?, email: String?, firstName: String?, lastName: String?) {
         let cellphoneNumber: String?
         let email:          String?
         let firstName:      String?
