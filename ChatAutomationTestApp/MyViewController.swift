@@ -211,6 +211,56 @@ extension MyViewController {
     }
     
     
+    /*
+     if somebody call this method,
+     a removeContact request will send
+     if the caller of this function filled the id of the contact that it wants to remove, removeContact request will send.
+     but if the callers did't send input parameter, it means the caller want's to just test the removeContact functionality
+     so the senario will be:
+     first addContact by using addContact function that will generate some parameters to add a contact
+     when the response of the addContact comes from server,
+     we will send removeContact request by using the id of the new contact that we created earlier.
+     */
+    func removeContact(id:              Int?,
+                       uniqueId:        @escaping (String) -> (),
+                       serverResponse:  @escaping (RemoveContactModel) -> ()) {
+        
+        func sendRequest(theId: Int) {
+            let removeContactInput = RemoveContactsRequestModel(id: theId)
+            myChatObject?.removeContact(removeContactsInput: removeContactInput, uniqueId: { (removeContactUniqueId) in
+                uniqueId(removeContactUniqueId)
+            }, completion: { (removeContactServerResponse) in
+                serverResponse(removeContactServerResponse as! RemoveContactModel)
+            })
+        }
+        
+        // the parameter is filled by the client, so send request with this params
+        if let contactId = id {
+            sendRequest(theId: contactId)
+        }
+            // if the input parameter didn't filled by the user, first create a contact, then remove it
+        else {
+            addContact(cellphoneNumber: nil, email: nil, firstName: nil, lastName: nil, uniqueId: { _ in }) { (contactModel) in
+                if let myContact = contactModel.contacts.first {
+                    if let contactId = myContact.id {
+                        sendRequest(theId: contactId)
+                    } else {
+                        // handle error that didn't get contactId in the contact model
+                    }
+                } else {
+                    // handle error that didn't get Contact Model
+                }
+            }
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
+    
     
     
     
