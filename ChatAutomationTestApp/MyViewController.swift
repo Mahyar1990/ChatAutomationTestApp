@@ -14,6 +14,9 @@ class MyViewController: UIViewController {
     
     var myChatObject: Chat?
     
+    
+    var chatIsReady = false
+    
 // SandBox Addresses:
 //    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
 //    let serverName              = "chat-server"
@@ -136,48 +139,6 @@ class MyViewController: UIViewController {
 
 
 
-// Views
-extension MyViewController {
-    
-    func setupViews() {
-        
-        view.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        
-        myLogCollectionView.register(MyCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
-        myLogCollectionView.delegate = self
-        myLogCollectionView.dataSource = self
-        pickerView.delegate = self
-        pickerView.dataSource = self
-        
-        view.addSubview(pickerView)
-        view.addSubview(sendPingButton)
-        view.addSubview(logView)
-        logView.addSubview(myLogCollectionView)
-        
-        pickerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-        pickerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
-        pickerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
-        pickerView.heightAnchor.constraint(equalToConstant: 128).isActive = true
-        
-        sendPingButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 8).isActive = true
-        sendPingButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
-        sendPingButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
-        sendPingButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
-        
-        logView.topAnchor.constraint(equalTo: sendPingButton.bottomAnchor, constant: 16).isActive = true
-        logView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
-        logView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
-        logView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
-        
-        myLogCollectionView.topAnchor.constraint(equalTo: logView.topAnchor, constant: 8).isActive = true
-        myLogCollectionView.leftAnchor.constraint(equalTo: logView.leftAnchor, constant: 8).isActive = true
-        myLogCollectionView.rightAnchor.constraint(equalTo: logView.rightAnchor, constant: -8).isActive = true
-        myLogCollectionView.bottomAnchor.constraint(equalTo: logView.bottomAnchor, constant: -8).isActive = true
-        
-    }
-    
-}
-
 
 
 
@@ -225,113 +186,14 @@ extension MyViewController: UICollectionViewDelegate, UICollectionViewDataSource
 
 
 
-// MARK: Base Cell for collectionView
-class MyCollectionViewCell: UICollectionViewCell {
-    
-    let myTextView: UITextView = {
-        let mtv = UITextView()
-        mtv.translatesAutoresizingMaskIntoConstraints = false
-        mtv.backgroundColor = UIColor.clear
-        return mtv
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-    }
-    
-    func setupView() {
-        addSubview(myTextView)
-        myTextView.topAnchor.constraint(equalTo: self.topAnchor, constant: 2).isActive = true
-        myTextView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 2).isActive = true
-        myTextView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -2).isActive = true
-        myTextView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -2).isActive = true
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-}
 
 
 
 
 
 
-// MARK: Chat delegatews
-extension MyViewController: ChatDelegates {
-    
-    func chatConnected() {
-        //        print("@@MyLog(Chat): connect")
-    }
-    
-    func chatDisconnect() {
-        //        print("@@MyLog(Chat): disconnect")
-    }
-    
-    func chatReconnect() {
-        //        print("@@MyLog(Chat): reconnect")
-    }
-    
-    func chatThreadEvents() {
-        //        print("@@MyLog(Chat): thread events")
-    }
-    
-    func chatReady() {
-        //        print("@@MyLog(Chat): chat ready")
-    }
-    
-    func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {
-        //        print("@@MyLog(Chat): error: errCode = \(errorCode), errMsg = \(errorMessage)")
-    }
-    
-    func chatState(state: Int) {
-        //        print("@@MyLog(Chat): chat state = \(state)")
-    }
-    
-    func chatDeliver(messageId: Int, ownerId: Int) {
-        //        print("@@MyLog(Chat): deliver with messageId = \(messageId), and ownerId = \(ownerId)")
-    }
-    
-    func messageEvents(type: String, result: JSON) {
-        //        print("@@MyLog(Chat): message events with \n type = \(type) \n result: \(result)")
-        
-        //        print("\n\n\n****************************")
-        //        print("****************************")
-        //        print("****************************")
-        //        print("MessageType: \(type)")
-        //        print("result in JSON: \n \(result)")
-        //        print("****************************")
-        //        print("****************************")
-        //        print("****************************\n\n\n")
-    }
-    
-    func threadEvents(type: String, result: JSON) {
-        //        print("@@MyLog:(Chat): ThreadEvents: \n type = \(type) , \n result: \(result) \n")
-        
-        if type == "THREAD_UNREAD_COUNT_UPDATED" {
-            print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("THREAD_UNREAD_COUNT_UPDATED : ")
-            print("\(result)")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n")
-        }
-        
-        if (type == "THREAD_LAST_ACTIVITY_TIME") {
-            print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("THREAD_LAST_ACTIVITY_TIME : ")
-            print("\(result)")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n")
-        }
-        
-    }
-    
-    
-}
+
+
 
 
 
