@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E6295612225778D002DB51C /* CreateThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6295602225778D002DB51C /* CreateThreadAutomation.swift */; };
+		3E629565222577B2002DB51C /* BlockAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E629564222577B2002DB51C /* BlockAutomation.swift */; };
+		3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E629566222577CA002DB51C /* GetContactsAutomation.swift */; };
+		3E629569222577D9002DB51C /* AddContactAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E629568222577D9002DB51C /* AddContactAutomation.swift */; };
+		3E62956B222577F1002DB51C /* RemoveContactAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E62956A222577F1002DB51C /* RemoveContactAutomation.swift */; };
+		3E947249222674DF005D986E /* Faker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E947248222674DF005D986E /* Faker.swift */; };
 		3E9725AF222292210056AD4D /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725AE222292210056AD4D /* Views.swift */; };
 		3E9725B32222925F0056AD4D /* ChatDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725B22222925F0056AD4D /* ChatDelegates.swift */; };
 		3E9725B5222292C80056AD4D /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725B4222292C80056AD4D /* BaseCell.swift */; };
@@ -35,6 +41,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E6295602225778D002DB51C /* CreateThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThreadAutomation.swift; sourceTree = "<group>"; };
+		3E629564222577B2002DB51C /* BlockAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockAutomation.swift; sourceTree = "<group>"; };
+		3E629566222577CA002DB51C /* GetContactsAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContactsAutomation.swift; sourceTree = "<group>"; };
+		3E629568222577D9002DB51C /* AddContactAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactAutomation.swift; sourceTree = "<group>"; };
+		3E62956A222577F1002DB51C /* RemoveContactAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveContactAutomation.swift; sourceTree = "<group>"; };
+		3E947248222674DF005D986E /* Faker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Faker.swift; sourceTree = "<group>"; };
 		3E9725AE222292210056AD4D /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		3E9725B22222925F0056AD4D /* ChatDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDelegates.swift; sourceTree = "<group>"; };
 		3E9725B4222292C80056AD4D /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
@@ -59,6 +71,58 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E94724C22267C1D005D986E /* Automation */ = {
+			isa = PBXGroup;
+			children = (
+				3E94724D22267C43005D986E /* Contacts */,
+				3E94724E22267C5C005D986E /* Threads */,
+				3E94724F22267C6A005D986E /* Messages */,
+				3E94725022267C78005D986E /* Maps */,
+				3E94725122267CA5005D986E /* Files */,
+			);
+			path = Automation;
+			sourceTree = "<group>";
+		};
+		3E94724D22267C43005D986E /* Contacts */ = {
+			isa = PBXGroup;
+			children = (
+				3E629564222577B2002DB51C /* BlockAutomation.swift */,
+				3E629566222577CA002DB51C /* GetContactsAutomation.swift */,
+				3E629568222577D9002DB51C /* AddContactAutomation.swift */,
+				3E62956A222577F1002DB51C /* RemoveContactAutomation.swift */,
+			);
+			path = Contacts;
+			sourceTree = "<group>";
+		};
+		3E94724E22267C5C005D986E /* Threads */ = {
+			isa = PBXGroup;
+			children = (
+				3E6295602225778D002DB51C /* CreateThreadAutomation.swift */,
+			);
+			path = Threads;
+			sourceTree = "<group>";
+		};
+		3E94724F22267C6A005D986E /* Messages */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Messages;
+			sourceTree = "<group>";
+		};
+		3E94725022267C78005D986E /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Maps;
+			sourceTree = "<group>";
+		};
+		3E94725122267CA5005D986E /* Files */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Files;
+			sourceTree = "<group>";
+		};
 		3EAE774622217AD4005AC3C3 = {
 			isa = PBXGroup;
 			children = (
@@ -82,6 +146,8 @@
 			children = (
 				3EAE775222217AD4005AC3C3 /* AppDelegate.swift */,
 				3EAE775422217AD4005AC3C3 /* MyViewController.swift */,
+				3E94724C22267C1D005D986E /* Automation */,
+				3E947248222674DF005D986E /* Faker.swift */,
 				3E9725B22222925F0056AD4D /* ChatDelegates.swift */,
 				3E9725AE222292210056AD4D /* Views.swift */,
 				3E9725B4222292C80056AD4D /* BaseCell.swift */,
@@ -202,9 +268,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E9725B32222925F0056AD4D /* ChatDelegates.swift in Sources */,
+				3E62956B222577F1002DB51C /* RemoveContactAutomation.swift in Sources */,
 				3EAE775522217AD4005AC3C3 /* MyViewController.swift in Sources */,
+				3E629569222577D9002DB51C /* AddContactAutomation.swift in Sources */,
+				3E6295612225778D002DB51C /* CreateThreadAutomation.swift in Sources */,
 				3EAE775322217AD4005AC3C3 /* AppDelegate.swift in Sources */,
+				3E629565222577B2002DB51C /* BlockAutomation.swift in Sources */,
+				3E947249222674DF005D986E /* Faker.swift in Sources */,
 				3E9725B5222292C80056AD4D /* BaseCell.swift in Sources */,
+				3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */,
 				3E9725AF222292210056AD4D /* Views.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
