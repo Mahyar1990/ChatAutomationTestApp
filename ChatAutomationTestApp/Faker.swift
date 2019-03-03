@@ -29,18 +29,17 @@ class Faker {
     }
     
     
-    func generateFakeGetContactParams() -> (count: Int?, offset: Int?) {
-        let count:  Int?
-        let offset: Int?
+    func generateFakeGetContactParams() -> (count: Int, offset: Int) {
+        var localCount:  Int = 1
+        var localOffset: Int = 0
         
-        count   = generateNumberAsInt(from: 1, to: 50)
-        offset  = generateNumberAsInt(from: 0, to: 50)
-        
-        return (count!, offset!)
+        localCount  = generateNumberAsInt(from: 1, to: 20)
+        localOffset = generateNumberAsInt(from: 0, to: 20)
+        return (localCount, localOffset)
     }
     
     
-    func generateFakeAddContactParams(cellphoneLength: Int?, firstNameLength: Int?, lastNameLength: Int?) -> (cellphoneNumber: String?, email: String?, firstName: String?, lastName: String?) {
+    func generateFakeAddContactParams(cellphoneLength: Int?, firstNameLength: Int?, lastNameLength: Int?) -> (cellphoneNumber: String, email: String, firstName: String, lastName: String) {
         let cellphoneNumber: String?
         let email:          String?
         let firstName:      String?
@@ -88,7 +87,8 @@ extension Faker {
     }
     
     func generateNumberAsInt(from: Int, to: Int) -> Int {
-        return Int.random(in: from ... to)
+        let randomNumber = Int.random(in: from ... to)
+        return randomNumber
     }
     
 }

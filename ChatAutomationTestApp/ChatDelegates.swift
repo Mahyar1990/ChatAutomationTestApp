@@ -12,74 +12,66 @@ import FanapPodChatSDK
 
 // MARK: Chat delegatews
 extension MyViewController: ChatDelegates {
-    
     func chatConnected() {
-        
+        let text = "Chat Connected"
+        addtext(text: text)
+        self.logHeightArr.append(30)
+        self.logBackgroundColor.append(UIColor.green)
+        print(text)
     }
     
     func chatDisconnect() {
-        chatIsReady = false
+        let text = "Chat Disconnected"
+        addtext(text: text)
+        self.logHeightArr.append(30)
+        self.logBackgroundColor.append(UIColor.red)
+        print(text)
     }
     
     func chatReconnect() {
-        
-    }
-    
-    func chatThreadEvents() {
-        //        print("@@MyLog(Chat): thread events")
-    }
-    
-    func chatReady() {
-        chatIsReady = true
-    }
-    
-    func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {
-        //        print("@@MyLog(Chat): error: errCode = \(errorCode), errMsg = \(errorMessage)")
+        let text = "Chat Reconnected"
+        addtext(text: text)
+        self.logHeightArr.append(30)
+        self.logBackgroundColor.append(UIColor.yellow)
+        print(text)
     }
     
     func chatState(state: Int) {
-        //        print("@@MyLog(Chat): chat state = \(state)")
+        print("chat state = \(state)")
+    }
+    
+    func chatReady(withUserInfo: User) {
+        let text = "Chat Ready. \nUserInfo = \(withUserInfo.formatToJSON())"
+        addtext(text: text)
+        self.logHeightArr.append(150)
+        self.logBackgroundColor.append(UIColor.green)
+        print(text)
+    }
+    
+    func userEvents(type: UserEventTypes, result: Any) {
+        //
+    }
+    
+    func contactEvents(type: ContactEventTypes, result: Any) {
+        //
     }
     
     func chatDeliver(messageId: Int, ownerId: Int) {
-        //        print("@@MyLog(Chat): deliver with messageId = \(messageId), and ownerId = \(ownerId)")
+        //
     }
     
-    func messageEvents(type: String, result: JSON) {
-        //        print("@@MyLog(Chat): message events with \n type = \(type) \n result: \(result)")
-        
-        //        print("\n\n\n****************************")
-        //        print("****************************")
-        //        print("****************************")
-        //        print("MessageType: \(type)")
-        //        print("result in JSON: \n \(result)")
-        //        print("****************************")
-        //        print("****************************")
-        //        print("****************************\n\n\n")
+    func messageEvents(type: MessageEventTypes, result: Any) {
+        //
     }
     
-    func threadEvents(type: String, result: JSON) {
-        //        print("@@MyLog:(Chat): ThreadEvents: \n type = \(type) , \n result: \(result) \n")
-        
-        if type == "THREAD_UNREAD_COUNT_UPDATED" {
-            print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("THREAD_UNREAD_COUNT_UPDATED : ")
-            print("\(result)")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n")
-        }
-        
-        if (type == "THREAD_LAST_ACTIVITY_TIME") {
-            print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("THREAD_LAST_ACTIVITY_TIME : ")
-            print("\(result)")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n")
-        }
-        
+    func threadEvents(type: ThreadEventTypes, result: Any) {
+        //
     }
+    
+    func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {
+        //
+    }
+    
     
     
 }

@@ -21,6 +21,8 @@ import FanapPodChatSDK
  */
 class AddContactAutomation {
     
+    public weak var delegate: MoreInfoDelegate?
+    
     let cellphoneNumber: String?
     let email:          String?
     let firstName:      String?
@@ -49,7 +51,10 @@ class AddContactAutomation {
         // if none of the parameters filled by the user, jenerate fake values and fill the input model to send request
         if (cellphoneNumber == nil) && (email == nil) && (firstName == nil) && (lastName == nil) {
             let fakeParams = Faker.sharedInstance.generateFakeAddContactParams(cellphoneLength: 11, firstNameLength: 4, lastNameLength: 7)
-            sendRequest(theCellphoneNumber: fakeParams.0, theEmail: fakeParams.1, theFirstName: fakeParams.2, theLastName: fakeParams.3)
+            
+            delegate?.newInfo(type: MoreInfoTypes.AddContact.rawValue, message: "generate fake values to add contact as:\ncellPhoneNumber = \(fakeParams.cellphoneNumber) , email = \(fakeParams.email) , firstName = \(fakeParams.firstName) , lastName = \(fakeParams.lastName)", lineNumbers: 3)
+            
+            sendRequest(theCellphoneNumber: fakeParams.cellphoneNumber, theEmail: fakeParams.email, theFirstName: fakeParams.firstName, theLastName: fakeParams.lastName)
         }
             // some or all of the parameters are filled by the client, so send request with this params
         else {
@@ -60,10 +65,15 @@ class AddContactAutomation {
     
     
     func sendRequest(theCellphoneNumber: String?, theEmail: String?, theFirstName: String?, theLastName: String?) {
+        
+        delegate?.newInfo(type: MoreInfoTypes.AddContact.rawValue, message: "Send AddContact request with this params:\ncellPhoneNumber = \(theCellphoneNumber ?? "nil") , email = \(theEmail ?? "nil") , firstName = \(theFirstName ?? "nil") , lastName = \(theLastName ?? "nil")", lineNumbers: 3)
+        
         let addContactInput = AddContactsRequestModel(cellphoneNumber: theCellphoneNumber, email: theEmail, firstName: theFirstName, lastName: theLastName)
         myChatObject?.addContact(addContactsInput: addContactInput, uniqueId: { (addContactsUniqueId) in
+//            self.delegate?.newInfo(type: MoreInfoTyps.AddContact.rawValue, message: "addContact UniqueId response = \(addContactsUniqueId)", lineNumbers: 1)
             self.uniqueIdCallback?(addContactsUniqueId)
         }, completion: { (addContactServerResponse) in
+//            self.delegate?.newInfo(type: MoreInfoTyps.AddContact.rawValue, message: "addContact response model = \((addContactServerResponse as! ContactModel).returnDataAsJSON())", lineNumbers: 4)
             self.responseCallback?(addContactServerResponse as! ContactModel)
         })
     }

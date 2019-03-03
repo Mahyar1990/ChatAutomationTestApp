@@ -21,22 +21,28 @@ extension MyViewController {
         pickerView.delegate = self
         pickerView.dataSource = self
         
-        view.addSubview(pickerView)
+        view.addSubview(tokenTextField)
         view.addSubview(sendPingButton)
+        view.addSubview(pickerView)
         view.addSubview(logView)
         logView.addSubview(myLogCollectionView)
         
-        pickerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
-        pickerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
-        pickerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
-        pickerView.heightAnchor.constraint(equalToConstant: 128).isActive = true
+        tokenTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16).isActive = true
+        tokenTextField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
+        tokenTextField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
+        tokenTextField.heightAnchor.constraint(equalToConstant: 32).isActive = true
         
-        sendPingButton.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 8).isActive = true
+        sendPingButton.topAnchor.constraint(equalTo: tokenTextField.bottomAnchor, constant: 8).isActive = true
         sendPingButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
         sendPingButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
         sendPingButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
         
-        logView.topAnchor.constraint(equalTo: sendPingButton.bottomAnchor, constant: 16).isActive = true
+        pickerView.topAnchor.constraint(equalTo: sendPingButton.bottomAnchor, constant: 8).isActive = true
+        pickerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
+        pickerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
+        pickerView.heightAnchor.constraint(equalToConstant: 128).isActive = true
+        
+        logView.topAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: 16).isActive = true
         logView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
         logView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
         logView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
