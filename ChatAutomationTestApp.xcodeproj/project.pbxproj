@@ -21,6 +21,8 @@
 		3EAE775A22217AD6005AC3C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EAE775922217AD6005AC3C3 /* Assets.xcassets */; };
 		3EAE775D22217AD6005AC3C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EAE775B22217AD6005AC3C3 /* LaunchScreen.storyboard */; };
 		3EAE779B22218ED9005AC3C3 /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EAE777D22218E79005AC3C3 /* FanapPodChatSDK.framework */; };
+		3ED3DA80222E5E9A00261DB3 /* GetBlockedListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */; };
+		3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		3EAE775C22217AD6005AC3C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3EAE775E22217AD6005AC3C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3EAE777222218E79005AC3C3 /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../../../Xcode Projects/Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
+		3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockedListAutomation.swift; sourceTree = "<group>"; };
+		3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockAutomation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +94,8 @@
 				3E629566222577CA002DB51C /* GetContactsAutomation.swift */,
 				3E629568222577D9002DB51C /* AddContactAutomation.swift */,
 				3E62956A222577F1002DB51C /* RemoveContactAutomation.swift */,
+				3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */,
+				3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -273,9 +279,11 @@
 				3E629569222577D9002DB51C /* AddContactAutomation.swift in Sources */,
 				3E6295612225778D002DB51C /* CreateThreadAutomation.swift in Sources */,
 				3EAE775322217AD4005AC3C3 /* AppDelegate.swift in Sources */,
+				3ED3DA80222E5E9A00261DB3 /* GetBlockedListAutomation.swift in Sources */,
 				3E629565222577B2002DB51C /* BlockAutomation.swift in Sources */,
 				3E947249222674DF005D986E /* Faker.swift in Sources */,
 				3E9725B5222292C80056AD4D /* BaseCell.swift in Sources */,
+				3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */,
 				3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */,
 				3E9725AF222292210056AD4D /* Views.swift in Sources */,
 			);
@@ -415,15 +423,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GP3XLTT75N;
 				INFOPLIST_FILE = ChatAutomationTestApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fanapSoft.ChatAutomationTestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -433,15 +445,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GP3XLTT75N;
 				INFOPLIST_FILE = ChatAutomationTestApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fanapSoft.ChatAutomationTestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

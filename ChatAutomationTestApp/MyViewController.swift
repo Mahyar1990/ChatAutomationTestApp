@@ -55,7 +55,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var logArr              = [String]()
     var logHeightArr        = [Int]()
     var logBackgroundColor  = [UIColor]()
-    let pickerData          = ["block", "getContacts", "addContact", "removeContact", "createThread"]
+    let pickerData          = ["block", "getContacts", "addContact", "removeContact", "createThread", "GetBlockedList", "Unblock"]
     
     
     let tokenTextField: UITextField = {
@@ -125,7 +125,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
             createChat()
         } else {
             // error! Please inter your token
-            token = "f76cf19e50894e899e76ab9fdcde7b78"
+            token = "7031c6d747a24d2d9bdd4145d5fd0cf1"
             createChat()
         }
     }
@@ -296,6 +296,38 @@ extension MyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
                 self.logBackgroundColor.append(UIColor.cyan)
                 print(myText)
             }
+        case 5:
+            // implement GetBlockedList automation
+            let getBlockedList = GetBlockedListAutomation(count: nil, offset: nil, typeCode: nil)
+            getBlockedList.create(uniqueId: { (getBlockedListUniqueId) in
+                let myText = "get blocked list unique id = \(getBlockedListUniqueId)"
+                self.addtext(text: myText)
+                self.logHeightArr.append(65)
+                self.logBackgroundColor.append(UIColor.cyan)
+                print(myText)
+            }) { (getBlockedContactListModel) in
+                let myText = "create thread model response = \(getBlockedContactListModel.returnDataAsJSON())"
+                self.addtext(text: myText)
+                self.logHeightArr.append(140)
+                self.logBackgroundColor.append(UIColor.cyan)
+                print(myText)
+            }
+        case 6:
+            // implement unblock automation
+            let unblock = UnblockAutomation(blockId: nil, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
+            unblock.create(uniqueId: { (unblockUniqueId) in
+                let myText = "unblock unique id = \(unblockUniqueId)"
+                self.addtext(text: myText)
+                self.logHeightArr.append(65)
+                self.logBackgroundColor.append(UIColor.cyan)
+                print(myText)
+            }) { (unblockModel) in
+                let myText = "unblock model response = \(unblockModel.returnDataAsJSON())"
+                self.addtext(text: myText)
+                self.logHeightArr.append(140)
+                self.logBackgroundColor.append(UIColor.cyan)
+                print(myText)
+            }
         default:
             print("Selected row number \(row) that is not in the correct range!")
         }
@@ -364,6 +396,8 @@ enum MoreInfoTypes: String {
     case AddContact     = "AddContact"
     case RemoveContact  = "RemoveContact"
     case CreateThread   = "CreateThread"
+    case GetBlockedList = "GetBlockedList"
+    case Unblock        = "Unblock"
 }
 
 
