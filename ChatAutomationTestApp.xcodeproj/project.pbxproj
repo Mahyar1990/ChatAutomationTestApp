@@ -23,6 +23,7 @@
 		3EAE779B22218ED9005AC3C3 /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EAE777D22218E79005AC3C3 /* FanapPodChatSDK.framework */; };
 		3ED3DA80222E5E9A00261DB3 /* GetBlockedListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */; };
 		3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */; };
+		3ED3DA86222E748600261DB3 /* GetThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		3EAE777222218E79005AC3C3 /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../../../Xcode Projects/Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
 		3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockedListAutomation.swift; sourceTree = "<group>"; };
 		3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockAutomation.swift; sourceTree = "<group>"; };
+		3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetThreadAutomation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				3E6295602225778D002DB51C /* CreateThreadAutomation.swift */,
+				3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */,
 			);
 			path = Threads;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				3ED3DA80222E5E9A00261DB3 /* GetBlockedListAutomation.swift in Sources */,
 				3E629565222577B2002DB51C /* BlockAutomation.swift in Sources */,
 				3E947249222674DF005D986E /* Faker.swift in Sources */,
+				3ED3DA86222E748600261DB3 /* GetThreadAutomation.swift in Sources */,
 				3E9725B5222292C80056AD4D /* BaseCell.swift in Sources */,
 				3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */,
 				3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */,

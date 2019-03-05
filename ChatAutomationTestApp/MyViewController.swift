@@ -55,7 +55,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var logArr              = [String]()
     var logHeightArr        = [Int]()
     var logBackgroundColor  = [UIColor]()
-    let pickerData          = ["block", "getContacts", "addContact", "removeContact", "createThread", "GetBlockedList", "Unblock"]
+    let pickerData          = ["block", "getContacts", "addContact", "removeContact", "createThread", "GetBlockedList", "Unblock", "GetThread"]
     
     
     let tokenTextField: UITextField = {
@@ -205,132 +205,24 @@ extension MyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         resetCollectionViewCells()
         
         switch row {
-        case 0:
-            // implement block automation
-            let block = BlockAutomation(contactId: nil, threadId: nil, typeCode: nil, userId: nil)
-            block.delegate = self
-            block.create(uniqueId: { (blockUniqueId) in
-                let myText = "block uniqueId = \(blockUniqueId)"
-                self.addtext(text: myText)
-                self.logHeightArr.append(40)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }) { (blockedContactModel) in
-                let myText = "block response = \(blockedContactModel.returnDataAsJSON())"
-                self.addtext(text: myText)
-                self.logHeightArr.append(140)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }
-        case 1:
-            // implement getContact automation
-            let getContact = GetContactsAutomation(count: nil, name: nil, offset: nil, typeCode: nil)
-            getContact.delegate = self
-            getContact.create(uniqueId: { (getContactUniqueId) in
-                let myText = "get contact unique id = \(getContactUniqueId)"
-                self.addtext(text: myText)
-                self.logHeightArr.append(40)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }, serverResponse: { (getContactsModel) in
-                let myText = "get contact model server response = \(getContactsModel.returnDataAsJSON())"
-                self.addtext(text: myText)
-                self.logHeightArr.append(140)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }) { (getContactsModel) in
-                let myText = "get contact model cache response = \(getContactsModel.returnDataAsJSON())"
-                self.addtext(text: myText)
-                self.logHeightArr.append(140)
-                self.logBackgroundColor.append(UIColor.blue)
-                print(myText)
-            }
-        case 2:
-            // implement addContact automation
-            let addContact = AddContactAutomation(cellphoneNumber: nil, email: nil, firstName: nil, lastName: nil)
-            addContact.delegate = self
-            addContact.create(uniqueId: { (addContactUniqueId) in
-                let myText = "add contact unique id = \(addContactUniqueId)"
-                self.addtext(text: myText)
-                self.logHeightArr.append(40)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }) { (addContactModel) in
-                let myText = "add contact model response = \(addContactModel.returnDataAsJSON())"
-                self.addtext(text: myText)
-                self.logHeightArr.append(140)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }
-        case 3:
-            // implement removeContact automation
-            let removeContact = RemoveContactAutomation(id: nil)
-            removeContact.delegate = self
-            removeContact.create(uniqueId: { (removeContactUniqueId) in
-                let myText = "remove contact unique id = \(removeContactUniqueId)"
-                self.addtext(text: myText)
-                self.logHeightArr.append(40)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }) { (removeContactModel) in
-                let myText = "remove contact model response = \(removeContactModel.returnDataAsJSON())"
-                self.addtext(text: myText)
-                self.logHeightArr.append(120)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }
-        case 4:
-            // impelement createThread automation
-            let createThread = CreateThreadAutomation(description: nil, image: nil, invitees: nil, metadata: nil, title: nil, type: nil, requestUniqueId: nil)
-            createThread.delegate = self
-            createThread.create(uniqueId: { (createThreadUniqueId, on) in
-                let myText = "create thread unique id \(on) = \(createThreadUniqueId)"
-                self.addtext(text: myText)
-                self.logHeightArr.append(65)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }) { (createThreadModel, on) in
-                let myText = "create thread model response \(on) = \(createThreadModel.returnDataAsJSON())"
-                self.addtext(text: myText)
-                self.logHeightArr.append(140)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }
-        case 5:
-            // implement GetBlockedList automation
-            let getBlockedList = GetBlockedListAutomation(count: nil, offset: nil, typeCode: nil)
-            getBlockedList.create(uniqueId: { (getBlockedListUniqueId) in
-                let myText = "get blocked list unique id = \(getBlockedListUniqueId)"
-                self.addtext(text: myText)
-                self.logHeightArr.append(65)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }) { (getBlockedContactListModel) in
-                let myText = "create thread model response = \(getBlockedContactListModel.returnDataAsJSON())"
-                self.addtext(text: myText)
-                self.logHeightArr.append(140)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }
-        case 6:
-            // implement unblock automation
-            let unblock = UnblockAutomation(blockId: nil, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
-            unblock.create(uniqueId: { (unblockUniqueId) in
-                let myText = "unblock unique id = \(unblockUniqueId)"
-                self.addtext(text: myText)
-                self.logHeightArr.append(65)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }) { (unblockModel) in
-                let myText = "unblock model response = \(unblockModel.returnDataAsJSON())"
-                self.addtext(text: myText)
-                self.logHeightArr.append(140)
-                self.logBackgroundColor.append(UIColor.cyan)
-                print(myText)
-            }
+        case 0: implementBlock()            // implement Block
+        case 1: implementGetContacts()      // implement GetContacts
+        case 2: implementAddContact()       // implement AddContact
+        case 3: implementRemoveContact()    // implement RemoveContact
+        case 4: implementCreateThread()     // implement CreateThread
+        case 5: implementGetBlockedList()   // implement GetBlockedList
+        case 6: implementUnblock()          // implement Unblock
+        case 7: implementGetThreads()       // implement GetThreads
         default:
             print("Selected row number \(row) that is not in the correct range!")
         }
+    }
+    
+    
+    func updateText(cellText: String, cellHeight: Int, cellColor: UIColor) {
+        self.addtext(text: cellText)
+        self.logHeightArr.append(cellHeight)
+        self.logBackgroundColor.append(cellColor)
     }
     
     
@@ -344,6 +236,117 @@ extension MyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         logHeightArr.removeAll()
         logBackgroundColor.removeAll()
         myLogCollectionView.reloadData()
+    }
+    
+}
+
+
+
+extension MyViewController {
+    
+    func implementBlock() {
+        let block = BlockAutomation(contactId: nil, threadId: nil, typeCode: nil, userId: nil)
+        block.delegate = self
+        block.create(uniqueId: { (blockUniqueId) in
+            let myText = "block uniqueId = \(blockUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 40, cellColor: .cyan)
+        }) { (blockedContactModel) in
+            let myText = "block response = \(blockedContactModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
+        }
+    }
+    
+    func implementGetContacts() {
+        let getContact = GetContactsAutomation(count: nil, name: nil, offset: nil, typeCode: nil)
+        getContact.delegate = self
+        getContact.create(uniqueId: { (getContactUniqueId) in
+            let myText = "get contact unique id = \(getContactUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 40, cellColor: .cyan)
+        }, serverResponse: { (getContactsModel) in
+            let myText = "get contact model server response = \(getContactsModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
+        }) { (getContactsModel) in
+            let myText = "get contact model cache response = \(getContactsModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .blue)
+        }
+    }
+    
+    func implementAddContact() {
+        let addContact = AddContactAutomation(cellphoneNumber: nil, email: nil, firstName: nil, lastName: nil)
+        addContact.delegate = self
+        addContact.create(uniqueId: { (addContactUniqueId) in
+            let myText = "add contact unique id = \(addContactUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 40, cellColor: .cyan)
+            print(myText)
+        }) { (addContactModel) in
+            let myText = "add contact model response = \(addContactModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
+        }
+    }
+    
+    func implementRemoveContact() {
+        let removeContact = RemoveContactAutomation(id: nil)
+        removeContact.delegate = self
+        removeContact.create(uniqueId: { (removeContactUniqueId) in
+            let myText = "remove contact unique id = \(removeContactUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 40, cellColor: .cyan)
+            print(myText)
+        }) { (removeContactModel) in
+            let myText = "remove contact model response = \(removeContactModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+            print(myText)
+        }
+    }
+    
+    func implementCreateThread() {
+        let createThread = CreateThreadAutomation(description: nil, image: nil, invitees: nil, metadata: nil, title: nil, type: nil, requestUniqueId: nil)
+        createThread.delegate = self
+        createThread.create(uniqueId: { (createThreadUniqueId, on) in
+            let myText = "create thread unique id \(on) = \(createThreadUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }) { (createThreadModel, on) in
+            let myText = "create thread model response \(on) = \(createThreadModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
+        }
+    }
+    
+    func implementGetBlockedList() {
+        let getBlockedList = GetBlockedListAutomation(count: nil, offset: nil, typeCode: nil)
+        getBlockedList.delegate = self
+        getBlockedList.create(uniqueId: { (getBlockedListUniqueId) in
+            let myText = "get blocked list unique id = \(getBlockedListUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }) { (getBlockedContactListModel) in
+            let myText = "create thread model response = \(getBlockedContactListModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
+        }
+    }
+    
+    func implementUnblock() {
+        let unblock = UnblockAutomation(blockId: nil, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
+        unblock.delegate = self
+        unblock.create(uniqueId: { (unblockUniqueId) in
+            let myText = "unblock unique id = \(unblockUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }) { (unblockModel) in
+            let myText = "unblock model response = \(unblockModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
+        }
+    }
+    
+    func implementGetThreads() {
+        let getThread = GetThreadAutomation(count: nil, coreUserId: nil, metadataCriteria: nil, name: nil, new: nil, offset: nil, threadIds: nil, typeCode: nil)
+        getThread.delegate = self
+        getThread.create(uniqueId: { (getThreadUniqueId) in
+            let myText = "getThread unique id = \(getThreadUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }, serverResponse: { (getThreadsModel) in
+            let myText = "get thread model server response = \(getThreadsModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
+        }) { (getThreadsModel) in
+            let myText = "get thread model cache response = \(getThreadsModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .blue)
+        }
     }
     
 }
@@ -398,6 +401,7 @@ enum MoreInfoTypes: String {
     case CreateThread   = "CreateThread"
     case GetBlockedList = "GetBlockedList"
     case Unblock        = "Unblock"
+    case GetThread      = "GetThread"
 }
 
 
