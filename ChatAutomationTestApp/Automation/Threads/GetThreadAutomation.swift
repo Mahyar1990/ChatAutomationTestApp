@@ -11,10 +11,7 @@ import SwiftyJSON
 
 /*
  if somebody call this method,
- a getContacts request will send
- if the callers did't send input parameters, inputs will fill qoutomatically by this parameters:
- - count: will be some number between 0 and 50
- - offset: will be some number between 0 and 50
+ a getThread request will send
  */
 
 class GetThreadAutomation {

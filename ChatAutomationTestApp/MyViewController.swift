@@ -55,7 +55,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var logArr              = [String]()
     var logHeightArr        = [Int]()
     var logBackgroundColor  = [UIColor]()
-    let pickerData          = ["block", "getContacts", "addContact", "removeContact", "createThread", "GetBlockedList", "Unblock", "GetThread"]
+    let pickerData          = ["block", "getContacts", "addContact", "removeContact", "createThread", "GetBlockedList", "Unblock", "GetThread", "SendTextMessage"]
     
     
     let tokenTextField: UITextField = {
@@ -213,6 +213,7 @@ extension MyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         case 5: implementGetBlockedList()   // implement GetBlockedList
         case 6: implementUnblock()          // implement Unblock
         case 7: implementGetThreads()       // implement GetThreads
+        case 8: implementSendTextMessage()  // implement SendTextMessage
         default:
             print("Selected row number \(row) that is not in the correct range!")
         }
@@ -349,6 +350,23 @@ extension MyViewController {
         }
     }
     
+    func implementSendTextMessage() {
+        let sendTextMessage = SendTextMessageAutomation(content: nil, metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: nil, typeCode: nil, uniqueId: nil)
+        sendTextMessage.create(uniqueId: { (sendTextMessageUniqueId) in
+            let myText = "getThread unique id = \(sendTextMessageUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }, serverSentResponse: { (sent) in
+            let myText = "sendTextMessage sent response = \(sent)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }, serverDeliverResponse: { (deliver) in
+            let myText = "sendTextMessage deliver response = \(deliver)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }) { (seen) in
+            let myText = "sendTextMessage seen response = \(seen)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }
+    }
+    
 }
 
 
@@ -394,14 +412,15 @@ protocol MoreInfoDelegate: class {
 }
 
 enum MoreInfoTypes: String {
-    case Block          = "Block"
-    case GetContact     = "GetContact"
-    case AddContact     = "AddContact"
-    case RemoveContact  = "RemoveContact"
-    case CreateThread   = "CreateThread"
-    case GetBlockedList = "GetBlockedList"
-    case Unblock        = "Unblock"
-    case GetThread      = "GetThread"
+    case Block              = "Block"
+    case GetContact         = "GetContact"
+    case AddContact         = "AddContact"
+    case RemoveContact      = "RemoveContact"
+    case CreateThread       = "CreateThread"
+    case GetBlockedList     = "GetBlockedList"
+    case Unblock            = "Unblock"
+    case GetThread          = "GetThread"
+    case SendTextMessage    = "SendTextMessage"
 }
 
 

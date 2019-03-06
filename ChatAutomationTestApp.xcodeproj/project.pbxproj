@@ -24,6 +24,7 @@
 		3ED3DA80222E5E9A00261DB3 /* GetBlockedListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */; };
 		3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */; };
 		3ED3DA86222E748600261DB3 /* GetThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */; };
+		3ED3DA88222E930600261DB3 /* SendTextMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA87222E930600261DB3 /* SendTextMessageAutomation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockedListAutomation.swift; sourceTree = "<group>"; };
 		3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockAutomation.swift; sourceTree = "<group>"; };
 		3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetThreadAutomation.swift; sourceTree = "<group>"; };
+		3ED3DA87222E930600261DB3 /* SendTextMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTextMessageAutomation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 		3E94724F22267C6A005D986E /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				3ED3DA87222E930600261DB3 /* SendTextMessageAutomation.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				3ED3DA86222E748600261DB3 /* GetThreadAutomation.swift in Sources */,
 				3E9725B5222292C80056AD4D /* BaseCell.swift in Sources */,
 				3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */,
+				3ED3DA88222E930600261DB3 /* SendTextMessageAutomation.swift in Sources */,
 				3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */,
 				3E9725AF222292210056AD4D /* Views.swift in Sources */,
 			);
