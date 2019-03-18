@@ -68,7 +68,7 @@ class SendTextMessageAutomation {
             let text = Faker.sharedInstance.generateNameAsString(withLength: 30)
             sendRequest(theContent: text, theMetaData: metaData, theRepliedTo: repliedTo, theSystemMetadata: systemMetadata, theThreadId: myThreadId, theTypeCode: typeCode, theUniqueId: uniqueIdOfAllRequests)
         default:
-            print("Error, we don't have this situation!!!!! (SendTextMessageAutomation)")
+            delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "You have to fill the  Content(iput 1) and threadId(input 3) of the message", lineNumbers: 2)
         }
         
         if (content == nil) || (threadId == nil) {

@@ -70,6 +70,11 @@ extension MyViewController: ChatDelegates {
     
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {
         //
+        let text = "Chat Error. \nerrorCode = \(errorCode) \nerrorMessage = \(errorMessage)"
+        addtext(text: text)
+        self.logHeightArr.append(150)
+        self.logBackgroundColor.append(UIColor.orange)
+        print(text)
     }
     
     

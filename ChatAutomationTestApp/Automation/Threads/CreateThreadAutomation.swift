@@ -59,7 +59,7 @@ class CreateThreadAutomation {
         self.responseCallback   = serverResponse
         
         // if the input parameter didn't filled by the user, first add a contact, then create a thread with this contact
-        if (invitees == nil) && (title == nil) {
+        if ((invitees == nil) || (invitees?.count == 0)) && (title == nil) {
             
             delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "there is no invitee or title specify to creat thread, so have to implement all the possible cases to create a thread!!", lineNumbers: 2)
             

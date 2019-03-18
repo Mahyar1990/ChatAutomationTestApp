@@ -62,6 +62,8 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         let mt = UITextField()
         mt.translatesAutoresizingMaskIntoConstraints = false
         mt.placeholder = "write your token..."
+        mt.autocapitalizationType = UITextAutocapitalizationType.none
+        mt.autocorrectionType = UITextAutocorrectionType.no
         mt.backgroundColor = UIColor(white: 0.8, alpha: 1)
         return mt
     }()
@@ -80,6 +82,46 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         mb.layer.shadowOffset = CGSize(width: 0, height: 3)
         mb.addTarget(self, action: #selector(connectChat), for: UIControl.Event.touchUpInside)
         return mb
+    }()
+    
+    let input1TextField: UITextField = {
+        let mt = UITextField()
+        mt.translatesAutoresizingMaskIntoConstraints = false
+        mt.placeholder = "Input 1"
+        mt.autocapitalizationType = UITextAutocapitalizationType.none
+        mt.autocorrectionType = UITextAutocorrectionType.no
+        mt.backgroundColor = UIColor(white: 0.8, alpha: 1)
+        return mt
+    }()
+    
+    let input2TextField: UITextField = {
+        let mt = UITextField()
+        mt.translatesAutoresizingMaskIntoConstraints = false
+        mt.placeholder = "Input 2"
+        mt.autocapitalizationType = UITextAutocapitalizationType.none
+        mt.autocorrectionType = UITextAutocorrectionType.no
+        mt.backgroundColor = UIColor(white: 0.8, alpha: 1)
+        return mt
+    }()
+    
+    let input3TextField: UITextField = {
+        let mt = UITextField()
+        mt.translatesAutoresizingMaskIntoConstraints = false
+        mt.placeholder = "Input 3"
+        mt.autocapitalizationType = UITextAutocapitalizationType.none
+        mt.autocorrectionType = UITextAutocorrectionType.no
+        mt.backgroundColor = UIColor(white: 0.8, alpha: 1)
+        return mt
+    }()
+    
+    let input4TextField: UITextField = {
+        let mt = UITextField()
+        mt.translatesAutoresizingMaskIntoConstraints = false
+        mt.placeholder = "Input 4"
+        mt.autocapitalizationType = UITextAutocapitalizationType.none
+        mt.autocorrectionType = UITextAutocorrectionType.no
+        mt.backgroundColor = UIColor(white: 0.8, alpha: 1)
+        return mt
     }()
     
     let pickerView: UIPickerView = {
@@ -111,8 +153,15 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         return mcv
     }()
     
+    var picker = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let fireButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.play, target: self, action: #selector(fireRequest))
+        navigationItem.leftBarButtonItem = fireButton
+        
+        updateText(cellText: " Input 1 = contactId as Int \n Input 2 = threadId as Int \n Input 3 = userId as Int", cellHeight: 60, cellColor: UIColor.white)
         
         setupViews()
     }
@@ -125,7 +174,8 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
             createChat()
         } else {
             // error! Please inter your token
-            token = "7031c6d747a24d2d9bdd4145d5fd0cf1"
+            updateText(cellText: "your token is invalid, write down valid token", cellHeight: 60, cellColor: UIColor.orange)
+            token = "74a60ee10840403a9756ce5f02c6d879"
             createChat()
         }
     }
@@ -204,16 +254,19 @@ extension MyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         
         resetCollectionViewCells()
         
+        picker = row
+        
         switch row {
-        case 0: implementBlock()            // implement Block
-        case 1: implementGetContacts()      // implement GetContacts
-        case 2: implementAddContact()       // implement AddContact
-        case 3: implementRemoveContact()    // implement RemoveContact
-        case 4: implementCreateThread()     // implement CreateThread
-        case 5: implementGetBlockedList()   // implement GetBlockedList
-        case 6: implementUnblock()          // implement Unblock
-        case 7: implementGetThreads()       // implement GetThreads
-        case 8: implementSendTextMessage()  // implement SendTextMessage
+        case 0:
+            updateText(cellText: " Input 1 = contactId as Int \n Input 2 = threadId as Int \n Input 3 = userId as Int", cellHeight: 70, cellColor: UIColor.white)
+        case 1: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String", cellHeight: 70, cellColor: UIColor.white)
+        case 2: updateText(cellText: " Input 1 = cellphoneNumber as String \n Input 2 = email as String \n Input 3 = firstName as String \n Input 4 = lastName as String", cellHeight: 70, cellColor: UIColor.white)
+        case 3: updateText(cellText: " Input 1 = id as Int", cellHeight: 40, cellColor: UIColor.white)
+        case 4: updateText(cellText: " Input 1 = description as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: UIColor.white)
+        case 5: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int", cellHeight: 40, cellColor: UIColor.white)
+        case 6: updateText(cellText: " Input 1 = blockId as String \n Input 2 = contactId as String \n Input 3 = threadId as String \n Input 4 = userId as String", cellHeight: 70, cellColor: UIColor.white)
+        case 7: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: UIColor.white)
+        case 8: updateText(cellText: " Input 1 = count as Int \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 70, cellColor: UIColor.white)
         default:
             print("Selected row number \(row) that is not in the correct range!")
         }
@@ -245,8 +298,28 @@ extension MyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
 extension MyViewController {
     
+    @objc func fireRequest() {
+        switch picker {
+        case 0: implementBlock()            // implement Block
+        case 1: implementGetContacts()      // implement GetContacts
+        case 2: implementAddContact()       // implement AddContact
+        case 3: implementRemoveContact()    // implement RemoveContact
+        case 4: implementCreateThread()     // implement CreateThread
+        case 5: implementGetBlockedList()   // implement GetBlockedList
+        case 6: implementUnblock()          // implement Unblock
+        case 7: implementGetThreads()       // implement GetThreads
+        case 8: implementSendTextMessage()  // implement SendTextMessage
+        default:
+            print("Selected row number \(picker) that is not in the correct range!")
+        }
+    }
+    
     func implementBlock() {
-        let block = BlockAutomation(contactId: nil, threadId: nil, typeCode: nil, userId: nil)
+        let conId:  Int?    = Int(input1TextField.text ?? "")
+        let thrId:  Int?    = Int(input2TextField.text ?? "")
+        let usrId:  Int?    = Int(input3TextField.text ?? "")
+        
+        let block = BlockAutomation(contactId: conId, threadId: thrId, typeCode: nil, userId: usrId)
         block.delegate = self
         block.create(uniqueId: { (blockUniqueId) in
             let myText = "block uniqueId = \(blockUniqueId)"
@@ -258,7 +331,11 @@ extension MyViewController {
     }
     
     func implementGetContacts() {
-        let getContact = GetContactsAutomation(count: nil, name: nil, offset: nil, typeCode: nil)
+        let count:  Int?    = Int(input1TextField.text ?? "")
+        let offst:  Int?    = Int(input2TextField.text ?? "")
+        let name:   String? = input3TextField.text
+        
+        let getContact = GetContactsAutomation(count: count, name: name, offset: offst, typeCode: nil)
         getContact.delegate = self
         getContact.create(uniqueId: { (getContactUniqueId) in
             let myText = "get contact unique id = \(getContactUniqueId)"
@@ -273,7 +350,12 @@ extension MyViewController {
     }
     
     func implementAddContact() {
-        let addContact = AddContactAutomation(cellphoneNumber: nil, email: nil, firstName: nil, lastName: nil)
+        let cell        = input1TextField.text
+        let email       = input2TextField.text
+        let firstName   = input3TextField.text
+        let lastName    = input4TextField.text
+        
+        let addContact = AddContactAutomation(cellphoneNumber: cell, email: email, firstName: firstName, lastName: lastName)
         addContact.delegate = self
         addContact.create(uniqueId: { (addContactUniqueId) in
             let myText = "add contact unique id = \(addContactUniqueId)"
@@ -286,7 +368,9 @@ extension MyViewController {
     }
     
     func implementRemoveContact() {
-        let removeContact = RemoveContactAutomation(id: nil)
+        let id: Int?    = Int(input1TextField.text ?? "")
+        
+        let removeContact = RemoveContactAutomation(id: id)
         removeContact.delegate = self
         removeContact.create(uniqueId: { (removeContactUniqueId) in
             let myText = "remove contact unique id = \(removeContactUniqueId)"
@@ -300,7 +384,13 @@ extension MyViewController {
     }
     
     func implementCreateThread() {
-        let createThread = CreateThreadAutomation(description: nil, image: nil, invitees: nil, metadata: nil, title: nil, type: nil, requestUniqueId: nil)
+        let description:String? = input1TextField.text
+        let title:      String? = input2TextField.text
+        let inviteeId:  String? = input3TextField.text
+        let inviteeType:String? = input4TextField.text
+        let invitee = Invitee(id: inviteeId, idType: inviteeType)
+        
+        let createThread = CreateThreadAutomation(description: description, image: nil, invitees: [invitee], metadata: nil, title: title, type: nil, requestUniqueId: nil)
         createThread.delegate = self
         createThread.create(uniqueId: { (createThreadUniqueId, on) in
             let myText = "create thread unique id \(on) = \(createThreadUniqueId)"
@@ -312,7 +402,10 @@ extension MyViewController {
     }
     
     func implementGetBlockedList() {
-        let getBlockedList = GetBlockedListAutomation(count: nil, offset: nil, typeCode: nil)
+        let count:  Int?    = Int(input1TextField.text ?? "")
+        let offset: Int?    = Int(input1TextField.text ?? "")
+        
+        let getBlockedList = GetBlockedListAutomation(count: count, offset: offset, typeCode: nil)
         getBlockedList.delegate = self
         getBlockedList.create(uniqueId: { (getBlockedListUniqueId) in
             let myText = "get blocked list unique id = \(getBlockedListUniqueId)"
@@ -324,7 +417,12 @@ extension MyViewController {
     }
     
     func implementUnblock() {
-        let unblock = UnblockAutomation(blockId: nil, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
+        let blockId:    Int?    = Int(input1TextField.text ?? "")
+        let contactId:  Int?    = Int(input2TextField.text ?? "")
+        let threadId:   Int?    = Int(input3TextField.text ?? "")
+        let userId:     Int?    = Int(input4TextField.text ?? "")
+        
+        let unblock = UnblockAutomation(blockId: blockId, contactId: contactId, threadId: threadId, typeCode: nil, userId: userId)
         unblock.delegate = self
         unblock.create(uniqueId: { (unblockUniqueId) in
             let myText = "unblock unique id = \(unblockUniqueId)"
@@ -336,7 +434,12 @@ extension MyViewController {
     }
     
     func implementGetThreads() {
-        let getThread = GetThreadAutomation(count: nil, coreUserId: nil, metadataCriteria: nil, name: nil, new: nil, offset: nil, threadIds: nil, typeCode: nil)
+        let count:      Int?    = Int(input1TextField.text ?? "")
+        let offset:     Int?    = Int(input2TextField.text ?? "")
+        let name:       String? = input3TextField.text
+        let threadId:   Int?    = Int(input4TextField.text ?? "")
+        
+        let getThread = GetThreadAutomation(count: count, coreUserId: nil, metadataCriteria: nil, name: name, new: nil, offset: offset, threadIds: [threadId ?? 0], typeCode: nil)
         getThread.delegate = self
         getThread.create(uniqueId: { (getThreadUniqueId) in
             let myText = "getThread unique id = \(getThreadUniqueId)"
@@ -351,7 +454,11 @@ extension MyViewController {
     }
     
     func implementSendTextMessage() {
-        let sendTextMessage = SendTextMessageAutomation(content: nil, metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: nil, typeCode: nil, uniqueId: nil)
+        let content:    String? = input1TextField.text
+        let repliedTo:  Int?    = Int(input2TextField.text ?? "")
+        let threadId: Int? = Int(input3TextField.text ?? "")
+        
+        let sendTextMessage = SendTextMessageAutomation(content: content, metaData: nil, repliedTo: repliedTo, systemMetadata: nil, threadId: threadId, typeCode: nil, uniqueId: nil)
         sendTextMessage.create(uniqueId: { (sendTextMessageUniqueId) in
             let myText = "getThread unique id = \(sendTextMessageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)

@@ -57,8 +57,12 @@ class GetThreadAutomation {
         self.cacheCallback      = cacheResponse
         self.responseCallback   = serverResponse
         
+        if threadIds?.first == 0 {
+            sendRequest(theCount: count, theCoreUserId: coreUserId, theMetadataCriteria: metadataCriteria, theName: name, theNew: new, theOffset: offset, theThreadIds: nil, theTypeCode: typeCode)
+        } else {
+            sendRequest(theCount: count, theCoreUserId: coreUserId, theMetadataCriteria: metadataCriteria, theName: name, theNew: new, theOffset: offset, theThreadIds: threadIds, theTypeCode: typeCode)
+        }
         
-        sendRequest(theCount: count, theCoreUserId: coreUserId, theMetadataCriteria: metadataCriteria, theName: name, theNew: new, theOffset: offset, theThreadIds: threadIds, theTypeCode: typeCode)
         
         
     }
