@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E1C3559225B570F001A343B /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C3556225B5703001A343B /* FanapPodChatSDK.framework */; };
+		3E1C3574225B5E44001A343B /* FanapPodAsyncSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C3573225B5E44001A343B /* FanapPodAsyncSDK.framework */; };
+		3E1C3576225B5E49001A343B /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C3575225B5E49001A343B /* Alamofire.framework */; };
+		3E1C3578225B5E51001A343B /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C3577225B5E51001A343B /* Starscream.framework */; };
+		3E1C357A225B5E55001A343B /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C3579225B5E55001A343B /* SwiftyBeaver.framework */; };
+		3E1C357C225B5E58001A343B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C357B225B5E58001A343B /* SwiftyJSON.framework */; };
+		3E1C3584225B600C001A343B /* GetHistoryAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */; };
 		3E6295612225778D002DB51C /* CreateThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6295602225778D002DB51C /* CreateThreadAutomation.swift */; };
 		3E629565222577B2002DB51C /* BlockAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E629564222577B2002DB51C /* BlockAutomation.swift */; };
 		3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E629566222577CA002DB51C /* GetContactsAutomation.swift */; };
@@ -20,7 +27,6 @@
 		3EAE775522217AD4005AC3C3 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE775422217AD4005AC3C3 /* MyViewController.swift */; };
 		3EAE775A22217AD6005AC3C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EAE775922217AD6005AC3C3 /* Assets.xcassets */; };
 		3EAE775D22217AD6005AC3C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EAE775B22217AD6005AC3C3 /* LaunchScreen.storyboard */; };
-		3EAE779B22218ED9005AC3C3 /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EAE777D22218E79005AC3C3 /* FanapPodChatSDK.framework */; };
 		3ED3DA80222E5E9A00261DB3 /* GetBlockedListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */; };
 		3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */; };
 		3ED3DA86222E748600261DB3 /* GetThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */; };
@@ -28,16 +34,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3EAE777C22218E79005AC3C3 /* PBXContainerItemProxy */ = {
+		3E1C3555225B5703001A343B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3EAE777222218E79005AC3C3 /* FanapPodChatSDK.xcodeproj */;
+			containerPortal = 3E1C354B225B5703001A343B /* FanapPodChatSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3EE025ED21206E63001810FB;
 			remoteInfo = FanapPodChatSDK;
 		};
-		3EAE777E22218E79005AC3C3 /* PBXContainerItemProxy */ = {
+		3E1C3557225B5703001A343B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3EAE777222218E79005AC3C3 /* FanapPodChatSDK.xcodeproj */;
+			containerPortal = 3E1C354B225B5703001A343B /* FanapPodChatSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3EE025F621206E63001810FB;
 			remoteInfo = FanapPodChatSDKTests;
@@ -45,6 +51,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E1C354B225B5703001A343B /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
+		3E1C3573225B5E44001A343B /* FanapPodAsyncSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FanapPodAsyncSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E1C3575225B5E49001A343B /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E1C3577225B5E51001A343B /* Starscream.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Starscream.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E1C3579225B5E55001A343B /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E1C357B225B5E58001A343B /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHistoryAutomation.swift; sourceTree = "<group>"; };
 		3E6295602225778D002DB51C /* CreateThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThreadAutomation.swift; sourceTree = "<group>"; };
 		3E629564222577B2002DB51C /* BlockAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockAutomation.swift; sourceTree = "<group>"; };
 		3E629566222577CA002DB51C /* GetContactsAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContactsAutomation.swift; sourceTree = "<group>"; };
@@ -60,7 +73,6 @@
 		3EAE775922217AD6005AC3C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EAE775C22217AD6005AC3C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3EAE775E22217AD6005AC3C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3EAE777222218E79005AC3C3 /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../../../Xcode Projects/Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
 		3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockedListAutomation.swift; sourceTree = "<group>"; };
 		3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockAutomation.swift; sourceTree = "<group>"; };
 		3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetThreadAutomation.swift; sourceTree = "<group>"; };
@@ -72,13 +84,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EAE779B22218ED9005AC3C3 /* FanapPodChatSDK.framework in Frameworks */,
+				3E1C357C225B5E58001A343B /* SwiftyJSON.framework in Frameworks */,
+				3E1C357A225B5E55001A343B /* SwiftyBeaver.framework in Frameworks */,
+				3E1C3578225B5E51001A343B /* Starscream.framework in Frameworks */,
+				3E1C3576225B5E49001A343B /* Alamofire.framework in Frameworks */,
+				3E1C3574225B5E44001A343B /* FanapPodAsyncSDK.framework in Frameworks */,
+				3E1C3559225B570F001A343B /* FanapPodChatSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E1C354C225B5703001A343B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3E1C3556225B5703001A343B /* FanapPodChatSDK.framework */,
+				3E1C3558225B5703001A343B /* FanapPodChatSDKTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3E94724C22267C1D005D986E /* Automation */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +135,7 @@
 			children = (
 				3E6295602225778D002DB51C /* CreateThreadAutomation.swift */,
 				3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */,
+				3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */,
 			);
 			path = Threads;
 			sourceTree = "<group>";
@@ -140,7 +167,7 @@
 			children = (
 				3EAE775122217AD4005AC3C3 /* ChatAutomationTestApp */,
 				3EAE775022217AD4005AC3C3 /* Products */,
-				3EAE777222218E79005AC3C3 /* FanapPodChatSDK.xcodeproj */,
+				3E1C354B225B5703001A343B /* FanapPodChatSDK.xcodeproj */,
 				3EAE779922218ED4005AC3C3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -170,18 +197,14 @@
 			path = ChatAutomationTestApp;
 			sourceTree = "<group>";
 		};
-		3EAE777322218E79005AC3C3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3EAE777D22218E79005AC3C3 /* FanapPodChatSDK.framework */,
-				3EAE777F22218E79005AC3C3 /* FanapPodChatSDKTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3EAE779922218ED4005AC3C3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3E1C357B225B5E58001A343B /* SwiftyJSON.framework */,
+				3E1C3579225B5E55001A343B /* SwiftyBeaver.framework */,
+				3E1C3577225B5E51001A343B /* Starscream.framework */,
+				3E1C3575225B5E49001A343B /* Alamofire.framework */,
+				3E1C3573225B5E44001A343B /* FanapPodAsyncSDK.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -234,8 +257,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 3EAE777322218E79005AC3C3 /* Products */;
-					ProjectRef = 3EAE777222218E79005AC3C3 /* FanapPodChatSDK.xcodeproj */;
+					ProductGroup = 3E1C354C225B5703001A343B /* Products */;
+					ProjectRef = 3E1C354B225B5703001A343B /* FanapPodChatSDK.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -246,18 +269,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		3EAE777D22218E79005AC3C3 /* FanapPodChatSDK.framework */ = {
+		3E1C3556225B5703001A343B /* FanapPodChatSDK.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = FanapPodChatSDK.framework;
-			remoteRef = 3EAE777C22218E79005AC3C3 /* PBXContainerItemProxy */;
+			remoteRef = 3E1C3555225B5703001A343B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3EAE777F22218E79005AC3C3 /* FanapPodChatSDKTests.xctest */ = {
+		3E1C3558225B5703001A343B /* FanapPodChatSDKTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = FanapPodChatSDKTests.xctest;
-			remoteRef = 3EAE777E22218E79005AC3C3 /* PBXContainerItemProxy */;
+			remoteRef = 3E1C3557225B5703001A343B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -287,6 +310,7 @@
 				3EAE775322217AD4005AC3C3 /* AppDelegate.swift in Sources */,
 				3ED3DA80222E5E9A00261DB3 /* GetBlockedListAutomation.swift in Sources */,
 				3E629565222577B2002DB51C /* BlockAutomation.swift in Sources */,
+				3E1C3584225B600C001A343B /* GetHistoryAutomation.swift in Sources */,
 				3E947249222674DF005D986E /* Faker.swift in Sources */,
 				3ED3DA86222E748600261DB3 /* GetThreadAutomation.swift in Sources */,
 				3E9725B5222292C80056AD4D /* BaseCell.swift in Sources */,
@@ -431,19 +455,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 87Y6C8NVU7;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GP3XLTT75N;
 				INFOPLIST_FILE = ChatAutomationTestApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fanapSoft.ChatAutomationTestApplication;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fanapSoft.ChatAutomationTestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = ChatAutomation.AdHoc;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -453,19 +477,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_INJECT_BASE_ENTITLEMENTS = YES;
-				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = 87Y6C8NVU7;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = GP3XLTT75N;
 				INFOPLIST_FILE = ChatAutomationTestApp/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.fanapSoft.ChatAutomationTestApplication;
+				PRODUCT_BUNDLE_IDENTIFIER = com.fanapSoft.ChatAutomationTestApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = ChatAutomation.AdHoc;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
