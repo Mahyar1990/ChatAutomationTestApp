@@ -19,6 +19,11 @@
 		3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E629566222577CA002DB51C /* GetContactsAutomation.swift */; };
 		3E629569222577D9002DB51C /* AddContactAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E629568222577D9002DB51C /* AddContactAutomation.swift */; };
 		3E62956B222577F1002DB51C /* RemoveContactAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E62956A222577F1002DB51C /* RemoveContactAutomation.swift */; };
+		3E8D1483225C594C001C0AE6 /* ReplyMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D1482225C594C001C0AE6 /* ReplyMessageAutomation.swift */; };
+		3E8D1487225C595F001C0AE6 /* ForwardMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D1486225C595F001C0AE6 /* ForwardMessageAutomation.swift */; };
+		3E8D1489225C7AE2001C0AE6 /* EditMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D1488225C7AE2001C0AE6 /* EditMessageAutomation.swift */; };
+		3E8D148B225C7CFF001C0AE6 /* DeleteMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D148A225C7CFF001C0AE6 /* DeleteMessageAutomation.swift */; };
+		3E8D148D225CAB63001C0AE6 /* UpdateContactAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D148C225CAB63001C0AE6 /* UpdateContactAutomation.swift */; };
 		3E947249222674DF005D986E /* Faker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E947248222674DF005D986E /* Faker.swift */; };
 		3E9725AF222292210056AD4D /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725AE222292210056AD4D /* Views.swift */; };
 		3E9725B32222925F0056AD4D /* ChatDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725B22222925F0056AD4D /* ChatDelegates.swift */; };
@@ -63,6 +68,11 @@
 		3E629566222577CA002DB51C /* GetContactsAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContactsAutomation.swift; sourceTree = "<group>"; };
 		3E629568222577D9002DB51C /* AddContactAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactAutomation.swift; sourceTree = "<group>"; };
 		3E62956A222577F1002DB51C /* RemoveContactAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveContactAutomation.swift; sourceTree = "<group>"; };
+		3E8D1482225C594C001C0AE6 /* ReplyMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyMessageAutomation.swift; sourceTree = "<group>"; };
+		3E8D1486225C595F001C0AE6 /* ForwardMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardMessageAutomation.swift; sourceTree = "<group>"; };
+		3E8D1488225C7AE2001C0AE6 /* EditMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMessageAutomation.swift; sourceTree = "<group>"; };
+		3E8D148A225C7CFF001C0AE6 /* DeleteMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMessageAutomation.swift; sourceTree = "<group>"; };
+		3E8D148C225CAB63001C0AE6 /* UpdateContactAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateContactAutomation.swift; sourceTree = "<group>"; };
 		3E947248222674DF005D986E /* Faker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Faker.swift; sourceTree = "<group>"; };
 		3E9725AE222292210056AD4D /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		3E9725B22222925F0056AD4D /* ChatDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDelegates.swift; sourceTree = "<group>"; };
@@ -120,12 +130,13 @@
 		3E94724D22267C43005D986E /* Contacts */ = {
 			isa = PBXGroup;
 			children = (
-				3E629564222577B2002DB51C /* BlockAutomation.swift */,
-				3E629566222577CA002DB51C /* GetContactsAutomation.swift */,
 				3E629568222577D9002DB51C /* AddContactAutomation.swift */,
-				3E62956A222577F1002DB51C /* RemoveContactAutomation.swift */,
+				3E629564222577B2002DB51C /* BlockAutomation.swift */,
 				3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */,
+				3E629566222577CA002DB51C /* GetContactsAutomation.swift */,
+				3E62956A222577F1002DB51C /* RemoveContactAutomation.swift */,
 				3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */,
+				3E8D148C225CAB63001C0AE6 /* UpdateContactAutomation.swift */,
 			);
 			path = Contacts;
 			sourceTree = "<group>";
@@ -134,8 +145,8 @@
 			isa = PBXGroup;
 			children = (
 				3E6295602225778D002DB51C /* CreateThreadAutomation.swift */,
-				3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */,
 				3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */,
+				3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */,
 			);
 			path = Threads;
 			sourceTree = "<group>";
@@ -143,6 +154,10 @@
 		3E94724F22267C6A005D986E /* Messages */ = {
 			isa = PBXGroup;
 			children = (
+				3E8D148A225C7CFF001C0AE6 /* DeleteMessageAutomation.swift */,
+				3E8D1488225C7AE2001C0AE6 /* EditMessageAutomation.swift */,
+				3E8D1486225C595F001C0AE6 /* ForwardMessageAutomation.swift */,
+				3E8D1482225C594C001C0AE6 /* ReplyMessageAutomation.swift */,
 				3ED3DA87222E930600261DB3 /* SendTextMessageAutomation.swift */,
 			);
 			path = Messages;
@@ -305,14 +320,19 @@
 				3E9725B32222925F0056AD4D /* ChatDelegates.swift in Sources */,
 				3E62956B222577F1002DB51C /* RemoveContactAutomation.swift in Sources */,
 				3EAE775522217AD4005AC3C3 /* MyViewController.swift in Sources */,
+				3E8D1489225C7AE2001C0AE6 /* EditMessageAutomation.swift in Sources */,
 				3E629569222577D9002DB51C /* AddContactAutomation.swift in Sources */,
+				3E8D148B225C7CFF001C0AE6 /* DeleteMessageAutomation.swift in Sources */,
 				3E6295612225778D002DB51C /* CreateThreadAutomation.swift in Sources */,
 				3EAE775322217AD4005AC3C3 /* AppDelegate.swift in Sources */,
+				3E8D1487225C595F001C0AE6 /* ForwardMessageAutomation.swift in Sources */,
 				3ED3DA80222E5E9A00261DB3 /* GetBlockedListAutomation.swift in Sources */,
 				3E629565222577B2002DB51C /* BlockAutomation.swift in Sources */,
+				3E8D1483225C594C001C0AE6 /* ReplyMessageAutomation.swift in Sources */,
 				3E1C3584225B600C001A343B /* GetHistoryAutomation.swift in Sources */,
 				3E947249222674DF005D986E /* Faker.swift in Sources */,
 				3ED3DA86222E748600261DB3 /* GetThreadAutomation.swift in Sources */,
+				3E8D148D225CAB63001C0AE6 /* UpdateContactAutomation.swift in Sources */,
 				3E9725B5222292C80056AD4D /* BaseCell.swift in Sources */,
 				3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */,
 				3ED3DA88222E930600261DB3 /* SendTextMessageAutomation.swift in Sources */,

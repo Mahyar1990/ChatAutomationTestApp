@@ -55,7 +55,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var logArr              = [String]()
     var logHeightArr        = [Int]()
     var logBackgroundColor  = [UIColor]()
-    let pickerData          = ["AddContact", "Block", "CreateThread", "GetBlockedList", "GetContacts", "GetHistory", "GetThread", "RemoveContact", "SendTextMessage", "Unblock"]
+    let pickerData          = ["AddContact", "Block", "GetBlockedList", "GetContacts", "RemoveContact", "Unblock", "UpdateContact", "CreateThread", "GetHistory", "GetThread", "DeleteMessage", "EditMessage", "ForwardMessage", "ReplyTextMessage", "SendTextMessage"]
     
     let tokenTextField: UITextField = {
         let mt = UITextField()
@@ -258,14 +258,21 @@ extension MyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         switch row {
         case 0: updateText(cellText: " Input 1 = cellphoneNumber as String \n Input 2 = email as String \n Input 3 = firstName as String \n Input 4 = lastName as String", cellHeight: 70, cellColor: UIColor.white)
         case 1: updateText(cellText: " Input 1 = contactId as Int \n Input 2 = threadId as Int \n Input 3 = userId as Int", cellHeight: 70, cellColor: UIColor.white)
-        case 2: updateText(cellText: " Input 1 = description as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: UIColor.white)
-        case 3: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int", cellHeight: 40, cellColor: UIColor.white)
-        case 4: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String", cellHeight: 70, cellColor: UIColor.white)
-        case 5: updateText(cellText: " Input 1 = threadId as Int \n Input 2 = fromTime as UInt \n Input 3 = toTime as UInt \n Input 4 = query as String", cellHeight: 70, cellColor: UIColor.white)
-        case 6: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: UIColor.white)
-        case 7: updateText(cellText: " Input 1 = id as Int", cellHeight: 40, cellColor: UIColor.white)
-        case 8: updateText(cellText: " Input 1 = count as Int \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 70, cellColor: UIColor.white)
-        case 9: updateText(cellText: " Input 1 = blockId as String \n Input 2 = contactId as String \n Input 3 = threadId as String \n Input 4 = userId as String", cellHeight: 70, cellColor: UIColor.white)
+        case 2: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int", cellHeight: 40, cellColor: UIColor.white)
+        case 3: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String", cellHeight: 70, cellColor: UIColor.white)
+        case 4: updateText(cellText: " Input 1 = id as Int", cellHeight: 40, cellColor: UIColor.white)
+        case 5: updateText(cellText: " Input 1 = blockId as String \n Input 2 = contactId as String \n Input 3 = threadId as String \n Input 4 = userId as String", cellHeight: 70, cellColor: UIColor.white)
+        case 6: updateText(cellText: " Input 1 = contactId as Int \n Input 2 = cellphoneNumber as String \n Input 3 = email as String \n Input 4 = fullname (contain firstname and lastname seperated by cama ',') as String", cellHeight: 90, cellColor: UIColor.white)
+            
+        case 7: updateText(cellText: " Input 1 = description as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: UIColor.white)
+        case 8: updateText(cellText: " Input 1 = threadId as Int \n Input 2 = fromTime as UInt \n Input 3 = toTime as UInt \n Input 4 = query as String", cellHeight: 70, cellColor: UIColor.white)
+        case 9: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: UIColor.white)
+        
+        case 10: updateText(cellText: " Input 1 = subjectId as Int", cellHeight: 40, cellColor: UIColor.white)
+        case 11: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: UIColor.white)
+        case 12: updateText(cellText: " Input 1 = messageIds as [Int] \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: UIColor.white)
+        case 13: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: UIColor.white)
+        case 14: updateText(cellText: " Input 1 = count as Int \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 70, cellColor: UIColor.white)
             
 //        case 0: updateText(cellText: " Input 1 = contactId as Int \n Input 2 = threadId as Int \n Input 3 = userId as Int", cellHeight: 70, cellColor: UIColor.white)
 //        case 1: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String", cellHeight: 70, cellColor: UIColor.white)
@@ -311,14 +318,22 @@ extension MyViewController {
         switch picker {
         case 0: implementAddContact()       // implement AddContact
         case 1: implementBlock()            // implement Block
-        case 2: implementCreateThread()     // implement CreateThread
-        case 3: implementGetBlockedList()   // implement GetBlockedList
-        case 4: implementGetContacts()      // implement GetContacts
-        case 5: implementGetHistory()       // implement GetHistory
-        case 6: implementGetThreads()       // implement GetThreads
-        case 7: implementRemoveContact()    // implement RemoveContact
-        case 8: implementSendTextMessage()  // implement SendTextMessage
-        case 9: implementUnblock()          // implement Unblock
+        case 2: implementGetBlockedList()   // implement GetBlockedList
+        case 3: implementGetContacts()      // implement GetContacts
+        case 4: implementRemoveContact()    // implement RemoveContact
+        case 5: implementUnblock()          // implement Unblock
+        case 6: implementUpdateContact()    // implement UpdateContact
+            
+        case 7: implementCreateThread()     // implement CreateThread
+        case 8: implementGetHistory()       // implement GetHistory
+        case 9: implementGetThreads()       // implement GetThreads
+        
+        case 10: implementDeleteMessage()    // implement DeletMessage
+        case 11: implementEditMessage()     // implement EditMessage
+        case 12: implementForwardMessage()   // implement ForwardMessage
+        case 13: implementReplyTextMessage()// implement ReplyTextMessage
+        case 14: implementSendTextMessage() // implement SendTextMessage
+            
         default:
             print("Selected row number \(picker) that is not in the correct range!")
         }
@@ -361,25 +376,6 @@ extension MyViewController {
     }
     
     // 2
-    func implementCreateThread() {
-        let description:String? = input1TextField.text
-        let title:      String? = input2TextField.text
-        let inviteeId:  String? = input3TextField.text
-        let inviteeType:String? = input4TextField.text
-        let invitee = Invitee(id: inviteeId, idType: inviteeType)
-        
-        let createThread = CreateThreadAutomation(description: description, image: nil, invitees: [invitee], metadata: nil, title: title, type: nil, requestUniqueId: nil)
-        createThread.delegate = self
-        createThread.create(uniqueId: { (createThreadUniqueId, on) in
-            let myText = "create thread unique id \(on) = \(createThreadUniqueId)"
-            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
-        }) { (createThreadModel, on) in
-            let myText = "create thread model response \(on) = \(createThreadModel.returnDataAsJSON())"
-            self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
-        }
-    }
-    
-    // 3
     func implementGetBlockedList() {
         let count:  Int?    = Int(input1TextField.text ?? "")
         let offset: Int?    = Int(input1TextField.text ?? "")
@@ -395,7 +391,7 @@ extension MyViewController {
         }
     }
     
-    // 4
+    // 3
     func implementGetContacts() {
         let count:  Int?    = Int(input1TextField.text ?? "")
         let offst:  Int?    = Int(input2TextField.text ?? "")
@@ -415,7 +411,91 @@ extension MyViewController {
         }
     }
     
+    // 4
+    func implementRemoveContact() {
+        let id: Int?    = Int(input1TextField.text ?? "")
+        
+        let removeContact = RemoveContactAutomation(id: id)
+        removeContact.delegate = self
+        removeContact.create(uniqueId: { (removeContactUniqueId) in
+            let myText = "remove contact unique id = \(removeContactUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 40, cellColor: .cyan)
+            print(myText)
+        }) { (removeContactModel) in
+            let myText = "remove contact model response = \(removeContactModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+            print(myText)
+        }
+    }
+    
     // 5
+    func implementUnblock() {
+        let blockId:    Int?    = Int(input1TextField.text ?? "")
+        let contactId:  Int?    = Int(input2TextField.text ?? "")
+        let threadId:   Int?    = Int(input3TextField.text ?? "")
+        let userId:     Int?    = Int(input4TextField.text ?? "")
+        
+        let unblock = UnblockAutomation(blockId: blockId, contactId: contactId, threadId: threadId, typeCode: nil, userId: userId)
+        unblock.delegate = self
+        unblock.create(uniqueId: { (unblockUniqueId) in
+            let myText = "unblock unique id = \(unblockUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }) { (unblockModel) in
+            let myText = "unblock model response = \(unblockModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
+        }
+    }
+    
+    // 6
+    func implementUpdateContact() {
+        let contactId       = Int(input1TextField.text ?? "")
+        let cellPhoneNumber = input2TextField.text
+        let email           = input3TextField.text
+        
+        var firstName: String?  = String()
+        var lastName: String?   = String()
+        
+        if let fullName = input4TextField.text {
+            let str = fullName.replacingOccurrences(of: " ", with: "") // remove all spaces
+            let fullnameArr = str.components(separatedBy: ",")            // seperate ids
+            if let fn = fullnameArr.first {
+                firstName = fn
+            }
+            if let ln = fullnameArr.last {
+                lastName = ln
+            }
+        }
+        
+        let updateContact = UpdateContactAutomation(cellphoneNumber: cellPhoneNumber, email: email, firstName: firstName, id: contactId, lastName: lastName)
+        updateContact.create(uniqueId: { (updateContactUniqueId) in
+            let myText = "update contact unique id = \(updateContactUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }) { (contactModelResponse) in
+            let myText = "update contact model response = \(contactModelResponse.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }
+    }
+    
+    // 6
+    func implementCreateThread() {
+        let description:String? = input1TextField.text
+        let title:      String? = input2TextField.text
+        let inviteeId:  String? = input3TextField.text
+        let inviteeType:String? = input4TextField.text
+        let invitee = Invitee(id: inviteeId, idType: inviteeType)
+        
+        let createThread = CreateThreadAutomation(description: description, image: nil, invitees: [invitee], metadata: nil, title: title, type: nil, requestUniqueId: nil)
+        createThread.delegate = self
+        createThread.create(uniqueId: { (createThreadUniqueId, on) in
+            let myText = "create thread unique id \(on) = \(createThreadUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }) { (createThreadModel, on) in
+            let myText = "create thread model response \(on) = \(createThreadModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
+        }
+    }
+    
+    // 7
     func implementGetHistory() {
         let threadId:   Int?    = Int(input1TextField.text ?? "")
         let fromTime:   UInt?   = UInt(input2TextField.text ?? "")
@@ -436,7 +516,7 @@ extension MyViewController {
         }
     }
     
-    // 6
+    // 8
     func implementGetThreads() {
         let count:      Int?    = Int(input1TextField.text ?? "")
         let offset:     Int?    = Int(input2TextField.text ?? "")
@@ -457,32 +537,100 @@ extension MyViewController {
         }
     }
     
-    // 7
-    func implementRemoveContact() {
-        let id: Int?    = Int(input1TextField.text ?? "")
+    
+    // 9
+    func implementDeleteMessage() {
+        let subjectId = Int(input1TextField.text ?? "")
         
-        let removeContact = RemoveContactAutomation(id: id)
-        removeContact.delegate = self
-        removeContact.create(uniqueId: { (removeContactUniqueId) in
-            let myText = "remove contact unique id = \(removeContactUniqueId)"
-            self.updateText(cellText: myText, cellHeight: 40, cellColor: .cyan)
-            print(myText)
-        }) { (removeContactModel) in
-            let myText = "remove contact model response = \(removeContactModel.returnDataAsJSON())"
+        let deleteMessage = DeleteMessageAutomation(deleteForAll: nil, subjectId: subjectId, typeCode: nil, requestUniqueId: nil)
+        deleteMessage.create(uniqueId: { (deleteMessageUniqueId) in
+            let myText = "deleteMessage unique id = \(deleteMessageUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }) { (deleteMessageResponse) in
+            let myText = "deleteMessage response = \(deleteMessageResponse)"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
-            print(myText)
         }
     }
     
-    // 8
+    // 10
+    func implementEditMessage() {
+        let content     = input1TextField.text
+        let subjectId   = Int(input2TextField.text ?? "")
+        let repliedId   = Int(input3TextField.text ?? "")
+        
+        let editMessage = EditMessageAutomation(content: content, metaData: nil, repliedTo: repliedId, subjectId: subjectId, typeCode: nil, requestUniqueId: nil)
+        editMessage.create(uniqueId: { (editMessageUniqueId) in
+            let myText = "editMessage unique id = \(editMessageUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }) { (editMessageResponse) in
+            let myText = "editMessage response = \(editMessageResponse)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }
+    }
+    
+    // 11
+    func implementForwardMessage() {
+        
+        var messageIds: [Int]?
+        if let msgIdsTxt = input1TextField.text {
+            let str = msgIdsTxt.replacingOccurrences(of: " ", with: "") // remove all spaces
+            let stringIds = str.components(separatedBy: ",")            // seperate ids
+            messageIds = []
+            for item in stringIds {
+                messageIds?.append(Int(item)!)
+            }
+        }
+        
+        let subjectId:  Int?    = Int(input2TextField.text ?? "")
+        let repliedTo:  Int?    = Int(input3TextField.text ?? "")
+        
+        let forwardMessage = ForwardMessageAutomation(messageIds: messageIds, metaData: nil, repliedTo: repliedTo, subjectId: subjectId, typeCode: nil, uniqueId: nil)
+        forwardMessage.create(uniqueId: { (forwardMessageUniqueId) in
+            let myText = "forwardMessage unique id = \(forwardMessageUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }, serverSentResponse: { (sent) in
+            let myText = "forwardMessage sent response = \(sent)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }, serverDeliverResponse: { (deliver) in
+            let myText = "forwardMessage deliver response = \(deliver)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }) { (seen) in
+            let myText = "forwardMessage seen response = \(seen)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }
+    }
+    
+    // 12
+    func implementReplyTextMessage() {
+        let content:    String? = input1TextField.text
+        let repliedTo:  Int?    = Int(input2TextField.text ?? "")
+        let subjectId:  Int?    = Int(input3TextField.text ?? "")
+        
+        let replyMessage = ReplyMessageAutomation(content: content, metaData: nil, repliedTo: repliedTo, subjectId: subjectId, typeCode: nil, uniqueId: nil)
+        replyMessage.create(uniqueId: { (replyMessageUniqueId) in
+            let myText = "replyTextMessage unique id = \(replyMessageUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }, serverSentResponse: { (sent) in
+            let myText = "replyTextMessage sent response = \(sent)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }, serverDeliverResponse: { (deliver) in
+            let myText = "replyTextMessage deliver response = \(deliver)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }) { (seen) in
+            let myText = "replyTextMessage seen response = \(seen)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }
+    }
+    
+    // 13
     func implementSendTextMessage() {
         let content:    String? = input1TextField.text
         let repliedTo:  Int?    = Int(input2TextField.text ?? "")
-        let threadId: Int? = Int(input3TextField.text ?? "")
+        let threadId:   Int?    = Int(input3TextField.text ?? "")
         
         let sendTextMessage = SendTextMessageAutomation(content: content, metaData: nil, repliedTo: repliedTo, systemMetadata: nil, threadId: threadId, typeCode: nil, uniqueId: nil)
         sendTextMessage.create(uniqueId: { (sendTextMessageUniqueId) in
-            let myText = "getThread unique id = \(sendTextMessageUniqueId)"
+            let myText = "sendTextMessage unique id = \(sendTextMessageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
         }, serverSentResponse: { (sent) in
             let myText = "sendTextMessage sent response = \(sent)"
@@ -493,24 +641,6 @@ extension MyViewController {
         }) { (seen) in
             let myText = "sendTextMessage seen response = \(seen)"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
-        }
-    }
-    
-    // 9
-    func implementUnblock() {
-        let blockId:    Int?    = Int(input1TextField.text ?? "")
-        let contactId:  Int?    = Int(input2TextField.text ?? "")
-        let threadId:   Int?    = Int(input3TextField.text ?? "")
-        let userId:     Int?    = Int(input4TextField.text ?? "")
-        
-        let unblock = UnblockAutomation(blockId: blockId, contactId: contactId, threadId: threadId, typeCode: nil, userId: userId)
-        unblock.delegate = self
-        unblock.create(uniqueId: { (unblockUniqueId) in
-            let myText = "unblock unique id = \(unblockUniqueId)"
-            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
-        }) { (unblockModel) in
-            let myText = "unblock model response = \(unblockModel.returnDataAsJSON())"
-            self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
         }
     }
     
@@ -561,14 +691,22 @@ protocol MoreInfoDelegate: class {
 enum MoreInfoTypes: String {
     case AddContact         = "AddContact"
     case Block              = "Block"
-    case CreateThread       = "CreateThread"
     case GetBlockedList     = "GetBlockedList"
     case GetContact         = "GetContact"
+    case RemoveContact      = "RemoveContact"
+    case Unblock            = "Unblock"
+    case UpdateContact      = "UpdateContact"
+    
+    case CreateThread       = "CreateThread"
     case GetHistory         = "GetHistory"
     case GetThread          = "GetThread"
-    case RemoveContact      = "RemoveContact"
+    
+    case DeleteMessage      = "DeleteMessage"
+    case EditMessage        = "EditMessage"
+    case ForwardMessage     = "ForwardMessage"
+    case ReplyTextMessage   = "ReplyTextMessage"
     case SendTextMessage    = "SendTextMessage"
-    case Unblock            = "Unblock"
+    
 }
 
 
