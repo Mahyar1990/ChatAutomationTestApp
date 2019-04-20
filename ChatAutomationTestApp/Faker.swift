@@ -54,7 +54,7 @@ class Faker {
     }
     
     
-    
+    let pouriaAsContact: (cellphoneNumber: String, email: String, firstName: String, lastName: String) = ("09387181694", "p.pahlevani@gmail.com", "Pooria", "Pahlevani")
     
 }
 

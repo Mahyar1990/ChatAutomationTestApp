@@ -174,7 +174,10 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         } else {
             // error! Please inter your token
             updateText(cellText: "your token is invalid, write down valid token", cellHeight: 60, cellColor: UIColor.orange)
-            token = "74a60ee10840403a9756ce5f02c6d879"
+/*
+https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52664cf7de0bda&response_type=token&redirect_uri=https://chat.fanapsoft.ir&scope=profile social:write
+ */
+            token = "c3f24578b72e4319be69c9d41e4a3833"
             createChat()
         }
     }
@@ -272,7 +275,7 @@ extension MyViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         case 11: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: UIColor.white)
         case 12: updateText(cellText: " Input 1 = messageIds as [Int] \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: UIColor.white)
         case 13: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: UIColor.white)
-        case 14: updateText(cellText: " Input 1 = count as Int \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 70, cellColor: UIColor.white)
+        case 14: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 70, cellColor: UIColor.white)
             
 //        case 0: updateText(cellText: " Input 1 = contactId as Int \n Input 2 = threadId as Int \n Input 3 = userId as Int", cellHeight: 70, cellColor: UIColor.white)
 //        case 1: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String", cellHeight: 70, cellColor: UIColor.white)
@@ -341,10 +344,23 @@ extension MyViewController {
     
     // 0
     func implementAddContact() {
-        let cell        = input1TextField.text
-        let email       = input2TextField.text
-        let firstName   = input3TextField.text
-        let lastName    = input4TextField.text
+        var cell:       String? = nil
+        var email:      String? = nil
+        var firstName:  String? = nil
+        var lastName:   String? = nil
+        
+        if let txt = input1TextField.text {
+            if (txt != "") && (txt.first != " ") { cell = txt }
+        }
+        if let txt = input2TextField.text {
+            if (txt != "") && (txt.first != " ") { email = txt }
+        }
+        if let txt = input3TextField.text {
+            if (txt != "") && (txt.first != " ") { firstName = txt }
+        }
+        if let txt = input4TextField.text {
+            if (txt != "") && (txt.first != " ") { lastName = txt }
+        }
         
         let addContact = AddContactAutomation(cellphoneNumber: cell, email: email, firstName: firstName, lastName: lastName)
         addContact.delegate = self
@@ -386,7 +402,7 @@ extension MyViewController {
             let myText = "get blocked list unique id = \(getBlockedListUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
         }) { (getBlockedContactListModel) in
-            let myText = "create thread model response = \(getBlockedContactListModel.returnDataAsJSON())"
+            let myText = "get blocked list model response = \(getBlockedContactListModel.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
         }
     }
@@ -395,7 +411,11 @@ extension MyViewController {
     func implementGetContacts() {
         let count:  Int?    = Int(input1TextField.text ?? "")
         let offst:  Int?    = Int(input2TextField.text ?? "")
-        let name:   String? = input3TextField.text
+        var name:   String? = nil
+        
+        if let txt = input3TextField.text {
+            if (txt != "") && (txt.first != " ") { name = txt }
+        }
         
         let getContact = GetContactsAutomation(count: count, name: name, offset: offst, typeCode: nil)
         getContact.delegate = self
@@ -448,25 +468,35 @@ extension MyViewController {
     
     // 6
     func implementUpdateContact() {
-        let contactId       = Int(input1TextField.text ?? "")
-        let cellPhoneNumber = input2TextField.text
-        let email           = input3TextField.text
+        let contactId:          Int?    = Int(input1TextField.text ?? "")
+        var cellPhoneNumber:    String? = nil
+        var email:              String? = nil
         
-        var firstName: String?  = String()
-        var lastName: String?   = String()
+        if let txt = input2TextField.text {
+            if (txt != "") && (txt.first != " ") { cellPhoneNumber = txt }
+        }
+        if let txt = input3TextField.text {
+            if (txt != "") && (txt.first != " ") { email = txt }
+        }
+        
+        var firstName: String?  = nil
+        var lastName: String?   = nil
         
         if let fullName = input4TextField.text {
-            let str = fullName.replacingOccurrences(of: " ", with: "") // remove all spaces
-            let fullnameArr = str.components(separatedBy: ",")            // seperate ids
-            if let fn = fullnameArr.first {
-                firstName = fn
-            }
-            if let ln = fullnameArr.last {
-                lastName = ln
+            if (fullName != "") && (fullName.first != " ") {
+                let str = fullName.replacingOccurrences(of: " ", with: "") // remove all spaces
+                let fullnameArr = str.components(separatedBy: ",")            // seperate ids
+                if let fn = fullnameArr.first {
+                    firstName = fn
+                }
+                if let ln = fullnameArr.last {
+                    lastName = ln
+                }
             }
         }
         
         let updateContact = UpdateContactAutomation(cellphoneNumber: cellPhoneNumber, email: email, firstName: firstName, id: contactId, lastName: lastName)
+        updateContact.delegate = self
         updateContact.create(uniqueId: { (updateContactUniqueId) in
             let myText = "update contact unique id = \(updateContactUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
@@ -476,15 +506,35 @@ extension MyViewController {
         }
     }
     
-    // 6
+    
+    // 7
     func implementCreateThread() {
-        let description:String? = input1TextField.text
-        let title:      String? = input2TextField.text
-        let inviteeId:  String? = input3TextField.text
-        let inviteeType:String? = input4TextField.text
-        let invitee = Invitee(id: inviteeId, idType: inviteeType)
+        var description:    String? = nil
+        var title:          String? = nil
+        var inviteeId:      String? = nil
+        var inviteeType:    String? = nil
         
-        let createThread = CreateThreadAutomation(description: description, image: nil, invitees: [invitee], metadata: nil, title: title, type: nil, requestUniqueId: nil)
+        if let txt = input1TextField.text {
+            if (txt != "") && (txt.first != " ") { description = txt }
+        }
+        if let txt = input2TextField.text {
+            if (txt != "") && (txt.first != " ") { title = txt }
+        }
+        if let txt = input3TextField.text {
+            if (txt != "") && (txt.first != " ") { inviteeId = txt }
+        }
+        if let txt = input4TextField.text {
+            if (txt != "") && (txt.first != " ") { inviteeType = txt }
+        }
+        
+        var invitees: [Invitee]? = nil
+        if let id = inviteeId {
+            if let type = inviteeType {
+                invitees = [Invitee(id: id, idType: type)]
+            }
+        }
+        
+        let createThread = CreateThreadAutomation(description: description, image: nil, invitees: invitees, metadata: nil, title: title, type: nil, requestUniqueId: nil)
         createThread.delegate = self
         createThread.create(uniqueId: { (createThreadUniqueId, on) in
             let myText = "create thread unique id \(on) = \(createThreadUniqueId)"
@@ -495,12 +545,16 @@ extension MyViewController {
         }
     }
     
-    // 7
+    // 8
     func implementGetHistory() {
         let threadId:   Int?    = Int(input1TextField.text ?? "")
         let fromTime:   UInt?   = UInt(input2TextField.text ?? "")
         let toTime:     UInt?   = UInt(input3TextField.text ?? "")
-        let query:      String? = input4TextField.text
+        var query:      String? = nil
+        
+        if let txt = input4TextField.text {
+            if (txt != "") && (txt.first != " ") { query = txt }
+        }
         
         let getHistory = GetHistoryAutomation(count: nil, firstMessageId: nil, fromTime: fromTime, lastMessageId: nil, messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: query, threadId: threadId, toTime: toTime, typeCode: nil, uniqueId: nil)
         getHistory.delegate = self
@@ -516,12 +570,16 @@ extension MyViewController {
         }
     }
     
-    // 8
+    // 9
     func implementGetThreads() {
         let count:      Int?    = Int(input1TextField.text ?? "")
         let offset:     Int?    = Int(input2TextField.text ?? "")
-        let name:       String? = input3TextField.text
+        var name:       String? = nil
         let threadId:   Int?    = Int(input4TextField.text ?? "")
+        
+        if let txt = input3TextField.text {
+            if (txt != "") && (txt.first != " ") { name = txt }
+        }
         
         let getThread = GetThreadAutomation(count: count, coreUserId: nil, metadataCriteria: nil, name: name, new: nil, offset: offset, threadIds: [threadId ?? 0], typeCode: nil)
         getThread.delegate = self
@@ -538,11 +596,12 @@ extension MyViewController {
     }
     
     
-    // 9
+    // 10
     func implementDeleteMessage() {
-        let subjectId = Int(input1TextField.text ?? "")
+        let subjectId:  Int?    = Int(input1TextField.text ?? "")
         
         let deleteMessage = DeleteMessageAutomation(deleteForAll: nil, subjectId: subjectId, typeCode: nil, requestUniqueId: nil)
+        deleteMessage.delegate = self
         deleteMessage.create(uniqueId: { (deleteMessageUniqueId) in
             let myText = "deleteMessage unique id = \(deleteMessageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
@@ -552,13 +611,18 @@ extension MyViewController {
         }
     }
     
-    // 10
+    // 11
     func implementEditMessage() {
-        let content     = input1TextField.text
-        let subjectId   = Int(input2TextField.text ?? "")
-        let repliedId   = Int(input3TextField.text ?? "")
+        var content:    String? = nil
+        let subjectId:  Int?    = Int(input2TextField.text ?? "")
+        let repliedId:  Int?    = Int(input3TextField.text ?? "")
+        
+        if let txt = input1TextField.text {
+            if (txt != "") && (txt.first != " ") { content = txt }
+        }
         
         let editMessage = EditMessageAutomation(content: content, metaData: nil, repliedTo: repliedId, subjectId: subjectId, typeCode: nil, requestUniqueId: nil)
+        editMessage.delegate = self
         editMessage.create(uniqueId: { (editMessageUniqueId) in
             let myText = "editMessage unique id = \(editMessageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
@@ -568,7 +632,7 @@ extension MyViewController {
         }
     }
     
-    // 11
+    // 12
     func implementForwardMessage() {
         
         var messageIds: [Int]?
@@ -585,6 +649,7 @@ extension MyViewController {
         let repliedTo:  Int?    = Int(input3TextField.text ?? "")
         
         let forwardMessage = ForwardMessageAutomation(messageIds: messageIds, metaData: nil, repliedTo: repliedTo, subjectId: subjectId, typeCode: nil, uniqueId: nil)
+        forwardMessage.delegate = self
         forwardMessage.create(uniqueId: { (forwardMessageUniqueId) in
             let myText = "forwardMessage unique id = \(forwardMessageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
@@ -600,13 +665,18 @@ extension MyViewController {
         }
     }
     
-    // 12
+    // 13
     func implementReplyTextMessage() {
-        let content:    String? = input1TextField.text
+        var content:    String? = nil
         let repliedTo:  Int?    = Int(input2TextField.text ?? "")
         let subjectId:  Int?    = Int(input3TextField.text ?? "")
         
+        if let txt = input1TextField.text {
+            if (txt != "") && (txt.first != " ") { content = txt }
+        }
+        
         let replyMessage = ReplyMessageAutomation(content: content, metaData: nil, repliedTo: repliedTo, subjectId: subjectId, typeCode: nil, uniqueId: nil)
+        replyMessage.delegate = self
         replyMessage.create(uniqueId: { (replyMessageUniqueId) in
             let myText = "replyTextMessage unique id = \(replyMessageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
@@ -622,13 +692,18 @@ extension MyViewController {
         }
     }
     
-    // 13
+    // 14
     func implementSendTextMessage() {
-        let content:    String? = input1TextField.text
+        var content:    String? = nil
         let repliedTo:  Int?    = Int(input2TextField.text ?? "")
         let threadId:   Int?    = Int(input3TextField.text ?? "")
         
+        if let txt = input1TextField.text {
+            if (txt != "") && (txt.first != " ") { content = txt }
+        }
+        
         let sendTextMessage = SendTextMessageAutomation(content: content, metaData: nil, repliedTo: repliedTo, systemMetadata: nil, threadId: threadId, typeCode: nil, uniqueId: nil)
+        sendTextMessage.delegate = self
         sendTextMessage.create(uniqueId: { (sendTextMessageUniqueId) in
             let myText = "sendTextMessage unique id = \(sendTextMessageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)

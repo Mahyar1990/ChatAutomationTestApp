@@ -115,11 +115,12 @@ class GetHistoryAutomation {
         let addContact = AddContactAutomation(cellphoneNumber: nil, email: nil, firstName: nil, lastName: nil)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
-                if let contactId = myContact.id {
-                    self.delegate?.newInfo(type: MoreInfoTypes.GetHistory.rawValue, message: "new conract has been created, contact id = \(contactId)", lineNumbers: 1)
+                
+                if let cellPhone = myContact.cellphoneNumber {
+                    self.delegate?.newInfo(type: MoreInfoTypes.GetHistory.rawValue, message: "new conract has been created, cellphone number = \(cellPhone)", lineNumbers: 1)
                     
                     // 2
-                    let myInvitee = Invitee(id: "\(contactId)", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")
+                    let myInvitee = Invitee(id: "\(cellPhone)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
                     let createThread = CreateThreadAutomation(description: nil, image: nil, invitees: [myInvitee], metadata: nil, title: "new Chat Thread", type: nil, requestUniqueId: nil)
                     createThread.create(uniqueId: { (_, _) in }, serverResponse: { (CreateThreadModelResponse, on) in
                         
@@ -149,6 +150,7 @@ class GetHistoryAutomation {
                 } else {
                     // handle error that didn't get contactId in the contact model
                 }
+                
             } else {
                 // handle error that didn't add Contact Model
             }

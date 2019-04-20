@@ -56,6 +56,7 @@ class UpdateContactAutomation {
             let requestModel = UpdateContactsRequestModel(cellphoneNumber: contactCellPhone, email: contactEmail, firstName: contactFirstname, id: contactId, lastName: contactLastname)
             sendRequest(updateContactRequest: requestModel)
         default:
+            delegate?.newInfo(type: MoreInfoTypes.UpdateContact.rawValue, message: "there is no contact specified to update. so first, need to addContact", lineNumbers: 1)
             addContactThenUpdateIt()
         }
         
@@ -64,7 +65,7 @@ class UpdateContactAutomation {
     
     func sendRequest(updateContactRequest: UpdateContactsRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.AddContact.rawValue, message: "Send UpdateContact request with this params:\n id = \(updateContactRequest.id) , cellPhoneNumber = \(updateContactRequest.cellphoneNumber) , email = \(updateContactRequest.email) , firstName = \(updateContactRequest.firstName) , lastName = \(updateContactRequest.lastName)", lineNumbers: 3)
+        delegate?.newInfo(type: MoreInfoTypes.UpdateContact.rawValue, message: "Send UpdateContact request with this params:\n id = \(updateContactRequest.id) , cellPhoneNumber = \(updateContactRequest.cellphoneNumber) , email = \(updateContactRequest.email) , firstName = \(updateContactRequest.firstName) , lastName = \(updateContactRequest.lastName)", lineNumbers: 3)
         
         myChatObject?.updateContact(updateContactsInput: updateContactRequest, uniqueId: { (updateContactsUniqueId) in
             self.uniqueIdCallback?(updateContactsUniqueId)
@@ -83,12 +84,25 @@ class UpdateContactAutomation {
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
                 if let contactId = myContact.id {
-                    self.delegate?.newInfo(type: MoreInfoTypes.GetHistory.rawValue, message: "new conract has been created, contact id = \(contactId)", lineNumbers: 1)
+                    self.delegate?.newInfo(type: MoreInfoTypes.UpdateContact.rawValue, message: "new conract has been created, contact id = \(contactId)", lineNumbers: 1)
                     
                     // 2
                     let sharedFaker = Faker.sharedInstance
                     let fakeContact = sharedFaker.generateFakeAddContactParams(cellphoneLength: 10, firstNameLength: 5, lastNameLength: 6)
-                    let updateContactModel = UpdateContactsRequestModel(cellphoneNumber: self.cellphoneNumber ?? fakeContact.cellphoneNumber, email: self.email ?? fakeContact.email, firstName: self.firstName ?? fakeContact.firstName, id: contactId, lastName: self.lastName ?? fakeContact.lastName)
+                    var contact: (cell: String, mail: String, first: String, last: String) = (self.cellphoneNumber ?? fakeContact.cellphoneNumber, self.email ?? fakeContact.email, self.firstName ?? fakeContact.firstName, self.lastName ?? fakeContact.lastName)
+                    if (self.cellphoneNumber == "") || (self.cellphoneNumber == " ") {
+                        contact.cell = fakeContact.cellphoneNumber
+                    }
+                    if (self.email == "") || (self.email == " ") {
+                        contact.mail = fakeContact.email
+                    }
+                    if (self.cellphoneNumber == "") || (self.cellphoneNumber == " ") {
+                        contact.cell = fakeContact.cellphoneNumber
+                    }
+                    if (self.lastName == "") || (self.lastName == " ") {
+                        contact.last = fakeContact.lastName
+                    }
+                    let updateContactModel = UpdateContactsRequestModel(cellphoneNumber: contact.cell, email: contact.mail, firstName: contact.first, id: contactId, lastName: contact.last)
                     self.sendRequest(updateContactRequest: updateContactModel)
                     
                 } else {

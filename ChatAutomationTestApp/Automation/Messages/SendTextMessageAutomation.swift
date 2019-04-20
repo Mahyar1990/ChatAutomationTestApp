@@ -69,6 +69,7 @@ class SendTextMessageAutomation {
             sendRequest(theContent: text, theMetaData: metaData, theRepliedTo: repliedTo, theSystemMetadata: systemMetadata, theThreadId: myThreadId, theTypeCode: typeCode, theUniqueId: uniqueIdOfAllRequests)
         default:
             delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "You have to fill the  Content(iput 1) and threadId(input 3) of the message", lineNumbers: 2)
+            createThreadAndSendMessage(withContent: nil)
         }
         
         if (content == nil) || (threadId == nil) {
@@ -107,15 +108,13 @@ class SendTextMessageAutomation {
     }
     
     
-    func createThreadAndSendMessage(withContent: String) {
+    func createThreadAndSendMessage(withContent: String?) {
         
         delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "try to addContact, then create a thread with it, then send a message to it", lineNumbers: 1)
         
-        let cellphoneNumber = "09387181694"
-        let firstName       = "Pooria"
-        let lastName        = "Pahlevani"
+        let pouria = Faker.sharedInstance.pouriaAsContact
         
-        let addContact = AddContactAutomation(cellphoneNumber: cellphoneNumber, email: nil, firstName: firstName, lastName: lastName)
+        let addContact = AddContactAutomation(cellphoneNumber: pouria.cellphoneNumber, email: nil, firstName: pouria.firstName, lastName: pouria.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
                 if let cellphoneNumber = myContact.cellphoneNumber {
@@ -129,20 +128,21 @@ class SendTextMessageAutomation {
                     let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: self.typeCode, requestUniqueId: nil)
                     
                     createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
+                        
                         if let id = createThreadModel.thread?.id {
                             self.delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
                             
-                            self.sendRequest(theContent: withContent, theMetaData: self.metaData, theRepliedTo: self.repliedTo, theSystemMetadata: self.systemMetadata, theThreadId: id, theTypeCode: self.typeCode, theUniqueId: self.uniqueIdOfAllRequests)
+                            self.sendRequest(theContent: withContent ?? "This is a dummy message", theMetaData: self.metaData, theRepliedTo: self.repliedTo, theSystemMetadata: self.systemMetadata, theThreadId: id, theTypeCode: self.typeCode, theUniqueId: self.uniqueIdOfAllRequests)
                         }
                     })
                     
                 } else {
                     // handle error that didn't get contact id in the contact model
-                    self.delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "there is no CellphoneNumber when addContact with this user (firstName = \(firstName) , cellphoneNumber = \(cellphoneNumber))!", lineNumbers: 2)
+                    self.delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "there is no CellphoneNumber when addContact with this user (firstName = \(pouria.firstName) , cellphoneNumber = \(pouria.cellphoneNumber))!", lineNumbers: 2)
                 }
             } else {
                 // handle error that didn't add Contact Model
-                self.delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(firstName) , cellphoneNumber = \(cellphoneNumber) , lastName = \(lastName)", lineNumbers: 2)
+                self.delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(pouria.firstName) , cellphoneNumber = \(pouria.cellphoneNumber) , lastName = \(pouria.lastName)", lineNumbers: 2)
             }
         }
         
