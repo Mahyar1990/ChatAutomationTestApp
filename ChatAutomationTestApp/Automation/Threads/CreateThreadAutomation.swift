@@ -104,7 +104,6 @@ class CreateThreadAutomation {
             self.uniqueIdCallback?(createThreadUniqueId, on)
         }, completion: { (createThreadModel) in
 //            self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "create thread response = \((createThreadModel as! CreateThreadModel).returnDataAsJSON())", lineNumbers: 3)
-            print("server response to create thread:\n\((createThreadModel as! CreateThreadModel).returnDataAsJSON())")
             self.responseCallback?(createThreadModel as! CreateThreadModel, on)
         })
         

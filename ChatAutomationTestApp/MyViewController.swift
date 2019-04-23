@@ -23,21 +23,21 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 */
     
 // SandBox Addresses:
-    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
-    let serverName              = "chat-server"
-    let ssoHost                 = "https://accounts.pod.land"
-    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = ""
+//    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
+//    let serverName              = "chat-server"
+//    let ssoHost                 = "https://accounts.pod.land"
+//    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+//    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+//    var token                   = ""
     
     
 // Local Addresses
-//    let socketAddress           = "ws://172.16.106.26:8003/ws"
-//    let serverName              = "chat-server"
-//    let ssoHost                 = "http://172.16.110.76"
-//    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
-//    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
-//    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
+    let socketAddress           = "ws://172.16.106.26:8003/ws"
+    let serverName              = "chat-server"
+    let ssoHost                 = "http://172.16.110.76"
+    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
+    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+    var token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"
 //    let token = "fbd4ecedb898426394646e65c6b1d5d1" //  {**REQUIRED**} SSO Token JiJi
@@ -177,7 +177,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 /*
 https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52664cf7de0bda&response_type=token&redirect_uri=https://chat.fanapsoft.ir&scope=profile social:write
  */
-            token = "c3f24578b72e4319be69c9d41e4a3833"
+            token = "7a18deb4a4b64339a81056089f5e5922"
             createChat()
         }
     }
@@ -195,7 +195,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                             mapApiKey:              nil,
                             mapServer:              "https://api.neshan.org/v1",
                             typeCode:               "default",
-                            enableCache:            true,
+                            enableCache:            false,
                             cacheTimeStampInSec:    nil,
                             msgPriority:            1,
                             msgTTL:                 messageTtl,
@@ -512,7 +512,7 @@ extension MyViewController {
         var description:    String? = nil
         var title:          String? = nil
         var inviteeId:      String? = nil
-        var inviteeType:    String? = nil
+        let inviteeType:    Int? = Int(input4TextField.text ?? "")
         
         if let txt = input1TextField.text {
             if (txt != "") && (txt.first != " ") { description = txt }
@@ -523,15 +523,28 @@ extension MyViewController {
         if let txt = input3TextField.text {
             if (txt != "") && (txt.first != " ") { inviteeId = txt }
         }
-        if let txt = input4TextField.text {
-            if (txt != "") && (txt.first != " ") { inviteeType = txt }
-        }
         
         var invitees: [Invitee]? = nil
         if let id = inviteeId {
-            if let type = inviteeType {
-                invitees = [Invitee(id: id, idType: type)]
+            switch inviteeType {
+            case 1:
+                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_SSO_ID)")]
+            case 2:
+                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")]
+            case 3:
+                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")]
+            case 4:
+                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_USERNAME)")]
+            case 0:
+                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_ID)")]
+            default:
+                invitees = [Invitee(id: id, idType: "0")]
             }
+            
+            
+//            if let type = inviteeType {
+//                invitees = [Invitee(id: id, idType: type)]
+//            }
         }
         
         let createThread = CreateThreadAutomation(description: description, image: nil, invitees: invitees, metadata: nil, title: title, type: nil, requestUniqueId: nil)
@@ -640,8 +653,10 @@ extension MyViewController {
             let str = msgIdsTxt.replacingOccurrences(of: " ", with: "") // remove all spaces
             let stringIds = str.components(separatedBy: ",")            // seperate ids
             messageIds = []
-            for item in stringIds {
-                messageIds?.append(Int(item)!)
+            if (stringIds.first != nil) && (stringIds.first != "") {
+                for item in stringIds {
+                    messageIds?.append(Int(item)!)
+                }
             }
         }
         

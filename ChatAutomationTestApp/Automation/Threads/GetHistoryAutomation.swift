@@ -72,7 +72,7 @@ class GetHistoryAutomation {
             sendRequest(getHistoryRequest: requestModel)
             
         } else {
-            sendMessageThenGetHistory()
+            sendRequestSenario(contactCellPhone: nil, threadId: nil, messageResponse: nil)
         }
         
     }
@@ -105,48 +105,98 @@ class GetHistoryAutomation {
     }
     
     
-    func sendMessageThenGetHistory() {
+//    func sendMessageThenGetHistory() {
+//        // 1- create contact
+//        // 2- create new thread with this contact, and get the threadId
+//        // 3- send a message
+//        // 4- sendRequest
+//
+//        // 1
+//        let pouria = Faker.sharedInstance.pouriaAsContact
+//        let addContact = AddContactAutomation(cellphoneNumber: pouria.cellphoneNumber, email: pouria.email, firstName: pouria.firstName, lastName: pouria.lastName)
+//        addContact.create(uniqueId: { _ in }) { (contactModel) in
+//            if let myContact = contactModel.contacts.first {
+//
+//                if let cellPhone = myContact.cellphoneNumber {
+//                    self.delegate?.newInfo(type: MoreInfoTypes.GetHistory.rawValue, message: "new conract has been created, cellphone number = \(cellPhone)", lineNumbers: 1)
+//
+//                    // 2
+//                    let myInvitee = Invitee(id: "\(cellPhone)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
+//                    let createThread = CreateThreadAutomation(description: nil, image: nil, invitees: [myInvitee], metadata: nil, title: "new Chat Thread", type: nil, requestUniqueId: nil)
+//                    createThread.create(uniqueId: { (_, _) in }, serverResponse: { (CreateThreadModelResponse, on) in
+//
+//                        // 3
+//                        if let conversationModel = CreateThreadModelResponse.thread {
+//                            if let thId = conversationModel.id {
+//
+//                                let sendMessage = SendTextMessageAutomation(content: "Hi", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: thId, typeCode: nil, uniqueId: nil)
+//                                sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (serverResponse) in
+//
+//                                    // 4
+//                                    let getHistoryModel = GetHistoryRequestModel(count: nil, firstMessageId: nil, fromTime: nil, lastMessageId: nil
+//                                        , messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: thId, toTime: nil, typeCode: nil, uniqueId: nil)
+//                                    self.sendRequest(getHistoryRequest: getHistoryModel)
+//
+//                                }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })
+//
+//                            } else {
+//                                // handle error that the conversation model doesn't have id (threadId)
+//                            }
+//                        } else {
+//                            // handle error that the response of createThread doesn't have Conversation Model
+//                        }
+//
+//                    })
+//
+//                } else {
+//                    // handle error that didn't get contactId in the contact model
+//                }
+//
+//            } else {
+//                // handle error that didn't add Contact Model
+//            }
+//        }
+//    }
+    
+    
+    
+    
+    func sendRequestSenario(contactCellPhone: String?, threadId: Int?, messageResponse: JSON?) {
         // 1- create contact
         // 2- create new thread with this contact, and get the threadId
         // 3- send a message
         // 4- sendRequest
         
-        // 1
-        let addContact = AddContactAutomation(cellphoneNumber: nil, email: nil, firstName: nil, lastName: nil)
+        
+        switch (contactCellPhone, threadId, messageResponse) {
+        case    (.none, .none, .none):
+            addContact()
+            
+        case let (.some(cellPhone), .none, .none):
+            createThread(cellPhoneNumber: cellPhone)
+            
+        case let (_ , .some(thread), .none):
+            sendMessage(toThread: thread)
+            
+        case let (_ , _ , .some(msg)):
+            if let thId = msg["subjectId"].int {
+                self.createGetHistoryModel(withThreadId: thId)
+            }
+        }
+        
+    }
+    
+    
+    // 1
+    func addContact() {
+        let pouria = Faker.sharedInstance.pouriaAsContact
+        let addContact = AddContactAutomation(cellphoneNumber: pouria.cellphoneNumber, email: pouria.email, firstName: pouria.firstName, lastName: pouria.lastName)
+//        let addContact = AddContactAutomation(cellphoneNumber: nil, email: nil, firstName: nil, lastName: nil)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
-                
                 if let cellPhone = myContact.cellphoneNumber {
                     self.delegate?.newInfo(type: MoreInfoTypes.GetHistory.rawValue, message: "new conract has been created, cellphone number = \(cellPhone)", lineNumbers: 1)
-                    
-                    // 2
-                    let myInvitee = Invitee(id: "\(cellPhone)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
-                    let createThread = CreateThreadAutomation(description: nil, image: nil, invitees: [myInvitee], metadata: nil, title: "new Chat Thread", type: nil, requestUniqueId: nil)
-                    createThread.create(uniqueId: { (_, _) in }, serverResponse: { (CreateThreadModelResponse, on) in
-                        
-                        // 3
-                        if let conversationModel = CreateThreadModelResponse.thread {
-                            if let thId = conversationModel.id {
-                                
-                                let sendMessage = SendTextMessageAutomation(content: "Hi", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: thId, typeCode: nil, uniqueId: nil)
-                                sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (serverResponse) in
-                                    
-                                    // 4
-                                    let getHistoryModel = GetHistoryRequestModel(count: nil, firstMessageId: nil, fromTime: nil, lastMessageId: nil
-                                        , messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: thId, toTime: nil, typeCode: nil, uniqueId: nil)
-                                    self.sendRequest(getHistoryRequest: getHistoryModel)
-                                    
-                                }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })
-                                
-                            } else {
-                                // handle error that the conversation model doesn't have id (threadId)
-                            }
-                        } else {
-                            // handle error that the response of createThread doesn't have Conversation Model
-                        }
-                        
-                    })
-                    
+                    self.sendRequestSenario(contactCellPhone: cellPhone, threadId: nil, messageResponse: nil)
                 } else {
                     // handle error that didn't get contactId in the contact model
                 }
@@ -156,6 +206,44 @@ class GetHistoryAutomation {
             }
         }
     }
+    
+    
+    // 2
+    func createThread(cellPhoneNumber: String) {
+        let myInvitee = Invitee(id: "\(cellPhoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
+        let createThread = CreateThreadAutomation(description: nil, image: nil, invitees: [myInvitee], metadata: nil, title: "new Chat Thread", type: nil, requestUniqueId: nil)
+        createThread.create(uniqueId: { (_, _) in }, serverResponse: { (CreateThreadModelResponse, on) in
+            if let conversationModel = CreateThreadModelResponse.thread {
+                if let thId = conversationModel.id {
+                    self.sendRequestSenario(contactCellPhone: nil, threadId: thId, messageResponse: nil)
+                } else {
+                    // handle error that the conversation model doesn't have id (threadId)
+                }
+            } else {
+                // handle error that the response of createThread doesn't have Conversation Model
+            }
+            
+        })
+        
+    }
+    
+    
+    // 3
+    func sendMessage(toThread thread: Int) {
+        let sendMessage = SendTextMessageAutomation(content: "Hi", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: thread, typeCode: nil, uniqueId: nil)
+        sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (serverResponse) in
+            self.sendRequestSenario(contactCellPhone: nil, threadId: nil, messageResponse: serverResponse)
+        }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })
+        
+    }
+    
+    
+    // 4
+    func createGetHistoryModel(withThreadId threadId: Int) {
+        let getHistoryModel = GetHistoryRequestModel(count: nil, firstMessageId: nil, fromTime: nil, lastMessageId: nil, messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: threadId, toTime: nil, typeCode: nil, uniqueId: nil)
+        self.sendRequest(getHistoryRequest: getHistoryModel)
+    }
+    
     
     
 }
