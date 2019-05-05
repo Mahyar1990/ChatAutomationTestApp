@@ -11,7 +11,7 @@ import SwiftyJSON
 import FanapPodChatSDK
 
 // MARK: Chat delegatews
-extension MyViewController: ChatDelegates {
+extension MyChatViewController: ChatDelegates {
     func chatConnected() {
         let text = "Chat Connected"
         addtext(text: text)

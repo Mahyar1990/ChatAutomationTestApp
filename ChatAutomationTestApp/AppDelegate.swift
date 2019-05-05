@@ -8,19 +8,74 @@
 
 import UIKit
 
+//var token = UserDefaults.standard.value(forKey: MyUserDefaultKeys.token) as? String ?? ""
+//var tokenIssuer = "1"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    let myViewController = UIViewController()
+    
+    fileprivate func loginIfNedded() {
+        // 1-0 check if user had login befor (there is some value inside UserDefaults)
+        // 1-1 if toke expiration has passed, call refreshToken function to get new token
+        // 2- if user didn't login yet, push him to the sso login page
+        if let token = UserDefaults.standard.value(forKey: MyUserDefaultKeys.token) as? String {
+            if (token != "") && (token != " ") {
+                if let tokenExTime = UserDefaults.standard.value(forKey: MyUserDefaultKeys.expireTokenTime) as? Int {
+                    if (Date().secondsSince1970 > tokenExTime) {
+                        // call referesh token!
+                        refereshToken()
+                    } else {
+                        //                        window?.rootViewController = myViewController
+                        //                        self.createMenuView()
+                        refereshToken()
+                    }
+                }
+            }
+        } else {
+            let loginPage = LoginViewController()
+            window?.rootViewController = loginPage
+            //            window.present(loginPage, animated: true, completion: nil)
+        }
+    }
+    fileprivate func refereshToken() {
+        window?.rootViewController = myViewController
+        let refreshToken = UserDefaults.standard.value(forKey: MyUserDefaultKeys.refreshToken) as! String
+        let codeVerifier = UserDefaults.standard.value(forKey: MyUserDefaultKeys.codeVerifier) as! String
+        GetTokenWithRefreshToken(refreshToken: refreshToken, codeVerifier: codeVerifier).request { (result) in
+            print("request to get New Token result = \(result)")
+            if result == true {
+                DispatchQueue.main.async {
+                    self.createChatView()
+                }
+            }
+        }
+    }
+    
+    fileprivate func createChatView() {
+        let navigation = UINavigationController(rootViewController: MyChatViewController())
+        myViewController.present(navigation, animated: true, completion: nil)
+//        window?.rootViewController = UINavigationController(rootViewController: MyViewController())
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        window?.rootViewController = UINavigationController(rootViewController: MyViewController())
+        window?.rootViewController = UINavigationController(rootViewController: MyChatViewController())
+        
+//        loginIfNedded()
+        
+//        UserDefaults.standard.setValue(nil, forKey: MyUserDefaultKeys.codeVerifier)
+//        UserDefaults.standard.setValue(nil, forKey: MyUserDefaultKeys.expires_in)
+//        UserDefaults.standard.setValue(nil, forKey: MyUserDefaultKeys.expireTokenTime)
+//        UserDefaults.standard.setValue(nil, forKey: MyUserDefaultKeys.refreshToken)
+//        UserDefaults.standard.setValue(nil, forKey: MyUserDefaultKeys.token)
+//        UserDefaults.standard.setValue(nil, forKey: MyUserDefaultKeys.tokenIssuer)
         
         return true
     }

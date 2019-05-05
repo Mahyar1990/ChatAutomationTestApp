@@ -9,7 +9,7 @@
 import UIKit
 
 // Views
-extension MyViewController {
+extension MyChatViewController {
     
     func setupViews() {
         
