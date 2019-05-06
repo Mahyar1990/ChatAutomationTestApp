@@ -20,21 +20,21 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 */
     
 // SandBox Addresses:
-//    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
-//    let serverName              = "chat-server"
-//    let ssoHost                 = "https://accounts.pod.land"
-//    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-//    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-//    var token                   = ""
+    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
+    let serverName              = "chat-server"
+    let ssoHost                 = "https://accounts.pod.land"
+    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+    var token                   = ""
     
     
 // Local Addresses
-    let socketAddress           = "ws://172.16.106.26:8003/ws"
-    let serverName              = "chat-server"
-    let ssoHost                 = "http://172.16.110.76"
-    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
-    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
-    var token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
+//    let socketAddress           = "ws://172.16.106.26:8003/ws"
+//    let serverName              = "chat-server"
+//    let ssoHost                 = "http://172.16.110.76"
+//    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
+//    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+//    var token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"
 //    let token = "fbd4ecedb898426394646e65c6b1d5d1" //  {**REQUIRED**} SSO Token JiJi
@@ -64,7 +64,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         return mt
     }()
     
-    let sendPingButton: UIButton = {
+    let setTokenAndConnectChatButton: UIButton = {
         let mb = UIButton()
         mb.translatesAutoresizingMaskIntoConstraints = false
         mb.setTitle("set Tocken and Connect Chat...", for: UIControl.State.normal)
@@ -186,7 +186,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 /*
 https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52664cf7de0bda&response_type=token&redirect_uri=https://chat.fanapsoft.ir&scope=profile social:write
  */
-            token = "7a18deb4a4b64339a81056089f5e5922"
+            token = "8ac71d8e55ba4453bf6a8b3b41d0e028"
             createChat()
         }
         
@@ -195,6 +195,8 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     
     
     func createChat() {
+        setTokenAndConnectChatButton.isEnabled = false
+        
         // create Chat object
         myChatObject = Chat(socketAddress:          socketAddress,
                             ssoHost:                ssoHost,
@@ -265,6 +267,7 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         print("row at index \(row) did selected")
         
         resetCollectionViewCells()
+        resetTextFields()
         
         picker = row
         
@@ -289,15 +292,6 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         case 15: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: UIColor.white)
         case 16: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 70, cellColor: UIColor.white)
             
-//        case 0: updateText(cellText: " Input 1 = contactId as Int \n Input 2 = threadId as Int \n Input 3 = userId as Int", cellHeight: 70, cellColor: UIColor.white)
-//        case 1: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String", cellHeight: 70, cellColor: UIColor.white)
-//        case 2: updateText(cellText: " Input 1 = cellphoneNumber as String \n Input 2 = email as String \n Input 3 = firstName as String \n Input 4 = lastName as String", cellHeight: 70, cellColor: UIColor.white)
-//        case 3: updateText(cellText: " Input 1 = id as Int", cellHeight: 40, cellColor: UIColor.white)
-//        case 4: updateText(cellText: " Input 1 = description as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: UIColor.white)
-//        case 5: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int", cellHeight: 40, cellColor: UIColor.white)
-//        case 6: updateText(cellText: " Input 1 = blockId as String \n Input 2 = contactId as String \n Input 3 = threadId as String \n Input 4 = userId as String", cellHeight: 70, cellColor: UIColor.white)
-//        case 7: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: UIColor.white)
-//        case 8: updateText(cellText: " Input 1 = count as Int \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 70, cellColor: UIColor.white)
         default:
             print("Selected row number \(row) that is not in the correct range!")
         }
@@ -321,6 +315,13 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         logHeightArr.removeAll()
         logBackgroundColor.removeAll()
         myLogCollectionView.reloadData()
+    }
+    
+    func resetTextFields() {
+        input1TextField.text?.removeAll()
+        input2TextField.text?.removeAll()
+        input3TextField.text?.removeAll()
+        input4TextField.text?.removeAll()
     }
     
 }
@@ -586,10 +587,6 @@ extension MyChatViewController {
                 invitees = [Invitee(id: id, idType: "0")]
             }
             
-            
-//            if let type = inviteeType {
-//                invitees = [Invitee(id: id, idType: type)]
-//            }
         }
         
         let createThread = CreateThreadAutomation(description: description, image: nil, invitees: invitees, metadata: nil, title: title, type: nil, requestUniqueId: nil)

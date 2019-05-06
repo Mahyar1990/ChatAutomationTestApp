@@ -52,27 +52,13 @@ class AddContactAutomation {
         switch (cellphoneNumber, email, firstName, lastName) {
         case (.none, .none, .none, .none), ("", "", "", ""):
             let fakeParams = Faker.sharedInstance.generateFakeAddContactParams(cellphoneLength: 11, firstNameLength: 4, lastNameLength: 7)
-            
             delegate?.newInfo(type: MoreInfoTypes.AddContact.rawValue, message: "generate fake values to add contact as:\ncellPhoneNumber = \(fakeParams.cellphoneNumber) , email = \(fakeParams.email) , firstName = \(fakeParams.firstName) , lastName = \(fakeParams.lastName)", lineNumbers: 3)
-            
             sendRequest(theCellphoneNumber: fakeParams.cellphoneNumber, theEmail: fakeParams.email, theFirstName: fakeParams.firstName, theLastName: fakeParams.lastName)
             
         // some or all of the parameters are filled by the client, so send request with this params
         default:
             sendRequest(theCellphoneNumber: cellphoneNumber, theEmail: email, theFirstName: firstName, theLastName: lastName)
         }
-        
-//        if (cellphoneNumber == nil) && (email == nil) && (firstName == nil) && (lastName == nil) {
-//            let fakeParams = Faker.sharedInstance.generateFakeAddContactParams(cellphoneLength: 11, firstNameLength: 4, lastNameLength: 7)
-//
-//            delegate?.newInfo(type: MoreInfoTypes.AddContact.rawValue, message: "generate fake values to add contact as:\ncellPhoneNumber = \(fakeParams.cellphoneNumber) , email = \(fakeParams.email) , firstName = \(fakeParams.firstName) , lastName = \(fakeParams.lastName)", lineNumbers: 3)
-//
-//            sendRequest(theCellphoneNumber: fakeParams.cellphoneNumber, theEmail: fakeParams.email, theFirstName: fakeParams.firstName, theLastName: fakeParams.lastName)
-//        }
-//            // some or all of the parameters are filled by the client, so send request with this params
-//        else {
-//            sendRequest(theCellphoneNumber: cellphoneNumber, theEmail: email, theFirstName: firstName, theLastName: lastName)
-//        }
         
     }
     
@@ -83,10 +69,8 @@ class AddContactAutomation {
         
         let addContactInput = AddContactsRequestModel(cellphoneNumber: theCellphoneNumber, email: theEmail, firstName: theFirstName, lastName: theLastName)
         myChatObject?.addContact(addContactsInput: addContactInput, uniqueId: { (addContactsUniqueId) in
-//            self.delegate?.newInfo(type: MoreInfoTyps.AddContact.rawValue, message: "addContact UniqueId response = \(addContactsUniqueId)", lineNumbers: 1)
             self.uniqueIdCallback?(addContactsUniqueId)
         }, completion: { (addContactServerResponse) in
-//            self.delegate?.newInfo(type: MoreInfoTyps.AddContact.rawValue, message: "addContact response model = \((addContactServerResponse as! ContactModel).returnDataAsJSON())", lineNumbers: 4)
             self.responseCallback?(addContactServerResponse as! ContactModel)
         })
     }

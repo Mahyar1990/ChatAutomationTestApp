@@ -22,7 +22,7 @@ extension MyChatViewController {
         pickerView.dataSource = self
         
         view.addSubview(tokenTextField)
-        view.addSubview(sendPingButton)
+        view.addSubview(setTokenAndConnectChatButton)
         view.addSubview(input1TextField)
         view.addSubview(input2TextField)
         view.addSubview(input3TextField)
@@ -36,14 +36,14 @@ extension MyChatViewController {
         tokenTextField.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
         tokenTextField.heightAnchor.constraint(equalToConstant: 28).isActive = true
         
-        sendPingButton.topAnchor.constraint(equalTo: tokenTextField.bottomAnchor, constant: 4).isActive = true
-        sendPingButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
-        sendPingButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
-        sendPingButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
+        setTokenAndConnectChatButton.topAnchor.constraint(equalTo: tokenTextField.bottomAnchor, constant: 4).isActive = true
+        setTokenAndConnectChatButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
+        setTokenAndConnectChatButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
+        setTokenAndConnectChatButton.heightAnchor.constraint(equalToConstant: 32).isActive = true
         
         let textFieldWidth = ((view.frame.width - 16 - 12) / 4)
         
-        input1TextField.topAnchor.constraint(equalTo: sendPingButton.bottomAnchor, constant: 8).isActive = true
+        input1TextField.topAnchor.constraint(equalTo: setTokenAndConnectChatButton.bottomAnchor, constant: 8).isActive = true
         input1TextField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
         input1TextField.heightAnchor.constraint(equalToConstant: 32).isActive = true
         input1TextField.widthAnchor.constraint(equalToConstant: textFieldWidth).isActive = true
