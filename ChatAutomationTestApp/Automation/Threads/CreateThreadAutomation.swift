@@ -395,7 +395,7 @@ extension CreateThreadAutomation {
                 switch (on) {
                 case (Section.NormalThreadWithCoreUserId):
                     if let linkeUser = myContact.linkedUser {
-                        if let linkUserId = linkeUser.coreUserId {
+                        if let linkUserId = linkeUser.id {
                             self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on \(on.rawValue) New Contact has been created, now try to create thread with some fake params and this user id = \(linkUserId).", lineNumbers: 2)
                             self.createThreadSenario(threadType: ThreadTypes.NORMAL, withCoreUserId: linkUserId, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: on, isCompleted: false)
                         } else {

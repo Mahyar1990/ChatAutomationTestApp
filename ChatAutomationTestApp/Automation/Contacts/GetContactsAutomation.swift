@@ -55,29 +55,26 @@ class GetContactsAutomation {
         if (count == nil) && (name == nil) && (offset == nil) {
             let fakeParams = Faker.sharedInstance.generateFakeGetContactParams()
             delegate?.newInfo(type: MoreInfoTypes.GetContact.rawValue, message: "create random numbers:\ncount = \(fakeParams.count) , offset = \(fakeParams.offset)", lineNumbers: 2)
-            sendRequest(theCount: fakeParams.0, theName: name, theOffset: fakeParams.1, theTypeCode: typeCode)
+            sendRequest(theCount: fakeParams.count, theOffset: fakeParams.offset, theName: name)
         }
             // some or all of the parameters are filled by the client, so send request with this params
         else {
-            sendRequest(theCount: count, theName: name, theOffset: offset, theTypeCode: typeCode)
+            sendRequest(theCount: count, theOffset: offset, theName: name)
         }
         
     }
     
     
-    func sendRequest(theCount: Int?, theName: String?, theOffset: Int?, theTypeCode: String?) {
+    func sendRequest(theCount: Int?, theOffset: Int?, theName: String?) {
         
-        delegate?.newInfo(type: MoreInfoTypes.GetContact.rawValue, message: "send Request to getContacts with this params:\ncount = \(theCount ?? 50) , offset = \(theOffset ?? 0) , name = \(theName ?? "nil") , typeCode = \(theTypeCode ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.GetContact.rawValue, message: "send Request to getContacts with this params:\ncount = \(theCount ?? 50) , offset = \(theOffset ?? 0) , name = \(theName ?? "nil") , typeCode = \(typeCode ?? "nil")", lineNumbers: 2)
         
-        let getContactInput = GetContactsRequestModel(count: theCount, name: theName, offset: theOffset, typeCode: theTypeCode)
+        let getContactInput = GetContactsRequestModel(count: theCount, name: theName, offset: theOffset, typeCode: typeCode)
         myChatObject?.getContacts(getContactsInput: getContactInput, uniqueId: { (getContactUniqueId) in
-//            self.delegate?.newInfo(type: MoreInfoTyps.GetContact.rawValue, message: "uniqueId = \(getContactUniqueId)")
             self.uniqueIdCallback?(getContactUniqueId)
         }, completion: { (getContactsResponse) in
-//            self.delegate?.newInfo(type: MoreInfoTyps.GetContact.rawValue, message: "server response = \((getContactsResponse as! GetContactsModel).returnDataAsJSON())")
             self.responseCallback?(getContactsResponse as! GetContactsModel)
         }, cacheResponse: { (getContactsCacheResponse) in
-//            self.delegate?.newInfo(type: MoreInfoTyps.GetContact.rawValue, message: "cahce response = \(getContactsCacheResponse.returnDataAsJSON())")
             self.cacheCallback?(getContactsCacheResponse)
         })
     }

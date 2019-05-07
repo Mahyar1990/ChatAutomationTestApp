@@ -72,7 +72,7 @@ extension MyChatViewController: ChatDelegates {
         //
         let text = "Chat Error. \nerrorCode = \(errorCode) \nerrorMessage = \(errorMessage)"
         addtext(text: text)
-        self.logHeightArr.append(150)
+        self.logHeightArr.append(90)
         self.logBackgroundColor.append(UIColor.orange)
         print(text)
     }

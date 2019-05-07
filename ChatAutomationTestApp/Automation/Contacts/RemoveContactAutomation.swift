@@ -46,41 +46,42 @@ class RemoveContactAutomation {
         }
         // if the input parameter didn't filled by the user, first create a contact, then remove it
         else {
-            
             delegate?.newInfo(type: MoreInfoTypes.RemoveContact.rawValue, message: "there is no id specify to block. so first, need to addContact", lineNumbers: 1)
-            
-            let addContact = AddContactAutomation(cellphoneNumber: nil, email: nil, firstName: nil, lastName: nil)
-            addContact.create(uniqueId: { _ in }) { (contactModel) in
-                if let myContact = contactModel.contacts.first {
-                    if let contactId = myContact.id {
-                        self.delegate?.newInfo(type: MoreInfoTypes.RemoveContact.rawValue, message: "new conract has been created, contact id = \(contactId)", lineNumbers: 1)
-                        self.sendRequest(theId: contactId)
-                    } else {
-                        // handle error that didn't get contactId in the contact model
-                    }
-                } else {
-                    // handle error that didn't add Contact Model
-                }
-            }
-            
+            addContact()
         }
         
     }
     
     
-    
     func sendRequest(theId: Int) {
         
-        delegate?.newInfo(type: MoreInfoTypes.RemoveContact.rawValue, message: "Send RemoveContact request with this param:\nid = \(theId)", lineNumbers: 1)
+        delegate?.newInfo(type: MoreInfoTypes.RemoveContact.rawValue, message: "Send RemoveContact request with this param:\nid = \(theId)", lineNumbers: 2)
         
         let removeContactInput = RemoveContactsRequestModel(id: theId)
         myChatObject?.removeContact(removeContactsInput: removeContactInput, uniqueId: { (removeContactUniqueId) in
-//        self.delegate?.newInfo(type: MoreInfoTypes.RemoveContact.rawValue, message: "removeContact UniqueId response = \(addContactsUniqueId)", lineNumbers: 1)
             self.uniqueIdCallback?(removeContactUniqueId)
         }, completion: { (removeContactServerResponse) in
-//            self.delegate?.newInfo(type: MoreInfoTypes.RemoveContact.rawValue, message: "removeContact response model = \((removeContactServerResponse as! RemoveContactModel).returnDataAsJSON())", lineNumbers: 4)
             self.responseCallback?(removeContactServerResponse as! RemoveContactModel)
         })
+    }
+    
+    
+    func addContact() {
+        let addContact = AddContactAutomation(cellphoneNumber: nil, email: nil, firstName: nil, lastName: nil)
+        addContact.create(uniqueId: { _ in }) { (contactModel) in
+            if let myContact = contactModel.contacts.first {
+                if let contactId = myContact.id {
+                    self.delegate?.newInfo(type: MoreInfoTypes.RemoveContact.rawValue, message: "new conract has been created, contact id = \(contactId)", lineNumbers: 1)
+                    self.sendRequest(theId: contactId)
+                } else {
+                    // handle error that didn't get contactId in the contact model
+                    self.delegate?.newInfo(type: MoreInfoTypes.RemoveContact.rawValue, message: "there is no contactId inside Contact Model", lineNumbers: 2)
+                }
+            } else {
+                // handle error that didn't add Contact Model
+                self.delegate?.newInfo(type: MoreInfoTypes.RemoveContact.rawValue, message: "there is no Contact Model in response!!", lineNumbers: 1)
+            }
+        }
     }
     
     

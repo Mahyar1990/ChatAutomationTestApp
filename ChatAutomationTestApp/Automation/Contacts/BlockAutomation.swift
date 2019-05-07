@@ -252,7 +252,7 @@ extension BlockAutomation {
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             
             if let myContact = contactModel.contacts.first {
-                if let id = myContact.linkedUser?.coreUserId {
+                if let id = myContact.linkedUser?.id {
                     self.delegate?.newInfo(type: MoreInfoTypes.Block.rawValue, message: "new conract has been created, user id = \(id)", lineNumbers: 1)
                     self.addContactThenBlockWithUserIdSenario(userId: id)
                 } else {
@@ -280,8 +280,8 @@ extension BlockAutomation {
     func addContactAndGetContactIdToCreateThread() {
         delegate?.newInfo(type: MoreInfoTypes.Block.rawValue, message: "try to add contact, then create thread with this contact, then block this threadId!!", lineNumbers: 1)
         
-        let pouria = Faker.sharedInstance.pouriaAsContact
-        let addContact = AddContactAutomation(cellphoneNumber: pouria.cellphoneNumber, email: nil, firstName: pouria.firstName, lastName: pouria.lastName)
+        let mehdi = Faker.sharedInstance.mehdiAsContact
+        let addContact = AddContactAutomation(cellphoneNumber: mehdi.cellphoneNumber, email: nil, firstName: mehdi.firstName, lastName: mehdi.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
                 if let phoneNumber = myContact.cellphoneNumber {
