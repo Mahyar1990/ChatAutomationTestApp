@@ -46,17 +46,18 @@ class UnblockAutomation {
         self.uniqueIdCallback   = uniqueId
         self.responseCallback   = serverResponse
         
-        switch (blockId, contactId, threadId, userId) {
+        switch (blockId, contactId, userId, threadId) {
         case let (.some(bId), _, _, _):
-            sendRequest(theBlockId: bId, theContactId: nil, theThreadId: nil, theUserId: nil, isAutomation: false)
+            sendRequest(theBlockId: bId, theContactId: nil, theUserId: nil, theThreadId: nil, isAutomation: false)
         case let (_, .some(cId), _, _):
-            sendRequest(theBlockId: nil, theContactId: cId, theThreadId: nil, theUserId: nil, isAutomation: false)
-        case let ( _, _, .some(tId), _):
-            sendRequest(theBlockId: nil, theContactId: nil, theThreadId: tId, theUserId: nil, isAutomation: false)
-        case let (_, _, _, .some(uId)):
-            sendRequest(theBlockId: nil, theContactId: nil, theThreadId: nil, theUserId: uId, isAutomation: false)
+            sendRequest(theBlockId: nil, theContactId: cId, theUserId: nil, theThreadId: nil, isAutomation: false)
+        case let ( _, _, .some(uId), _):
+            sendRequest(theBlockId: nil, theContactId: nil, theUserId: uId, theThreadId: nil, isAutomation: false)
+        case let (_, _, _, .some(tId)):
+            sendRequest(theBlockId: nil, theContactId: nil, theUserId: nil, theThreadId: tId, isAutomation: false)
         default:
-            unblockSenario(withBlockId: nil, withContactId: nil, withThreadId: nil, withUserId: nil)
+            delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "there is no id to unblock, so we have to implement all the possible cases to unblock", lineNumbers: 2)
+            unblockSenario(withBlockId: nil, withContactId: nil, withUserId: nil, withThreadId: nil)
         }
         
 //        if let block = blockId {
@@ -77,7 +78,7 @@ class UnblockAutomation {
     }
     
     
-    func sendRequest(theBlockId: Int?, theContactId: Int?, theThreadId: Int?, theUserId: Int?, isAutomation: Bool) {
+    func sendRequest(theBlockId: Int?, theContactId: Int?, theUserId: Int?, theThreadId: Int?, isAutomation: Bool) {
         
         delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "send Request to Unblock with this params:\nblockId = \(theBlockId ?? 0) , contactId = \(theContactId ?? 0) , threadId = \(theThreadId ?? 0) , typeCode = \(typeCode ?? "nil") , userId = \(theUserId ?? 0)", lineNumbers: 2)
         
@@ -88,13 +89,13 @@ class UnblockAutomation {
         }, completion: { (unblockResponse) in
             self.responseCallback?(unblockResponse as! BlockedContactModel)
             if isAutomation {
-                switch (theBlockId, theContactId, theThreadId, theUserId) {
+                switch (theBlockId, theContactId, theUserId, theThreadId) {
                 case let (.some(id), .none, .none, .none):
-                    self.unblockSenario(withBlockId: id, withContactId: nil, withThreadId: nil, withUserId: nil)
+                    self.unblockSenario(withBlockId: id, withContactId: nil, withUserId: nil, withThreadId: nil)
                 case let (.none, .some(id), .none, .none):
-                    self.unblockSenario(withBlockId: nil, withContactId: id, withThreadId: nil, withUserId: nil)
+                    self.unblockSenario(withBlockId: nil, withContactId: id, withUserId: nil, withThreadId: nil)
                 case let (.none, .none, .some(id), .none):
-                    self.unblockSenario(withBlockId: nil, withContactId: nil, withThreadId: id, withUserId: nil)
+                    self.unblockSenario(withBlockId: nil, withContactId: nil, withUserId: id, withThreadId: nil)
                 default: return
                 }
             }
@@ -103,22 +104,23 @@ class UnblockAutomation {
     }
     
     
-    func unblockSenario(withBlockId: Int?, withContactId: Int?, withThreadId: Int?, withUserId: Int?) {
-        switch (withBlockId, withContactId, withThreadId, withUserId) {
-        case (.none, .none, .none, .none):      createContactAndBlockItThenUnblockWithBlockId()
-        case (.some(_), .none, .none, .none):   addContactThenBlock(withContactId: true, withThreadId: false, withUserId: false)
-        case (.none, .some(_), .none, .none):   addContactThenBlock(withContactId: false, withThreadId: true, withUserId: false)
-        case (.none, .none, .some(_), .none):   addContactThenBlock(withContactId: false, withThreadId: false, withUserId: true)
+    func unblockSenario(withBlockId: Int?, withContactId: Int?, withUserId: Int?, withThreadId: Int?) {
+        switch (withBlockId, withContactId, withUserId, withThreadId) {
+        case (.none, .none, .none, .none):      addContactThenBlock(withContactId: false, withUserId: false, withThreadId: false)
+        case (.some(_), .none, .none, .none):   addContactThenBlock(withContactId: true, withUserId: false, withThreadId: false)
+        case (.none, .some(_), .none, .none):   addContactThenBlock(withContactId: false, withUserId: true, withThreadId: false)
+        case (.none, .none, .some(_), .none):   addContactThenBlock(withContactId: false, withUserId: false, withThreadId: true)
         default: return
         }
     }
     
-    func createContactAndBlockItThenUnblockWithBlockId() {
-        
-    }
     
-    func addContactThenBlock(withContactId: Bool, withThreadId: Bool, withUserId: Bool) {
-        
+}
+
+
+extension UnblockAutomation {
+    
+    func addContactThenBlock(withContactId: Bool, withUserId: Bool, withThreadId: Bool) {
         delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "try to add contact, then block it with contactId!!", lineNumbers: 1)
         
         let pouria = Faker.sharedInstance.pouriaAsContact
@@ -128,10 +130,20 @@ class UnblockAutomation {
             if let myContact = contactModel.contacts.first {
                 
                 switch (withContactId, withUserId, withThreadId) {
+                    
+                case (false, false, false):
+                    if let id = myContact.id {
+                        self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new conract has been created, contact id = \(id)", lineNumbers: 1)
+                        self.blockWith(contactId: id, userId: nil, threadId: nil, needBlockList: true)
+                    } else {
+                        // handle error that the contact doesn't have id!!!!!
+                        self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "the contact doesn't have id", lineNumbers: 1)
+                    }
+                    
                 case (true, false, false):
                     if let id = myContact.id {
                         self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new conract has been created, contact id = \(id)", lineNumbers: 1)
-                        self.blockWith(contactId: id, threadId: nil, userId: nil)
+                        self.blockWith(contactId: id, userId: nil, threadId: nil, needBlockList: false)
                     } else {
                         // handle error that the contact doesn't have id!!!!!
                         self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "the contact doesn't have id", lineNumbers: 1)
@@ -140,7 +152,7 @@ class UnblockAutomation {
                 case (false, true, false):
                     if let id = myContact.linkedUser?.id {
                         self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new conract has been created, user id = \(id)", lineNumbers: 1)
-                        self.blockWith(contactId: nil, threadId: nil, userId: id)
+                        self.blockWith(contactId: myContact.id, userId: id, threadId: nil, needBlockList: false)
                     } else {
                         // handle error that the contact doesn't have linkedUser, or coreUserId
                         self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "the contact doesn't have linkedUser, or coreUserId in its Model", lineNumbers: 1)
@@ -156,7 +168,7 @@ class UnblockAutomation {
                             if let threadId = createThreadModel.thread?.id {
                                 self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new Thread has been created, threadId = \(threadId)", lineNumbers: 1)
                                 
-                                self.blockWith(contactId: nil, threadId: threadId, userId: nil)
+                                self.blockWith(contactId: nil, userId: nil, threadId: threadId, needBlockList: false)
                             }
                         })
                     } else {
@@ -176,37 +188,61 @@ class UnblockAutomation {
     
     
     
-    func blockWith(contactId: Int?, threadId: Int?, userId: Int?) {
+    func blockWith(contactId: Int?, userId: Int?, threadId: Int?, needBlockList: Bool) {
         
-        switch (contactId, threadId, userId) {
+        
+        switch (contactId, userId, threadId) {
         case let (.some(contact), .none, .none):
+            delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new try to block contact with contactId = \(contact)", lineNumbers: 1)
             let block = BlockAutomation(contactId: contact, threadId: nil, typeCode: typeCode, userId: nil)
             block.create(uniqueId: { _ in }) { (blockedContactModel) in
-                if let blockId = blockedContactModel.blockedContact.id {
-                    self.sendRequest(theBlockId: nil, theContactId: blockId, theThreadId: nil, theUserId: nil, isAutomation: true)
+                self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "contact has been blocked", lineNumbers: 1)
+                if needBlockList {
+                    self.getBlockList()
+                } else {
+                    self.sendRequest(theBlockId: nil, theContactId: contact, theUserId: nil, theThreadId: nil, isAutomation: true)
                 }
             }
-            
-        case let (.none, .some(thread), .none):
+        
+        case let (.some(contact), .some(user), .none):
+            delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new try to block contact with userId = \(user)", lineNumbers: 1)
+//            let block = BlockAutomation(contactId: nil, threadId: nil, typeCode: typeCode, userId: user)
+            let block = BlockAutomation(contactId: contact, threadId: nil, typeCode: typeCode, userId: nil)
+            block.create(uniqueId: { _ in }) { (blockedContactModel) in
+                self.sendRequest(theBlockId: nil, theContactId: nil, theUserId: user, theThreadId: nil, isAutomation: true)
+            }
+        
+        case let (.none, .none, .some(thread)):
+            delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new try to block the threadId = \(thread)", lineNumbers: 1)
             let block = BlockAutomation(contactId: nil, threadId: thread, typeCode: typeCode, userId: nil)
             block.create(uniqueId: { _ in }) { (blockedContactModel) in
-                if let blockId = blockedContactModel.blockedContact.id {
-                    self.sendRequest(theBlockId: nil, theContactId: nil, theThreadId: blockId, theUserId: nil, isAutomation: true)
-                }
+                self.sendRequest(theBlockId: nil, theContactId: nil, theUserId: nil, theThreadId: thread, isAutomation: true)
             }
             
-        case let (.none, .none, .some(user)):
-            let block = BlockAutomation(contactId: nil, threadId: nil, typeCode: typeCode, userId: user)
-            block.create(uniqueId: { _ in }) { (blockedContactModel) in
-                if let blockId = blockedContactModel.blockedContact.id {
-                    self.sendRequest(theBlockId: nil, theContactId: nil, theThreadId: nil, theUserId: blockId, isAutomation: true)
-                }
-            }
-            
+        
         default: return
         }
         
-        
+    }
+    
+    func getBlockList() {
+        delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "send request to get block list", lineNumbers: 1)
+        let getBlockLists = GetBlockedListAutomation(count: 1, offset: 0, typeCode: nil)
+        getBlockLists.create(uniqueId: { _ in}) { (getBlockedContactListModel) in
+            if let blockedContact = getBlockedContactListModel.blockedList.first {
+                if let blockId = blockedContact.id {
+                    self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "got the block id (\(blockId)) from the GetBlockList Request", lineNumbers: 2)
+                    self.sendRequest(theBlockId: blockId, theContactId: nil, theUserId: nil, theThreadId: nil, isAutomation: true)
+                } else {
+                    // handle error that the blocked Model doesn't have id !!!
+                    self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "the blocked Model doesn't have id !!!", lineNumbers: 1)
+                }
+            } else {
+                // handle error that there is no block object on the server response
+                self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "there is no objec in the blockedList array!", lineNumbers: 1)
+            }
+        }
     }
     
 }
+

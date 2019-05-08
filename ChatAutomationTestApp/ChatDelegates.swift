@@ -37,7 +37,7 @@ extension MyChatViewController: ChatDelegates {
     }
     
     func chatState(state: Int) {
-        print("chat state = \(state)")
+        print("chat state changed: \(state)")
     }
     
     func chatReady(withUserInfo: User) {

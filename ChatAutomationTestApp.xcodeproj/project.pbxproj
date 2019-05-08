@@ -32,6 +32,7 @@
 		3EAE775522217AD4005AC3C3 /* MyChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE775422217AD4005AC3C3 /* MyChatViewController.swift */; };
 		3EAE775A22217AD6005AC3C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EAE775922217AD6005AC3C3 /* Assets.xcassets */; };
 		3EAE775D22217AD6005AC3C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EAE775B22217AD6005AC3C3 /* LaunchScreen.storyboard */; };
+		3ECC15762282F870003B8240 /* CreateThreadWithMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECC15752282F870003B8240 /* CreateThreadWithMessageAutomation.swift */; };
 		3ED3DA80222E5E9A00261DB3 /* GetBlockedListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */; };
 		3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */; };
 		3ED3DA86222E748600261DB3 /* GetThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */; };
@@ -88,6 +89,7 @@
 		3EAE775922217AD6005AC3C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EAE775C22217AD6005AC3C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3EAE775E22217AD6005AC3C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3ECC15752282F870003B8240 /* CreateThreadWithMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThreadWithMessageAutomation.swift; sourceTree = "<group>"; };
 		3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockedListAutomation.swift; sourceTree = "<group>"; };
 		3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockAutomation.swift; sourceTree = "<group>"; };
 		3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetThreadAutomation.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 			children = (
 				3EEB0813227EA277009DA162 /* AddParticipantAutomation.swift */,
 				3E6295602225778D002DB51C /* CreateThreadAutomation.swift */,
+				3ECC15752282F870003B8240 /* CreateThreadWithMessageAutomation.swift */,
 				3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */,
 				3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */,
 				3EE1047D227D736000A4E645 /* GetThreadParticipantsAutomation.swift */,
@@ -357,6 +360,7 @@
 				3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */,
 				3ED3DA88222E930600261DB3 /* SendTextMessageAutomation.swift in Sources */,
 				3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */,
+				3ECC15762282F870003B8240 /* CreateThreadWithMessageAutomation.swift in Sources */,
 				3E9725AF222292210056AD4D /* Views.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

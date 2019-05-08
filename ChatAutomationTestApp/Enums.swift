@@ -28,10 +28,11 @@ enum MoreInfoTypes: String {
     case Unblock            = "Unblock"
     case UpdateContact      = "UpdateContact"
     
-    case AddParticipant     = "AddParticipant"
-    case CreateThread       = "CreateThread"
-    case GetHistory         = "GetHistory"
-    case GetThread          = "GetThread"
+    case AddParticipant         = "AddParticipant"
+    case CreateThread           = "CreateThread"
+    case CreateThreadWithMessage = "CreateThreadWithMessage"
+    case GetHistory             = "GetHistory"
+    case GetThread              = "GetThread"
     case GetThreadParticipants  = "GetThreadParticipants"
     
     case DeleteMessage      = "DeleteMessage"

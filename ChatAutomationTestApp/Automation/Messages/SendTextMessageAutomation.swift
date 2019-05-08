@@ -91,16 +91,12 @@ class SendTextMessageAutomation {
                                                           typeCode:         theTypeCode,
                                                           uniqueId:         theUniqueId)
         myChatObject?.sendTextMessage(sendTextMessageInput: sendTextMessage, uniqueId: { (sentTextMessageUniqueId) in
-//            self.delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "uniqueId = \(sentTextMessageUniqueId)", lineNumbers: 1)
             self.uniqueIdCallback?(sentTextMessageUniqueId)
         }, onSent: { (sent) in
-//            self.delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "sent = \(sentTextMessageUniqueId as! JSON)", lineNumbers: 2)
             self.serverSentResponse?(sent as! JSON)
         }, onDelivere: { (deliver) in
-            //
             self.serverDeliverResponse?(deliver as! JSON)
         }, onSeen: { (seen) in
-            //
             self.serverSeenResponse?(seen as! JSON)
         })
         
