@@ -14,6 +14,12 @@
 		3E1C357A225B5E55001A343B /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C3579225B5E55001A343B /* SwiftyBeaver.framework */; };
 		3E1C357C225B5E58001A343B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C357B225B5E58001A343B /* SwiftyJSON.framework */; };
 		3E1C3584225B600C001A343B /* GetHistoryAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */; };
+		3E5EEDF52286B4210026DB58 /* SearchContactAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EEDF42286B4210026DB58 /* SearchContactAutomation.swift */; };
+		3E5EEDF92286C2FC0026DB58 /* LeaveThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EEDF82286C2FC0026DB58 /* LeaveThreadAutomation.swift */; };
+		3E5EEDFD2286C8A70026DB58 /* MuteThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EEDFC2286C8A70026DB58 /* MuteThreadAutomation.swift */; };
+		3E5EEDFF2286CA870026DB58 /* UnmuteThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EEDFE2286CA870026DB58 /* UnmuteThreadAutomation.swift */; };
+		3E5EEE012286F4630026DB58 /* SpamThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EEE002286F4630026DB58 /* SpamThreadAutomation.swift */; };
+		3E5EEE032286FD3F0026DB58 /* RemoveParticipantAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EEE022286FD3F0026DB58 /* RemoveParticipantAutomation.swift */; };
 		3E6295612225778D002DB51C /* CreateThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6295602225778D002DB51C /* CreateThreadAutomation.swift */; };
 		3E629565222577B2002DB51C /* BlockAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E629564222577B2002DB51C /* BlockAutomation.swift */; };
 		3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E629566222577CA002DB51C /* GetContactsAutomation.swift */; };
@@ -69,6 +75,12 @@
 		3E1C3579225B5E55001A343B /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E1C357B225B5E58001A343B /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHistoryAutomation.swift; sourceTree = "<group>"; };
+		3E5EEDF42286B4210026DB58 /* SearchContactAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContactAutomation.swift; sourceTree = "<group>"; };
+		3E5EEDF82286C2FC0026DB58 /* LeaveThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveThreadAutomation.swift; sourceTree = "<group>"; };
+		3E5EEDFC2286C8A70026DB58 /* MuteThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuteThreadAutomation.swift; sourceTree = "<group>"; };
+		3E5EEDFE2286CA870026DB58 /* UnmuteThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnmuteThreadAutomation.swift; sourceTree = "<group>"; };
+		3E5EEE002286F4630026DB58 /* SpamThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamThreadAutomation.swift; sourceTree = "<group>"; };
+		3E5EEE022286FD3F0026DB58 /* RemoveParticipantAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveParticipantAutomation.swift; sourceTree = "<group>"; };
 		3E6295602225778D002DB51C /* CreateThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThreadAutomation.swift; sourceTree = "<group>"; };
 		3E629564222577B2002DB51C /* BlockAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockAutomation.swift; sourceTree = "<group>"; };
 		3E629566222577CA002DB51C /* GetContactsAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContactsAutomation.swift; sourceTree = "<group>"; };
@@ -147,6 +159,7 @@
 				3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */,
 				3E629566222577CA002DB51C /* GetContactsAutomation.swift */,
 				3E62956A222577F1002DB51C /* RemoveContactAutomation.swift */,
+				3E5EEDF42286B4210026DB58 /* SearchContactAutomation.swift */,
 				3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */,
 				3E8D148C225CAB63001C0AE6 /* UpdateContactAutomation.swift */,
 			);
@@ -162,6 +175,11 @@
 				3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */,
 				3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */,
 				3EE1047D227D736000A4E645 /* GetThreadParticipantsAutomation.swift */,
+				3E5EEDF82286C2FC0026DB58 /* LeaveThreadAutomation.swift */,
+				3E5EEDFC2286C8A70026DB58 /* MuteThreadAutomation.swift */,
+				3E5EEDFE2286CA870026DB58 /* UnmuteThreadAutomation.swift */,
+				3E5EEE022286FD3F0026DB58 /* RemoveParticipantAutomation.swift */,
+				3E5EEE002286F4630026DB58 /* SpamThreadAutomation.swift */,
 			);
 			path = Threads;
 			sourceTree = "<group>";
@@ -336,7 +354,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E9725B32222925F0056AD4D /* ChatDelegates.swift in Sources */,
+				3E5EEDF92286C2FC0026DB58 /* LeaveThreadAutomation.swift in Sources */,
 				3E62956B222577F1002DB51C /* RemoveContactAutomation.swift in Sources */,
+				3E5EEDFF2286CA870026DB58 /* UnmuteThreadAutomation.swift in Sources */,
 				3EEB081C227EC98C009DA162 /* GetTokenWithRefreshToken.swift in Sources */,
 				3EEB081A227EC7DD009DA162 /* Enums.swift in Sources */,
 				3EAE775522217AD4005AC3C3 /* MyChatViewController.swift in Sources */,
@@ -357,11 +377,15 @@
 				3E8D148D225CAB63001C0AE6 /* UpdateContactAutomation.swift in Sources */,
 				3E9725B5222292C80056AD4D /* BaseCell.swift in Sources */,
 				3EEB0814227EA277009DA162 /* AddParticipantAutomation.swift in Sources */,
+				3E5EEDFD2286C8A70026DB58 /* MuteThreadAutomation.swift in Sources */,
 				3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */,
+				3E5EEE032286FD3F0026DB58 /* RemoveParticipantAutomation.swift in Sources */,
+				3E5EEDF52286B4210026DB58 /* SearchContactAutomation.swift in Sources */,
 				3ED3DA88222E930600261DB3 /* SendTextMessageAutomation.swift in Sources */,
 				3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */,
 				3ECC15762282F870003B8240 /* CreateThreadWithMessageAutomation.swift in Sources */,
 				3E9725AF222292210056AD4D /* Views.swift in Sources */,
+				3E5EEE012286F4630026DB58 /* SpamThreadAutomation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

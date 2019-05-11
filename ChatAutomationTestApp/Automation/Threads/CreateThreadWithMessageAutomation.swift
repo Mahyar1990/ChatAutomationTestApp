@@ -73,6 +73,7 @@ class CreateThreadWithMessageAutomation {
             } else {
                 // handle that you should fill all these 2 items: title , invitees
                 delegate?.newInfo(type: MoreInfoTypes.CreateThreadWithMessage.rawValue, message: "'title' and 'invitees' are empty. you should fill both of these items", lineNumbers: 1)
+                addContactThenCreateThread()
             }
         }
     }
@@ -101,7 +102,7 @@ class CreateThreadWithMessageAutomation {
                                                                                messageMetaDataType: nil,
                                                                                messageMetaDataOwner: nil)
         
-            myChatObject?.creatThreadWithMessage(creatThreadWithMessageInput: createThreadWithMessageInput, uniqueId: { (createThreadWithMessageUniqueId) in
+            myChatObject?.createThreadWithMessage(creatThreadWithMessageInput: createThreadWithMessageInput, uniqueId: { (createThreadWithMessageUniqueId) in
                 self.uniqueIdCallback?(createThreadWithMessageUniqueId)
             }, completion: { (createThreadModel) in
                 self.completionResponseCallback?(createThreadModel as! CreateThreadModel)
