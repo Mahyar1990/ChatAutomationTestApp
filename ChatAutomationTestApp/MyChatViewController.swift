@@ -52,7 +52,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var logArr              = [String]()
     var logHeightArr        = [Int]()
     var logBackgroundColor  = [UIColor]()
-    let pickerData          = ["AddContact", "Block", "GetBlockedList", "GetContacts", "RemoveContact", "SearchContact", "Unblock", "UpdateContact", "AddParticipants", "CreateThread", "CreateThreadWithMessage", "GetHistory", "GetThread", "GetThreadParticipants", "LeaveThread", "MuteThread", "UnmuteThread", "RemoveParticipant", "SpamThread", "DeleteMessage", "EditMessage", "ForwardMessage", "ReplyTextMessage", "SendTextMessage"]
+    let pickerData          = ["AddContact", "Block", "GetBlockedList", "GetContacts", "RemoveContact", "SearchContact", "Unblock", "UpdateContact", "AddParticipants", "CreateThread", "CreateThreadWithMessage", "GetHistory", "GetThread", "GetThreadParticipants", "LeaveThread", "MuteThread", "UnmuteThread", "RemoveParticipant", "SpamThread", "DeleteMessage", "EditMessage", "ForwardMessage", "ReplyTextMessage", "SendTextMessage", "UploadFile", "UploadImage"]
     
     let tokenTextField: UITextField = {
         let mt = UITextField()
@@ -151,6 +151,8 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     
     var picker = 0
     
+    let pickerController = UIImagePickerController()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -186,7 +188,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 /*
 https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52664cf7de0bda&response_type=token&redirect_uri=https://chat.fanapsoft.ir&scope=profile social:write
  */
-            token = "48038718d349482785cd08254e931dae"
+            token = "38a51bd71e53419ca19de5fb318146c2"
 //            token = "7a18deb4a4b64339a81056089f5e5922"
 //            token = "7cba09ff83554fc98726430c30afcfc6"
             createChat()
@@ -301,6 +303,9 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         case 22: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: .white)
         case 23: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 70, cellColor: .white)
             
+        case 24: updateText(cellText: "Input 1 = fileName", cellHeight: 50, cellColor: .white)
+        case 25: updateText(cellText: "Input 1 = imageName", cellHeight: 50, cellColor: .white)
+            
         default:
             print("Selected row number \(row) that is not in the correct range!")
         }
@@ -367,6 +372,9 @@ extension MyChatViewController {
         case 21: implementForwardMessage()  // implement ForwardMessage
         case 22: implementReplyTextMessage()// implement ReplyTextMessage
         case 23: implementSendTextMessage() // implement SendTextMessage
+            
+        case 24: implementUploadFile()      // implement UploadFile
+        case 25: implementUploadImage()     // implement UploadImage
             
         default:
             print("Selected row number \(picker) that is not in the correct range!")
@@ -1016,6 +1024,32 @@ extension MyChatViewController {
         }
     }
     
+    // 24
+    func implementUploadFile() {
+        var fileName:    String? = nil
+        if let txt = input1TextField.text {
+            if (txt != "") && (txt.first != " ") { fileName = txt }
+        }
+        let uploadFile = UploadFileAutomation(data: nil, fileName: fileName, threadId: nil, uniqueId: nil)
+        uploadFile.delegate = self
+        uploadFile.create(uniqueId: { (uploadFileUniqueId) in
+            let myText = "uploadFile unique id = \(uploadFileUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }, progress: { (progress) in
+            print("\(progress)")
+        }) { (uploadFileServerResponse) in
+            let myText = "uploadFile response = \(uploadFileServerResponse.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }
+    }
+    
+    // 25
+    func implementUploadImage() {
+        pickerController.delegate = self
+        pickerController.allowsEditing = true
+        self.present(pickerController, animated: true, completion: nil)
+    }
+    
 }
 
 
@@ -1046,6 +1080,36 @@ extension MyChatViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 
 
+extension MyChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        var selectedImage: UIImage?
+        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+            selectedImage = editedImage
+        } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            selectedImage = originalImage
+        }
+        picker.dismiss(animated: true, completion: nil)
+        
+        var fileName:    String? = nil
+        if let txt = input1TextField.text {
+            if (txt != "") && (txt.first != " ") { fileName = txt }
+        }
+        
+        let uploadImge = UploadImageAutomation(image: selectedImage, fileName: fileName, threadId: nil, uniqueId: nil)
+        uploadImge.delegate = self
+        uploadImge.create(uniqueId: { (uploadImageUniqueId) in
+            let myText = "uploadImage unique id = \(uploadImageUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }, progress: { (progress) in
+            print("\(progress)")
+        }) { (uploadImageServerResponse) in
+            let myText = "uploadImage response = \(uploadImageServerResponse.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }
+        
+    }
+}
 
 
 
