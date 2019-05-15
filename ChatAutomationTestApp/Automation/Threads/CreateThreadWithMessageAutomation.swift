@@ -125,8 +125,8 @@ class CreateThreadWithMessageAutomation {
 extension CreateThreadWithMessageAutomation {
     
     func addContactThenCreateThread() {
-        let pouria = Faker.sharedInstance.pouriaAsContact
-        let addContact = AddContactAutomation(cellphoneNumber: pouria.cellphoneNumber, email: pouria.email, firstName: pouria.firstName, lastName: pouria.lastName)
+        let mehdi = Faker.sharedInstance.mehdiAsContact
+        let addContact = AddContactAutomation(cellphoneNumber: mehdi.cellphoneNumber, email: mehdi.email, firstName: mehdi.firstName, lastName: mehdi.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
                 if let id = myContact.id {
@@ -138,11 +138,11 @@ extension CreateThreadWithMessageAutomation {
                     
                 } else {
                     // handle error that didn't get contact id in the contact model
-                    self.delegate?.newInfo(type: MoreInfoTypes.CreateThreadWithMessage.rawValue, message: "there is no CellphoneNumber when addContact with this user (firstName = \(pouria.firstName) , cellphoneNumber = \(pouria.cellphoneNumber))!", lineNumbers: 2)
+                    self.delegate?.newInfo(type: MoreInfoTypes.CreateThreadWithMessage.rawValue, message: "there is no CellphoneNumber when addContact with this user (firstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber))!", lineNumbers: 2)
                 }
             } else {
                 // handle error that didn't add Contact Model
-                self.delegate?.newInfo(type: MoreInfoTypes.CreateThreadWithMessage.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(pouria.firstName) , cellphoneNumber = \(pouria.cellphoneNumber) , lastName = \(pouria.lastName)", lineNumbers: 2)
+                self.delegate?.newInfo(type: MoreInfoTypes.CreateThreadWithMessage.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber) , lastName = \(mehdi.lastName)", lineNumbers: 2)
             }
         }
     }

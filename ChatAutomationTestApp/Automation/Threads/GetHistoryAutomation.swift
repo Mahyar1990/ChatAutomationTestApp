@@ -133,8 +133,8 @@ class GetHistoryAutomation {
     
     // 1
     func addContact() {
-        let pouria = Faker.sharedInstance.pouriaAsContact
-        let addContact = AddContactAutomation(cellphoneNumber: pouria.cellphoneNumber, email: pouria.email, firstName: pouria.firstName, lastName: pouria.lastName)
+        let mehdi = Faker.sharedInstance.mehdiAsContact
+        let addContact = AddContactAutomation(cellphoneNumber: mehdi.cellphoneNumber, email: mehdi.email, firstName: mehdi.firstName, lastName: mehdi.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
                 if let cellPhone = myContact.cellphoneNumber {

@@ -20,23 +20,23 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 */
     
 // SandBox Addresses:
-    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
-    let serverName              = "chat-server"
-    let ssoHost                 = "https://accounts.pod.land"
-    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = ""
+//    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
+//    let serverName              = "chat-server"
+//    let ssoHost                 = "https://accounts.pod.land"
+//    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+//    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+//    var token                   = ""
     
     
 // Local Addresses
-//    let socketAddress           = "ws://172.16.106.26:8003/ws"
-//    let serverName              = "chat-server"
-//    let ssoHost                 = "http://172.16.110.76"
-//    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
-//    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+    let socketAddress           = "ws://172.16.106.26:8003/ws"
+    let serverName              = "chat-server"
+    let ssoHost                 = "http://172.16.110.76"
+    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
+    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
 //    var token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
-//    var token                   = "7cba09ff83554fc98726430c30afcfc6"    // ZiZi
+    var token                   = "7cba09ff83554fc98726430c30afcfc6"    // ZiZi
 //    let token = "fbd4ecedb898426394646e65c6b1d5d1" //  {**REQUIRED**} SSO Token JiJi
 //    let token = "5fb88da4c6914d07a501a76d68a62363" // {**REQUIRED**} SSO Token FiFi
 //    let token = "bebc31c4ead6458c90b607496dae25c6" // {**REQUIRED**} SSO Token Alexi
@@ -52,7 +52,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var logArr              = [String]()
     var logHeightArr        = [Int]()
     var logBackgroundColor  = [UIColor]()
-    let pickerData          = ["AddContact", "Block", "GetBlockedList", "GetContacts", "RemoveContact", "SearchContact", "Unblock", "UpdateContact", "AddParticipants", "CreateThread", "CreateThreadWithMessage", "GetHistory", "GetThread", "GetThreadParticipants", "LeaveThread", "MuteThread", "UnmuteThread", "RemoveParticipant", "SpamThread", "DeleteMessage", "EditMessage", "ForwardMessage", "ReplyTextMessage", "SendTextMessage", "UploadFile", "UploadImage"]
+    let pickerData          = ["AddContact", "Block", "GetBlockedList", "GetContacts", "RemoveContact", "SearchContact", "Unblock", "UpdateContact", "AddParticipants", "ClearHistory", "CreateThread", "CreateThreadWithMessage", "GetHistory", "GetThread", "GetThreadParticipants", "LeaveThread", "MuteThread", "UnmuteThread", "RemoveParticipant", "SpamThread", "DeleteMessage", "EditMessage", "ForwardMessage", "MessageDeliveryList" ,"MessageSeenList", "ReplyTextMessage", "SendTextMessage", "UploadFile", "UploadImage"]
     
     let tokenTextField: UITextField = {
         let mt = UITextField()
@@ -188,9 +188,9 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 /*
 https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52664cf7de0bda&response_type=token&redirect_uri=https://chat.fanapsoft.ir&scope=profile social:write
  */
-            token = "38a51bd71e53419ca19de5fb318146c2"
+//            token = "b188587935f349f3b23e281bf2f770f2"
 //            token = "7a18deb4a4b64339a81056089f5e5922"
-//            token = "7cba09ff83554fc98726430c30afcfc6"
+            token = "7cba09ff83554fc98726430c30afcfc6"
             createChat()
         }
         
@@ -286,25 +286,28 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         case 7: updateText(cellText: " Input 1 = contactId as Int \n Input 2 = cellphoneNumber as String \n Input 3 = email as String \n Input 4 = fullname (contain firstname and lastname seperated by cama ',') as String", cellHeight: 90, cellColor: .white)
             
         case 8: updateText(cellText: " Input 1 = threadId as Int \n Input 2 = ContactId1 as Int \n Input 3 = ContactId2 as Int \n Input 4 = ContactId3 as Int", cellHeight: 70, cellColor: .white)
-        case 9: updateText(cellText: " Input 1 = description as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: .white)
-        case 10: updateText(cellText: " Input 1 = message text as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: .white)
-        case 11: updateText(cellText: " Input 1 = threadId as Int \n Input 2 = fromTime as UInt \n Input 3 = toTime as UInt \n Input 4 = query as String", cellHeight: 70, cellColor: .white)
-        case 12: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
+        case 9: updateText(cellText: " Input 1 = threadId as Int", cellHeight: 70, cellColor: .white)
+        case 10: updateText(cellText: " Input 1 = description as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: .white)
+        case 11: updateText(cellText: " Input 1 = message text as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: .white)
+        case 12: updateText(cellText: " Input 1 = threadId as Int \n Input 2 = fromTime as UInt \n Input 3 = toTime as UInt \n Input 4 = query as String", cellHeight: 70, cellColor: .white)
         case 13: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
-        case 14: updateText(cellText: " Input 1 = ThreadId", cellHeight: 50, cellColor: .white)
+        case 14: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
         case 15: updateText(cellText: " Input 1 = ThreadId", cellHeight: 50, cellColor: .white)
         case 16: updateText(cellText: " Input 1 = ThreadId", cellHeight: 50, cellColor: .white)
-        case 17: updateText(cellText: " Input 1 = ThreadId \n Input 2 = participant as Int \n Input 3 = participant as Int \n Input 4 = participant as Int", cellHeight: 50, cellColor: .white)
-        case 18: updateText(cellText: " Input 1 = ThreadId", cellHeight: 50, cellColor: .white)
+        case 17: updateText(cellText: " Input 1 = ThreadId", cellHeight: 50, cellColor: .white)
+        case 18: updateText(cellText: " Input 1 = ThreadId \n Input 2 = participant as Int \n Input 3 = participant as Int \n Input 4 = participant as Int", cellHeight: 50, cellColor: .white)
+        case 19: updateText(cellText: " Input 1 = ThreadId", cellHeight: 50, cellColor: .white)
             
-        case 19: updateText(cellText: " Input 1 = subjectId as Int", cellHeight: 40, cellColor: .white)
-        case 20: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: .white)
-        case 21: updateText(cellText: " Input 1 = messageIds as [Int] \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: .white)
-        case 22: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: .white)
-        case 23: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 70, cellColor: .white)
+        case 20: updateText(cellText: " Input 1 = subjectId as Int", cellHeight: 40, cellColor: .white)
+        case 21: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: .white)
+        case 22: updateText(cellText: " Input 1 = messageIds as [Int] \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: .white)
+        case 23: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = messageId as Int", cellHeight: 70, cellColor: .white)
+        case 24: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = messageId as Int", cellHeight: 70, cellColor: .white)
+        case 25: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: .white)
+        case 26: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 70, cellColor: .white)
             
-        case 24: updateText(cellText: "Input 1 = fileName", cellHeight: 50, cellColor: .white)
-        case 25: updateText(cellText: "Input 1 = imageName", cellHeight: 50, cellColor: .white)
+        case 27: updateText(cellText: "Input 1 = fileName", cellHeight: 50, cellColor: .white)
+        case 28: updateText(cellText: "Input 1 = imageName", cellHeight: 50, cellColor: .white)
             
         default:
             print("Selected row number \(row) that is not in the correct range!")
@@ -355,26 +358,29 @@ extension MyChatViewController {
         case 6: implementUnblock()          // implement Unblock
         case 7: implementUpdateContact()    // implement UpdateContact
             
-        case 8: implementAddParticipant()   // implement AddThreadParticipants
-        case 9: implementCreateThread()     // implement CreateThread
-        case 10: implementCreateWithMessageThread()     // implement CreateThreadWithMessage
-        case 11: implementGetHistory()      // implement GetHistory
-        case 12: implementGetThreads()      // implement GetThreads
-        case 13: implementGetThreadParticipants() // implement GetThreadParticipants
-        case 14: implementLeaveThread()     // implement LeaveThread
-        case 15: implementMuteThread()      // implement MuteThread
-        case 16: implementUnmuteThread()    // implement UnmuteThread
-        case 17: implementRemoveParticipant() // implement RemoveParticipant
-        case 18: implementSpamThread()      // implement SpamThread
+        case 8: implementAddParticipant()           // implement AddThreadParticipants
+        case 9: implementClearHistory()             // implement ClearHistory
+        case 10: implementCreateThread()            // implement CreateThread
+        case 11: implementCreateWithMessageThread() // implement CreateThreadWithMessage
+        case 12: implementGetHistory()              // implement GetHistory
+        case 13: implementGetThreads()              // implement GetThreads
+        case 14: implementGetThreadParticipants()   // implement GetThreadParticipants
+        case 15: implementLeaveThread()             // implement LeaveThread
+        case 16: implementMuteThread()              // implement MuteThread
+        case 17: implementUnmuteThread()            // implement UnmuteThread
+        case 18: implementRemoveParticipant()       // implement RemoveParticipant
+        case 19: implementSpamThread()              // implement SpamThread
             
-        case 19: implementDeleteMessage()   // implement DeletMessage
-        case 20: implementEditMessage()     // implement EditMessage
-        case 21: implementForwardMessage()  // implement ForwardMessage
-        case 22: implementReplyTextMessage()// implement ReplyTextMessage
-        case 23: implementSendTextMessage() // implement SendTextMessage
+        case 20: implementDeleteMessage()       // implement DeletMessage
+        case 21: implementEditMessage()         // implement EditMessage
+        case 22: implementForwardMessage()      // implement ForwardMessage
+        case 23: implementMessageDeliveryList() // implement MessgaeDeliveryList
+        case 24: implementMessageSeenList()     // implement MessageSeenList
+        case 25: implementReplyTextMessage()    // implement ReplyTextMessage
+        case 26: implementSendTextMessage()     // implement SendTextMessage
             
-        case 24: implementUploadFile()      // implement UploadFile
-        case 25: implementUploadImage()     // implement UploadImage
+        case 27: implementUploadFile()      // implement UploadFile
+        case 28: implementUploadImage()     // implement UploadImage
             
         default:
             print("Selected row number \(picker) that is not in the correct range!")
@@ -612,12 +618,30 @@ extension MyChatViewController {
             let myText = "add thread participant unique id) = \(addParticipantUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
         }) { (addParticipantServerResponse) in
-            let myText = "add thread participant unique id) = \(addParticipantServerResponse.returnDataAsJSON())"
+            let myText = "add thread participant server model response) = \(addParticipantServerResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
         }
     }
     
     // 9
+    func implementClearHistory() {
+        let threadId:   Int?    = Int(input1TextField.text ?? "")
+        
+        let clearHistory = ClearHistoryAutomation(threadId: threadId, requestUniqueId: nil)
+        clearHistory.delegate = self
+        clearHistory.create(uniqueId: { (clearHistoryUniqueId) in
+            let myText = "clear history unique id = \(clearHistoryUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }, serverResponse: { (clearHistoryServerResponse) in
+            let myText = "clear history server model response = \(clearHistoryServerResponse)"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .cyan)
+        }) { (clearHistoryCacheResponse) in
+            let myText = "clear history cache model response = \(clearHistoryCacheResponse)"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: .blue)
+        }
+    }
+    
+    // 10
     func implementCreateThread() {
         var description:    String? = nil
         var title:          String? = nil
@@ -664,7 +688,7 @@ extension MyChatViewController {
         }
     }
     
-    // 10
+    // 11
     func implementCreateWithMessageThread() {
         var textMessage:    String? = nil
         var title:          String? = nil
@@ -728,7 +752,7 @@ extension MyChatViewController {
         
     }
     
-    // 11
+    // 12
     func implementGetHistory() {
         let threadId:   Int?    = Int(input1TextField.text ?? "")
         let fromTime:   UInt?   = UInt(input2TextField.text ?? "")
@@ -753,7 +777,7 @@ extension MyChatViewController {
         }
     }
     
-    // 12
+    // 13
     func implementGetThreads() {
         let count:      Int?    = Int(input1TextField.text ?? "")
         let offset:     Int?    = Int(input2TextField.text ?? "")
@@ -779,7 +803,7 @@ extension MyChatViewController {
     }
     
     
-    // 13
+    // 14
     func implementGetThreadParticipants() {
         let count:      Int?    = Int(input1TextField.text ?? "")
         let offset:     Int?    = Int(input2TextField.text ?? "")
@@ -804,7 +828,7 @@ extension MyChatViewController {
         }
     }
     
-    // 14
+    // 15
     func implementLeaveThread() {
         let threadId: Int?  = Int(input1TextField.text ?? "")
         
@@ -819,7 +843,7 @@ extension MyChatViewController {
         }
     }
     
-    // 15
+    // 16
     func implementMuteThread() {
         let threadId: Int?  = Int(input1TextField.text ?? "")
         
@@ -834,7 +858,7 @@ extension MyChatViewController {
         }
     }
     
-    // 16
+    // 17
     func implementUnmuteThread() {
         let threadId: Int?  = Int(input1TextField.text ?? "")
         
@@ -849,7 +873,7 @@ extension MyChatViewController {
         }
     }
     
-    // 17
+    // 18
     func implementRemoveParticipant() {
         let threadId:       Int?    = Int(input1TextField.text ?? "")
         var myParticipants: [Int] = []
@@ -884,7 +908,7 @@ extension MyChatViewController {
         }
     }
     
-    // 18
+    // 19
     func implementSpamThread() {
         let threadId: Int?  = Int(input1TextField.text ?? "")
         
@@ -899,7 +923,7 @@ extension MyChatViewController {
         }
     }
     
-    // 19
+    // 20
     func implementDeleteMessage() {
         let subjectId:  Int?    = Int(input1TextField.text ?? "")
         
@@ -914,7 +938,7 @@ extension MyChatViewController {
         }
     }
     
-    // 20
+    // 21
     func implementEditMessage() {
         var content:    String? = nil
         let subjectId:  Int?    = Int(input2TextField.text ?? "")
@@ -935,7 +959,7 @@ extension MyChatViewController {
         }
     }
     
-    // 21
+    // 22
     func implementForwardMessage() {
         
         var messageIds: [Int]?
@@ -970,7 +994,41 @@ extension MyChatViewController {
         }
     }
     
-    // 22
+    //23
+    func implementMessageDeliveryList() {
+        let count:      Int?    = Int(input1TextField.text ?? "")
+        let offset:     Int?    = Int(input2TextField.text ?? "")
+        let messageId:  Int?    = Int(input3TextField.text ?? "")
+        
+        let deliveryList = MessageDeliveryListAutomation(count: count, messageId: messageId, offset: offset, typeCode: nil)
+        deliveryList.delegate = self
+        deliveryList.create(uniqueId: { (messageDeliveryListUniqueId) in
+            let myText = "MessageDeliveryList unique id = \(messageDeliveryListUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }) { (messageDeliveryListResponse) in
+            let myText = "MessageDeliveryList sent response = \(messageDeliveryListResponse)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }
+    }
+    
+    //24
+    func implementMessageSeenList() {
+        let count:      Int?    = Int(input1TextField.text ?? "")
+        let offset:     Int?    = Int(input2TextField.text ?? "")
+        let messageId:  Int?    = Int(input3TextField.text ?? "")
+        
+        let seenList = MessageSeenListAutomation(count: count, messageId: messageId, offset: offset, typeCode: nil)
+        seenList.delegate = self
+        seenList.create(uniqueId: { (messageSeenListUniqueId) in
+            let myText = "MessageSeenList unique id = \(messageSeenListUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }) { (messageSeenListResponse) in
+            let myText = "MessageSeenList sent response = \(messageSeenListResponse)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }
+    }
+    
+    // 25
     func implementReplyTextMessage() {
         var content:    String? = nil
         let repliedTo:  Int?    = Int(input2TextField.text ?? "")
@@ -997,7 +1055,7 @@ extension MyChatViewController {
         }
     }
     
-    // 23
+    // 26
     func implementSendTextMessage() {
         var content:    String? = nil
         let repliedTo:  Int?    = Int(input2TextField.text ?? "")
@@ -1024,7 +1082,7 @@ extension MyChatViewController {
         }
     }
     
-    // 24
+    // 27
     func implementUploadFile() {
         var fileName:    String? = nil
         if let txt = input1TextField.text {
@@ -1043,7 +1101,7 @@ extension MyChatViewController {
         }
     }
     
-    // 25
+    // 28
     func implementUploadImage() {
         pickerController.delegate = self
         pickerController.allowsEditing = true

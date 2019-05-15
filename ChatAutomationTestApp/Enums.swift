@@ -30,6 +30,7 @@ enum MoreInfoTypes: String {
     case UpdateContact      = "UpdateContact"
     
     case AddParticipant         = "AddParticipant"
+    case ClearHistory           = "ClearHistory"
     case CreateThread           = "CreateThread"
     case CreateThreadWithMessage = "CreateThreadWithMessage"
     case GetHistory             = "GetHistory"
@@ -41,14 +42,16 @@ enum MoreInfoTypes: String {
     case RemoveParticipant      = "RemoveParticipant"
     case SpamThread             = "SpamThread"
     
-    case DeleteMessage      = "DeleteMessage"
-    case EditMessage        = "EditMessage"
-    case ForwardMessage     = "ForwardMessage"
-    case ReplyTextMessage   = "ReplyTextMessage"
-    case SendTextMessage    = "SendTextMessage"
+    case DeleteMessage          = "DeleteMessage"
+    case EditMessage            = "EditMessage"
+    case ForwardMessage         = "ForwardMessage"
+    case MessageDeliveryList    = "MessageDeliveryList"
+    case MessageSeenList        = "MessageSeenList"
+    case ReplyTextMessage       = "ReplyTextMessage"
+    case SendTextMessage        = "SendTextMessage"
     
     case UploadFile         = "UploadFile"
-    
+    case UploadImage        = "UploadImage"
 }
 
 

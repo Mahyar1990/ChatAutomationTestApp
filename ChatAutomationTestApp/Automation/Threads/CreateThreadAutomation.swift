@@ -387,8 +387,8 @@ extension CreateThreadAutomation {
 
 extension CreateThreadAutomation {
     func addContact(on: Section) {
-        let pouria = Faker.sharedInstance.pouriaAsContact
-        let addContact = AddContactAutomation(cellphoneNumber: pouria.cellphoneNumber, email: pouria.email, firstName: pouria.firstName, lastName: pouria.lastName)
+        let mehdi = Faker.sharedInstance.mehdiAsContact
+        let addContact = AddContactAutomation(cellphoneNumber: mehdi.cellphoneNumber, email: mehdi.email, firstName: mehdi.firstName, lastName: mehdi.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
                 
@@ -428,7 +428,7 @@ extension CreateThreadAutomation {
                         self.createThreadSenario(threadType: ThreadTypes.NORMAL, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: cellphoneNumber, withContactId: nil, section: on, isCompleted: false)
                     } else {
                         // handle error that didn't get contact id in the contact model
-                        self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on \(on.rawValue)) there is no CellphoneNumber when addContact with this user (firstName = \(pouria.firstName) , cellphoneNumber = \(pouria.cellphoneNumber))!", lineNumbers: 2)
+                        self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on \(on.rawValue)) there is no CellphoneNumber when addContact with this user (firstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber))!", lineNumbers: 2)
                     }
                     
                 case .NormalThreadWithContactId, .ChannelThread, .ChannelGroupThread, .OwnerGroupThread, .PublicGroupThread:
@@ -451,7 +451,7 @@ extension CreateThreadAutomation {
                 
             } else {
                 // handle error that didn't add Contact Model
-                self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "AddContact (on \(on.rawValue) with this parameters is Failed!\nfirstName = \(pouria.firstName) , cellphoneNumber = \(pouria.cellphoneNumber) , lastName = \(pouria.lastName)", lineNumbers: 2)
+                self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "AddContact (on \(on.rawValue) with this parameters is Failed!\nfirstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber) , lastName = \(mehdi.lastName)", lineNumbers: 2)
             }
         }
         

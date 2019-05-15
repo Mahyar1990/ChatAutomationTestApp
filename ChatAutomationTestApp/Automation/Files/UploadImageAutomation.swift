@@ -45,14 +45,14 @@ class UploadImageAutomation {
         if let myImage = image {
             prepareImageToUpload(theImage: myImage)
         } else {
-            delegate?.newInfo(type: MoreInfoTypes.UploadFile.rawValue, message: "there is no image specified to upload", lineNumbers: 1)
+            delegate?.newInfo(type: MoreInfoTypes.UploadImage.rawValue, message: "there is no image specified to upload", lineNumbers: 1)
             prepareImageToUpload(theImage: nil)
         }
         
     }
     
     func sendRequest(theData: Data, theFileName: String) {
-        delegate?.newInfo(type: MoreInfoTypes.UploadFile.rawValue, message: "send Request UploadImage with this params:\n fileName = \(theFileName)", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.UploadImage.rawValue, message: "send Request UploadImage with this params:\n fileName = \(theFileName)", lineNumbers: 2)
         
         let uploadImageInput = UploadImageRequestModel(dataToSend:      theData,
                                                        fileExtension:   nil,
@@ -80,13 +80,13 @@ class UploadImageAutomation {
         
         if let image = theImage {
             if let data = image.jpegData(compressionQuality: 1) {
-                delegate?.newInfo(type: MoreInfoTypes.UploadFile.rawValue, message: "Image has picked from user correctly", lineNumbers: 1)
+                delegate?.newInfo(type: MoreInfoTypes.UploadImage.rawValue, message: "Image has picked from user correctly", lineNumbers: 1)
                 sendRequest(theData: data, theFileName: fileName ?? "Image\(Faker.sharedInstance.generateNameAsString(withLength: 3))")
             }
         } else {
             let image = UIImage(named: "pic")
             if let data = image?.jpegData(compressionQuality: 1) {
-                delegate?.newInfo(type: MoreInfoTypes.UploadFile.rawValue, message: "image has piced from Assets, prepare it to upload", lineNumbers: 1)
+                delegate?.newInfo(type: MoreInfoTypes.UploadImage.rawValue, message: "image has piced from Assets, prepare it to upload", lineNumbers: 1)
                 sendRequest(theData: data, theFileName: fileName ?? "Image\(Faker.sharedInstance.generateNameAsString(withLength: 3))")
             }
         }
