@@ -179,7 +179,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 //        }
         
         if (tokenTextField.text?.count)! > 30 {
-            print("my token is : \(tokenTextField.text)")
+            print("my token is : \(tokenTextField.text ?? "nil")")
             token = tokenTextField.text!
             createChat()
         } else {
