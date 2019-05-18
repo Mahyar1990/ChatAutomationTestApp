@@ -25,7 +25,7 @@ class MessageDeliveryListAutomation {
     let typeCode:   String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
-    typealias callbackServerResponseTypeAlias   = (JSON) -> ()
+    typealias callbackServerResponseTypeAlias   = (GetThreadParticipantsModel) -> ()
     
     private var uniqueIdCallback:   callbackStringTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
@@ -40,7 +40,7 @@ class MessageDeliveryListAutomation {
     }
     
     func create(uniqueId:       @escaping (String) -> (),
-                serverResponse: @escaping (JSON) -> ()) {
+                serverResponse: @escaping (GetThreadParticipantsModel) -> ()) {
         
         self.uniqueIdCallback   = uniqueId
         self.responseCallback   = serverResponse
@@ -48,7 +48,8 @@ class MessageDeliveryListAutomation {
         if let mId = messageId {
             sendRequest(theMessageId: mId)
         } else {
-            
+            delegate?.newInfo(type: MoreInfoTypes.MessageDeliveryList.rawValue, message: "MessageId has not been specified, so we will create a thread and send a message, then we will send MessageDelivery request", lineNumbers: 2)
+            sendMessage()
         }
         
     }
@@ -62,8 +63,28 @@ class MessageDeliveryListAutomation {
         myChatObject?.messageDeliveryList(messageDeliveryListInput: deliveryInput, uniqueId: { (messageDeliveryListUniqueId) in
             self.uniqueIdCallback?(messageDeliveryListUniqueId)
         }, completion: { (messageDeliveryListResponse) in
-            self.responseCallback?(messageDeliveryListResponse as! JSON)
+            self.responseCallback?(messageDeliveryListResponse as! GetThreadParticipantsModel)
         })
+        
+    }
+    
+    
+    func sendMessage() {
+        
+        let x = SendTextMessageAutomation(content: "hi", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: nil, typeCode: nil, uniqueId: nil)
+        x.create(uniqueId: { _ in }, serverSentResponse: { (sent) in
+            self.delegate?.newInfo(type: MoreInfoTypes.MessageDeliveryList.rawValue, message: "new Message has been sent", lineNumbers: 1)
+            print("\n\nSent: \n\(sent)\n\n")
+            if let messageIdStr = sent["content"].string {
+                if let mId = Int(messageIdStr) {
+                    self.sendRequest(theMessageId: mId)
+                }
+            }
+        }, serverDeliverResponse: { (deliver) in
+            print("\n\nDeliver: \n\(deliver)\n\n")
+        }) { (seen) in
+            print("\n\nSeen: \n\(seen)\n\n")
+        }
         
     }
     

@@ -20,23 +20,23 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 */
     
 // SandBox Addresses:
-//    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
-//    let serverName              = "chat-server"
-//    let ssoHost                 = "https://accounts.pod.land"
-//    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-//    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-//    var token                   = ""
+    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
+    let serverName              = "chat-server"
+    let ssoHost                 = "https://accounts.pod.land"
+    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+    var token                   = ""
     
     
 // Local Addresses
-    let socketAddress           = "ws://172.16.106.26:8003/ws"
-    let serverName              = "chat-server"
-    let ssoHost                 = "http://172.16.110.76"
-    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
-    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+//    let socketAddress           = "ws://172.16.106.26:8003/ws"
+//    let serverName              = "chat-server"
+//    let ssoHost                 = "http://172.16.110.76"
+//    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
+//    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
 //    var token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
-    var token                   = "7cba09ff83554fc98726430c30afcfc6"    // ZiZi
+//    var token                   = "7cba09ff83554fc98726430c30afcfc6"    // ZiZi
 //    let token = "fbd4ecedb898426394646e65c6b1d5d1" //  {**REQUIRED**} SSO Token JiJi
 //    let token = "5fb88da4c6914d07a501a76d68a62363" // {**REQUIRED**} SSO Token FiFi
 //    let token = "bebc31c4ead6458c90b607496dae25c6" // {**REQUIRED**} SSO Token Alexi
@@ -58,6 +58,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         let mt = UITextField()
         mt.translatesAutoresizingMaskIntoConstraints = false
         mt.placeholder = "write your token..."
+        mt.layer.cornerRadius = 4
         mt.autocapitalizationType = UITextAutocapitalizationType.none
         mt.autocorrectionType = UITextAutocorrectionType.no
         mt.backgroundColor = UIColor(white: 0.8, alpha: 1)
@@ -67,13 +68,13 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let setTokenAndConnectChatButton: UIButton = {
         let mb = UIButton()
         mb.translatesAutoresizingMaskIntoConstraints = false
-        mb.setTitle("set Tocken and Connect Chat...", for: UIControl.State.normal)
+        mb.setTitle("Connect", for: UIControl.State.normal)
         mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
         mb.layer.cornerRadius = 5
         mb.layer.borderWidth = 2
         mb.layer.borderColor = UIColor.clear.cgColor
         mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
-        mb.layer.shadowOpacity = 2
+        mb.layer.shadowOpacity = 1
         mb.layer.shadowRadius = 1
         mb.layer.shadowOffset = CGSize(width: 0, height: 3)
         mb.addTarget(self, action: #selector(connectChat), for: UIControl.Event.touchUpInside)
@@ -84,6 +85,8 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         let mt = UITextField()
         mt.translatesAutoresizingMaskIntoConstraints = false
         mt.placeholder = "Input 1"
+        mt.textAlignment = .center
+        mt.layer.cornerRadius = 5
         mt.autocapitalizationType = UITextAutocapitalizationType.none
         mt.autocorrectionType = UITextAutocorrectionType.no
         mt.backgroundColor = UIColor(white: 0.8, alpha: 1)
@@ -94,6 +97,8 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         let mt = UITextField()
         mt.translatesAutoresizingMaskIntoConstraints = false
         mt.placeholder = "Input 2"
+        mt.textAlignment = .center
+        mt.layer.cornerRadius = 5
         mt.autocapitalizationType = UITextAutocapitalizationType.none
         mt.autocorrectionType = UITextAutocorrectionType.no
         mt.backgroundColor = UIColor(white: 0.8, alpha: 1)
@@ -104,6 +109,8 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         let mt = UITextField()
         mt.translatesAutoresizingMaskIntoConstraints = false
         mt.placeholder = "Input 3"
+        mt.textAlignment = .center
+        mt.layer.cornerRadius = 5
         mt.autocapitalizationType = UITextAutocapitalizationType.none
         mt.autocorrectionType = UITextAutocorrectionType.no
         mt.backgroundColor = UIColor(white: 0.8, alpha: 1)
@@ -114,6 +121,8 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         let mt = UITextField()
         mt.translatesAutoresizingMaskIntoConstraints = false
         mt.placeholder = "Input 4"
+        mt.textAlignment = .center
+        mt.layer.cornerRadius = 5
         mt.autocapitalizationType = UITextAutocapitalizationType.none
         mt.autocorrectionType = UITextAutocorrectionType.no
         mt.backgroundColor = UIColor(white: 0.8, alpha: 1)
@@ -123,8 +132,9 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let pickerView: UIPickerView = {
         let pv = UIPickerView()
         pv.translatesAutoresizingMaskIntoConstraints = false
-        pv.backgroundColor = UIColor(white: 0.8, alpha: 0.8)
-        
+//        pv.backgroundColor = UIColor(white: 0.9, alpha: 0.8)
+        pv.backgroundColor = UIColor.gray
+        pv.layer.cornerRadius = 5
         return pv
     }()
     
@@ -184,13 +194,13 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
             createChat()
         } else {
             // error! Please inter your token
-            updateText(cellText: "your token is invalid, write down valid token", cellHeight: 60, cellColor: UIColor.orange)
+            updateText(cellText: "your token is invalid, write down valid token", cellHeight: 35, cellColor: UIColor.orange)
 /*
 https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52664cf7de0bda&response_type=token&redirect_uri=https://chat.fanapsoft.ir&scope=profile social:write
  */
-//            token = "b188587935f349f3b23e281bf2f770f2"
+            token = "a0fcfeca92404be09b6f7f7aaf56c6e3"
 //            token = "7a18deb4a4b64339a81056089f5e5922"
-            token = "7cba09ff83554fc98726430c30afcfc6"
+//            token = "7cba09ff83554fc98726430c30afcfc6"
             createChat()
         }
         
@@ -200,6 +210,8 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     
     func createChat() {
         setTokenAndConnectChatButton.isEnabled = false
+        setTokenAndConnectChatButton.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 0.2)
+        setTokenAndConnectChatButton.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 0.4).cgColor
         
         // create Chat object
         myChatObject = Chat(socketAddress:          socketAddress,
@@ -277,34 +289,34 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         
         switch row {
         case 0: updateText(cellText: " Input 1 = cellphoneNumber as String \n Input 2 = email as String \n Input 3 = firstName as String \n Input 4 = lastName as String", cellHeight: 70, cellColor: .white)
-        case 1: updateText(cellText: " Input 1 = contactId as Int \n Input 2 = threadId as Int \n Input 3 = userId as Int", cellHeight: 70, cellColor: .white)
-        case 2: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int", cellHeight: 40, cellColor: .white)
-        case 3: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String", cellHeight: 70, cellColor: .white)
-        case 4: updateText(cellText: " Input 1 = id as Int", cellHeight: 40, cellColor: .white)
+        case 1: updateText(cellText: " Input 1 = contactId as Int \n Input 2 = threadId as Int \n Input 3 = userId as Int", cellHeight: 60, cellColor: .white)
+        case 2: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int", cellHeight: 50, cellColor: .white)
+        case 3: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String", cellHeight: 60, cellColor: .white)
+        case 4: updateText(cellText: " Input 1 = id as Int", cellHeight: 35, cellColor: .white)
         case 5: updateText(cellText: " Input 1 = cellPhoneNumner as String \n Input 2 = firstName as String \n Input 3 = lastName as String \n Input 4 = id as Int", cellHeight: 70, cellColor: .white)
         case 6: updateText(cellText: " Input 1 = blockId as String \n Input 2 = contactId as String \n Input 3 = threadId as String \n Input 4 = userId as String", cellHeight: 70, cellColor: .white)
         case 7: updateText(cellText: " Input 1 = contactId as Int \n Input 2 = cellphoneNumber as String \n Input 3 = email as String \n Input 4 = fullname (contain firstname and lastname seperated by cama ',') as String", cellHeight: 90, cellColor: .white)
             
         case 8: updateText(cellText: " Input 1 = threadId as Int \n Input 2 = ContactId1 as Int \n Input 3 = ContactId2 as Int \n Input 4 = ContactId3 as Int", cellHeight: 70, cellColor: .white)
-        case 9: updateText(cellText: " Input 1 = threadId as Int", cellHeight: 70, cellColor: .white)
+        case 9: updateText(cellText: " Input 1 = threadId as Int", cellHeight: 35, cellColor: .white)
         case 10: updateText(cellText: " Input 1 = description as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: .white)
         case 11: updateText(cellText: " Input 1 = message text as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: .white)
         case 12: updateText(cellText: " Input 1 = threadId as Int \n Input 2 = fromTime as UInt \n Input 3 = toTime as UInt \n Input 4 = query as String", cellHeight: 70, cellColor: .white)
         case 13: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
         case 14: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
-        case 15: updateText(cellText: " Input 1 = ThreadId", cellHeight: 50, cellColor: .white)
-        case 16: updateText(cellText: " Input 1 = ThreadId", cellHeight: 50, cellColor: .white)
-        case 17: updateText(cellText: " Input 1 = ThreadId", cellHeight: 50, cellColor: .white)
+        case 15: updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
+        case 16: updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
+        case 17: updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
         case 18: updateText(cellText: " Input 1 = ThreadId \n Input 2 = participant as Int \n Input 3 = participant as Int \n Input 4 = participant as Int", cellHeight: 50, cellColor: .white)
-        case 19: updateText(cellText: " Input 1 = ThreadId", cellHeight: 50, cellColor: .white)
+        case 19: updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
             
-        case 20: updateText(cellText: " Input 1 = subjectId as Int", cellHeight: 40, cellColor: .white)
-        case 21: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: .white)
-        case 22: updateText(cellText: " Input 1 = messageIds as [Int] \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: .white)
-        case 23: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = messageId as Int", cellHeight: 70, cellColor: .white)
-        case 24: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = messageId as Int", cellHeight: 70, cellColor: .white)
-        case 25: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 70, cellColor: .white)
-        case 26: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 70, cellColor: .white)
+        case 20: updateText(cellText: " Input 1 = subjectId as Int", cellHeight: 35, cellColor: .white)
+        case 21: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 60, cellColor: .white)
+        case 22: updateText(cellText: " Input 1 = messageIds as [Int] \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 60, cellColor: .white)
+        case 23: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = messageId as Int", cellHeight: 60, cellColor: .white)
+        case 24: updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = messageId as Int", cellHeight: 60, cellColor: .white)
+        case 25: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 60, cellColor: .white)
+        case 26: updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 60, cellColor: .white)
             
         case 27: updateText(cellText: "Input 1 = fileName", cellHeight: 50, cellColor: .white)
         case 28: updateText(cellText: "Input 1 = imageName", cellHeight: 50, cellColor: .white)
@@ -1006,7 +1018,7 @@ extension MyChatViewController {
             let myText = "MessageDeliveryList unique id = \(messageDeliveryListUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
         }) { (messageDeliveryListResponse) in
-            let myText = "MessageDeliveryList sent response = \(messageDeliveryListResponse)"
+            let myText = "MessageDeliveryList sent response = \(messageDeliveryListResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
         }
     }
@@ -1023,7 +1035,7 @@ extension MyChatViewController {
             let myText = "MessageSeenList unique id = \(messageSeenListUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
         }) { (messageSeenListResponse) in
-            let myText = "MessageSeenList sent response = \(messageSeenListResponse)"
+            let myText = "MessageSeenList sent response = \(messageSeenListResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
         }
     }
