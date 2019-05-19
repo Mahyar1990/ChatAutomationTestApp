@@ -54,6 +54,61 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var logBackgroundColor  = [UIColor]()
     let pickerData          = ["AddContact", "Block", "GetBlockedList", "GetContacts", "RemoveContact", "SearchContact", "Unblock", "UpdateContact", "AddParticipants", "ClearHistory", "CreateThread", "CreateThreadWithMessage", "GetHistory", "GetThread", "GetThreadParticipants", "LeaveThread", "MuteThread", "UnmuteThread", "RemoveParticipant", "SpamThread", "DeleteMessage", "EditMessage", "ForwardMessage", "MessageDeliveryList" ,"MessageSeenList", "ReplyTextMessage", "SendTextMessage", "UploadFile", "UploadImage"]
     
+    let spaceProgressView: UIProgressView = {
+        let pv = UIProgressView()
+        pv.translatesAutoresizingMaskIntoConstraints = false
+        pv.progressTintColor = UIColor.blue
+        pv.trackTintColor = UIColor.gray
+        pv.layer.cornerRadius = 4
+        pv.layer.borderWidth = 2
+        pv.layer.borderColor = UIColor.white.cgColor
+        pv.clipsToBounds = true
+        pv.progress = 0.0
+        return pv
+    }()
+    let cancelUploadButton: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Cancel", for: UIControl.State.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 1
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 1
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.addTarget(self, action: #selector(cancelUpload), for: UIControl.Event.touchUpInside)
+        return mb
+    }()
+    let pauseUploadButton: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Pause", for: UIControl.State.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 1
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 1
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.addTarget(self, action: #selector(pauseUpload), for: UIControl.Event.touchUpInside)
+        return mb
+    }()
+    var uploadImageUniqueId: String = ""
+    var uploadFileUniqueId: String = ""
+    var iSprogressActive = false
+    var myProgress: Float = 0.0 {
+        didSet {
+            spaceProgressView.progress = myProgress
+//            if (myProgress == 1.0) || (myProgress == 0.0) {
+//                cancelUploadButton.removeFromSuperview()
+//                pauseUploadButton.removeFromSuperview()
+//            }
+        }
+    }
+    
     let tokenTextField: UITextField = {
         let mt = UITextField()
         mt.translatesAutoresizingMaskIntoConstraints = false
@@ -198,8 +253,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 /*
 https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52664cf7de0bda&response_type=token&redirect_uri=https://chat.fanapsoft.ir&scope=profile social:write
  */
-            token = "a0fcfeca92404be09b6f7f7aaf56c6e3"
-//            token = "7a18deb4a4b64339a81056089f5e5922"
+            token = "156284987e1949ce93102300412d464f"
 //            token = "7cba09ff83554fc98726430c30afcfc6"
             createChat()
         }
@@ -238,6 +292,61 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         myChatObject?.delegate = self
     }
     
+    
+    @objc func cancelUpload() {
+        updateText(cellText: "user tries to Cancel Upload!", cellHeight: 40, cellColor: .gray)
+        if uploadImageUniqueId != "" {
+            myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
+                self.logBackgroundColor.append(UIColor.gray)
+                self.logHeightArr.append(40)
+                self.addtext(text: message)
+            })
+        } else if uploadFileUniqueId != "" {
+            myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
+                self.logBackgroundColor.append(UIColor.gray)
+                self.logHeightArr.append(40)
+                self.addtext(text: message)
+            })
+        }
+    }
+    
+    
+    @objc func pauseUpload() {
+        if pauseUploadButton.titleLabel?.text == "Pause" {
+            pauseUploadButton.setTitle("Resume", for: UIControl.State.normal)
+            updateText(cellText: "user tries to Pause the Upload", cellHeight: 40, cellColor: .gray)
+            if uploadImageUniqueId != "" {
+                myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
+                    self.logBackgroundColor.append(UIColor.gray)
+                    self.logHeightArr.append(40)
+                    self.addtext(text: message)
+                })
+            } else if uploadFileUniqueId != "" {
+                myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
+                    self.logBackgroundColor.append(UIColor.gray)
+                    self.logHeightArr.append(40)
+                    self.addtext(text: message)
+                })
+            }
+        } else {
+            updateText(cellText: "user tries to Resume the Upload", cellHeight: 40, cellColor: .gray)
+            if uploadImageUniqueId != "" {
+                myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
+                    self.logBackgroundColor.append(UIColor.gray)
+                    self.logHeightArr.append(40)
+                    self.addtext(text: message)
+                })
+            } else if uploadFileUniqueId != "" {
+                myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
+                    self.logBackgroundColor.append(UIColor.gray)
+                    self.logHeightArr.append(40)
+                    self.addtext(text: message)
+                })
+            }
+            pauseUploadButton.setTitle("Pause", for: UIControl.State.normal)
+        }
+        
+    }
     
     // write down senarios
     
@@ -347,6 +456,10 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func resetTextFields() {
+        iSprogressActive = false
+        myProgress = 0.0
+        uploadImageUniqueId = ""
+        uploadFileUniqueId = ""
         input1TextField.text?.removeAll()
         input2TextField.text?.removeAll()
         input3TextField.text?.removeAll()
@@ -1105,8 +1218,15 @@ extension MyChatViewController {
         uploadFile.create(uniqueId: { (uploadFileUniqueId) in
             let myText = "uploadFile unique id = \(uploadFileUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+            self.uploadFileUniqueId = uploadFileUniqueId
         }, progress: { (progress) in
-            print("\(progress)")
+            if self.iSprogressActive {
+                self.myProgress = progress
+            } else {
+                self.iSprogressActive = true
+                let myText = "uploadFile Progress:"
+                self.updateText(cellText: myText, cellHeight: 70, cellColor: .lightGray)
+            }
         }) { (uploadFileServerResponse) in
             let myText = "uploadFile response = \(uploadFileServerResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
@@ -1135,6 +1255,26 @@ extension MyChatViewController: UICollectionViewDelegate, UICollectionViewDataSo
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MyCollectionViewCell
         cell.backgroundColor = logBackgroundColor[indexPath.item]
         cell.myTextView.text = logArr[indexPath.item]
+        if (logBackgroundColor[indexPath.item] == UIColor.lightGray) {
+            cell.addSubview(spaceProgressView)
+            cell.addSubview(cancelUploadButton)
+            cell.addSubview(pauseUploadButton)
+            
+            spaceProgressView.bottomAnchor.constraint(equalTo: cell.bottomAnchor, constant: -8).isActive = true
+            spaceProgressView.leftAnchor.constraint(equalTo: cell.leftAnchor, constant: 4).isActive = true
+            spaceProgressView.rightAnchor.constraint(equalTo: cell.rightAnchor, constant: -4).isActive = true
+            spaceProgressView.heightAnchor.constraint(equalToConstant: 8).isActive = true
+            
+            cancelUploadButton.bottomAnchor.constraint(equalTo: spaceProgressView.topAnchor, constant: -4).isActive = true
+            cancelUploadButton.rightAnchor.constraint(equalTo: spaceProgressView.rightAnchor).isActive = true
+            cancelUploadButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
+            cancelUploadButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            
+            pauseUploadButton.bottomAnchor.constraint(equalTo: cancelUploadButton.bottomAnchor).isActive = true
+            pauseUploadButton.topAnchor.constraint(equalTo: cancelUploadButton.topAnchor).isActive = true
+            pauseUploadButton.rightAnchor.constraint(equalTo: cancelUploadButton.leftAnchor, constant: -10).isActive = true
+            pauseUploadButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
+        }
         return cell
     }
     
@@ -1171,8 +1311,15 @@ extension MyChatViewController: UIImagePickerControllerDelegate, UINavigationCon
         uploadImge.create(uniqueId: { (uploadImageUniqueId) in
             let myText = "uploadImage unique id = \(uploadImageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+            self.uploadImageUniqueId = uploadImageUniqueId
         }, progress: { (progress) in
-            print("\(progress)")
+            if self.iSprogressActive {
+                self.myProgress = progress
+            } else {
+                self.iSprogressActive = true
+                let myText = "uploadImage Progress:"
+                self.updateText(cellText: myText, cellHeight: 70, cellColor: .lightGray)
+            }
         }) { (uploadImageServerResponse) in
             let myText = "uploadImage response = \(uploadImageServerResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
