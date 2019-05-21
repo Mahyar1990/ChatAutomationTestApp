@@ -6,7 +6,9 @@
 //  Copyright © 1397 Mahyar Zhiani. All rights reserved.
 //
 
-import FanapPodChatSDK
+//import FanapPodChatSDK
+import PodChat
+
 
 class Faker {
     

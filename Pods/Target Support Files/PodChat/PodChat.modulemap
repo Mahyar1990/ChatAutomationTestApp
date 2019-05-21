@@ -1,0 +1,6 @@
+framework module PodChat {
+  umbrella header "PodChat-umbrella.h"
+
+  export *
+  module * { export * }
+}

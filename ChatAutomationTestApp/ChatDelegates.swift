@@ -8,7 +8,9 @@
 
 import UIKit
 import SwiftyJSON
-import FanapPodChatSDK
+//import FanapPodChatSDK
+import PodChat
+
 
 // MARK: Chat delegatews
 extension MyChatViewController: ChatDelegates {

@@ -6,7 +6,9 @@
 //  Copyright © 1397 Mahyar Zhiani. All rights reserved.
 //
 
-import FanapPodChatSDK
+import PodChat
+//import FanapPodChatSDK
+
 
 /*
  This method will create a thread with some specific users

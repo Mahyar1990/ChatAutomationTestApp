@@ -6,7 +6,8 @@
 //  Copyright © 1397 Mahyar Zhiani. All rights reserved.
 //
 
-import FanapPodChatSDK
+import PodChat
+//import FanapPodChatSDK
 
 /*
  if somebody call this method,

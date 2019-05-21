@@ -16,6 +16,7 @@ extension MyChatViewController {
         view.backgroundColor = UIColor(white: 0.95, alpha: 1)
         
         myLogCollectionView.register(MyCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
+        myLogCollectionView.register(MyCollectionViewUploadCell.self, forCellWithReuseIdentifier: uploadCellId)
         myLogCollectionView.delegate = self
         myLogCollectionView.dataSource = self
         pickerView.delegate = self

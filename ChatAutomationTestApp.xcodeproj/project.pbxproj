@@ -7,12 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E1C3559225B570F001A343B /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C3556225B5703001A343B /* FanapPodChatSDK.framework */; };
-		3E1C3574225B5E44001A343B /* FanapPodAsyncSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C3573225B5E44001A343B /* FanapPodAsyncSDK.framework */; };
-		3E1C3576225B5E49001A343B /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C3575225B5E49001A343B /* Alamofire.framework */; };
-		3E1C3578225B5E51001A343B /* Starscream.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C3577225B5E51001A343B /* Starscream.framework */; };
-		3E1C357A225B5E55001A343B /* SwiftyBeaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C3579225B5E55001A343B /* SwiftyBeaver.framework */; };
-		3E1C357C225B5E58001A343B /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E1C357B225B5E58001A343B /* SwiftyJSON.framework */; };
 		3E1C3584225B600C001A343B /* GetHistoryAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */; };
 		3E2A62DC2287F60B002FB5D7 /* UploadFileAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2A62DB2287F60B002FB5D7 /* UploadFileAutomation.swift */; };
 		3E2A62E422880833002FB5D7 /* UploadImageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2A62E322880833002FB5D7 /* UploadImageAutomation.swift */; };
@@ -53,27 +47,11 @@
 		3EEB0818227EC7B2009DA162 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB0817227EC7B2009DA162 /* LoginViewController.swift */; };
 		3EEB081A227EC7DD009DA162 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB0819227EC7DD009DA162 /* Enums.swift */; };
 		3EEB081C227EC98C009DA162 /* GetTokenWithRefreshToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB081B227EC98C009DA162 /* GetTokenWithRefreshToken.swift */; };
+		4D1C067671F59551FA590680 /* Pods_ChatAutomationTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2254F55487D066E2DF8C1AD7 /* Pods_ChatAutomationTestApp.framework */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		3E1C3555225B5703001A343B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3E1C354B225B5703001A343B /* FanapPodChatSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3EE025ED21206E63001810FB;
-			remoteInfo = FanapPodChatSDK;
-		};
-		3E1C3557225B5703001A343B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3E1C354B225B5703001A343B /* FanapPodChatSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3EE025F621206E63001810FB;
-			remoteInfo = FanapPodChatSDKTests;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXFileReference section */
-		3E1C354B225B5703001A343B /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
+		2254F55487D066E2DF8C1AD7 /* Pods_ChatAutomationTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAutomationTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E1C3573225B5E44001A343B /* FanapPodAsyncSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FanapPodAsyncSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E1C3575225B5E49001A343B /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E1C3577225B5E51001A343B /* Starscream.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Starscream.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +99,8 @@
 		3EEB0817227EC7B2009DA162 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3EEB0819227EC7DD009DA162 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		3EEB081B227EC98C009DA162 /* GetTokenWithRefreshToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTokenWithRefreshToken.swift; sourceTree = "<group>"; };
+		794764CA0065DA2CA5A7CA75 /* Pods-ChatAutomationTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAutomationTestApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatAutomationTestApp/Pods-ChatAutomationTestApp.debug.xcconfig"; sourceTree = "<group>"; };
+		C6ACFCB4E4559BC655A03381 /* Pods-ChatAutomationTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAutomationTestApp.release.xcconfig"; path = "Target Support Files/Pods-ChatAutomationTestApp/Pods-ChatAutomationTestApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,25 +108,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E1C357C225B5E58001A343B /* SwiftyJSON.framework in Frameworks */,
-				3E1C357A225B5E55001A343B /* SwiftyBeaver.framework in Frameworks */,
-				3E1C3578225B5E51001A343B /* Starscream.framework in Frameworks */,
-				3E1C3576225B5E49001A343B /* Alamofire.framework in Frameworks */,
-				3E1C3574225B5E44001A343B /* FanapPodAsyncSDK.framework in Frameworks */,
-				3E1C3559225B570F001A343B /* FanapPodChatSDK.framework in Frameworks */,
+				4D1C067671F59551FA590680 /* Pods_ChatAutomationTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3E1C354C225B5703001A343B /* Products */ = {
+		023902CE273B9E0D10EA5361 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3E1C3556225B5703001A343B /* FanapPodChatSDK.framework */,
-				3E1C3558225B5703001A343B /* FanapPodChatSDKTests.xctest */,
+				794764CA0065DA2CA5A7CA75 /* Pods-ChatAutomationTestApp.debug.xcconfig */,
+				C6ACFCB4E4559BC655A03381 /* Pods-ChatAutomationTestApp.release.xcconfig */,
 			);
-			name = Products;
+			name = Pods;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 		3E94724C22267C1D005D986E /* Automation */ = {
@@ -230,8 +206,8 @@
 			children = (
 				3EAE775122217AD4005AC3C3 /* ChatAutomationTestApp */,
 				3EAE775022217AD4005AC3C3 /* Products */,
-				3E1C354B225B5703001A343B /* FanapPodChatSDK.xcodeproj */,
 				3EAE779922218ED4005AC3C3 /* Frameworks */,
+				023902CE273B9E0D10EA5361 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -271,6 +247,7 @@
 				3E1C3577225B5E51001A343B /* Starscream.framework */,
 				3E1C3575225B5E49001A343B /* Alamofire.framework */,
 				3E1C3573225B5E44001A343B /* FanapPodAsyncSDK.framework */,
+				2254F55487D066E2DF8C1AD7 /* Pods_ChatAutomationTestApp.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -282,9 +259,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 3EAE776122217AD6005AC3C3 /* Build configuration list for PBXNativeTarget "ChatAutomationTestApp" */;
 			buildPhases = (
+				D77A6BC0A164C954575578AD /* [CP] Check Pods Manifest.lock */,
 				3EAE774B22217AD4005AC3C3 /* Sources */,
 				3EAE774C22217AD4005AC3C3 /* Frameworks */,
 				3EAE774D22217AD4005AC3C3 /* Resources */,
+				7C785D4854539E96E0A8A11E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -321,35 +300,12 @@
 			mainGroup = 3EAE774622217AD4005AC3C3;
 			productRefGroup = 3EAE775022217AD4005AC3C3 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 3E1C354C225B5703001A343B /* Products */;
-					ProjectRef = 3E1C354B225B5703001A343B /* FanapPodChatSDK.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				3EAE774E22217AD4005AC3C3 /* ChatAutomationTestApp */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		3E1C3556225B5703001A343B /* FanapPodChatSDK.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = FanapPodChatSDK.framework;
-			remoteRef = 3E1C3555225B5703001A343B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3E1C3558225B5703001A343B /* FanapPodChatSDKTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = FanapPodChatSDKTests.xctest;
-			remoteRef = 3E1C3557225B5703001A343B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3EAE774D22217AD4005AC3C3 /* Resources */ = {
@@ -362,6 +318,61 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7C785D4854539E96E0A8A11E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ChatAutomationTestApp/Pods-ChatAutomationTestApp-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/PodAsync/PodAsync.framework",
+				"${BUILT_PRODUCTS_DIR}/PodChat/PodChat.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PodAsync.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PodChat.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChatAutomationTestApp/Pods-ChatAutomationTestApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D77A6BC0A164C954575578AD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ChatAutomationTestApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		3EAE774B22217AD4005AC3C3 /* Sources */ = {
@@ -541,6 +552,7 @@
 		};
 		3EAE776222217AD6005AC3C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 794764CA0065DA2CA5A7CA75 /* Pods-ChatAutomationTestApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -564,6 +576,7 @@
 		};
 		3EAE776322217AD6005AC3C3 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6ACFCB4E4559BC655A03381 /* Pods-ChatAutomationTestApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
