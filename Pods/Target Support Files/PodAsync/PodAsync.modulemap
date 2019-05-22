@@ -1,6 +1,0 @@
-framework module PodAsync {
-  umbrella header "PodAsync-umbrella.h"
-
-  export *
-  module * { export * }
-}

@@ -38,6 +38,8 @@
 		3EAE775D22217AD6005AC3C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EAE775B22217AD6005AC3C3 /* LaunchScreen.storyboard */; };
 		3EBAFA792289975900D9F653 /* ClearHistoryAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBAFA782289975900D9F653 /* ClearHistoryAutomation.swift */; };
 		3ECC15762282F870003B8240 /* CreateThreadWithMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECC15752282F870003B8240 /* CreateThreadWithMessageAutomation.swift */; };
+		3ED224FE2295389400E51B42 /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED224FB2295387000E51B42 /* FanapPodChatSDK.framework */; };
+		3ED22518229538B100E51B42 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED2250B229538AA00E51B42 /* Alamofire.framework */; };
 		3ED3DA80222E5E9A00261DB3 /* GetBlockedListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */; };
 		3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */; };
 		3ED3DA86222E748600261DB3 /* GetThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */; };
@@ -47,16 +49,76 @@
 		3EEB0818227EC7B2009DA162 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB0817227EC7B2009DA162 /* LoginViewController.swift */; };
 		3EEB081A227EC7DD009DA162 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB0819227EC7DD009DA162 /* Enums.swift */; };
 		3EEB081C227EC98C009DA162 /* GetTokenWithRefreshToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEB081B227EC98C009DA162 /* GetTokenWithRefreshToken.swift */; };
-		4D1C067671F59551FA590680 /* Pods_ChatAutomationTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2254F55487D066E2DF8C1AD7 /* Pods_ChatAutomationTestApp.framework */; };
+		9EDEAF6B6E408C03F20B7634 /* Pods_ChatAutomationTestApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B97C9F9D0C2ACD183166704 /* Pods_ChatAutomationTestApp.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		3ED224FA2295387000E51B42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3ED224F12295387000E51B42 /* FanapPodChatSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3EE025ED21206E63001810FB;
+			remoteInfo = FanapPodChatSDK;
+		};
+		3ED224FC2295387000E51B42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3ED224F12295387000E51B42 /* FanapPodChatSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3EE025F621206E63001810FB;
+			remoteInfo = FanapPodChatSDKTests;
+		};
+		3ED2250A229538AA00E51B42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8111E3319A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS";
+		};
+		3ED2250C229538AA00E51B42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F8111E3E19A95C8B0040E7D1;
+			remoteInfo = "Alamofire iOS Tests";
+		};
+		3ED2250E229538AA00E51B42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4DD67C0B1A5C55C900ED2280;
+			remoteInfo = "Alamofire macOS";
+		};
+		3ED22510229538AA00E51B42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F829C6B21A7A94F100A2CD59;
+			remoteInfo = "Alamofire macOS Tests";
+		};
+		3ED22512229538AA00E51B42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CF626EF1BA7CB3E0011A099;
+			remoteInfo = "Alamofire tvOS";
+		};
+		3ED22514229538AA00E51B42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4CF626F81BA7CB3E0011A099;
+			remoteInfo = "Alamofire tvOS Tests";
+		};
+		3ED22516229538AA00E51B42 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E4202FE01B667AA100C997FB;
+			remoteInfo = "Alamofire watchOS";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		2254F55487D066E2DF8C1AD7 /* Pods_ChatAutomationTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAutomationTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E1C3573225B5E44001A343B /* FanapPodAsyncSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FanapPodAsyncSDK.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E1C3575225B5E49001A343B /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E1C3577225B5E51001A343B /* Starscream.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Starscream.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E1C3579225B5E55001A343B /* SwiftyBeaver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyBeaver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E1C357B225B5E58001A343B /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHistoryAutomation.swift; sourceTree = "<group>"; };
 		3E2A62DB2287F60B002FB5D7 /* UploadFileAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileAutomation.swift; sourceTree = "<group>"; };
 		3E2A62E322880833002FB5D7 /* UploadImageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImageAutomation.swift; sourceTree = "<group>"; };
@@ -90,6 +152,8 @@
 		3EAE775E22217AD6005AC3C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3EBAFA782289975900D9F653 /* ClearHistoryAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearHistoryAutomation.swift; sourceTree = "<group>"; };
 		3ECC15752282F870003B8240 /* CreateThreadWithMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThreadWithMessageAutomation.swift; sourceTree = "<group>"; };
+		3ED224F12295387000E51B42 /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
+		3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "../Usefull Libraries/Alamofire-4.8.2/Alamofire.xcodeproj"; sourceTree = "<group>"; };
 		3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockedListAutomation.swift; sourceTree = "<group>"; };
 		3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockAutomation.swift; sourceTree = "<group>"; };
 		3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetThreadAutomation.swift; sourceTree = "<group>"; };
@@ -99,8 +163,9 @@
 		3EEB0817227EC7B2009DA162 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		3EEB0819227EC7DD009DA162 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		3EEB081B227EC98C009DA162 /* GetTokenWithRefreshToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTokenWithRefreshToken.swift; sourceTree = "<group>"; };
-		794764CA0065DA2CA5A7CA75 /* Pods-ChatAutomationTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAutomationTestApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatAutomationTestApp/Pods-ChatAutomationTestApp.debug.xcconfig"; sourceTree = "<group>"; };
-		C6ACFCB4E4559BC655A03381 /* Pods-ChatAutomationTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAutomationTestApp.release.xcconfig"; path = "Target Support Files/Pods-ChatAutomationTestApp/Pods-ChatAutomationTestApp.release.xcconfig"; sourceTree = "<group>"; };
+		7D9B1DE72E26A1CC32E80BE1 /* Pods-ChatAutomationTestApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAutomationTestApp.debug.xcconfig"; path = "Target Support Files/Pods-ChatAutomationTestApp/Pods-ChatAutomationTestApp.debug.xcconfig"; sourceTree = "<group>"; };
+		9B97C9F9D0C2ACD183166704 /* Pods_ChatAutomationTestApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatAutomationTestApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9522879ADCFD8CDE9A5ED37 /* Pods-ChatAutomationTestApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatAutomationTestApp.release.xcconfig"; path = "Target Support Files/Pods-ChatAutomationTestApp/Pods-ChatAutomationTestApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,18 +173,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D1C067671F59551FA590680 /* Pods_ChatAutomationTestApp.framework in Frameworks */,
+				3ED22518229538B100E51B42 /* Alamofire.framework in Frameworks */,
+				3ED224FE2295389400E51B42 /* FanapPodChatSDK.framework in Frameworks */,
+				9EDEAF6B6E408C03F20B7634 /* Pods_ChatAutomationTestApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		023902CE273B9E0D10EA5361 /* Pods */ = {
+		00298887EFBDC7BD45FC467A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				794764CA0065DA2CA5A7CA75 /* Pods-ChatAutomationTestApp.debug.xcconfig */,
-				C6ACFCB4E4559BC655A03381 /* Pods-ChatAutomationTestApp.release.xcconfig */,
+				9B97C9F9D0C2ACD183166704 /* Pods_ChatAutomationTestApp.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0CB402C4A12FF65E9126AFFF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7D9B1DE72E26A1CC32E80BE1 /* Pods-ChatAutomationTestApp.debug.xcconfig */,
+				E9522879ADCFD8CDE9A5ED37 /* Pods-ChatAutomationTestApp.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -206,8 +281,10 @@
 			children = (
 				3EAE775122217AD4005AC3C3 /* ChatAutomationTestApp */,
 				3EAE775022217AD4005AC3C3 /* Products */,
-				3EAE779922218ED4005AC3C3 /* Frameworks */,
-				023902CE273B9E0D10EA5361 /* Pods */,
+				3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */,
+				3ED224F12295387000E51B42 /* FanapPodChatSDK.xcodeproj */,
+				0CB402C4A12FF65E9126AFFF /* Pods */,
+				00298887EFBDC7BD45FC467A /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -239,17 +316,27 @@
 			path = ChatAutomationTestApp;
 			sourceTree = "<group>";
 		};
-		3EAE779922218ED4005AC3C3 /* Frameworks */ = {
+		3ED224F22295387000E51B42 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3E1C357B225B5E58001A343B /* SwiftyJSON.framework */,
-				3E1C3579225B5E55001A343B /* SwiftyBeaver.framework */,
-				3E1C3577225B5E51001A343B /* Starscream.framework */,
-				3E1C3575225B5E49001A343B /* Alamofire.framework */,
-				3E1C3573225B5E44001A343B /* FanapPodAsyncSDK.framework */,
-				2254F55487D066E2DF8C1AD7 /* Pods_ChatAutomationTestApp.framework */,
+				3ED224FB2295387000E51B42 /* FanapPodChatSDK.framework */,
+				3ED224FD2295387000E51B42 /* FanapPodChatSDKTests.xctest */,
 			);
-			name = Frameworks;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3ED22500229538AA00E51B42 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3ED2250B229538AA00E51B42 /* Alamofire.framework */,
+				3ED2250D229538AA00E51B42 /* Alamofire iOS Tests.xctest */,
+				3ED2250F229538AA00E51B42 /* Alamofire.framework */,
+				3ED22511229538AA00E51B42 /* Alamofire macOS Tests.xctest */,
+				3ED22513229538AA00E51B42 /* Alamofire.framework */,
+				3ED22515229538AA00E51B42 /* Alamofire tvOS Tests.xctest */,
+				3ED22517229538AA00E51B42 /* Alamofire.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -263,7 +350,6 @@
 				3EAE774B22217AD4005AC3C3 /* Sources */,
 				3EAE774C22217AD4005AC3C3 /* Frameworks */,
 				3EAE774D22217AD4005AC3C3 /* Resources */,
-				7C785D4854539E96E0A8A11E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -300,12 +386,88 @@
 			mainGroup = 3EAE774622217AD4005AC3C3;
 			productRefGroup = 3EAE775022217AD4005AC3C3 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 3ED22500229538AA00E51B42 /* Products */;
+					ProjectRef = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
+				},
+				{
+					ProductGroup = 3ED224F22295387000E51B42 /* Products */;
+					ProjectRef = 3ED224F12295387000E51B42 /* FanapPodChatSDK.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				3EAE774E22217AD4005AC3C3 /* ChatAutomationTestApp */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		3ED224FB2295387000E51B42 /* FanapPodChatSDK.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FanapPodChatSDK.framework;
+			remoteRef = 3ED224FA2295387000E51B42 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3ED224FD2295387000E51B42 /* FanapPodChatSDKTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FanapPodChatSDKTests.xctest;
+			remoteRef = 3ED224FC2295387000E51B42 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3ED2250B229538AA00E51B42 /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = 3ED2250A229538AA00E51B42 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3ED2250D229538AA00E51B42 /* Alamofire iOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire iOS Tests.xctest";
+			remoteRef = 3ED2250C229538AA00E51B42 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3ED2250F229538AA00E51B42 /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = 3ED2250E229538AA00E51B42 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3ED22511229538AA00E51B42 /* Alamofire macOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire macOS Tests.xctest";
+			remoteRef = 3ED22510229538AA00E51B42 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3ED22513229538AA00E51B42 /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = 3ED22512229538AA00E51B42 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3ED22515229538AA00E51B42 /* Alamofire tvOS Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "Alamofire tvOS Tests.xctest";
+			remoteRef = 3ED22514229538AA00E51B42 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3ED22517229538AA00E51B42 /* Alamofire.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Alamofire.framework;
+			remoteRef = 3ED22516229538AA00E51B42 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3EAE774D22217AD4005AC3C3 /* Resources */ = {
@@ -320,36 +482,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		7C785D4854539E96E0A8A11E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-ChatAutomationTestApp/Pods-ChatAutomationTestApp-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
-				"${BUILT_PRODUCTS_DIR}/PodAsync/PodAsync.framework",
-				"${BUILT_PRODUCTS_DIR}/PodChat/PodChat.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
-				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PodAsync.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PodChat.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ChatAutomationTestApp/Pods-ChatAutomationTestApp-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		D77A6BC0A164C954575578AD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -552,7 +684,7 @@
 		};
 		3EAE776222217AD6005AC3C3 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 794764CA0065DA2CA5A7CA75 /* Pods-ChatAutomationTestApp.debug.xcconfig */;
+			baseConfigurationReference = 7D9B1DE72E26A1CC32E80BE1 /* Pods-ChatAutomationTestApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -576,7 +708,7 @@
 		};
 		3EAE776322217AD6005AC3C3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C6ACFCB4E4559BC655A03381 /* Pods-ChatAutomationTestApp.release.xcconfig */;
+			baseConfigurationReference = E9522879ADCFD8CDE9A5ED37 /* Pods-ChatAutomationTestApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";

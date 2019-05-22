@@ -6,8 +6,8 @@
 //  Copyright © 1397 Mahyar Zhiani. All rights reserved.
 //
 
-import PodChat
-//import FanapPodChatSDK
+//import PodChat
+import FanapPodChatSDK
 import SwiftyJSON
 
 /*

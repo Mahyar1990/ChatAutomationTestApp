@@ -6,6 +6,6 @@ target 'ChatAutomationTestApp' do
   use_frameworks!
 
   # Pods for ChatAutomationTestApp
-pod 'PodChat'
+  # pod 'PodChat'
 
 end

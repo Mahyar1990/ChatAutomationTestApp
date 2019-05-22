@@ -8,8 +8,8 @@
 
 import UIKit
 import SwiftyJSON
-//import FanapPodChatSDK
-import PodChat
+import FanapPodChatSDK
+//import PodChat
 
 var myChatObject: Chat?
 
