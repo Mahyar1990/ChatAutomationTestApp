@@ -86,7 +86,7 @@ class CreateThreadAutomation {
             i.append("\(item.formatToJSON()) ,")
         }
         
-        delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "on \(on?.rawValue ?? "") send create thread request with this parameters:\ndescription = \(withDescription ?? "nil") , image = \(self.image ?? "nil") , invitees = \(i) , metadata = \(self.metadata ?? "nil") , title = \(withTitle) , type = \(withType ?? "nil") , requestUniqueId = \(self.requestUniqueId ?? "nil")", lineNumbers: 3)
+        delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "on \(on?.rawValue ?? "") send create thread request with this parameters:\n description = \(withDescription ?? "nil") ,\n image = \(self.image ?? "nil") ,\n invitees = \(i) ,\n metadata = \(self.metadata ?? "nil") ,\n title = \(withTitle) ,\n type = \(withType ?? "nil") ,\n requestUniqueId = \(self.requestUniqueId ?? "nil")", lineNumbers: 6)
         
         let createThreadInput = CreateThreadRequestModel(description: withDescription, image: self.image, invitees: withInvitees, metadata: self.metadata, title: withTitle, type: withType, uniqueId: self.requestUniqueId)
         myChatObject?.createThread(createThreadInput: createThreadInput, uniqueId: { (createThreadUniqueId) in

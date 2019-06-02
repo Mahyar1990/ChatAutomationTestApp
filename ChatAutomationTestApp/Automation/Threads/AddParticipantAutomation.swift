@@ -53,7 +53,7 @@ class AddParticipantAutomation {
             }
         } else {
             delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "threadId is not specified so we will create a thread by ourself and do the rest", lineNumbers: 2)
-            sendRequestSenario(contactCellPhone: nil, threadId: nil, contacts: nil)
+            sendRequestSenario(contactId: nil, threadId: nil, contacts: nil)
         }
     }
     
@@ -68,25 +68,25 @@ class AddParticipantAutomation {
             print("uniqueId = \(addParticipantsUniqueId)")
             self.uniqueIdCallback?(addParticipantsUniqueId)
         }, completion: { (addParticipantServerResponse) in
-            print("response = \((addParticipantServerResponse as! AddParticipantModel).returnDataAsJSON())")
+//            print("response = \((addParticipantServerResponse as! AddParticipantModel).returnDataAsJSON())")
             self.responseCallback?(addParticipantServerResponse as! AddParticipantModel)
         })
         
     }
     
     
-    func sendRequestSenario(contactCellPhone: String?, threadId: Int?, contacts: [Int]?) {
+    func sendRequestSenario(contactId: String?, threadId: Int?, contacts: [Int]?) {
         // 1- add contact
         // 2- create thread with this contact
         // 3- add contact to this thread
         // 4- send request
         
-        switch (contactCellPhone, threadId, contacts) {
+        switch (contactId, threadId, contacts) {
         case (.none, .none, .none):
             addContact()
             
-        case let (.some(cellPhone), .none, .none):
-            createThread(withCellphoneNumber: cellPhone)
+        case let (.some(id), .none, .none):
+            createThread(withContactId: id)
             
         case let (_ , .some(id), .none):
             addContactToThread(threadId: id)
@@ -109,7 +109,7 @@ class AddParticipantAutomation {
                 if let id = myContact.id {
                     
                     self.delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this contact id = \(id).", lineNumbers: 2)
-                    self.sendRequestSenario(contactCellPhone: "\(id)", threadId: nil, contacts: nil)
+                    self.sendRequestSenario(contactId: "\(id)", threadId: nil, contacts: nil)
                     
                 } else {
                     // handle error that didn't get contact id in the contact model
@@ -123,15 +123,20 @@ class AddParticipantAutomation {
     }
     
     // 2
-    func createThread(withCellphoneNumber cellphoneNumber: String) {
+    func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")
+        let myInvitee = Invitee(id: "\(contactId)", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")
         let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP.rawValue, requestUniqueId: nil)
+        var i = ""
+        for item in createThread.invitees! {
+            i.append("\(item.formatToJSON()) ,")
+        }
+        delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "try to create new PublicGroup thread with this parameters: \n description = \(createThread.description!),\n invitees = \(i),\n title = \(createThread.title!),\n type = \(createThread.type!)", lineNumbers: 6)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 
                 self.delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
-                self.sendRequestSenario(contactCellPhone: nil, threadId: id, contacts: nil)
+                self.sendRequestSenario(contactId: nil, threadId: id, contacts: nil)
                 
             } else {
                 // handle error, there is no id in the Conversation model
@@ -141,6 +146,7 @@ class AddParticipantAutomation {
     
     // 3
     func addContactToThread(threadId: Int) {
+        delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "try to add new contact to this new threadId: \(threadId)", lineNumbers: 2)
         let mehdi = Faker.sharedInstance.mehdiAsContact
         let addContact = AddContactAutomation(cellphoneNumber: mehdi.cellphoneNumber, email: mehdi.email, firstName: mehdi.firstName, lastName: mehdi.lastName)
         addContact.create(uniqueId: { (_) in }) { (contactModel) in
@@ -148,7 +154,7 @@ class AddParticipantAutomation {
                 if let id = myContact.id {
                     
                     self.delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "New Contact has been created, now try to add this contact id: \(id) to the thread \(threadId)", lineNumbers: 1)
-                    self.sendRequestSenario(contactCellPhone: nil, threadId: threadId, contacts: [id])
+                    self.sendRequestSenario(contactId: nil, threadId: threadId, contacts: [id])
                     
                 } else {
                     // handle error that didn't get contact id in the contact model

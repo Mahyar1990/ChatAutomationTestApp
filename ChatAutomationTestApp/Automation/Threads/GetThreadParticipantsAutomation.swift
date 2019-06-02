@@ -19,6 +19,7 @@ class GetThreadParticipantsAutomation {
     
     public weak var delegate: MoreInfoDelegate?
     
+    let admin:          Bool?
     let count:          Int?
     let firstMessageId: Int?
     let lastMessageId:  Int?
@@ -35,8 +36,9 @@ class GetThreadParticipantsAutomation {
     private var cacheCallback:      callbackServerResponseTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
     
-    init(count: Int?, firstMessageId: Int?, lastMessageId: Int?, name: String?, offset: Int?, threadId: Int?, typeCode: String?) {
+    init(admin: Bool?, count: Int?, firstMessageId: Int?, lastMessageId: Int?, name: String?, offset: Int?, threadId: Int?, typeCode: String?) {
         
+        self.admin              = admin
         self.count              = count
         self.firstMessageId     = firstMessageId
         self.lastMessageId      = lastMessageId
@@ -62,9 +64,10 @@ class GetThreadParticipantsAutomation {
     }
     
     func sendRequest(theThreadId: Int) {
-        delegate?.newInfo(type: MoreInfoTypes.GetThreadParticipants.rawValue, message: "send Request to getThreadParticipants with this params:\ncount = \(count ?? 50) firstMessageId = \(firstMessageId ?? 0) , lastMessageId = \(firstMessageId ?? 0) , name = \(name ?? "nil") , offset = \(offset ?? 0) , threadIds = \(theThreadId) , typeCode = \(typeCode ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.GetThreadParticipants.rawValue, message: "send Request to getThreadParticipants with this params:\n admin = \(admin ?? false) count = \(count ?? 50) firstMessageId = \(firstMessageId ?? 0) , lastMessageId = \(firstMessageId ?? 0) , name = \(name ?? "nil") , offset = \(offset ?? 0) , threadIds = \(theThreadId) , typeCode = \(typeCode ?? "nil")", lineNumbers: 2)
         
-        let getThreadParticipantsInput = GetThreadParticipantsRequestModel(count:           count,
+        let getThreadParticipantsInput = GetThreadParticipantsRequestModel(admin:           admin,
+                                                                           count:           count,
                                                                            firstMessageId:  firstMessageId,
                                                                            lastMessageId:   lastMessageId,
                                                                            name:            name,
@@ -88,15 +91,12 @@ class GetThreadParticipantsAutomation {
         
         switch (contactCellPhone, threadId) {
         case    (.none, .none):
-            print("here 1")
             addContact()
             
         case let (.some(cellPhone), .none):
-            print("here 2")
             createThread(withCellphoneNumber: cellPhone)
             
         case let (_ , .some(id)):
-            print("here 3")
             self.sendRequest(theThreadId: id)
             
         }
