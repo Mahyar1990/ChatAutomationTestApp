@@ -30,10 +30,10 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     
     
 // Local Addresses
-    let socketAddress           = "ws://172.16.110.131:8003/ws"
-    let serverName              = "chat-server2"
-//    let socketAddress           = "ws://172.16.106.26:8003/ws"
-//    let serverName              = "chat-server"
+//    let socketAddress           = "ws://172.16.110.131:8003/ws"
+//    let serverName              = "chat-server2"
+    let socketAddress           = "ws://172.16.106.26:8003/ws"
+    let serverName              = "chat-server"
     let ssoHost                 = "http://172.16.110.76"
     let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
@@ -201,6 +201,22 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         return pv
     }()
     
+    let runButton: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Run", for: UIControl.State.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 1
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.addTarget(self, action: #selector(fireRequest), for: UIControl.Event.touchUpInside)
+        return mb
+    }()
+    
     let logView: UIView = {
         let mv = UIView()
         mv.translatesAutoresizingMaskIntoConstraints = false
@@ -229,8 +245,8 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let fireButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.play, target: self, action: #selector(fireRequest))
-        navigationItem.leftBarButtonItem = fireButton
+//        let fireButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.play, target: self, action: #selector(fireRequest))
+//        navigationItem.leftBarButtonItem = fireButton
         
         updateText(cellText: " Input 1 = contactId as Int \n Input 2 = threadId as Int \n Input 3 = userId as Int", cellHeight: 60, cellColor: UIColor.white)
         
@@ -262,6 +278,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52664cf7de0bda&response_type=token&redirect_uri=https://chat.fanapsoft.ir&scope=profile social:write
  */
 //            token = "87fe0796fe764fe39369a257d605e850"
+//            token = "7a18deb4a4b64339a81056089f5e5922"
             token = "fbd4ecedb898426394646e65c6b1d5d1"
             createChat()
         }
@@ -1093,7 +1110,18 @@ extension MyChatViewController {
     
     // 20
     func implementRemoveAdmin() {
-        
+        let removeAdmin = RemoveAdminAutomation(threadId: 9947, userId: 621, requestUniqueId: nil)
+        removeAdmin.delegate = self
+        removeAdmin.create(uniqueId: { (removeAdminUniqueId) in
+            let myText = "remove Admin unique id = \(removeAdminUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 65, cellColor: .cyan)
+        }, serverResponse: { (removeAdminModelServerResponse) in
+            let myText = "remove admin model response = \(removeAdminModelServerResponse)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }) { (removeAdminModelCacheResponse) in
+            let myText = "remove admin model response = \(removeAdminModelCacheResponse)"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: .cyan)
+        }
     }
     
     // 21

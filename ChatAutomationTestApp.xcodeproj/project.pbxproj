@@ -31,7 +31,7 @@
 		3E947249222674DF005D986E /* Faker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E947248222674DF005D986E /* Faker.swift */; };
 		3E9725AF222292210056AD4D /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725AE222292210056AD4D /* Views.swift */; };
 		3E9725B32222925F0056AD4D /* ChatDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725B22222925F0056AD4D /* ChatDelegates.swift */; };
-		3E9725B5222292C80056AD4D /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725B4222292C80056AD4D /* BaseCell.swift */; };
+		3E9725B5222292C80056AD4D /* BaseCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725B4222292C80056AD4D /* BaseCells.swift */; };
 		3EA5259822A27DD1004ABE11 /* AddAdminAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA5259722A27DD1004ABE11 /* AddAdminAutomation.swift */; };
 		3EADF7CB228BCF53009B102C /* MessageDeliveryListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EADF7CA228BCF53009B102C /* MessageDeliveryListAutomation.swift */; };
 		3EADF7CF228BD15E009B102C /* MessageSeenListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EADF7CE228BD15E009B102C /* MessageSeenListAutomation.swift */; };
@@ -145,7 +145,7 @@
 		3E947248222674DF005D986E /* Faker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Faker.swift; sourceTree = "<group>"; };
 		3E9725AE222292210056AD4D /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		3E9725B22222925F0056AD4D /* ChatDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDelegates.swift; sourceTree = "<group>"; };
-		3E9725B4222292C80056AD4D /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
+		3E9725B4222292C80056AD4D /* BaseCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCells.swift; sourceTree = "<group>"; };
 		3EA5259722A27DD1004ABE11 /* AddAdminAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAdminAutomation.swift; sourceTree = "<group>"; };
 		3EADF7CA228BCF53009B102C /* MessageDeliveryListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDeliveryListAutomation.swift; sourceTree = "<group>"; };
 		3EADF7CE228BD15E009B102C /* MessageSeenListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSeenListAutomation.swift; sourceTree = "<group>"; };
@@ -307,14 +307,11 @@
 			children = (
 				3EAE775222217AD4005AC3C3 /* AppDelegate.swift */,
 				3EAE775422217AD4005AC3C3 /* MyChatViewController.swift */,
-				3EEB0817227EC7B2009DA162 /* LoginViewController.swift */,
-				3EEB081B227EC98C009DA162 /* GetTokenWithRefreshToken.swift */,
-				3EEB0819227EC7DD009DA162 /* Enums.swift */,
-				3E94724C22267C1D005D986E /* Automation */,
-				3E947248222674DF005D986E /* Faker.swift */,
 				3E9725B22222925F0056AD4D /* ChatDelegates.swift */,
-				3E9725AE222292210056AD4D /* Views.swift */,
-				3E9725B4222292C80056AD4D /* BaseCell.swift */,
+				3EEF6E9422A4F54C00B0B560 /* View */,
+				3EEF6E9522A4F57900B0B560 /* Login */,
+				3E94724C22267C1D005D986E /* Automation */,
+				3EEF6E9322A4F52A00B0B560 /* Helpers */,
 				3EAE775922217AD6005AC3C3 /* Assets.xcassets */,
 				3EAE775B22217AD6005AC3C3 /* LaunchScreen.storyboard */,
 				3EAE775E22217AD6005AC3C3 /* Info.plist */,
@@ -343,6 +340,33 @@
 				3ED22517229538AA00E51B42 /* Alamofire.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		3EEF6E9322A4F52A00B0B560 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3E947248222674DF005D986E /* Faker.swift */,
+				3EEB0819227EC7DD009DA162 /* Enums.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		3EEF6E9422A4F54C00B0B560 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3E9725AE222292210056AD4D /* Views.swift */,
+				3E9725B4222292C80056AD4D /* BaseCells.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3EEF6E9522A4F57900B0B560 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				3EEB0817227EC7B2009DA162 /* LoginViewController.swift */,
+				3EEB081B227EC98C009DA162 /* GetTokenWithRefreshToken.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -544,7 +568,7 @@
 				3ED3DA86222E748600261DB3 /* GetThreadAutomation.swift in Sources */,
 				3EE1047E227D736000A4E645 /* GetThreadParticipantsAutomation.swift in Sources */,
 				3E8D148D225CAB63001C0AE6 /* UpdateContactAutomation.swift in Sources */,
-				3E9725B5222292C80056AD4D /* BaseCell.swift in Sources */,
+				3E9725B5222292C80056AD4D /* BaseCells.swift in Sources */,
 				3E659B8D2299204C0042B03B /* GetAdminAutomation.swift in Sources */,
 				3EEB0814227EA277009DA162 /* AddParticipantAutomation.swift in Sources */,
 				3EADF7CB228BCF53009B102C /* MessageDeliveryListAutomation.swift in Sources */,

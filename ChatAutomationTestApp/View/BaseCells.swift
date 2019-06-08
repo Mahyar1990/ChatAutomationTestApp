@@ -1,5 +1,5 @@
 //
-//  BaseCell.swift
+//  BaseCells.swift
 //  ChatAutomationTestApp
 //
 //  Created by Mahyar Zhiani on 12/5/1397 AP.

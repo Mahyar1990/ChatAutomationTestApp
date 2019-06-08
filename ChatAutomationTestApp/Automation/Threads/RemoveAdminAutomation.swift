@@ -59,7 +59,7 @@ class RemoveAdminAutomation {
     func sendRequest(theThreadId: Int, theUserId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.RemoveAdmin.rawValue, message: "send Request to removeAdminRole with this params: \n threadId = \(theThreadId), \n userId = \(theUserId)", lineNumbers: 2)
         
-        let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Remove, threadId: theThreadId, uniqueId: requestUniqueId, userId: theUserId)
+        let addAdminInput = SetRoleRequestModel(roles: [Roles.EDIT_MESSAGE_OF_OTHERS], roleOperation: RoleOperations.Remove, threadId: theThreadId, uniqueId: requestUniqueId, userId: theUserId)
         myChatObject?.setRole(setRoleInput: [addAdminInput], uniqueId: { (addAdminUniqueId) in
             self.uniqueIdCallback?(addAdminUniqueId)
         }, completion: { (addAdminServerResponseModel) in

@@ -24,6 +24,7 @@ extension MyChatViewController {
         
         view.addSubview(tokenTextField)
         view.addSubview(setTokenAndConnectChatButton)
+        view.addSubview(runButton)
         view.addSubview(input1TextField)
         view.addSubview(input2TextField)
         view.addSubview(input3TextField)
@@ -44,8 +45,13 @@ extension MyChatViewController {
         
         pickerView.topAnchor.constraint(equalTo: tokenTextField.bottomAnchor, constant: 4).isActive = true
         pickerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
-        pickerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
+        pickerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -78).isActive = true
         pickerView.heightAnchor.constraint(equalToConstant: 128).isActive = true
+        
+        runButton.topAnchor.constraint(equalTo: pickerView.topAnchor, constant: 2).isActive = true
+        runButton.bottomAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: -2).isActive = true
+        runButton.leftAnchor.constraint(equalTo: pickerView.rightAnchor, constant: 8).isActive = true
+        runButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
         
         let inputTextFieldWidth = ((view.frame.width - 16 - 12) / 4)
         
