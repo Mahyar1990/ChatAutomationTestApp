@@ -44,8 +44,8 @@ class MyCollectionViewUploadCell: UICollectionViewCell {
     let spaceProgressView: UIProgressView = {
         let pv = UIProgressView()
         pv.translatesAutoresizingMaskIntoConstraints = false
-        pv.progressTintColor = UIColor.blue
-        pv.trackTintColor = UIColor.gray
+        pv.progressTintColor = UIColor.init().hexToRGB(hex: "#0984e3", alpha: 1)
+        pv.trackTintColor = UIColor.init().hexToRGB(hex: "#b2bec3", alpha: 1)
         pv.layer.cornerRadius = 4
         pv.layer.borderWidth = 2
         pv.layer.borderColor = UIColor.white.cgColor
@@ -57,11 +57,13 @@ class MyCollectionViewUploadCell: UICollectionViewCell {
         let mb = UIButton()
         mb.translatesAutoresizingMaskIntoConstraints = false
         mb.setTitle("Cancel", for: UIControl.State.normal)
-        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+//        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.backgroundColor = UIColor.init().hexToRGB(hex: "#fab1a0", alpha: 1)
         mb.layer.cornerRadius = 5
         mb.layer.borderWidth = 1
         mb.layer.borderColor = UIColor.clear.cgColor
-        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+//        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowColor = UIColor.init().hexToRGB(hex: "#e17055", alpha: 1).cgColor
         mb.layer.shadowOpacity = 1
         mb.layer.shadowRadius = 1
         mb.layer.shadowOffset = CGSize(width: 0, height: 3)
@@ -71,11 +73,13 @@ class MyCollectionViewUploadCell: UICollectionViewCell {
         let mb = UIButton()
         mb.translatesAutoresizingMaskIntoConstraints = false
         mb.setTitle("Pause", for: UIControl.State.normal)
-        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+//        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.backgroundColor = UIColor.init().hexToRGB(hex: "#a29bfe", alpha: 1)
         mb.layer.cornerRadius = 5
         mb.layer.borderWidth = 1
         mb.layer.borderColor = UIColor.clear.cgColor
-        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+//        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowColor = UIColor.init().hexToRGB(hex: "#6c5ce7", alpha: 1).cgColor
         mb.layer.shadowOpacity = 1
         mb.layer.shadowRadius = 1
         mb.layer.shadowOffset = CGSize(width: 0, height: 3)

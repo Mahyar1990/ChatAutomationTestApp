@@ -254,7 +254,7 @@ extension BlockAutomation {
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             
             if let myContact = contactModel.contacts.first {
-                if let id = myContact.linkedUser?.id {
+                if let id = myContact.linkedUser?.coreUserId {
                     self.delegate?.newInfo(type: MoreInfoTypes.Block.rawValue, message: "new conract has been created, user id = \(id)", lineNumbers: 1)
                     self.addContactThenBlockWithUserIdSenario(userId: id)
                 } else {

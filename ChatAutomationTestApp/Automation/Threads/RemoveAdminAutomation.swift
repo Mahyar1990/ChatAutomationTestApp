@@ -51,7 +51,8 @@ class RemoveAdminAutomation {
         case let (.some(tId), .some(uId)):
             sendRequest(theThreadId: tId, theUserId: uId)
         default:
-            addParticipant()
+//            sendRequestSenario(threadId: nil, theUserId: nil, addedAsAdmin: false)
+            createThreadAndAddParticipant()
         }
         
     }
@@ -59,7 +60,7 @@ class RemoveAdminAutomation {
     func sendRequest(theThreadId: Int, theUserId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.RemoveAdmin.rawValue, message: "send Request to removeAdminRole with this params: \n threadId = \(theThreadId), \n userId = \(theUserId)", lineNumbers: 2)
         
-        let addAdminInput = SetRoleRequestModel(roles: [Roles.EDIT_MESSAGE_OF_OTHERS], roleOperation: RoleOperations.Remove, threadId: theThreadId, uniqueId: requestUniqueId, userId: theUserId)
+        let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Remove, threadId: theThreadId, uniqueId: requestUniqueId, userId: theUserId)
         myChatObject?.setRole(setRoleInput: [addAdminInput], uniqueId: { (addAdminUniqueId) in
             self.uniqueIdCallback?(addAdminUniqueId)
         }, completion: { (addAdminServerResponseModel) in
@@ -70,7 +71,32 @@ class RemoveAdminAutomation {
         
     }
     
-    func addParticipant() {
+    
+    func sendRequestSenario(threadId: Int?, theUserId: Int?, addedAsAdmin: Bool) {
+        // 1- create thread and add participant to it
+        // 2- set admin role to the participant
+        // 3- send a message
+        // 4- sendRequest
+        
+        
+        switch (threadId, theUserId, addedAsAdmin) {
+        case    (.none, .none, _):
+            createThreadAndAddParticipant()
+            
+        case let (.some(tId), .some(uID), false):
+            addAdmin(theThreadId: tId, theUserId: uID)
+            
+        case let (.some(tId), .some(uID), true):
+            sendRequest(theThreadId: tId, theUserId: uID)
+            
+        default: print("Wrong situation!!!")
+        }
+        
+        
+    }
+    
+    
+    func createThreadAndAddParticipant() {
         delegate?.newInfo(type: MoreInfoTypes.RemoveAdmin.rawValue, message: "Try to create thread then add an participant to the thread", lineNumbers: 2)
         let addParticipant = AddParticipantAutomation(contacts: nil, threadId: nil, typeCode: nil, uniqueId: nil)
         addParticipant.create(uniqueId: { _ in }) { (addParticipantResponseModel) in
@@ -85,11 +111,15 @@ class RemoveAdminAutomation {
                                     if !found {
                                         switch (item.admin, item.id) {
                                         case let (.none, .some(participantId)):
-                                            self.addAdmin(theThreadId: myThreadId, theUserId: participantId)
+                                            self.sendRequestSenario(threadId: myThreadId, theUserId: participantId, addedAsAdmin: false)
+//                                            self.addAdmin(theThreadId: myThreadId, theUserId: participantId)
+//                                            self.sendRequest(theThreadId: myThreadId, theUserId: participantId)
                                             found = true
                                         case let (.some(isTrue), .some(participantId)):
                                             if !isTrue {
-                                                self.addAdmin(theThreadId: myThreadId, theUserId: participantId)
+                                                self.sendRequestSenario(threadId: myThreadId, theUserId: participantId, addedAsAdmin: false)
+//                                                self.addAdmin(theThreadId: myThreadId, theUserId: participantId)
+//                                                self.sendRequest(theThreadId: myThreadId, theUserId: participantId)
                                                 found = true
                                             }
                                         default: return
@@ -111,13 +141,17 @@ class RemoveAdminAutomation {
     }
     
     
+    
+    
     func addAdmin(theThreadId: Int, theUserId: Int) {
         
         delegate?.newInfo(type: MoreInfoTypes.RemoveAdmin.rawValue, message: "try to addAdmin with this params: threadId = \(theThreadId), userId = \(theUserId)", lineNumbers: 2)
         
         let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Add, threadId: theThreadId, uniqueId: requestUniqueId, userId: theUserId)
         myChatObject?.setRole(setRoleInput: [addAdminInput], uniqueId: { _ in }, completion: { (addAdminServerResponseModel) in
-            self.sendRequest(theThreadId: theThreadId, theUserId: theUserId)
+            self.delegate?.newInfo(type: MoreInfoTypes.RemoveAdmin.rawValue, message: "This is addAdmin response from server:\n\(addAdminServerResponseModel)", lineNumbers: 3)
+            self.sendRequestSenario(threadId: theThreadId, theUserId: theUserId, addedAsAdmin: true)
+//            self.sendRequest(theThreadId: theThreadId, theUserId: theUserId)
         }, cacheResponse: { _ in })
         
     }

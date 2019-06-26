@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let myViewController = UIViewController()
     
+    /*
     fileprivate func loginIfNedded() {
         // 1-0 check if user had login befor (there is some value inside UserDefaults)
         // 1-1 if toke expiration has passed, call refreshToken function to get new token
@@ -53,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    */
     
     fileprivate func createChatView() {
         let navigation = UINavigationController(rootViewController: MyChatViewController())
@@ -66,6 +68,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
+//        window?.rootViewController = MyChatViewController()
         window?.rootViewController = UINavigationController(rootViewController: MyChatViewController())
         
 //        loginIfNedded()

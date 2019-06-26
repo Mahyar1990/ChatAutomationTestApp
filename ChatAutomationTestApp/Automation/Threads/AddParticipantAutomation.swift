@@ -83,16 +83,24 @@ class AddParticipantAutomation {
         
         switch (contactId, threadId, contacts) {
         case (.none, .none, .none):
-            addContact()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.addContact()
+            }
             
         case let (.some(id), .none, .none):
-            createThread(withContactId: id)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.createThread(withContactId: id)
+            }
             
         case let (_ , .some(id), .none):
-            addContactToThread(threadId: id)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.addContactToThread(threadId: id)
+            }
             
         case let (_ , .some(id), .some(cntcts)):
-            sendRequest(theContacts: cntcts, theThreadId: id)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.sendRequest(theContacts: cntcts, theThreadId: id)
+            }
             
         case (_, .none, .some(_)):
             print("wrong situation")

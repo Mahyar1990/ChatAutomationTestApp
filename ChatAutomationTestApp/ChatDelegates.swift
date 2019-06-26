@@ -48,6 +48,7 @@ extension MyChatViewController: ChatDelegates {
         self.logHeightArr.append(150)
         self.logBackgroundColor.append(UIColor.green)
         print(text)
+        activityIndicator.stopAnimating()
     }
     
     func userEvents(type: UserEventTypes, result: Any) {

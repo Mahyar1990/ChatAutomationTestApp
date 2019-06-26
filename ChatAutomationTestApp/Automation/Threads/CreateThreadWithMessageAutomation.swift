@@ -92,16 +92,19 @@ class CreateThreadWithMessageAutomation {
         delegate?.newInfo(type: MoreInfoTypes.CreateThreadWithMessage.rawValue, message: "send create thread with Message request with this parameters:\n message = \(withMessage), description = \(withDescription ?? "nil") , image = \(self.image ?? "nil") , invitees = \(i) , metadata = \(self.metadata ?? "nil") , title = \(withTitle) , type = \(withType) , requestUniqueId = \(self.requestUniqueId ?? "nil")", lineNumbers: 4)
         
         let createThreadWithMessageInput = CreateThreadWithMessageRequestModel(threadDescription: withDescription,
-                                                                               threadImage: self.image,
-                                                                               threadInvitees: withInvitees,
-                                                                               threadMetadata: self.metadata,
-                                                                               threadTitle: withTitle,
-                                                                               threadType: withType,
-                                                                               uniqueId: self.requestUniqueId,
-                                                                               messageContent: "This is The Message Text",
-                                                                               messageMetaDataId: nil,
-                                                                               messageMetaDataType: nil,
-                                                                               messageMetaDataOwner: nil)
+                                                                               threadImage:     self.image,
+                                                                               threadInvitees:  withInvitees,
+                                                                               threadMetadata:  self.metadata,
+                                                                               threadTitle:     withTitle,
+                                                                               threadType:      withType,
+                                                                               messageForwardedMessageIds:  nil,
+                                                                               messageForwardedUniqueIds:   nil,
+                                                                               messageMetaData:         nil,
+                                                                               messageRepliedTo:        nil,
+                                                                               messageSystemMetaData:   nil,
+                                                                               messageText:     "This is The Message Text",
+                                                                               messageType:     nil,
+                                                                               uniqueId:        self.requestUniqueId)
         
             myChatObject?.createThreadWithMessage(creatThreadWithMessageInput: createThreadWithMessageInput, uniqueId: { (createThreadWithMessageUniqueId) in
                 self.uniqueIdCallback?(createThreadWithMessageUniqueId)

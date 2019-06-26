@@ -23,7 +23,7 @@ class UnmuteThreadAutomation {
     let typeCode:       String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
-    typealias callbackServerResponseTypeAlias   = (JSON) -> ()
+    typealias callbackServerResponseTypeAlias   = (MuteUnmuteThreadModel) -> ()
     
     private var uniqueIdCallback:   callbackStringTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
@@ -55,7 +55,7 @@ class UnmuteThreadAutomation {
         myChatObject?.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
             self.uniqueIdCallback?(muteThreadUniqueId)
         }, completion: { (muteThreadServerResponseModel) in
-            self.responseCallback?(muteThreadServerResponseModel as! JSON)
+            self.responseCallback?(muteThreadServerResponseModel as! MuteUnmuteThreadModel)
         })
         
     }
@@ -64,14 +64,15 @@ class UnmuteThreadAutomation {
     func muteThread() {
         let muteThread = MuteThreadAutomation(threadId: nil, typeCode: nil)
         muteThread.create(uniqueId: { _ in }) { (muteThreadResponse) in
-            if let mutedThreadId = muteThreadResponse["result"].string {
-                self.delegate?.newInfo(type: MoreInfoTypes.UnmuteThread.rawValue, message: "This thread with id = \(mutedThreadId) has been Muted", lineNumbers: 1)
-                if let id = Int(mutedThreadId) {
-                    self.sendRequest(theThreadId: id)
-                }
-            } else {
-                self.delegate?.newInfo(type: MoreInfoTypes.UnmuteThread.rawValue, message: "Response of the Mute Thread does not contain threadId!! (result in the json response)", lineNumbers: 2)
-            }
+            
+            self.delegate?.newInfo(type: MoreInfoTypes.UnmuteThread.rawValue, message: "This thread with id = \(muteThreadResponse.threadId) has been Muted", lineNumbers: 1)
+            self.sendRequest(theThreadId: muteThreadResponse.threadId)
+            
+//            if let mutedThread = muteThreadResponse as? MuteUnmuteThreadModel {
+//
+//            } else {
+//                self.delegate?.newInfo(type: MoreInfoTypes.UnmuteThread.rawValue, message: "Response of the Mute Thread does not contain threadId!! (result in the json response)", lineNumbers: 2)
+//            }
         }
     }
     

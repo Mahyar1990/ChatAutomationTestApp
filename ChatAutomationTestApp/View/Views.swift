@@ -14,6 +14,7 @@ extension MyChatViewController {
     func setupViews() {
         
         view.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        activityIndicator.color = UIColor.init().hexToRGB(hex: "#d63031", alpha: 1)
         
         myLogCollectionView.register(MyCollectionViewCell.self, forCellWithReuseIdentifier: cellId)
         myLogCollectionView.register(MyCollectionViewUploadCell.self, forCellWithReuseIdentifier: uploadCellId)
@@ -22,8 +23,8 @@ extension MyChatViewController {
         pickerView.delegate = self
         pickerView.dataSource = self
         
-        view.addSubview(tokenTextField)
-        view.addSubview(setTokenAndConnectChatButton)
+//        view.addSubview(tokenTextField)
+//        view.addSubview(setTokenAndConnectChatButton)
         view.addSubview(runButton)
         view.addSubview(input1TextField)
         view.addSubview(input2TextField)
@@ -33,20 +34,25 @@ extension MyChatViewController {
         view.addSubview(logView)
         logView.addSubview(myLogCollectionView)
         
-        setTokenAndConnectChatButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
-        setTokenAndConnectChatButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -4).isActive = true
-        setTokenAndConnectChatButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
-        setTokenAndConnectChatButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
+//        setTokenAndConnectChatButton.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
+//        setTokenAndConnectChatButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -4).isActive = true
+//        setTokenAndConnectChatButton.widthAnchor.constraint(equalToConstant: 70).isActive = true
+//        setTokenAndConnectChatButton.heightAnchor.constraint(equalToConstant: 28).isActive = true
+//
+//        tokenTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
+//        tokenTextField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
+//        tokenTextField.rightAnchor.constraint(equalTo: setTokenAndConnectChatButton.leftAnchor, constant: -4).isActive = true
+//        tokenTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
         
-        tokenTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
-        tokenTextField.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
-        tokenTextField.rightAnchor.constraint(equalTo: setTokenAndConnectChatButton.leftAnchor, constant: -4).isActive = true
-        tokenTextField.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        
-        pickerView.topAnchor.constraint(equalTo: tokenTextField.bottomAnchor, constant: 4).isActive = true
+        pickerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 8).isActive = true
         pickerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
         pickerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -78).isActive = true
-        pickerView.heightAnchor.constraint(equalToConstant: 128).isActive = true
+        pickerView.heightAnchor.constraint(equalToConstant: 110).isActive = true
+        
+//        pickerView.topAnchor.constraint(equalTo: tokenTextField.bottomAnchor, constant: 4).isActive = true
+//        pickerView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
+//        pickerView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -78).isActive = true
+//        pickerView.heightAnchor.constraint(equalToConstant: 128).isActive = true
         
         runButton.topAnchor.constraint(equalTo: pickerView.topAnchor, constant: 2).isActive = true
         runButton.bottomAnchor.constraint(equalTo: pickerView.bottomAnchor, constant: -2).isActive = true

@@ -53,8 +53,12 @@ enum MoreInfoTypes: String {
     case ReplyTextMessage       = "ReplyTextMessage"
     case SendTextMessage        = "SendTextMessage"
     
-    case UploadFile         = "UploadFile"
-    case UploadImage        = "UploadImage"
+    case SendLocationMessage    = "SendLocationMessage"
+    
+    case ReplyFileMessage       = "ReplyFileMessage"
+    case SendFileMessage        = "SendFileMessage"
+    case UploadFile             = "UploadFile"
+    case UploadImage            = "UploadImage"
 }
 
 

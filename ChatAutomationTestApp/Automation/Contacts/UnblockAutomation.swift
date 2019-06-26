@@ -152,7 +152,7 @@ extension UnblockAutomation {
                     }
                     
                 case (false, true, false):
-                    if let id = myContact.linkedUser?.id {
+                    if let id = myContact.linkedUser?.coreUserId {
                         self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new conract has been created, user id = \(id)", lineNumbers: 1)
                         self.blockWith(contactId: myContact.id, userId: id, threadId: nil, needBlockList: false)
                     } else {

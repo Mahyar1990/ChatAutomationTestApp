@@ -51,7 +51,7 @@ class AddAdminAutomation {
         case let (.some(tId), .some(uId)):
             sendRequest(theThreadId: tId, theUserId: uId)
         default:
-            addParticipant()
+            createThreadAndAddParticipant()
         }
         
     }
@@ -59,7 +59,7 @@ class AddAdminAutomation {
     func sendRequest(theThreadId: Int, theUserId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.AddAdmin.rawValue, message: "send Request to getAdmins with this params: \n threadId = \(theThreadId)", lineNumbers: 2)
         
-        let addAdminInput = SetRoleRequestModel(roles: [Roles.EDIT_MESSAGE_OF_OTHERS], roleOperation: RoleOperations.Add, threadId: theThreadId, uniqueId: requestUniqueId, userId: theUserId)
+        let addAdminInput = SetRoleRequestModel(roles: [Roles.CHANGE_THREAD_INFO, Roles.ADD_NEW_USER, Roles.DELETE_MESSAGE_OF_OTHERS], roleOperation: RoleOperations.Add, threadId: theThreadId, uniqueId: requestUniqueId, userId: theUserId)
         myChatObject?.setRole(setRoleInput: [addAdminInput], uniqueId: { (addAdminUniqueId) in
             self.uniqueIdCallback?(addAdminUniqueId)
         }, completion: { (addAdminServerResponseModel) in
@@ -70,7 +70,7 @@ class AddAdminAutomation {
         
     }
     
-    func addParticipant() {
+    func createThreadAndAddParticipant() {
         delegate?.newInfo(type: MoreInfoTypes.AddAdmin.rawValue, message: "Try to create thread then add an participant to the thread", lineNumbers: 2)
         let addParticipant = AddParticipantAutomation(contacts: nil, threadId: nil, typeCode: nil, uniqueId: nil)
         addParticipant.create(uniqueId: { _ in }) { (addParticipantResponseModel) in

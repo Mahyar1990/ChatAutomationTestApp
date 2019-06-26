@@ -22,6 +22,7 @@
 		3E629569222577D9002DB51C /* AddContactAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E629568222577D9002DB51C /* AddContactAutomation.swift */; };
 		3E62956B222577F1002DB51C /* RemoveContactAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E62956A222577F1002DB51C /* RemoveContactAutomation.swift */; };
 		3E659B8D2299204C0042B03B /* GetAdminAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E659B8C2299204C0042B03B /* GetAdminAutomation.swift */; };
+		3E7ACC0022C236B800042168 /* DeleteMultipleMessagesAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7ACBFF22C236B800042168 /* DeleteMultipleMessagesAutomation.swift */; };
 		3E8D1483225C594C001C0AE6 /* ReplyMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D1482225C594C001C0AE6 /* ReplyMessageAutomation.swift */; };
 		3E8D1487225C595F001C0AE6 /* ForwardMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D1486225C595F001C0AE6 /* ForwardMessageAutomation.swift */; };
 		3E8D1489225C7AE2001C0AE6 /* EditMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8D1488225C7AE2001C0AE6 /* EditMessageAutomation.swift */; };
@@ -39,7 +40,11 @@
 		3EAE775522217AD4005AC3C3 /* MyChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAE775422217AD4005AC3C3 /* MyChatViewController.swift */; };
 		3EAE775A22217AD6005AC3C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EAE775922217AD6005AC3C3 /* Assets.xcassets */; };
 		3EAE775D22217AD6005AC3C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EAE775B22217AD6005AC3C3 /* LaunchScreen.storyboard */; };
+		3EB2EAD522BF2EC800848C62 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB2EAD422BF2EC800848C62 /* Extensions.swift */; };
 		3EBAFA792289975900D9F653 /* ClearHistoryAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBAFA782289975900D9F653 /* ClearHistoryAutomation.swift */; };
+		3EC964E322AF66DD000CE284 /* SendFileMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC964E222AF66DD000CE284 /* SendFileMessageAutomation.swift */; };
+		3EC964FC22AF7B91000CE284 /* ReplyFileMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC964FB22AF7B91000CE284 /* ReplyFileMessageAutomation.swift */; };
+		3EC9650822AFBCAC000CE284 /* SendLocationMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC9650722AFBCAC000CE284 /* SendLocationMessageAutomation.swift */; };
 		3ECC15762282F870003B8240 /* CreateThreadWithMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECC15752282F870003B8240 /* CreateThreadWithMessageAutomation.swift */; };
 		3ED224FE2295389400E51B42 /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED224FB2295387000E51B42 /* FanapPodChatSDK.framework */; };
 		3ED22518229538B100E51B42 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED2250B229538AA00E51B42 /* Alamofire.framework */; };
@@ -136,6 +141,7 @@
 		3E629568222577D9002DB51C /* AddContactAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactAutomation.swift; sourceTree = "<group>"; };
 		3E62956A222577F1002DB51C /* RemoveContactAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveContactAutomation.swift; sourceTree = "<group>"; };
 		3E659B8C2299204C0042B03B /* GetAdminAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAdminAutomation.swift; sourceTree = "<group>"; };
+		3E7ACBFF22C236B800042168 /* DeleteMultipleMessagesAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteMultipleMessagesAutomation.swift; sourceTree = "<group>"; };
 		3E8D1482225C594C001C0AE6 /* ReplyMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyMessageAutomation.swift; sourceTree = "<group>"; };
 		3E8D1486225C595F001C0AE6 /* ForwardMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForwardMessageAutomation.swift; sourceTree = "<group>"; };
 		3E8D1488225C7AE2001C0AE6 /* EditMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMessageAutomation.swift; sourceTree = "<group>"; };
@@ -155,7 +161,11 @@
 		3EAE775922217AD6005AC3C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3EAE775C22217AD6005AC3C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3EAE775E22217AD6005AC3C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3EB2EAD422BF2EC800848C62 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		3EBAFA782289975900D9F653 /* ClearHistoryAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearHistoryAutomation.swift; sourceTree = "<group>"; };
+		3EC964E222AF66DD000CE284 /* SendFileMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFileMessageAutomation.swift; sourceTree = "<group>"; };
+		3EC964FB22AF7B91000CE284 /* ReplyFileMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyFileMessageAutomation.swift; sourceTree = "<group>"; };
+		3EC9650722AFBCAC000CE284 /* SendLocationMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLocationMessageAutomation.swift; sourceTree = "<group>"; };
 		3ECC15752282F870003B8240 /* CreateThreadWithMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThreadWithMessageAutomation.swift; sourceTree = "<group>"; };
 		3ED224F12295387000E51B42 /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
 		3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "../Usefull Libraries/Alamofire-4.8.2/Alamofire.xcodeproj"; sourceTree = "<group>"; };
@@ -256,6 +266,7 @@
 			isa = PBXGroup;
 			children = (
 				3E8D148A225C7CFF001C0AE6 /* DeleteMessageAutomation.swift */,
+				3E7ACBFF22C236B800042168 /* DeleteMultipleMessagesAutomation.swift */,
 				3E8D1488225C7AE2001C0AE6 /* EditMessageAutomation.swift */,
 				3E8D1486225C595F001C0AE6 /* ForwardMessageAutomation.swift */,
 				3EADF7CA228BCF53009B102C /* MessageDeliveryListAutomation.swift */,
@@ -269,6 +280,7 @@
 		3E94725022267C78005D986E /* Maps */ = {
 			isa = PBXGroup;
 			children = (
+				3EC9650722AFBCAC000CE284 /* SendLocationMessageAutomation.swift */,
 			);
 			path = Maps;
 			sourceTree = "<group>";
@@ -276,6 +288,8 @@
 		3E94725122267CA5005D986E /* Files */ = {
 			isa = PBXGroup;
 			children = (
+				3EC964FB22AF7B91000CE284 /* ReplyFileMessageAutomation.swift */,
+				3EC964E222AF66DD000CE284 /* SendFileMessageAutomation.swift */,
 				3E2A62DB2287F60B002FB5D7 /* UploadFileAutomation.swift */,
 				3E2A62E322880833002FB5D7 /* UploadImageAutomation.swift */,
 			);
@@ -346,6 +360,7 @@
 			isa = PBXGroup;
 			children = (
 				3E947248222674DF005D986E /* Faker.swift */,
+				3EB2EAD422BF2EC800848C62 /* Extensions.swift */,
 				3EEB0819227EC7DD009DA162 /* Enums.swift */,
 			);
 			path = Helpers;
@@ -545,12 +560,16 @@
 				3E2A62E422880833002FB5D7 /* UploadImageAutomation.swift in Sources */,
 				3E5EEDF92286C2FC0026DB58 /* LeaveThreadAutomation.swift in Sources */,
 				3E62956B222577F1002DB51C /* RemoveContactAutomation.swift in Sources */,
+				3EC964FC22AF7B91000CE284 /* ReplyFileMessageAutomation.swift in Sources */,
 				3E2A62DC2287F60B002FB5D7 /* UploadFileAutomation.swift in Sources */,
 				3E5EEDFF2286CA870026DB58 /* UnmuteThreadAutomation.swift in Sources */,
 				3EA5259822A27DD1004ABE11 /* AddAdminAutomation.swift in Sources */,
 				3EEB081C227EC98C009DA162 /* GetTokenWithRefreshToken.swift in Sources */,
 				3EEB081A227EC7DD009DA162 /* Enums.swift in Sources */,
+				3EB2EAD522BF2EC800848C62 /* Extensions.swift in Sources */,
+				3E7ACC0022C236B800042168 /* DeleteMultipleMessagesAutomation.swift in Sources */,
 				3EAE775522217AD4005AC3C3 /* MyChatViewController.swift in Sources */,
+				3EC9650822AFBCAC000CE284 /* SendLocationMessageAutomation.swift in Sources */,
 				3E8D1489225C7AE2001C0AE6 /* EditMessageAutomation.swift in Sources */,
 				3E629569222577D9002DB51C /* AddContactAutomation.swift in Sources */,
 				3E8D148B225C7CFF001C0AE6 /* DeleteMessageAutomation.swift in Sources */,
@@ -573,6 +592,7 @@
 				3EEB0814227EA277009DA162 /* AddParticipantAutomation.swift in Sources */,
 				3EADF7CB228BCF53009B102C /* MessageDeliveryListAutomation.swift in Sources */,
 				3E5EEDFD2286C8A70026DB58 /* MuteThreadAutomation.swift in Sources */,
+				3EC964E322AF66DD000CE284 /* SendFileMessageAutomation.swift in Sources */,
 				3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */,
 				3E5EEE032286FD3F0026DB58 /* RemoveParticipantAutomation.swift in Sources */,
 				3E5EEDF52286B4210026DB58 /* SearchContactAutomation.swift in Sources */,

@@ -58,8 +58,9 @@ class DeleteMessageAutomation {
     
     func sendRequest(deleteMessageRequest: DeleteMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "send Request to DeleteMessage with this params:\n deleteForAll = \(deleteMessageRequest.deleteForAll ?? JSON.null) , subjectId = \(deleteMessageRequest.subjectId ?? 0) , typeCode = \(deleteMessageRequest.typeCode ?? "nil") , uniqueId = \(deleteMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "send Request to DeleteMessage with this params:\n deleteForAll = \(deleteMessageRequest.deleteForAll ?? JSON.null) , subjectId = \(deleteMessageRequest.subjectId) , typeCode = \(deleteMessageRequest.typeCode ?? "nil") , uniqueId = \(deleteMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
         
+        let deleteMessageRequest = DeleteMessageRequestModel(deleteForAll: deleteMessageRequest.deleteForAll, subjectId: deleteMessageRequest.subjectId, typeCode: deleteMessageRequest.typeCode, uniqueId: deleteMessageRequest.typeCode)
         myChatObject?.deleteMessage(deleteMessageInput: deleteMessageRequest, uniqueId: { (deleteMessageUniqueId) in
             self.uniqueIdCallback?(deleteMessageUniqueId)
         }, completion: { (deleteMessageResponse) in

@@ -23,7 +23,7 @@ class MuteThreadAutomation {
     let typeCode:       String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
-    typealias callbackServerResponseTypeAlias   = (JSON) -> ()
+    typealias callbackServerResponseTypeAlias   = (MuteUnmuteThreadModel) -> ()
     
     private var uniqueIdCallback:   callbackStringTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
@@ -55,7 +55,7 @@ class MuteThreadAutomation {
         myChatObject?.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
             self.uniqueIdCallback?(muteThreadUniqueId)
         }, completion: { (muteThreadServerResponseModel) in
-            self.responseCallback?(muteThreadServerResponseModel as! JSON)
+            self.responseCallback?(muteThreadServerResponseModel as! MuteUnmuteThreadModel)
         })
         
     }
