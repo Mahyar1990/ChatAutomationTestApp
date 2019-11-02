@@ -64,7 +64,9 @@ class AddParticipantAutomation {
                                                               threadId: theThreadId,
                                                               typeCode: typeCode,
                                                               uniqueId: requestUniqueId)
-        myChatObject?.addParticipants(addParticipantsInput: addParticipantInput, uniqueId: { (addParticipantsUniqueId) in
+        
+        Chat.sharedInstance.addParticipants(addParticipantsInput: addParticipantInput, uniqueId: { (addParticipantsUniqueId) in
+//        myChatObject?.addParticipants(addParticipantsInput: addParticipantInput, uniqueId: { (addParticipantsUniqueId) in
             print("uniqueId = \(addParticipantsUniqueId)")
             self.uniqueIdCallback?(addParticipantsUniqueId)
         }, completion: { (addParticipantServerResponse) in
@@ -81,30 +83,25 @@ class AddParticipantAutomation {
         // 3- add contact to this thread
         // 4- send request
         
-        switch (contactId, threadId, contacts) {
-        case (.none, .none, .none):
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            switch (contactId, threadId, contacts) {
+            case (.none, .none, .none):
                 self.addContact()
-            }
-            
-        case let (.some(id), .none, .none):
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                
+            case let (.some(id), .none, .none):
                 self.createThread(withContactId: id)
-            }
-            
-        case let (_ , .some(id), .none):
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                
+            case let (_ , .some(id), .none):
                 self.addContactToThread(threadId: id)
-            }
-            
-        case let (_ , .some(id), .some(cntcts)):
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                
+            case let (_ , .some(id), .some(cntcts)):
                 self.sendRequest(theContacts: cntcts, theThreadId: id)
+                
+            case (_, .none, .some(_)):
+                print("wrong situation")
             }
-            
-        case (_, .none, .some(_)):
-            print("wrong situation")
         }
+        
     }
     
     
@@ -134,7 +131,13 @@ class AddParticipantAutomation {
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(contactId)", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP.rawValue, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description:  fakeParams.description,
+                                                  image:        nil,
+                                                  invitees:     [myInvitee],
+                                                  metadata:     nil,
+                                                  title:        fakeParams.title,
+                                                  type:         ThreadTypes.PUBLIC_GROUP,
+                                                  requestUniqueId: nil)
         var i = ""
         for item in createThread.invitees! {
             i.append("\(item.formatToJSON()) ,")

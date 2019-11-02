@@ -84,10 +84,12 @@ class UnblockAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "send Request to Unblock with this params:\nblockId = \(theBlockId ?? 0) , contactId = \(theContactId ?? 0) , threadId = \(theThreadId ?? 0) , typeCode = \(typeCode ?? "nil") , userId = \(theUserId ?? 0)", lineNumbers: 2)
         
-        let unblockInput = UnblockContactsRequestModel(blockId: theBlockId, contactId: theContactId, threadId: theThreadId, typeCode: typeCode, userId: theUserId)
+        let unblockInput = UnblockContactsRequestModel(blockId: theBlockId, contactId: theContactId, threadId: theThreadId, typeCode: typeCode, userId: theUserId, uniqueId: nil)
         
-        myChatObject?.unblockContact(unblockContactsInput: unblockInput, uniqueId: { (unblockUniqueId) in
+        Chat.sharedInstance.unblockContact(unblockContactsInput: unblockInput, uniqueId: { (unblockUniqueId) in
             self.uniqueIdCallback?(unblockUniqueId)
+//        myChatObject?.unblockContact(unblockContactsInput: unblockInput, uniqueId: { (unblockUniqueId) in
+//            self.uniqueIdCallback?(unblockUniqueId)
         }, completion: { (unblockResponse) in
             self.responseCallback?(unblockResponse as! BlockedContactModel)
             if isAutomation {
@@ -165,7 +167,7 @@ extension UnblockAutomation {
                         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
                         self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this CellphoneNumber = \(cellphoneNumber).", lineNumbers: 2)
                         let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
-                        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: self.typeCode, requestUniqueId: nil)
+                        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: nil, requestUniqueId: nil)
                         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
                             if let threadId = createThreadModel.thread?.id {
                                 self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new Thread has been created, threadId = \(threadId)", lineNumbers: 1)

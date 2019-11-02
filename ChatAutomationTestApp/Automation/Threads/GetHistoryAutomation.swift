@@ -68,13 +68,27 @@ class GetHistoryAutomation {
         self.cacheCallback      = cacheResponse
         self.responseCallback   = serverResponse
         
-        if let thId = threadId {
-            let requestModel = GetHistoryRequestModel(count: count, firstMessageId: firstMessageId, fromTime: fromTime, lastMessageId: lastMessageId, metadataCriteria: metadataCriteria, offset: offset, order: order, query: query, threadId: thId, toTime: toTime, typeCode: typeCode, uniqueId: requestUniqueId)
-            sendRequest(getHistoryRequest: requestModel)
-            
-        } else {
-            sendRequestSenario(contactCellPhone: nil, threadId: nil, messageResponse: nil)
-        }
+//        if let thId = threadId {
+//            let requestModel = GetHistoryRequestModel(count:            count,
+//                                                      firstMessageId:   firstMessageId,
+//                                                      fromTime:         fromTime,
+//                                                      lastMessageId:    lastMessageId,
+//                                                      messageId:        nil,
+//                                                      metadataCriteria: metadataCriteria,
+//                                                      offset:           offset,
+//                                                      order:            order,
+//                                                      query:            query,
+//                                                      threadId:         thId,
+//                                                      toTime:           toTime,
+//                                                      typeCode:         typeCode,
+//                                                      uniqueId:         requestUniqueId)
+//            sendRequest(getHistoryRequest: requestModel)
+//
+//        } else {
+//            sendRequestSenario(contactCellPhone: nil, threadId: nil, responseThreadId: nil)
+//        }
+        
+        sendRequestSenario(contactCellPhone: nil, threadId: nil, responseThreadId: threadId)
         
     }
     
@@ -83,7 +97,8 @@ class GetHistoryAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.GetHistory.rawValue, message: "send Request to getHistory with this params:\ncount = \(getHistoryRequest.count ?? 50) firstMessageId = \(getHistoryRequest.firstMessageId ?? -1) , fromTime = \(getHistoryRequest.fromTime ?? 0) , lastMessageId = \(getHistoryRequest.lastMessageId ?? 0) , metadataCriteria = \(getHistoryRequest.metadataCriteria ?? JSON.null) , offset = \(getHistoryRequest.offset ?? 0) , order = \(getHistoryRequest.order ?? "nil") , query = \(getHistoryRequest.query ?? "nil") , threadId = \(getHistoryRequest.threadId ) , toTime = \(getHistoryRequest.toTime ?? 0) , typeCode = \(getHistoryRequest.typeCode ?? "nil") , uniqueId = \(getHistoryRequest.uniqueId ?? "nil")", lineNumbers: 3)
         
-        myChatObject?.getHistory(getHistoryInput: getHistoryRequest, uniqueId: { (getHistoryUniqueId) in
+        Chat.sharedInstance.getHistory(getHistoryInput: getHistoryRequest, uniqueId: { (getHistoryUniqueId) in
+//        myChatObject?.getHistory(getHistoryInput: getHistoryRequest, uniqueId: { (getHistoryUniqueId) in
             self.uniqueIdCallback?(getHistoryUniqueId)
         }, completion: { (getHistoryServerResponse) in
             self.responseCallback?(getHistoryServerResponse as! GetHistoryModel)
@@ -106,26 +121,28 @@ class GetHistoryAutomation {
     }
     
     
-    func sendRequestSenario(contactCellPhone: String?, threadId: Int?, messageResponse: JSON?) {
+    func sendRequestSenario(contactCellPhone: String?, threadId: Int?, responseThreadId: Int?) {
         // 1- create contact
         // 2- create new thread with this contact, and get the threadId
         // 3- send a message
         // 4- sendRequest
         
-        
-        switch (contactCellPhone, threadId, messageResponse) {
-        case    (.none, .none, .none):
-            addContact()
-            
-        case let (.some(cellPhone), .none, .none):
-            createThread(cellPhoneNumber: cellPhone)
-            
-        case let (_ , .some(thread), .none):
-            sendMessage(toThread: thread)
-            
-        case let (_ , _ , .some(msg)):
-            if let thId = msg["subjectId"].int {
-                self.createGetHistoryModel(withThreadId: thId)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            switch (contactCellPhone, threadId, responseThreadId) {
+            case    (.none, .none, .none):
+                self.addContact()
+                
+            case let (.some(cellPhone), .none, .none):
+                self.createThread(cellPhoneNumber: cellPhone)
+                
+            case let (_ , .some(thread), .none):
+                self.sendMessage(toThread: thread)
+                
+            case let (_ , _ , .some(msg)):
+                self.createGetHistoryModel(withThreadId: msg)
+                //            if let thId = msg["subjectId"].int {
+                //                self.createGetHistoryModel(withThreadId: thId)
+                //            }
             }
         }
         
@@ -140,7 +157,7 @@ class GetHistoryAutomation {
             if let myContact = contactModel.contacts.first {
                 if let cellPhone = myContact.cellphoneNumber {
                     self.delegate?.newInfo(type: MoreInfoTypes.GetHistory.rawValue, message: "new conract has been created, cellphone number = \(cellPhone)", lineNumbers: 1)
-                    self.sendRequestSenario(contactCellPhone: cellPhone, threadId: nil, messageResponse: nil)
+                    self.sendRequestSenario(contactCellPhone: cellPhone, threadId: nil, responseThreadId: nil)
                 } else {
                     // handle error that didn't get contactId in the contact model
                 }
@@ -156,10 +173,10 @@ class GetHistoryAutomation {
     func createThread(cellPhoneNumber: String) {
         let myInvitee = Invitee(id: "\(cellPhoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
         let createThread = CreateThreadAutomation(description: nil, image: nil, invitees: [myInvitee], metadata: nil, title: "new Chat Thread", type: nil, requestUniqueId: nil)
-        createThread.create(uniqueId: { (_, _) in }, serverResponse: { (CreateThreadModelResponse, on) in
-            if let conversationModel = CreateThreadModelResponse.thread {
+        createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModelResponse, on) in
+            if let conversationModel = createThreadModelResponse.thread {
                 if let thId = conversationModel.id {
-                    self.sendRequestSenario(contactCellPhone: nil, threadId: thId, messageResponse: nil)
+                    self.sendRequestSenario(contactCellPhone: nil, threadId: thId, responseThreadId: nil)
                 } else {
                     // handle error that the conversation model doesn't have id (threadId)
                 }
@@ -174,9 +191,15 @@ class GetHistoryAutomation {
     
     // 3
     func sendMessage(toThread thread: Int) {
-        let sendMessage = SendTextMessageAutomation(content: "Hi", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: thread, typeCode: nil, uniqueId: nil)
+        let sendMessage = SendTextMessageAutomation(content:        "Hi",
+                                                    metaData:       nil,
+                                                    repliedTo:      nil,
+                                                    systemMetadata: nil,
+                                                    threadId:       thread,
+                                                    typeCode:       nil,
+                                                    uniqueId:       nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (serverResponse) in
-            self.sendRequestSenario(contactCellPhone: nil, threadId: nil, messageResponse: serverResponse)
+            self.sendRequestSenario(contactCellPhone: nil, threadId: nil, responseThreadId: serverResponse.message?.conversation?.id)
         }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })
         
     }
@@ -184,7 +207,19 @@ class GetHistoryAutomation {
     
     // 4
     func createGetHistoryModel(withThreadId threadId: Int) {
-        let getHistoryModel = GetHistoryRequestModel(count: nil, firstMessageId: nil, fromTime: nil, lastMessageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: threadId, toTime: nil, typeCode: nil, uniqueId: nil)
+        let getHistoryModel = GetHistoryRequestModel(count:             count,
+                                                     firstMessageId:    firstMessageId,
+                                                     fromTime:          fromTime,
+                                                     lastMessageId:     lastMessageId,
+                                                     messageId:         messageId,
+                                                     metadataCriteria:  metadataCriteria,
+                                                     offset:            offset,
+                                                     order:             order,
+                                                     query:             query,
+                                                     threadId:          threadId,
+                                                     toTime:            toTime,
+                                                     typeCode:          typeCode,
+                                                     uniqueId:          requestUniqueId)
         self.sendRequest(getHistoryRequest: getHistoryModel)
     }
     

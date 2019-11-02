@@ -47,7 +47,6 @@
 		3EC9650822AFBCAC000CE284 /* SendLocationMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC9650722AFBCAC000CE284 /* SendLocationMessageAutomation.swift */; };
 		3ECC15762282F870003B8240 /* CreateThreadWithMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECC15752282F870003B8240 /* CreateThreadWithMessageAutomation.swift */; };
 		3ED224FE2295389400E51B42 /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED224FB2295387000E51B42 /* FanapPodChatSDK.framework */; };
-		3ED22518229538B100E51B42 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3ED2250B229538AA00E51B42 /* Alamofire.framework */; };
 		3ED3DA80222E5E9A00261DB3 /* GetBlockedListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */; };
 		3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */; };
 		3ED3DA86222E748600261DB3 /* GetThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */; };
@@ -73,55 +72,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 3EE025F621206E63001810FB;
 			remoteInfo = FanapPodChatSDKTests;
-		};
-		3ED2250A229538AA00E51B42 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8111E3319A95C8B0040E7D1;
-			remoteInfo = "Alamofire iOS";
-		};
-		3ED2250C229538AA00E51B42 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F8111E3E19A95C8B0040E7D1;
-			remoteInfo = "Alamofire iOS Tests";
-		};
-		3ED2250E229538AA00E51B42 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4DD67C0B1A5C55C900ED2280;
-			remoteInfo = "Alamofire macOS";
-		};
-		3ED22510229538AA00E51B42 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F829C6B21A7A94F100A2CD59;
-			remoteInfo = "Alamofire macOS Tests";
-		};
-		3ED22512229538AA00E51B42 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4CF626EF1BA7CB3E0011A099;
-			remoteInfo = "Alamofire tvOS";
-		};
-		3ED22514229538AA00E51B42 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 4CF626F81BA7CB3E0011A099;
-			remoteInfo = "Alamofire tvOS Tests";
-		};
-		3ED22516229538AA00E51B42 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = E4202FE01B667AA100C997FB;
-			remoteInfo = "Alamofire watchOS";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -168,7 +118,6 @@
 		3EC9650722AFBCAC000CE284 /* SendLocationMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLocationMessageAutomation.swift; sourceTree = "<group>"; };
 		3ECC15752282F870003B8240 /* CreateThreadWithMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThreadWithMessageAutomation.swift; sourceTree = "<group>"; };
 		3ED224F12295387000E51B42 /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
-		3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Alamofire.xcodeproj; path = "../Usefull Libraries/Alamofire-4.8.2/Alamofire.xcodeproj"; sourceTree = "<group>"; };
 		3ED3DA7F222E5E9A00261DB3 /* GetBlockedListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetBlockedListAutomation.swift; sourceTree = "<group>"; };
 		3ED3DA83222E629D00261DB3 /* UnblockAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnblockAutomation.swift; sourceTree = "<group>"; };
 		3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetThreadAutomation.swift; sourceTree = "<group>"; };
@@ -188,7 +137,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3ED22518229538B100E51B42 /* Alamofire.framework in Frameworks */,
 				3ED224FE2295389400E51B42 /* FanapPodChatSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -301,7 +249,6 @@
 			children = (
 				3EAE775122217AD4005AC3C3 /* ChatAutomationTestApp */,
 				3EAE775022217AD4005AC3C3 /* Products */,
-				3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */,
 				3ED224F12295387000E51B42 /* FanapPodChatSDK.xcodeproj */,
 				0CB402C4A12FF65E9126AFFF /* Pods */,
 				00298887EFBDC7BD45FC467A /* Frameworks */,
@@ -338,20 +285,6 @@
 			children = (
 				3ED224FB2295387000E51B42 /* FanapPodChatSDK.framework */,
 				3ED224FD2295387000E51B42 /* FanapPodChatSDKTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		3ED22500229538AA00E51B42 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3ED2250B229538AA00E51B42 /* Alamofire.framework */,
-				3ED2250D229538AA00E51B42 /* Alamofire iOS Tests.xctest */,
-				3ED2250F229538AA00E51B42 /* Alamofire.framework */,
-				3ED22511229538AA00E51B42 /* Alamofire macOS Tests.xctest */,
-				3ED22513229538AA00E51B42 /* Alamofire.framework */,
-				3ED22515229538AA00E51B42 /* Alamofire tvOS Tests.xctest */,
-				3ED22517229538AA00E51B42 /* Alamofire.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -433,10 +366,6 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 3ED22500229538AA00E51B42 /* Products */;
-					ProjectRef = 3ED224FF229538AA00E51B42 /* Alamofire.xcodeproj */;
-				},
-				{
 					ProductGroup = 3ED224F22295387000E51B42 /* Products */;
 					ProjectRef = 3ED224F12295387000E51B42 /* FanapPodChatSDK.xcodeproj */;
 				},
@@ -461,55 +390,6 @@
 			fileType = wrapper.cfbundle;
 			path = FanapPodChatSDKTests.xctest;
 			remoteRef = 3ED224FC2295387000E51B42 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3ED2250B229538AA00E51B42 /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = 3ED2250A229538AA00E51B42 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3ED2250D229538AA00E51B42 /* Alamofire iOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Alamofire iOS Tests.xctest";
-			remoteRef = 3ED2250C229538AA00E51B42 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3ED2250F229538AA00E51B42 /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = 3ED2250E229538AA00E51B42 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3ED22511229538AA00E51B42 /* Alamofire macOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Alamofire macOS Tests.xctest";
-			remoteRef = 3ED22510229538AA00E51B42 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3ED22513229538AA00E51B42 /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = 3ED22512229538AA00E51B42 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3ED22515229538AA00E51B42 /* Alamofire tvOS Tests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = "Alamofire tvOS Tests.xctest";
-			remoteRef = 3ED22514229538AA00E51B42 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		3ED22517229538AA00E51B42 /* Alamofire.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Alamofire.framework;
-			remoteRef = 3ED22516229538AA00E51B42 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

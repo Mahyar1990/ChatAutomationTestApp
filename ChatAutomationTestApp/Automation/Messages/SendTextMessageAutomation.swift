@@ -30,7 +30,8 @@ class SendTextMessageAutomation {
     let uniqueIdOfAllRequests:  String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
-    typealias callbackServerResponseTypeAlias   = (JSON) -> ()
+    typealias callbackServerResponseTypeAlias   = (SendMessageModel) -> ()
+    typealias callbackServerResponseTypeAlias1   = (JSON) -> ()
     
     private var uniqueIdCallback:       callbackStringTypeAlias?
     private var serverSentResponse:     callbackServerResponseTypeAlias?
@@ -49,9 +50,9 @@ class SendTextMessageAutomation {
     }
     
     func create(uniqueId:               @escaping (String) -> (),
-                serverSentResponse:     @escaping (JSON) -> (),
-                serverDeliverResponse:  @escaping (JSON) -> (),
-                serverSeenResponse:     @escaping (JSON) -> ()) {
+                serverSentResponse:     @escaping (SendMessageModel) -> (),
+                serverDeliverResponse:  @escaping (SendMessageModel) -> (),
+                serverSeenResponse:     @escaping (SendMessageModel) -> ()) {
         
         self.uniqueIdCallback       = uniqueId
         self.serverSentResponse     = serverSentResponse
@@ -91,14 +92,16 @@ class SendTextMessageAutomation {
                                                           threadId:         theThreadId,
                                                           typeCode:         theTypeCode,
                                                           uniqueId:         theUniqueId)
-        myChatObject?.sendTextMessage(sendTextMessageInput: sendTextMessage, uniqueId: { (sentTextMessageUniqueId) in
+        
+        Chat.sharedInstance.sendTextMessage(sendTextMessageInput: sendTextMessage, uniqueId: { (sentTextMessageUniqueId) in
+//        myChatObject?.sendTextMessage(sendTextMessageInput: sendTextMessage, uniqueId: { (sentTextMessageUniqueId) in
             self.uniqueIdCallback?(sentTextMessageUniqueId)
         }, onSent: { (sent) in
-            self.serverSentResponse?(sent as! JSON)
+            self.serverSentResponse?(sent as! SendMessageModel)
         }, onDelivere: { (deliver) in
-            self.serverDeliverResponse?(deliver as! JSON)
+            self.serverDeliverResponse?(deliver as! SendMessageModel)
         }, onSeen: { (seen) in
-            self.serverSeenResponse?(seen as! JSON)
+            self.serverSeenResponse?(seen as! SendMessageModel)
         })
         
         
@@ -122,7 +125,7 @@ class SendTextMessageAutomation {
                     
                     let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
                     
-                    let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: self.typeCode, requestUniqueId: nil)
+                    let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
                     
                     createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
                         

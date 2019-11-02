@@ -54,7 +54,12 @@ class UpdateContactAutomation {
         // if none of the parameters filled by the user, jenerate fake values and fill the input model to send request
         switch (id, cellphoneNumber, firstName, lastName, email) {
         case let (.some(contactId), .some(contactCellPhone), .some(contactFirstname), .some(contactLastname), .some(contactEmail)):
-            let requestModel = UpdateContactsRequestModel(cellphoneNumber: contactCellPhone, email: contactEmail, firstName: contactFirstname, id: contactId, lastName: contactLastname)
+            let requestModel = UpdateContactsRequestModel(cellphoneNumber:  contactCellPhone,
+                                                          email:            contactEmail,
+                                                          firstName:        contactFirstname,
+                                                          id:               contactId,
+                                                          lastName:         contactLastname,
+                                                          uniqueId:         nil)
             sendRequest(updateContactRequest: requestModel)
         default:
             delegate?.newInfo(type: MoreInfoTypes.UpdateContact.rawValue, message: "there is no contact specified to update. so first, need to addContact", lineNumbers: 1)
@@ -68,7 +73,8 @@ class UpdateContactAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.UpdateContact.rawValue, message: "Send UpdateContact request with this params:\n id = \(updateContactRequest.id) , cellPhoneNumber = \(updateContactRequest.cellphoneNumber) , email = \(updateContactRequest.email) , firstName = \(updateContactRequest.firstName) , lastName = \(updateContactRequest.lastName)", lineNumbers: 3)
         
-        myChatObject?.updateContact(updateContactsInput: updateContactRequest, uniqueId: { (updateContactsUniqueId) in
+        Chat.sharedInstance.updateContact(updateContactsInput: updateContactRequest, uniqueId: { (updateContactsUniqueId) in
+//        myChatObject?.updateContact(updateContactsInput: updateContactRequest, uniqueId: { (updateContactsUniqueId) in
             self.uniqueIdCallback?(updateContactsUniqueId)
         }, completion: { (updateContactServerResponse) in
             self.responseCallback?(updateContactServerResponse as! ContactModel)
@@ -103,7 +109,12 @@ class UpdateContactAutomation {
                     if (self.lastName == "") || (self.lastName == " ") {
                         contact.last = fakeContact.lastName
                     }
-                    let updateContactModel = UpdateContactsRequestModel(cellphoneNumber: contact.cell, email: contact.mail, firstName: contact.first, id: contactId, lastName: contact.last)
+                    let updateContactModel = UpdateContactsRequestModel(cellphoneNumber:    contact.cell,
+                                                                        email:              contact.mail,
+                                                                        firstName:          contact.first,
+                                                                        id:                 contactId,
+                                                                        lastName:           contact.last,
+                                                                        uniqueId:           nil)
                     self.sendRequest(updateContactRequest: updateContactModel)
                     
                 } else {

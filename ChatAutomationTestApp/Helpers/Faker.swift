@@ -18,15 +18,15 @@ class Faker {
         
     }
     
-    func generateFakeCreateThread() -> (description: String, title: String, type: String, message: String) {
+    func generateFakeCreateThread() -> (description: String, title: String, type: ThreadTypes, message: String) {
         let description:    String?
         let title:          String?
-        let type:           String?
+        let type:           ThreadTypes?
         let message:        String?
         
         description = generateNameAsString(withLength: 13)
         title       = generateNameAsString(withLength: 10)
-        type        = ThreadTypes.NORMAL.rawValue
+        type        = ThreadTypes.NORMAL
         message     = generateNameAsString(withLength: 20)
         
         return (description!, title!, type!, message!)
@@ -43,7 +43,14 @@ class Faker {
     }
     
     
-    func generateFakeAddContactParams(cellphoneLength: Int?, firstNameLength: Int?, lastNameLength: Int?) -> (cellphoneNumber: String, email: String, firstName: String, lastName: String) {
+    func generateFakeAddContactParams(cellphoneLength:  Int?,
+                                      firstNameLength:  Int?,
+                                      lastNameLength:   Int?)
+        -> (cellphoneNumber: String,
+            email:          String,
+            firstName:      String,
+            lastName:       String) {
+                
         let cellphoneNumber: String?
         let email:          String?
         let firstName:      String?

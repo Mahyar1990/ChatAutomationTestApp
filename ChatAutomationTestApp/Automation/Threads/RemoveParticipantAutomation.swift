@@ -45,13 +45,7 @@ class RemoveParticipantAutomation {
         self.uniqueIdCallback   = uniqueId
         self.responseCallback   = serverResponse
         
-        switch (content, threadId) {
-        case let (.some(participnats), .some(id)):
-            sendRequest(participants: participnats,theThreadId: id)
-        default:
-            delegate?.newInfo(type: MoreInfoTypes.RemoveParticipant.rawValue, message: "threadId or Participants to remove are not specified", lineNumbers: 2)
-            addParticipant()
-        }
+        sendRequestSenario(content: content, threadId: threadId)
         
     }
     
@@ -62,7 +56,9 @@ class RemoveParticipantAutomation {
                                                                     threadId: theThreadId,
                                                                     typeCode: typeCode,
                                                                     uniqueId: requestUniqueId)
-        myChatObject?.removeParticipants(removeParticipantsInput: removeParticipantInput, uniqueId: { (removeParticipantUniqueId) in
+        
+        Chat.sharedInstance.removeParticipants(removeParticipantsInput: removeParticipantInput, uniqueId: { (removeParticipantUniqueId) in
+//        myChatObject?.removeParticipants(removeParticipantsInput: removeParticipantInput, uniqueId: { (removeParticipantUniqueId) in
             self.uniqueIdCallback?(removeParticipantUniqueId)
         }, completion: { (removeParticipantServerResponseModel) in
             self.responseCallback?(removeParticipantServerResponseModel as! RemoveParticipantModel)
@@ -70,6 +66,17 @@ class RemoveParticipantAutomation {
         
     }
     
+    func sendRequestSenario(content: [Int]?, threadId: Int?) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            switch (content, threadId) {
+            case let (.some(participnats), .some(id)):
+                self.sendRequest(participants: participnats, theThreadId: id)
+            default:
+                self.delegate?.newInfo(type: MoreInfoTypes.RemoveParticipant.rawValue, message: "threadId or Participants to remove are not specified", lineNumbers: 2)
+                self.addParticipant()
+            }
+        }
+    }
     
     func addParticipant() {
         delegate?.newInfo(type: MoreInfoTypes.RemoveParticipant.rawValue, message: "Try to add participant", lineNumbers: 1)
@@ -79,7 +86,8 @@ class RemoveParticipantAutomation {
                 if let myThreadId = threadModel.id {
                     if let participants = threadModel.participants {
                         if participants.count > 0 {
-                            self.sendRequest(participants: [participants.first!.id!], theThreadId: myThreadId)
+                            self.sendRequestSenario(content: [participants.first!.id!], threadId: myThreadId)
+//                            self.sendRequest(participants: [participants.first!.id!], theThreadId: myThreadId)
                         }
                     } else {
                         self.delegate?.newInfo(type: MoreInfoTypes.RemoveParticipant.rawValue, message: "Error: AddParticipant response does not have Participants inside the thread Model!!!!", lineNumbers: 2)

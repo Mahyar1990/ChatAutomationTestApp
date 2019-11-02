@@ -24,7 +24,7 @@ class ReplyFileMessageAutomation {
     
     typealias callbackStringTypeAlias           = (String) -> ()
     typealias callbackProgressTypeAlias         = (Float) -> ()
-    typealias callbackServerResponseTypeAlias   = (JSON) -> ()
+    typealias callbackServerResponseTypeAlias   = (SendMessageModel) -> ()
     
     private var uniqueIdCallback:       callbackStringTypeAlias?
     private var progressCallback:       callbackProgressTypeAlias?
@@ -78,8 +78,8 @@ class ReplyFileMessageAutomation {
         case (_, .some(_), .some(_), .none):
             prepareDataToUpload()
             
-        case let (_, .some(_), .some(_), .some(myData)):
-            sendRequest(theData: myData)
+        case let (_, .some(tId), .some(_), .some(myData)):
+            sendRequest(theData: myData, toThreadId: tId)
             
         }
     }
@@ -110,7 +110,7 @@ class ReplyFileMessageAutomation {
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(contactId)", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP.rawValue, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
         var i = ""
         for item in createThread.invitees! {
             i.append("\(item.formatToJSON()) ,")
@@ -133,7 +133,9 @@ class ReplyFileMessageAutomation {
         let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: threadId, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             print("message response = \(sentResponse)")
-            if let messageId = Int(sentResponse["content"].stringValue) {
+            
+//            if let messageId = Int(sentResponse["content"].stringValue) {
+            if let messageId = sentResponse.message?.id {
                 self.repliedTo = messageId
                 self.delegate?.newInfo(type: MoreInfoTypes.ReplyFileMessage.rawValue, message: "Message has been sent to this threadId = \(self.threadId ?? 0), messageId = \(messageId)", lineNumbers: 1)
                 self.sendRequestSenario(contactId: nil, threadId: self.threadId, repliedTo: self.repliedTo, data: self.data)
@@ -153,36 +155,37 @@ class ReplyFileMessageAutomation {
     }
     
     // 5
-    func sendRequest(theData: Data) {
+    func sendRequest(theData: Data, toThreadId: Int) {
         let myFileName =  self.fileName ?? "Image\(Faker.sharedInstance.generateNameAsString(withLength: 3))"
         let myContent = content ?? "This is a dummy message"
         delegate?.newInfo(type: MoreInfoTypes.ReplyFileMessage.rawValue, message: "send Request ReplyFileMessage with this params:\n messageText = \(myContent),\n threadId = \(threadId ?? 0),\n repliedTo = \(repliedTo ?? 0),\n fileName = \(myFileName),", lineNumbers: 2)
         
-        let replyFileMessageInput = SendFileMessageRequestModel(fileName:    myFileName,
-                                                                imageName:   nil,
-                                                                xC:          nil,
-                                                                yC:          nil,
-                                                                hC:          nil,
-                                                                wC:          nil,
-                                                                threadId:    threadId,
-                                                                content:     myContent,
-                                                                metaData:    nil,
-                                                                repliedTo:   repliedTo,
-//                                                                subjectId:   nil,
-                                                                typeCode:    nil,
-                                                                fileToSend:  theData,
-                                                                imageToSend: nil)
+        let replyFileMessageInput = SendFileMessageRequestModel(fileName:       myFileName,
+                                                                imageName:      nil,
+                                                                xC:             nil,
+                                                                yC:             nil,
+                                                                hC:             nil,
+                                                                wC:             nil,
+                                                                threadId:       toThreadId,
+                                                                content:        myContent,
+                                                                metaData:       nil,
+                                                                repliedTo:      repliedTo,
+                                                                typeCode:       nil,
+                                                                fileToSend:     theData,
+                                                                imageToSend:    nil,
+                                                                uniqueId:       nil)
         
-        myChatObject?.replyFileMessage(replyFileMessageInput: replyFileMessageInput, uniqueId: { (replyFileMessageUniqueId) in
+        Chat.sharedInstance.replyFileMessage(replyFileMessageInput: replyFileMessageInput, uniqueId: { (replyFileMessageUniqueId) in
+//        myChatObject?.replyFileMessage(replyFileMessageInput: replyFileMessageInput, uniqueId: { (replyFileMessageUniqueId) in
             self.uniqueIdCallback?(replyFileMessageUniqueId)
         }, uploadProgress: { (uploadFileProgress) in
             self.progressCallback?(uploadFileProgress)
         }, onSent: { (sent) in
-            self.serverDeliverResponse?(sent as! JSON)
+            self.serverDeliverResponse?(sent as! SendMessageModel)
         }, onDelivered: { (deliver) in
-            self.serverDeliverResponse?(deliver as! JSON)
+            self.serverDeliverResponse?(deliver as! SendMessageModel)
         }, onSeen: { (seen) in
-            self.serverSeenResponse?(seen as! JSON)
+            self.serverSeenResponse?(seen as! SendMessageModel)
         })
         
     }

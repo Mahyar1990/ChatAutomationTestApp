@@ -60,8 +60,10 @@ class MessageSeenListAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.MessageSeenList.rawValue, message: "send Request to get MessageSeenList with this params:\n count = \(count ?? 0) , messageId = \(theMessageId) , offset = \(offset ?? 0) , typeCode = \(typeCode ?? "nil")", lineNumbers: 2)
         
-        let seenInput = MessageDeliverySeenListRequestModel(count: count, messageId: theMessageId, offset: offset, typeCode: typeCode)
-        myChatObject?.messageDeliveryList(messageDeliveryListInput: seenInput, uniqueId: { (messageSeenListUniqueId) in
+        let seenInput = MessageDeliverySeenListRequestModel(count: count, messageId: theMessageId, offset: offset, typeCode: typeCode, uniqueId: nil)
+        
+        Chat.sharedInstance.messageDeliveryList(messageDeliveryListInput: seenInput, uniqueId: { (messageSeenListUniqueId) in
+//        myChatObject?.messageDeliveryList(messageDeliveryListInput: seenInput, uniqueId: { (messageSeenListUniqueId) in
             self.uniqueIdCallback?(messageSeenListUniqueId)
         }, completion: { (messageSeenListResponse) in
 //            print("*******************\n\n\n\n\(messageSeenListResponse)")
@@ -78,10 +80,12 @@ class MessageSeenListAutomation {
         x.create(uniqueId: { _ in }, serverSentResponse: { (sent) in
             self.delegate?.newInfo(type: MoreInfoTypes.MessageSeenList.rawValue, message: "new Message has been sent", lineNumbers: 1)
             print("\n\nSent: \n\(sent)\n\n")
-            if let messageIdStr = sent["content"].string {
-                if let mId = Int(messageIdStr) {
-                    self.sendRequest(theMessageId: mId)
-                }
+//            if let messageIdStr = sent["content"].string {
+//                if let mId = Int(messageIdStr) {
+//                    self.sendRequest(theMessageId: mId)
+//                }
+            if let messageId = sent.message?.id {
+                self.sendRequest(theMessageId: messageId)
             }
         }, serverDeliverResponse: { (deliver) in
             print("\n\nDeliver: \n\(deliver)\n\n")

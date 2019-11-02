@@ -29,7 +29,7 @@ class ReplyMessageAutomation {
     let requestUniqueId:    String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
-    typealias callbackServerResponseTypeAlias   = (JSON) -> ()
+    typealias callbackServerResponseTypeAlias   = (SendMessageModel) -> ()
     
     private var uniqueIdCallback:       callbackStringTypeAlias?
     private var serverSentResponse:     callbackServerResponseTypeAlias?
@@ -47,9 +47,9 @@ class ReplyMessageAutomation {
     }
     
     func create(uniqueId:               @escaping (String) -> (),
-                serverSentResponse:     @escaping (JSON) -> (),
-                serverDeliverResponse:  @escaping (JSON) -> (),
-                serverSeenResponse:     @escaping (JSON) -> ()) {
+                serverSentResponse:     @escaping (SendMessageModel) -> (),
+                serverDeliverResponse:  @escaping (SendMessageModel) -> (),
+                serverSeenResponse:     @escaping (SendMessageModel) -> ()) {
         
         self.uniqueIdCallback       = uniqueId
         self.serverSentResponse     = serverSentResponse
@@ -59,15 +59,25 @@ class ReplyMessageAutomation {
         
         switch (repliedTo, subjectId, content) {
         case let (.some(repTo), .some(subTo), .some(myContent)):
-            let inputModel = ReplyTextMessageRequestModel(content: myContent, metaData: metaData, repliedTo: repTo, subjectId: subTo, typeCode: typeCode, uniqueId: requestUniqueId)
+            let inputModel = ReplyTextMessageRequestModel(content: myContent,
+                                                          metaData: metaData,
+                                                          repliedTo: repTo,
+                                                          subjectId: subTo,
+                                                          typeCode: typeCode,
+                                                          uniqueId: requestUniqueId)
             sendRequest(replyTextMessageRequest: inputModel)
             
         case let (.some(repTo), .some(subTo), .none):
-            let inputModel = ReplyTextMessageRequestModel(content: "This is ReplyMessage", metaData: metaData, repliedTo: repTo, subjectId: subTo, typeCode: typeCode, uniqueId: requestUniqueId)
+            let inputModel = ReplyTextMessageRequestModel(content: "This is ReplyMessage",
+                                                          metaData: metaData,
+                                                          repliedTo: repTo,
+                                                          subjectId: subTo,
+                                                          typeCode: typeCode,
+                                                          uniqueId: requestUniqueId)
             sendRequest(replyTextMessageRequest: inputModel)
             
         default:
-            sendRequestSenario(contactCellPhone: nil, threadId: nil, messageResponse: nil)
+            sendRequestSenario(contactCellPhone: nil, threadId: nil, responseThreadId: nil, responseMessageId: nil)
         }
         
     }
@@ -77,14 +87,15 @@ class ReplyMessageAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.ReplyTextMessage.rawValue, message: "send Request to ReplyTextMessage with this params:\n content = \(replyTextMessageRequest.content) , metaData = \(replyTextMessageRequest.metaData ?? JSON.null) , repliedTo = \(replyTextMessageRequest.repliedTo) , subjectId = \(replyTextMessageRequest.subjectId) , typeCode = \(replyTextMessageRequest.typeCode ?? "nil") , uniqueId = \(replyTextMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
         
-        myChatObject?.replyMessage(replyMessageInput: replyTextMessageRequest, uniqueId: { (replyMessageUniqueId) in
+        Chat.sharedInstance.replyMessage(replyMessageInput: replyTextMessageRequest, uniqueId: { (replyMessageUniqueId) in
+//        myChatObject?.replyMessage(replyMessageInput: replyTextMessageRequest, uniqueId: { (replyMessageUniqueId) in
             self.uniqueIdCallback?(replyMessageUniqueId)
         }, onSent: { (sent) in
-            self.serverSentResponse?(sent as! JSON)
+            self.serverSentResponse?(sent as! SendMessageModel)
         }, onDelivere: { (deliver) in
-            self.serverDeliverResponse?(deliver as! JSON)
+            self.serverDeliverResponse?(deliver as! SendMessageModel)
         }, onSeen: { (seen) in
-            self.serverSeenResponse?(seen as! JSON)
+            self.serverSeenResponse?(seen as! SendMessageModel)
         })
         
     }
@@ -154,29 +165,34 @@ class ReplyMessageAutomation {
 //
 //    }
     
-    func sendRequestSenario(contactCellPhone: String?, threadId: Int?, messageResponse: JSON?) {
+    func sendRequestSenario(contactCellPhone: String?, threadId: Int?, responseThreadId: Int?, responseMessageId: Int?) {
         // 1- add contact
         // 2- create thread with this contact
         // 3- sendMessage to this thread
         // 4- reply this message to this thread
         
         
-        switch (contactCellPhone, threadId, messageResponse) {
-        case    (.none, .none, .none):
+        switch (contactCellPhone, threadId, responseThreadId, responseMessageId) {
+        case    (.none, .none, .none, .none):
             addContact()
             
-        case let (.some(cellPhone), .none, .none):
+        case let (.some(cellPhone), .none, .none, .none):
             createThread(withCellphoneNumber: cellPhone)
             
-        case let (_ , .some(thread), .none):
+        case let (_ , .some(thread), .none, .none):
             sendMessage(toThread: thread)
             
-        case let (_ , _ , .some(msg)):
-            if let thId = msg["subjectId"].int {
-                if let messageId = Int(msg["content"].stringValue) {
-                    self.createReplyTextMessageModel(inThreadId: thId, onMessageId: messageId)
-                }
-            }
+        case let (_ , _ , .some(tId), .some(mId)):
+            self.createReplyTextMessageModel(inThreadId: tId, onMessageId: mId)
+//            if let thId = msg["subjectId"].int {
+//                if let messageId = Int(msg["content"].stringValue) {
+//                    self.createReplyTextMessageModel(inThreadId: thId, onMessageId: messageId)
+//                }
+//            }
+        case (_, _, .some(_), .none):
+            print("")
+        case (_, _, .none, .some(_)):
+            print("")
         }
         
     }
@@ -191,7 +207,7 @@ class ReplyMessageAutomation {
                 if let cellphoneNumber = myContact.cellphoneNumber {
                     
                     self.delegate?.newInfo(type: MoreInfoTypes.ReplyTextMessage.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this CellphoneNumber = \(cellphoneNumber).", lineNumbers: 2)
-                    self.sendRequestSenario(contactCellPhone: cellphoneNumber, threadId: nil, messageResponse: nil)
+                    self.sendRequestSenario(contactCellPhone: cellphoneNumber, threadId: nil, responseThreadId: nil, responseMessageId: nil)
                     
                 } else {
                     // handle error that didn't get contact id in the contact model
@@ -209,12 +225,12 @@ class ReplyMessageAutomation {
     func createThread(withCellphoneNumber cellphoneNumber: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: self.typeCode, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: nil, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 
                 self.delegate?.newInfo(type: MoreInfoTypes.ReplyTextMessage.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
-                self.sendRequestSenario(contactCellPhone: nil, threadId: id, messageResponse: nil)
+                self.sendRequestSenario(contactCellPhone: nil, threadId: id, responseThreadId: nil, responseMessageId: nil)
                 
             } else {
                 // handle error, there is no id in the Conversation model
@@ -229,9 +245,10 @@ class ReplyMessageAutomation {
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             print("message response = \(sentResponse)")
             
-            if let messageId = Int(sentResponse["content"].stringValue) {
+//            if let messageId = Int(sentResponse["content"].stringValue) {
+            if let messageId = sentResponse.message?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.ReplyTextMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(messageId)", lineNumbers: 1)
-                self.sendRequestSenario(contactCellPhone: nil, threadId: nil, messageResponse: sentResponse)
+                self.sendRequestSenario(contactCellPhone: nil, threadId: nil, responseThreadId: sentResponse.message?.conversation?.id, responseMessageId: sentResponse.message?.id)
             }
             
         }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })

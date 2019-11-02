@@ -10,6 +10,7 @@
 import FanapPodChatSDK
 import SwiftyJSON
 
+// ToDo: put the sendRequestSenario in this test (+ using DispatchTime)
 /*
  
  */
@@ -23,12 +24,12 @@ class CreateThreadWithMessageAutomation {
     let messageText:    String?
     let metadata:       String?
     let title:          String?
-    let type:           String?
+    let type:           ThreadTypes?
     let requestUniqueId: String?
     
     typealias callbackStringTypeAlias                   = (String) -> ()
-    typealias callbackServerThreadResponseTypeAlias     = (CreateThreadModel) -> ()
-    typealias callbackServerMessageResponseTypeAlias    = (JSON) -> ()
+    typealias callbackServerThreadResponseTypeAlias     = (ThreadModel) -> ()
+    typealias callbackServerMessageResponseTypeAlias    = (SendMessageModel) -> ()
     
     private var uniqueIdCallback:           callbackStringTypeAlias?
     private var completionResponseCallback: callbackServerThreadResponseTypeAlias?
@@ -36,7 +37,14 @@ class CreateThreadWithMessageAutomation {
     private var serverDeliverResponse:      callbackServerMessageResponseTypeAlias?
     private var serverSeenResponse:         callbackServerMessageResponseTypeAlias?
     
-    init(description: String?, image: String?, invitees: [Invitee]?, messageText: String?, metadata: String?, title: String?, type: String?, requestUniqueId: String?) {
+    init(description:       String?,
+         image:             String?,
+         invitees:          [Invitee]?,
+         messageText:       String?,
+         metadata:          String?,
+         title:             String?,
+         type:              ThreadTypes?,
+         requestUniqueId:   String?) {
         
         self.description        = description
         self.image              = image
@@ -70,7 +78,11 @@ class CreateThreadWithMessageAutomation {
             // some or all of the parameters are filled by the caller, so send request with this params
             if (title != nil) && (invitees != nil) {
                 let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-                sendRequest(withDescription: description ?? fakeParams.description, withInvitees: invitees!, withTitle: title ?? fakeParams.title, withType: type ?? fakeParams.type, withMessage: messageText ?? fakeParams.message)
+                sendRequest(withDescription: description ?? fakeParams.description,
+                            withInvitees:   invitees!,
+                            withTitle:      title ?? fakeParams.title,
+                            withType:       type ?? fakeParams.type,
+                            withMessage:    messageText ?? fakeParams.message)
             } else {
                 // handle that you should fill all these 2 items: title , invitees
                 delegate?.newInfo(type: MoreInfoTypes.CreateThreadWithMessage.rawValue, message: "'title' and 'invitees' are empty. you should fill both of these items", lineNumbers: 1)
@@ -82,7 +94,7 @@ class CreateThreadWithMessageAutomation {
     
     
     
-    func sendRequest(withDescription: String?, withInvitees: [Invitee], withTitle: String, withType: String, withMessage: String) {
+    func sendRequest(withDescription: String?, withInvitees: [Invitee], withTitle: String, withType: ThreadTypes, withMessage: String) {
         
         var i = ""
         for item in withInvitees {
@@ -106,22 +118,19 @@ class CreateThreadWithMessageAutomation {
                                                                                messageType:     nil,
                                                                                uniqueId:        self.requestUniqueId)
         
-            myChatObject?.createThreadWithMessage(creatThreadWithMessageInput: createThreadWithMessageInput, uniqueId: { (createThreadWithMessageUniqueId) in
+        Chat.sharedInstance.createThreadWithMessage(creatThreadWithMessageInput: createThreadWithMessageInput, uniqueId: { (createThreadWithMessageUniqueId) in
                 self.uniqueIdCallback?(createThreadWithMessageUniqueId)
             }, completion: { (createThreadModel) in
-                self.completionResponseCallback?(createThreadModel as! CreateThreadModel)
+                self.completionResponseCallback?(createThreadModel as! ThreadModel)
             }, onSent: { (sent) in
-                self.serverSentResponse?(sent as! JSON)
+                self.serverSentResponse?(sent as! SendMessageModel)
             }, onDelivere: { (deliver) in
-                self.serverDeliverResponse?(deliver as! JSON)
+                self.serverDeliverResponse?(deliver as! SendMessageModel)
             }, onSeen: { (seen) in
-                self.serverSeenResponse?(seen as! JSON)
+                self.serverSeenResponse?(seen as! SendMessageModel)
             })
         
     }
-    
-    
-    
     
 }
 
@@ -138,7 +147,11 @@ extension CreateThreadWithMessageAutomation {
                     
                     let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
                     let myInvitee = Invitee(id: "\(id)", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")
-                    self.sendRequest(withDescription: fakeParams.description, withInvitees: [myInvitee], withTitle: fakeParams.title, withType: fakeParams.type, withMessage: fakeParams.message)
+                    self.sendRequest(withDescription:   fakeParams.description,
+                                     withInvitees:      [myInvitee],
+                                     withTitle:         fakeParams.title,
+                                     withType:          fakeParams.type,
+                                     withMessage:       fakeParams.message)
                     
                 } else {
                     // handle error that didn't get contact id in the contact model

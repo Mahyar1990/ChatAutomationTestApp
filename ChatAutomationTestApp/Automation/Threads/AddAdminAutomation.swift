@@ -24,8 +24,8 @@ class AddAdminAutomation {
     let requestUniqueId: String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
-    typealias callbackServerResponseTypeAlias   = (JSON) -> ()
-    typealias callbackCacheResponseTypeAlias    = (JSON) -> ()
+    typealias callbackServerResponseTypeAlias   = (UserRolesModel) -> ()
+    typealias callbackCacheResponseTypeAlias    = (UserRolesModel) -> ()
     
     private var uniqueIdCallback:       callbackStringTypeAlias?
     private var serverResponseCallback: callbackServerResponseTypeAlias?
@@ -47,26 +47,35 @@ class AddAdminAutomation {
         self.serverResponseCallback = serverResponse
         self.cacheResponseCallback  = cacheResponse
         
-        switch (threadId, userId) {
-        case let (.some(tId), .some(uId)):
-            sendRequest(theThreadId: tId, theUserId: uId)
-        default:
-            createThreadAndAddParticipant()
-        }
-        
+        sendRequestSenario(inThreadId: threadId, withUserId: userId)
     }
     
     func sendRequest(theThreadId: Int, theUserId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.AddAdmin.rawValue, message: "send Request to getAdmins with this params: \n threadId = \(theThreadId)", lineNumbers: 2)
         
-        let addAdminInput = SetRoleRequestModel(roles: [Roles.CHANGE_THREAD_INFO, Roles.ADD_NEW_USER, Roles.DELETE_MESSAGE_OF_OTHERS], roleOperation: RoleOperations.Add, threadId: theThreadId, uniqueId: requestUniqueId, userId: theUserId)
-        myChatObject?.setRole(setRoleInput: [addAdminInput], uniqueId: { (addAdminUniqueId) in
+        let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Add, threadId: theThreadId, typeCode: nil, uniqueId: requestUniqueId, userId: theUserId)
+        
+        Chat.sharedInstance.setRole(setRoleInput: [addAdminInput], uniqueId: { (addAdminUniqueId) in
+//        myChatObject?.setRole(setRoleInput: [addAdminInput], uniqueId: { (addAdminUniqueId) in
             self.uniqueIdCallback?(addAdminUniqueId)
         }, completion: { (addAdminServerResponseModel) in
-            self.serverResponseCallback?(addAdminServerResponseModel as! JSON)
+            self.serverResponseCallback?(addAdminServerResponseModel as! UserRolesModel)
         }, cacheResponse: { (addAdminCacheResponseModel) in
-            self.cacheResponseCallback?(addAdminCacheResponseModel as! JSON)
+            self.cacheResponseCallback?(addAdminCacheResponseModel as! UserRolesModel)
         })
+        
+    }
+    
+    func sendRequestSenario(inThreadId: Int?, withUserId: Int?) {
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            switch (inThreadId, withUserId) {
+            case let (.some(tId), .some(uId)):
+                self.sendRequest(theThreadId: tId, theUserId: uId)
+            default:
+                self.createThreadAndAddParticipant()
+            }
+        }
         
     }
     
@@ -85,11 +94,13 @@ class AddAdminAutomation {
                                     if !found {
                                         switch (item.admin, item.id) {
                                         case let (.none, .some(participantId)):
-                                            self.sendRequest(theThreadId: myThreadId, theUserId: participantId)
+//                                            self.sendRequest(theThreadId: myThreadId, theUserId: participantId)
+                                            self.sendRequestSenario(inThreadId: myThreadId, withUserId: participantId)
                                             found = true
                                         case let (.some(isTrue), .some(participantId)):
                                             if !isTrue {
-                                                self.sendRequest(theThreadId: myThreadId, theUserId: participantId)
+//                                                self.sendRequest(theThreadId: myThreadId, theUserId: participantId)
+                                                self.sendRequestSenario(inThreadId: myThreadId, withUserId: participantId)
                                                 found = true
                                             }
                                         default: return

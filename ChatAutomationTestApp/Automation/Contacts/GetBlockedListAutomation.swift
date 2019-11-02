@@ -51,8 +51,9 @@ class GetBlockedListAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.GetBlockedList.rawValue, message: "send Request to GetBlockedList with this params:\ncount = \(theCount ?? 50) , offset = \(theOffset ?? 0) , typeCode = \(self.typeCode ?? "nil")", lineNumbers: 2)
         
-        let getBlockedListInput = GetBlockedContactListRequestModel(count: theCount, offset: theOffset, typeCode: self.typeCode)
-        myChatObject?.getBlockedContacts(getBlockedContactsInput: getBlockedListInput, uniqueId: { (getBlockedListUniqueId) in
+        let getBlockedListInput = GetBlockedContactListRequestModel(count: theCount, offset: theOffset, typeCode: self.typeCode, uniqueId: nil)
+        Chat.sharedInstance.getBlockedContacts(getBlockedContactsInput: getBlockedListInput, uniqueId: { (getBlockedListUniqueId) in
+//        myChatObject?.getBlockedContacts(getBlockedContactsInput: getBlockedListInput, uniqueId: { (getBlockedListUniqueId) in
             self.uniqueIdCallback?(getBlockedListUniqueId)
         }, completion: { (getBlockedListResponse) in
             self.responseCallback?(getBlockedListResponse as! GetBlockedContactListModel)

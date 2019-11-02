@@ -14,7 +14,8 @@ import FanapPodChatSDK
 
 // MARK: Chat delegatews
 extension MyChatViewController: ChatDelegates {
-    func chatConnected() {
+    
+    func chatConnect() {
         let text = "Chat Connected"
         addtext(text: text)
         self.logHeightArr.append(30)
@@ -49,17 +50,18 @@ extension MyChatViewController: ChatDelegates {
         self.logBackgroundColor.append(UIColor.green)
         print(text)
         activityIndicator.stopAnimating()
-    }
-    
-    func userEvents(type: UserEventTypes, result: Any) {
-        //
+        
+        Chat.sharedInstance.getUserInfo(uniqueId: { (uId) in
+//        myChatObject?.getUserInfo(uniqueId: { (uId) in
+            print("UserInfo uniqueId:\n\(uId)")
+        }, completion: { (ServerResponse) in
+            print("Server UserInfoModel:\n\((ServerResponse as! UserInfoModel).returnDataAsJSON())")
+        }, cacheResponse: { (userFromCache) in
+            print("Cache UserInfoModel:\n\(userFromCache.returnDataAsJSON())")
+        })
     }
     
     func contactEvents(type: ContactEventTypes, result: Any) {
-        //
-    }
-    
-    func chatDeliver(messageId: Int, ownerId: Int) {
         //
     }
     
@@ -68,6 +70,18 @@ extension MyChatViewController: ChatDelegates {
     }
     
     func threadEvents(type: ThreadEventTypes, result: Any) {
+        //
+    }
+    
+    func fileUploadEvents(type: FileUploadEventTypes, result: Any) {
+        //
+    }
+    
+    func systemEvents(type: SystemEventTypes, result: Any) {
+        //
+    }
+    
+    func botEvents(type: BotEventTypes, result: Any) {
         //
     }
     

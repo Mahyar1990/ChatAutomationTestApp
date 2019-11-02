@@ -24,11 +24,9 @@ class ClearHistoryAutomation {
     let requestUniqueId:    String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
-    typealias callbackCacheRespoonseTypeAlias   = (JSON) -> ()
-    typealias callbackServerResponseTypeAlias   = (JSON) -> ()
+    typealias callbackServerResponseTypeAlias   = (ClearHistoryModel) -> ()
     
     private var uniqueIdCallback:   callbackStringTypeAlias?
-    private var cacheCallback:      callbackServerResponseTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
     
     init(threadId: Int?, requestUniqueId: String?) {
@@ -38,18 +36,16 @@ class ClearHistoryAutomation {
     }
     
     func create(uniqueId:       @escaping (String) -> (),
-                serverResponse: @escaping (JSON) -> (),
-                cacheResponse:  @escaping (JSON) -> ()) {
+                serverResponse: @escaping (ClearHistoryModel) -> ()) {
         
         self.uniqueIdCallback   = uniqueId
-        self.cacheCallback      = cacheResponse
         self.responseCallback   = serverResponse
         
         if let id = threadId {
             sendRequest(theThreadId: id)
         } else {
             delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "not threadId has been specified to clead it's History, we we will create a thread then do the ClearHistory", lineNumbers: 2)
-            sendRequestSenario(contactCellPhone: nil, threadId: nil, messageResponse: nil)
+            sendRequestSenario(contactCellPhone: nil, threadId: nil, responseThreadId: nil)
         }
         
     }
@@ -59,13 +55,14 @@ class ClearHistoryAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "send Request to clearHistory with this params:\n threadId = \(theThreadId) , uniqueId = \(requestUniqueId ?? "nil")", lineNumbers: 2)
         
-        let clearHistoryInput = ClearHistoryRequestModel(threadId: theThreadId, uniqueId: requestUniqueId)
-        myChatObject?.clearHistory(clearHistoryInput: clearHistoryInput, uniqueId: { (clearHistoryUniqueId) in
+        let clearHistoryInput = ClearHistoryRequestModel(threadId: theThreadId,
+                                                         uniqueId: requestUniqueId)
+        
+        Chat.sharedInstance.clearHistory(clearHistoryInput: clearHistoryInput, uniqueId: { (clearHistoryUniqueId) in
+//        myChatObject?.clearHistory(clearHistoryInput: clearHistoryInput, uniqueId: { (clearHistoryUniqueId) in
             self.uniqueIdCallback?(clearHistoryUniqueId)
         }, completion: { (clearHistoryServerResponse) in
-            self.responseCallback?(clearHistoryServerResponse as! JSON)
-        }, cacheResponse: { (clearHistoryCacheResponse) in
-            self.cacheCallback?(clearHistoryCacheResponse as! JSON)
+            self.responseCallback?(clearHistoryServerResponse as! ClearHistoryModel)
         })
         
     }
@@ -75,26 +72,25 @@ class ClearHistoryAutomation {
 
 extension ClearHistoryAutomation {
     
-    func sendRequestSenario(contactCellPhone: String?, threadId: Int?, messageResponse: JSON?) {
+    func sendRequestSenario(contactCellPhone: String?, threadId: Int?, responseThreadId: Int?) {
         // 1- add contact
         // 2- create thread with this contact
         // 3- sendMessage to this thread
         // 4- clear history of this thread
         
-        
-        switch (contactCellPhone, threadId, messageResponse) {
-        case    (.none, .none, .none):
-            addContact()
-            
-        case let (.some(cellPhone), .none, .none):
-            createThread(withCellphoneNumber: cellPhone)
-            
-        case let (_ , .some(thread), .none):
-            sendMessage(toThread: thread)
-            
-        case let (_ , _ , .some(msg)):
-            if let thId = msg["subjectId"].int {
-                sendRequest(theThreadId: thId)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            switch (contactCellPhone, threadId, responseThreadId) {
+            case    (.none, .none, .none):
+                self.addContact()
+                
+            case let (.some(cellPhone), .none, .none):
+                self.createThread(withCellphoneNumber: cellPhone)
+                
+            case let (_ , .some(thread), .none):
+                self.sendMessage(toThread: thread)
+                
+            case let (_ , _ , .some(msg)):
+                self.sendRequest(theThreadId: msg)
             }
         }
         
@@ -112,7 +108,7 @@ extension ClearHistoryAutomation {
                 if let cellphoneNumber = myContact.cellphoneNumber {
                     
                     self.delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this CellphoneNumber = \(cellphoneNumber).", lineNumbers: 2)
-                    self.sendRequestSenario(contactCellPhone: cellphoneNumber, threadId: nil, messageResponse: nil)
+                    self.sendRequestSenario(contactCellPhone: cellphoneNumber, threadId: nil, responseThreadId: nil)
                     
                 } else {
                     // handle error that didn't get contact id in the contact model
@@ -136,7 +132,7 @@ extension ClearHistoryAutomation {
             if let id = createThreadModel.thread?.id {
                 
                 self.delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
-                self.sendRequestSenario(contactCellPhone: nil, threadId: id, messageResponse: nil)
+                self.sendRequestSenario(contactCellPhone: nil, threadId: id, responseThreadId: nil)
                 
             } else {
                 // handle error, there is no id in the Conversation model
@@ -150,9 +146,10 @@ extension ClearHistoryAutomation {
         let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
-            if let messageId = Int(sentResponse["content"].stringValue) {
+//            if let messageId = Int(sentResponse["content"].stringValue) {
+            if let messageId = sentResponse.message?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(messageId)", lineNumbers: 1)
-                self.sendRequestSenario(contactCellPhone: nil, threadId: nil, messageResponse: sentResponse)
+                self.sendRequestSenario(contactCellPhone: nil, threadId: nil, responseThreadId: sentResponse.message?.conversation?.id)
             }
             
         }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })

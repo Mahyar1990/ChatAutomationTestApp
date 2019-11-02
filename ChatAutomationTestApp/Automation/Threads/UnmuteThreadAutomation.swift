@@ -41,18 +41,18 @@ class UnmuteThreadAutomation {
         self.uniqueIdCallback   = uniqueId
         self.responseCallback   = serverResponse
         
-        if let id = threadId {
-            sendRequest(theThreadId: id)
-        } else {
-            muteThread()
-        }
+        sendRequestSenario()
     }
     
     func sendRequest(theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.UnmuteThread.rawValue, message: "send Request to UnmuteThread with this params: \n threadId = \(theThreadId)", lineNumbers: 2)
         
-        let muteThreadInput = MuteAndUnmuteThreadRequestModel(subjectId: theThreadId, typeCode: typeCode)
-        myChatObject?.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
+        let muteThreadInput = MuteAndUnmuteThreadRequestModel(subjectId: theThreadId,
+                                                              typeCode: typeCode,
+                                                              uniqueId: nil)
+        
+        Chat.sharedInstance.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
+//        myChatObject?.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
             self.uniqueIdCallback?(muteThreadUniqueId)
         }, completion: { (muteThreadServerResponseModel) in
             self.responseCallback?(muteThreadServerResponseModel as! MuteUnmuteThreadModel)
@@ -60,6 +60,15 @@ class UnmuteThreadAutomation {
         
     }
     
+    func sendRequestSenario() {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            if let id = self.threadId {
+                self.sendRequest(theThreadId: id)
+            } else {
+                self.muteThread()
+            }
+        }
+    }
     
     func muteThread() {
         let muteThread = MuteThreadAutomation(threadId: nil, typeCode: nil)

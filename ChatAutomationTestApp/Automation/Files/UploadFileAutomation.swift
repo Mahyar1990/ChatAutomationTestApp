@@ -61,7 +61,9 @@ class UploadFileAutomation {
                                                      originalFileName: nil,
                                                      threadId: threadId,
                                                      uniqueId: nil)
-        myChatObject?.uploadFile(uploadFileInput: uploadFileInput, uniqueId: { (uploadFileUniqueId) in
+        
+        Chat.sharedInstance.uploadFile(uploadFileInput: uploadFileInput, uniqueId: { (uploadFileUniqueId) in
+//        myChatObject?.uploadFile(uploadFileInput: uploadFileInput, uniqueId: { (uploadFileUniqueId) in
             self.uniqueIdCallback?(uploadFileUniqueId)
         }, progress: { (uploadFileProgress) in
             self.progressCallback?(uploadFileProgress)

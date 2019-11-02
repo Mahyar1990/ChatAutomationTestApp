@@ -46,3 +46,105 @@ extension UIColor {
 }
 
 
+
+extension UIViewController {
+    
+    class MZInputTextField: UITextField {
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            
+            self.translatesAutoresizingMaskIntoConstraints = false
+            self.placeholder = "Input"
+            self.textAlignment = .center
+            self.layer.cornerRadius = 5
+            self.layer.borderWidth = 1
+            self.layer.borderColor = UIColor.gray.cgColor
+            self.autocapitalizationType = UITextAutocapitalizationType.none
+            self.autocorrectionType = UITextAutocorrectionType.no
+            self.backgroundColor = UIColor.init().hexToRGB(hex: "#dfe6e9", alpha: 1)
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+    
+    
+    
+    class MZPickerView: UIPickerView {
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            
+            self.translatesAutoresizingMaskIntoConstraints = false
+            self.backgroundColor = UIColor.init().hexToRGB(hex: "#b2bec3", alpha: 1)
+            self.layer.cornerRadius = 2
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+    
+    class MZRunButton: UIButton {
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            
+            self.translatesAutoresizingMaskIntoConstraints = false
+            self.setTitle("Run", for: UIControl.State.normal)
+            self.backgroundColor = UIColor.init().hexToRGB(hex: "#0984e3", alpha: 1)
+            self.layer.cornerRadius = 2
+            self.layer.borderWidth = 2
+            self.layer.borderColor = UIColor.clear.cgColor
+            self.layer.shadowColor = UIColor.init().hexToRGB(hex: "#74b9ff", alpha: 1).cgColor
+            self.layer.shadowOpacity = 1
+            self.layer.shadowRadius = 1
+            self.layer.shadowOffset = CGSize(width: 0, height: 2)
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }
+    
+    class MZLogView: UIView {
+        
+        override init(frame: CGRect) {
+            super.init(frame: frame)
+            
+            self.translatesAutoresizingMaskIntoConstraints = false
+            self.backgroundColor = UIColor.init().hexToRGB(hex: "#b2bec3", alpha: 1)
+            self.layer.cornerRadius = 5
+            self.layer.borderWidth = 2
+            self.layer.borderColor = UIColor.clear.cgColor
+            self.layer.shadowColor = UIColor.darkGray.cgColor
+            self.layer.shadowOpacity = 2
+            self.layer.shadowRadius = 1
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    
+    }
+    
+    
+    class MZCollectionView: UICollectionView {
+        
+        override init(frame: CGRect, collectionViewLayout layout: UICollectionViewLayout) {
+            super.init(frame: frame, collectionViewLayout: UICollectionViewFlowLayout())
+            
+            self.translatesAutoresizingMaskIntoConstraints = false
+            self.backgroundColor = UIColor.clear
+        }
+        
+        required init?(coder aDecoder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+        
+    }
+    
+    
+}
+
+

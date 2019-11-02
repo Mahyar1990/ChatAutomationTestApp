@@ -19,94 +19,131 @@ class GetAdminAutomation {
     
     public weak var delegate: MoreInfoDelegate?
     
+    let admin:          Bool = true
+    let count:          Int?
+    let firstMessageId: Int?
+    let lastMessageId:  Int?
+    let name:           String?
+    let offset:         Int?
     let threadId:       Int?
-    let requestUniqueId: String?
+    let typeCode:       String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
-    typealias callbackServerResponseTypeAlias   = (JSON) -> ()
-    typealias callbackCacheResponseTypeAlias    = (JSON) -> ()
+    typealias callbackCacheRespoonseTypeAlias   = (GetThreadParticipantsModel) -> ()
+    typealias callbackServerResponseTypeAlias   = (GetThreadParticipantsModel) -> ()
     
-    private var uniqueIdCallback:       callbackStringTypeAlias?
-    private var serverResponseCallback: callbackServerResponseTypeAlias?
-    private var cacheResponseCallback:  callbackCacheResponseTypeAlias?
+    private var uniqueIdCallback:   callbackStringTypeAlias?
+    private var cacheCallback:      callbackServerResponseTypeAlias?
+    private var responseCallback:   callbackServerResponseTypeAlias?
     
-    init(threadId: Int?, requestUniqueId: String?) {
+    init(count: Int?, firstMessageId: Int?, lastMessageId: Int?, name: String?, offset: Int?, threadId: Int?, typeCode: String?) {
         
-        self.threadId       = threadId
-        self.requestUniqueId = requestUniqueId
-        
+        self.count              = count
+        self.firstMessageId     = firstMessageId
+        self.lastMessageId      = lastMessageId
+        self.name               = name
+        self.offset             = offset
+        self.threadId           = threadId
+        self.typeCode           = typeCode
     }
     
-    func create(uniqueId:       @escaping callbackStringTypeAlias,
-                serverResponse: @escaping callbackServerResponseTypeAlias,
-                cacheResponse:  @escaping callbackCacheResponseTypeAlias) {
+    func create(uniqueId:       @escaping (String) -> (),
+                serverResponse: @escaping (GetThreadParticipantsModel) -> (),
+                cacheResponse:  @escaping (GetThreadParticipantsModel) -> ()) {
         
-        self.uniqueIdCallback       = uniqueId
-        self.serverResponseCallback = serverResponse
-        self.cacheResponseCallback  = cacheResponse
+        self.uniqueIdCallback   = uniqueId
+        self.cacheCallback      = cacheResponse
+        self.responseCallback   = serverResponse
         
-        if let id = threadId {
-            sendRequest(theThreadId: id)
-        } else {
-            addParticipant()
+//        if let id = threadId {
+//            sendRequest(theThreadId: id)
+//        } else {
 //            sendRequestSenario(contactCellPhone: nil, threadId: nil)
-        }
+//        }
+        sendRequestSenario(contactCellPhone: nil, threadId: threadId)
     }
     
     func sendRequest(theThreadId: Int) {
-        delegate?.newInfo(type: MoreInfoTypes.GetAdmins.rawValue, message: "send Request to getAdmins with this params: \n threadId = \(theThreadId)", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.GetThreadParticipants.rawValue, message: "send Request to getThreadParticipants with this params:\n admin = \(admin) count = \(count ?? 50) firstMessageId = \(firstMessageId ?? 0) , lastMessageId = \(firstMessageId ?? 0) , name = \(name ?? "nil") , offset = \(offset ?? 0) , threadIds = \(theThreadId) , typeCode = \(typeCode ?? "nil")", lineNumbers: 2)
         
-        let getAdminInput = GetAdminListRequestModel(threadId: theThreadId, uniqueId: requestUniqueId)
-        myChatObject?.getAdminList(getAdminListInput: getAdminInput, uniqueId: { (getAdminUniqueId) in
-            self.uniqueIdCallback?(getAdminUniqueId)
-        }, completion: { (getAdminServerResponseModel) in
-            self.serverResponseCallback?(getAdminServerResponseModel as! JSON)
-        }, cacheResponse: { (getAdminCacheResponseModel) in
-            self.cacheResponseCallback?(getAdminCacheResponseModel as! JSON)
+        let getThreadParticipantsInput = GetThreadParticipantsRequestModel(admin:           admin,
+                                                                           count:           count,
+                                                                           firstMessageId:  firstMessageId,
+                                                                           lastMessageId:   lastMessageId,
+                                                                           name:            name,
+                                                                           offset:          offset,
+                                                                           threadId:        theThreadId,
+                                                                           typeCode:        typeCode,
+                                                                           uniqueId:        nil)
+        
+        Chat.sharedInstance.getThreadParticipants(getThreadParticipantsInput: getThreadParticipantsInput, uniqueId: { (getThreadParticipantsUniqueId) in
+            //        myChatObject?.getThreadParticipants(getThreadParticipantsInput: getThreadParticipantsInput, uniqueId: { (getThreadParticipantsUniqueId) in
+            self.uniqueIdCallback?(getThreadParticipantsUniqueId)
+        }, completion: { (getThreadParticipantsServerResponse) in
+            self.responseCallback?(getThreadParticipantsServerResponse as! GetThreadParticipantsModel)
+        }, cacheResponse: { (getThreadParticipantsCacheResponse) in
+            self.cacheCallback?(getThreadParticipantsCacheResponse)
         })
+    }
+    
+    
+    func sendRequestSenario(contactCellPhone: String?, threadId: Int?) {
+        // 1- add contact
+        // 2- create thread with this contact
+        // 3- getparticipants
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            switch (contactCellPhone, threadId) {
+            case    (.none, .none):
+                self.addContact()
+                
+            case let (.some(cellPhone), .none):
+                self.createThread(withCellphoneNumber: cellPhone)
+                
+            case let (_ , .some(id)):
+                self.sendRequest(theThreadId: id)
+                
+            }
+        }
         
     }
     
     
-//    func sendRequestSenario(contactCellPhone: String?, threadId: Int?) {
-//        // 1- add contact
-//        // 2- create thread with this contact
-//        // 3- leaveThread
-//
-//        switch (contactCellPhone, threadId) {
-//        case    (.none, .none):
-//            addContact()
-//
-//        case let (.some(cellPhone), .none):
-//            createThread(withCellphoneNumber: cellPhone)
-//
-//        case let (_ , .some(id)):
-//            self.sendRequest(theThreadId: id)
-//
-//        }
-//    }
-    
-    
-    func addParticipant() {
-        delegate?.newInfo(type: MoreInfoTypes.GetAdmins.rawValue, message: "Try to create thread then add an participant to the thread", lineNumbers: 2)
-        let addParticipant = AddParticipantAutomation(contacts: nil, threadId: nil, typeCode: nil, uniqueId: nil)
-        addParticipant.create(uniqueId: { _ in }) { (addParticipantResponseModel) in
-            if let threadModel = addParticipantResponseModel.thread {
-                if let myThreadId = threadModel.id {
-                    if let participants = threadModel.participants {
-                        if participants.count > 0 {
-                            self.sendRequest(theThreadId: myThreadId)
-                        }
-                    } else {
-                        self.delegate?.newInfo(type: MoreInfoTypes.GetAdmins.rawValue, message: "Error: AddParticipant response does not have Participants inside the thread Model!!!!", lineNumbers: 2)
-                    }
+    func addContact() {
+        // 1
+        let mehdi = Faker.sharedInstance.mehdiAsContact
+        let addContact = AddContactAutomation(cellphoneNumber: mehdi.cellphoneNumber, email: mehdi.email, firstName: mehdi.firstName, lastName: mehdi.lastName)
+        addContact.create(uniqueId: { _ in }) { (contactModel) in
+            if let myContact = contactModel.contacts.first {
+                if let cellphoneNumber = myContact.cellphoneNumber {
+                    self.delegate?.newInfo(type: MoreInfoTypes.GetThreadParticipants.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this CellphoneNumber = \(cellphoneNumber).", lineNumbers: 2)
+                    self.sendRequestSenario(contactCellPhone: cellphoneNumber, threadId: nil)
+                    
                 } else {
-                    self.delegate?.newInfo(type: MoreInfoTypes.GetAdmins.rawValue, message: "Error: AddParticipant response does not have threadId inside the thread Model!!!!", lineNumbers: 2)
+                    // handle error that didn't get contact id in the contact model
+                    self.delegate?.newInfo(type: MoreInfoTypes.GetThreadParticipants.rawValue, message: "there is no CellphoneNumber when addContact with this user (firstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber))!", lineNumbers: 2)
                 }
             } else {
-                self.delegate?.newInfo(type: MoreInfoTypes.GetAdmins.rawValue, message: "Error: AddParticipant response does not have thread model in it!!!!", lineNumbers: 2)
+                // handle error that didn't add Contact Model
+                self.delegate?.newInfo(type: MoreInfoTypes.GetThreadParticipants.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber) , lastName = \(mehdi.lastName)", lineNumbers: 2)
             }
         }
+    }
+    
+    // 2
+    func createThread(withCellphoneNumber cellphoneNumber: String) {
+        let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
+        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: nil, requestUniqueId: nil)
+        createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
+            if let id = createThreadModel.thread?.id {
+                self.delegate?.newInfo(type: MoreInfoTypes.GetThreadParticipants.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
+                self.sendRequestSenario(contactCellPhone: nil, threadId: id)
+                
+            } else {
+                // handle error, there is no id in the Conversation model
+            }
+        })
     }
     
     

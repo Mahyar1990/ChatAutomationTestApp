@@ -71,8 +71,10 @@ class BlockAutomation {
     func sendRequest(theContactId: Int?, theUserId: Int?, theThreadId: Int?, isAutomation: Bool) {
         delegate?.newInfo(type: MoreInfoTypes.Block.rawValue, message: "send block request with this parameters:\ncontactId = \(theContactId ?? 0) , threadId = \(theThreadId ?? 0) , typeCode = \(typeCode ?? "nil") , userId = \(theUserId ?? 0)", lineNumbers: 2)
         
-        let blockContactInput = BlockContactsRequestModel(contactId: theContactId, threadId: theThreadId, typeCode: typeCode, userId: theUserId)
-        myChatObject?.blockContact(blockContactsInput: blockContactInput, uniqueId: { (blockContactUniqueId) in
+        let blockContactInput = BlockContactsRequestModel(contactId: theContactId, threadId: theThreadId, typeCode: typeCode, userId: theUserId, uniqueId: nil)
+        
+        Chat.sharedInstance.blockContact(blockContactsInput: blockContactInput, uniqueId: { (blockContactUniqueId) in
+//        myChatObject?.blockContact(blockContactsInput: blockContactInput, uniqueId: { (blockContactUniqueId) in
             self.uniqueIdCallback?(blockContactUniqueId)
         }, completion: { (blockContactResponse) in
             self.responseCallback?(blockContactResponse as! BlockedContactModel)
@@ -302,7 +304,7 @@ extension BlockAutomation {
     
     func createThreadWith(cellPhoneNumber: String) {
         let invitee = Invitee(id: cellPhoneNumber, idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")
-        let createThread = CreateThreadAutomation(description: "new thread", image: nil, invitees: [invitee], metadata: nil, title: "Thread", type: ThreadTypes.NORMAL.rawValue, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: "new thread", image: nil, invitees: [invitee], metadata: nil, title: "Thread", type: ThreadTypes.NORMAL, requestUniqueId: nil)
         createThread.create(uniqueId: { _,_  in }, serverResponse: { (createThreadModel, _ )  in
             if let myThreadId = createThreadModel.thread?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.Block.rawValue, message: "new thread has been created, thread id = \(myThreadId)", lineNumbers: 1)

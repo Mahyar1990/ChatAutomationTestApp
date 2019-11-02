@@ -59,22 +59,32 @@ class GetThreadAutomation {
         self.responseCallback   = serverResponse
         
         if threadIds?.first == 0 {
-            sendRequest(theCount: count, theCoreUserId: coreUserId, theMetadataCriteria: metadataCriteria, theName: name, theNew: new, theOffset: offset, theThreadIds: nil, theTypeCode: typeCode)
+            sendRequest(theThreadIds: nil)
         } else {
-            sendRequest(theCount: count, theCoreUserId: coreUserId, theMetadataCriteria: metadataCriteria, theName: name, theNew: new, theOffset: offset, theThreadIds: threadIds, theTypeCode: typeCode)
+            sendRequest(theThreadIds: threadIds)
         }
-        
-        
         
     }
     
     
-    func sendRequest(theCount: Int?, theCoreUserId: Int?, theMetadataCriteria: JSON?, theName: String?, theNew: Bool?, theOffset: Int?, theThreadIds: [Int]?, theTypeCode: String?) {
+    func sendRequest(theThreadIds: [Int]?) {
         
-        delegate?.newInfo(type: MoreInfoTypes.GetThread.rawValue, message: "send Request to getThread with this params:\ncount = \(theCount ?? 50) coreUserId = \(theCoreUserId ?? 0) , metadataCriteria = \(theMetadataCriteria ?? JSON.null) , name = \(theName ?? "nil") , new = \(theNew ?? false) , offset = \(theOffset ?? 0) , threadIds = \(theThreadIds ?? [0]) , typeCode = \(theTypeCode ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.GetThread.rawValue, message: "send Request to getThread with this params:\ncount = \(count ?? 50) coreUserId = \(coreUserId ?? 0) , metadataCriteria = \(metadataCriteria ?? JSON.null) , name = \(name ?? "nil") , new = \(new ?? false) , offset = \(offset ?? 0) , threadIds = \(theThreadIds ?? [0]) , typeCode = \(typeCode ?? "nil")", lineNumbers: 2)
         
-        let getThreadInput = GetThreadsRequestModel(count: theCount, coreUserId: theCoreUserId, metadataCriteria: theMetadataCriteria, name: theName, new: theNew, offset: theOffset, threadIds: theThreadIds, typeCode: theTypeCode)
-        myChatObject?.getThreads(getThreadsInput: getThreadInput, uniqueId: { (getThreadUniqueId) in
+        let getThreadInput = GetThreadsRequestModel(count: count,
+                                                    creatorCoreUserId:  coreUserId,
+                                                    metadataCriteria:   metadataCriteria,
+                                                    name:               name,
+                                                    new:                new,
+                                                    offset:             offset,
+                                                    partnerCoreContactId: nil,
+                                                    partnerCoreUserId:  nil,
+                                                    threadIds:          theThreadIds,
+                                                    typeCode:           typeCode,
+                                                    uniqueId:           nil)
+        
+        Chat.sharedInstance.getThreads(getThreadsInput: getThreadInput, uniqueId: { (getThreadUniqueId) in
+//        myChatObject?.getThreads(getThreadsInput: getThreadInput, uniqueId: { (getThreadUniqueId) in
 //            self.delegate?.newInfo(type: MoreInfoTypes.GetThread.rawValue, message: "uniqueId = \(getThreadUniqueId)", lineNumbers: 1)
             self.uniqueIdCallback?(getThreadUniqueId)
         }, completion: { (getThreadsServerResponse) in

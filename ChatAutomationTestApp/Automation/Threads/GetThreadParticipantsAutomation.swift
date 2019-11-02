@@ -56,11 +56,12 @@ class GetThreadParticipantsAutomation {
         self.cacheCallback      = cacheResponse
         self.responseCallback   = serverResponse
         
-        if let id = threadId {
-            sendRequest(theThreadId: id)
-        } else {
-            sendRequestSenario(contactCellPhone: nil, threadId: nil)
-        }
+        sendRequestSenario(contactCellPhone: nil, threadId: threadId)
+//        if let id = threadId {
+//            sendRequest(theThreadId: id)
+//        } else {
+//            sendRequestSenario(contactCellPhone: nil, threadId: nil)
+//        }
     }
     
     func sendRequest(theThreadId: Int) {
@@ -73,8 +74,11 @@ class GetThreadParticipantsAutomation {
                                                                            name:            name,
                                                                            offset:          offset,
                                                                            threadId:        theThreadId,
-                                                                           typeCode:        typeCode)
-        myChatObject?.getThreadParticipants(getThreadParticipantsInput: getThreadParticipantsInput, uniqueId: { (getThreadParticipantsUniqueId) in
+                                                                           typeCode:        typeCode,
+                                                                           uniqueId:        nil)
+        
+        Chat.sharedInstance.getThreadParticipants(getThreadParticipantsInput: getThreadParticipantsInput, uniqueId: { (getThreadParticipantsUniqueId) in
+//        myChatObject?.getThreadParticipants(getThreadParticipantsInput: getThreadParticipantsInput, uniqueId: { (getThreadParticipantsUniqueId) in
             self.uniqueIdCallback?(getThreadParticipantsUniqueId)
         }, completion: { (getThreadParticipantsServerResponse) in
             self.responseCallback?(getThreadParticipantsServerResponse as! GetThreadParticipantsModel)
@@ -89,17 +93,20 @@ class GetThreadParticipantsAutomation {
         // 2- create thread with this contact
         // 3- getparticipants
         
-        switch (contactCellPhone, threadId) {
-        case    (.none, .none):
-            addContact()
-            
-        case let (.some(cellPhone), .none):
-            createThread(withCellphoneNumber: cellPhone)
-            
-        case let (_ , .some(id)):
-            self.sendRequest(theThreadId: id)
-            
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            switch (contactCellPhone, threadId) {
+            case    (.none, .none):
+                self.addContact()
+                
+            case let (.some(cellPhone), .none):
+                self.createThread(withCellphoneNumber: cellPhone)
+                
+            case let (_ , .some(id)):
+                self.sendRequest(theThreadId: id)
+                
+            }
         }
+        
     }
     
     
@@ -128,7 +135,7 @@ class GetThreadParticipantsAutomation {
     func createThread(withCellphoneNumber cellphoneNumber: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: self.typeCode, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: nil, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.GetThreadParticipants.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)

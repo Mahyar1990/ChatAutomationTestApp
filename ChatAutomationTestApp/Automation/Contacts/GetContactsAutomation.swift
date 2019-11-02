@@ -25,8 +25,8 @@ class GetContactsAutomation {
     
     
     let count:      Int?
-    let name:       String?
     let offset:     Int?
+    let query:      String?
     let typeCode:   String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
@@ -37,11 +37,11 @@ class GetContactsAutomation {
     private var cacheCallback:      callbackServerResponseTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
     
-    init(count: Int?, name: String?, offset: Int?, typeCode: String?) {
+    init(count: Int?, offset: Int?, query: String?, typeCode: String?) {
         
         self.count      = count
-        self.name       = name
         self.offset     = offset
+        self.query      = query
         self.typeCode   = typeCode
     }
     
@@ -54,25 +54,27 @@ class GetContactsAutomation {
         self.responseCallback   = serverResponse
         
         // if none of the parameters filled by the user, jenerate fake values and fill the input model to send request
-        if (count == nil) && (name == nil) && (offset == nil) {
-            let fakeParams = Faker.sharedInstance.generateFakeGetContactParams()
-            delegate?.newInfo(type: MoreInfoTypes.GetContact.rawValue, message: "create random numbers:\ncount = \(fakeParams.count) , offset = \(fakeParams.offset)", lineNumbers: 2)
-            sendRequest(theCount: fakeParams.count, theOffset: fakeParams.offset, theName: name)
+        if (count == nil) && (query == nil) && (offset == nil) {
+//            let fakeParams = Faker.sharedInstnce.generateFakeGetContactParams()
+            delegate?.newInfo(type: MoreInfoTypes.GetContact.rawValue, message: "create random numbers:\ncount = \(50) , offset = \(0)", lineNumbers: 2)
+            sendRequest(theCount: 50, theOffset: 0, theQuery: query)
         }
             // some or all of the parameters are filled by the client, so send request with this params
         else {
-            sendRequest(theCount: count, theOffset: offset, theName: name)
+            sendRequest(theCount: count, theOffset: offset, theQuery: query)
         }
         
     }
     
     
-    func sendRequest(theCount: Int?, theOffset: Int?, theName: String?) {
+    func sendRequest(theCount: Int?, theOffset: Int?, theQuery: String?) {
         
-        delegate?.newInfo(type: MoreInfoTypes.GetContact.rawValue, message: "send Request to getContacts with this params:\ncount = \(theCount ?? 50) , offset = \(theOffset ?? 0) , name = \(theName ?? "nil") , typeCode = \(typeCode ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.GetContact.rawValue, message: "send Request to getContacts with this params:\ncount = \(theCount ?? 50) , offset = \(theOffset ?? 0) , query = \(theQuery ?? "nil") , typeCode = \(typeCode ?? "nil")", lineNumbers: 2)
         
-        let getContactInput = GetContactsRequestModel(count: theCount, name: theName, offset: theOffset, typeCode: typeCode)
-        myChatObject?.getContacts(getContactsInput: getContactInput, uniqueId: { (getContactUniqueId) in
+        let getContactInput = GetContactsRequestModel(count: theCount, offset: theOffset, query: theQuery, typeCode: typeCode, uniqueId: nil)
+        
+        Chat.sharedInstance.getContacts(getContactsInput: getContactInput, uniqueId: { (getContactUniqueId) in
+//        myChatObject?.getContacts(getContactsInput: getContactInput, uniqueId: { (getContactUniqueId) in
             self.uniqueIdCallback?(getContactUniqueId)
         }, completion: { (getContactsResponse) in
             self.responseCallback?(getContactsResponse as! GetContactsModel)

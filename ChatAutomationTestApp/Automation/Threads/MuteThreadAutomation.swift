@@ -41,18 +41,23 @@ class MuteThreadAutomation {
         self.uniqueIdCallback   = uniqueId
         self.responseCallback   = serverResponse
         
-        if let id = threadId {
-            sendRequest(theThreadId: id)
-        } else {
-            sendRequestSenario(contactCellPhone: nil, threadId: nil)
-        }
+        sendRequestSenario(contactCellPhone: nil, threadId: threadId)
+        
+//        if let id = threadId {
+//            sendRequest(theThreadId: id)
+//        } else {
+//            sendRequestSenario(contactCellPhone: nil, threadId: nil)
+//        }
     }
     
     func sendRequest(theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.MuteThread.rawValue, message: "send Request to MuteThread with this params: \n threadId = \(theThreadId)", lineNumbers: 2)
         
-        let muteThreadInput = MuteAndUnmuteThreadRequestModel(subjectId: theThreadId, typeCode: typeCode)
-        myChatObject?.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
+        let muteThreadInput = MuteAndUnmuteThreadRequestModel(subjectId: theThreadId,
+                                                              typeCode: typeCode, uniqueId: nil)
+        
+        Chat.sharedInstance.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
+//        myChatObject?.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
             self.uniqueIdCallback?(muteThreadUniqueId)
         }, completion: { (muteThreadServerResponseModel) in
             self.responseCallback?(muteThreadServerResponseModel as! MuteUnmuteThreadModel)
@@ -66,17 +71,19 @@ class MuteThreadAutomation {
         // 2- create thread with this contact
         // 3- muteThread
         
-        switch (contactCellPhone, threadId) {
-        case    (.none, .none):
-            addContact()
-            
-        case let (.some(cellPhone), .none):
-            createThread(withCellphoneNumber: cellPhone)
-            
-        case let (_ , .some(id)):
-            self.sendRequest(theThreadId: id)
-            
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            switch (contactCellPhone, threadId) {
+            case    (.none, .none):
+                self.addContact()
+                
+            case let (.some(cellPhone), .none):
+                self.createThread(withCellphoneNumber: cellPhone)
+                
+            case let (_ , .some(id)):
+                self.sendRequest(theThreadId: id)
+            }
         }
+        
     }
     
     
@@ -105,7 +112,7 @@ class MuteThreadAutomation {
     func createThread(withCellphoneNumber cellphoneNumber: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: self.typeCode, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.MuteThread.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)

@@ -9,7 +9,7 @@
 //import PodChat
 import FanapPodChatSDK
 
-
+// ToDo: put the sendRequestSenario in this test (+ using DispatchTime)
 /*
  This method will create a thread with some specific users
  when calling this method,
@@ -34,16 +34,16 @@ class CreateThreadAutomation {
     let invitees:       [Invitee]?
     let metadata:       String?
     let title:          String?
-    let type:           String?
+    let type:           ThreadTypes?
     let requestUniqueId: String?
     
     typealias callbackStringTypeAlias            = (String, String) -> ()
-    typealias callbackServerResponseTypeAlias    = (CreateThreadModel, String) -> ()
+    typealias callbackServerResponseTypeAlias    = (ThreadModel, String) -> ()
     
     private var uniqueIdCallback:   callbackStringTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
     
-    init(description: String?, image: String?, invitees: [Invitee]?, metadata: String?, title: String?, type: String?, requestUniqueId: String?) {
+    init(description: String?, image: String?, invitees: [Invitee]?, metadata: String?, title: String?, type: ThreadTypes?, requestUniqueId: String?) {
         
         self.description        = description
         self.image              = image
@@ -77,22 +77,28 @@ class CreateThreadAutomation {
     }
     
     
-    
-    
-    func sendRequest(on: Section?, withDescription: String?, withInvitees: [Invitee], withTitle: String, withType: String?) {
+    func sendRequest(on: Section?, withDescription: String?, withInvitees: [Invitee], withTitle: String, withType: ThreadTypes?) {
         
         var i = ""
         for item in withInvitees {
             i.append("\(item.formatToJSON()) ,")
         }
         
-        delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "on \(on?.rawValue ?? "") send create thread request with this parameters:\n description = \(withDescription ?? "nil") ,\n image = \(self.image ?? "nil") ,\n invitees = \(i) ,\n metadata = \(self.metadata ?? "nil") ,\n title = \(withTitle) ,\n type = \(withType ?? "nil") ,\n requestUniqueId = \(self.requestUniqueId ?? "nil")", lineNumbers: 6)
+        delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "on \(on?.rawValue ?? "") send create thread request with this parameters:\n description = \(withDescription ?? "nil") ,\n image = \(self.image ?? "nil") ,\n invitees = \(i) ,\n metadata = \(self.metadata ?? "nil") ,\n title = \(withTitle) ,\n type = \(withType ?? ThreadTypes.NORMAL) ,\n requestUniqueId = \(self.requestUniqueId ?? "nil")", lineNumbers: 6)
         
-        let createThreadInput = CreateThreadRequestModel(description: withDescription, image: self.image, invitees: withInvitees, metadata: self.metadata, title: withTitle, type: withType, uniqueId: self.requestUniqueId)
-        myChatObject?.createThread(createThreadInput: createThreadInput, uniqueId: { (createThreadUniqueId) in
+        let createThreadInput = CreateThreadRequestModel(description: withDescription,
+                                                         image: self.image,
+                                                         invitees: withInvitees,
+                                                         metadata: self.metadata,
+                                                         title: withTitle,
+                                                         type: withType,
+                                                         uniqueId: self.requestUniqueId)
+        
+        Chat.sharedInstance.createThread(createThreadInput: createThreadInput, uniqueId: { (createThreadUniqueId) in
+//        myChatObject?.createThread(createThreadInput: createThreadInput, uniqueId: { (createThreadUniqueId) in
             self.uniqueIdCallback?(createThreadUniqueId, "on \(on?.rawValue ?? "user request")")
         }, completion: { (createThreadModel) in
-            self.responseCallback?(createThreadModel as! CreateThreadModel, "on \(on?.rawValue ?? "user request")")
+            self.responseCallback?(createThreadModel as! ThreadModel, "on \(on?.rawValue ?? "user request")")
             if let section = on {
                 switch (section) {
                 case (Section.NormalThreadWithCoreUserId):
@@ -117,186 +123,6 @@ class CreateThreadAutomation {
         
     }
     
-    
-    /*
-     first create a contact, then use it linkeUser model,
-     insid linkeUser, there is parameter nameed "coreUserId"
-     in the invitee model to pass to createThread, pass this "coreUserId" and type "TO_BE_USER_ID"
-     */
-//    func createNormalThreadWithId(cellphoneNumber: String?, email: String?, firstName: String?, lastName: String?) {
-//
-//        delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "try to create NORMAL thread with userId", lineNumbers: 1)
-//
-//        let addContact = AddContactAutomation(cellphoneNumber: cellphoneNumber, email: email, firstName: firstName, lastName: lastName)
-//        addContact.create(uniqueId: { _ in }) { (contactModel) in
-//            if let myContact = contactModel.contacts.first {
-//
-//                if let linkeUser = myContact.linkedUser {
-//                    if let linkUserId = linkeUser.coreUserId {
-//                        let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-//
-//                        self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on createNormalThreadWithId) New Contact has been created, now try to create thread with some fake params and this user id = \(linkUserId).", lineNumbers: 2)
-//
-//                        let myInvitee = Invitee(id: "\(linkUserId)", idType: "\(InviteeVOidTypes.TO_BE_USER_ID)")
-//                        self.sendRequest(on: "(on createNormalThreadWithId)", theDescription: fakeParams.description, theImage: self.image, theInvitees: [myInvitee], theMetadata: self.metadata, theTitle: fakeParams.title, theType: fakeParams.type, theRequestUniqueId: nil)
-//                    } else {
-//                        // handle error that didn't get linkUserId in the linkedUser model of Contact
-//                        self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on createNormalThreadWithId) This user is register but it doesn't have coreUserId in it's Model!)", lineNumbers: 1)
-//                    }
-//
-//                } else {
-//                    // handle error that didn't get linkUser model of Contact
-//                    self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on createNormalThreadWithId) This user is not registered! (doesn't have LinkUser Model inside the server response...)", lineNumbers: 1)
-//                }
-//
-//            } else {
-//                // handle error that didn't add Contact Model
-//                self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "AddContact (on createNormalThreadWithId) with this parameters is Failed!\nfirstName = \(firstName ?? "nil") , cellphoneNumber = \(cellphoneNumber ?? "nil") , lastName = \(lastName ?? "nil")", lineNumbers: 2)
-//            }
-//        }
-//
-//    }
-//
-//    /*
-//     this one needs user ssoId that has not implemented yet (how to get user ssoId)
-//     */
-//    func createNormalThreadWithSsoId() {
-//
-//    }
-//
-//    /*
-//     first create a contact, then use it linkeUser model,
-//     insid linkeUser, there is parameter nameed "username"
-//     in the invitee model to pass to createThread, pass this "username" and type "TO_BE_USER_USERNAME"
-//     */
-//    func createNormalThreadWithUsername(cellphoneNumber: String?, email: String?, firstName: String?, lastName: String?) {
-//
-//        delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "try to create NORMAL thread with Username", lineNumbers: 1)
-//
-//        let addContact = AddContactAutomation(cellphoneNumber: cellphoneNumber, email: email, firstName: firstName, lastName: lastName)
-//        addContact.create(uniqueId: { _ in }) { (contactModel) in
-//            if let myContact = contactModel.contacts.first {
-////                if myContact.hasUser {
-//
-//                    if let linkeUser = myContact.linkedUser {
-//                        if let linkedUsername = linkeUser.username {
-//                            let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-//
-//                            self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on createNormalThreadWithUsername) New Contact has been created, now try to create thread with some fake params and this username = \(linkedUsername).", lineNumbers: 2)
-//
-//                            let myInvitee = Invitee(id: linkedUsername, idType: "\(InviteeVOidTypes.TO_BE_USER_USERNAME)")
-//                            self.sendRequest(on: "(on createNormalThreadWithUsername)", theDescription: fakeParams.description, theImage: self.image, theInvitees: [myInvitee], theMetadata: self.metadata, theTitle: fakeParams.title, theType: fakeParams.type, theRequestUniqueId: nil)
-//                        } else {
-//                            // handle error that didn't get linkUserId in the linkedUser model of Contact
-//                            self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on createNormalThreadWithUsername) This user is register but it doesn't have username in it's Model!)", lineNumbers: 1)
-//                        }
-//
-//                    } else {
-//                        // handle error that didn't get linkUser model of Contact
-//                        self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on createNormalThreadWithUsername) This user is not registered! (doesn't have LinkUser Model inside the server response...)", lineNumbers: 1)
-//                    }
-//
-////                } else {
-////                    // this contact don't have linkeUser
-////                    self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on createNormalThreadWithUsername) This user is not registered! (the property 'hasUser' == 'flase' inside the server response...)", lineNumbers: 1)
-////                }
-//
-//            } else {
-//                // handle error that didn't add Contact Model
-//                self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "AddContact (on createNormalThreadWithUsername) with this parameters is Failed!\nfirstName = \(firstName ?? "nil") , cellphoneNumber = \(cellphoneNumber ?? "nil") , lastName = \(lastName ?? "nil")", lineNumbers: 2)
-//            }
-//        }
-//
-//    }
-//
-//    /*
-//     first create a contact, in the response ContactModel there is parameter nameed "cellphoneNumber"
-//     in the invitee model to pass to createThread, pass this "cellphoneNumber" and type "TO_BE_USER_CELLPHONE_NUMBER"
-//     */
-//    func createNormalThreadWithCellPhoneNumber(cellphoneNumber: String?, email: String?, firstName: String?, lastName: String?) {
-//        delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "try to create NORMAL thread with CellPhoneNumber", lineNumbers: 1)
-//        let addContact = AddContactAutomation(cellphoneNumber: cellphoneNumber, email: email, firstName: firstName, lastName: lastName)
-//        addContact.create(uniqueId: { _ in }) { (contactModel) in
-//            if let myContact = contactModel.contacts.first {
-//                if let cellphoneNumber = myContact.cellphoneNumber {
-//
-//                    let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-//
-//                    self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on createNormalThreadWithCellphoneNumber) New Contact has been created, now try to create thread with some fake params and this CellphoneNumber = \(cellphoneNumber).", lineNumbers: 2)
-//
-//                    let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
-//                    self.sendRequest(on: "(on createNormalThreadWithCellphoneNumber)", theDescription: fakeParams.description, theImage: self.image, theInvitees: [myInvitee], theMetadata: self.metadata, theTitle: fakeParams.title, theType: fakeParams.type, theRequestUniqueId: nil)
-//
-//                } else {
-//                    // handle error that didn't get contact id in the contact model
-//                    self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on createNormalThreadWithCellphoneNumber) there is no CellphoneNumber when addContact with this user (firstName = \(firstName ?? "nil") , cellphoneNumber = \(cellphoneNumber ?? "nil"))!", lineNumbers: 2)
-//                }
-//            } else {
-//                // handle error that didn't add Contact Model
-//                self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "(on createNormalThreadWithCellphoneNumber) AddContact with this parameters is Failed!\nfirstName = \(firstName ?? "nil") , cellphoneNumber = \(cellphoneNumber ?? "nil") , lastName = \(lastName ?? "nil")", lineNumbers: 2)
-//            }
-//        }
-//    }
-//
-//
-//    /*
-//     first create a contact, in the response ContactModel there is parameter nameed "id"
-//     in the invitee model to pass to createThread, pass this "id" and type "TO_BE_USER_CONTACT_ID"
-//     */
-//    func createNormalThreadWithContactId(cellphoneNumber: String?, email: String?, firstName: String?, lastName: String?) {
-//        delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "try to create NORMAL thread with contactId", lineNumbers: 1)
-//        createContactWithContactIdThenCreateThread(on: "(on createNormalThreadWithContactId)", cellphoneNumber: cellphoneNumber, email: email, firstName: firstName, lastName: lastName, threadType: ThreadTypes.NORMAL.rawValue)
-//    }
-//
-//    func createChannelThread(cellphoneNumber: String?, email: String?, firstName: String?, lastName: String?) {
-//        delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "try to create Channel thread with ContactId", lineNumbers: 1)
-//        createContactWithContactIdThenCreateThread(on: "(on createChannelThreadWithContactId)", cellphoneNumber: cellphoneNumber, email: email, firstName: firstName, lastName: lastName, threadType: ThreadTypes.CHANNEL.rawValue)
-//    }
-//
-//    func createChannelGroupThread(cellphoneNumber: String?, email: String?, firstName: String?, lastName: String?) {
-//        delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "try to create ChannelGroup thread with ContactId", lineNumbers: 1)
-//        createContactWithContactIdThenCreateThread(on: "(on createChannelGroupThreadWithContactId)", cellphoneNumber: cellphoneNumber, email: email, firstName: firstName, lastName: lastName, threadType: ThreadTypes.CHANNEL_GROUP.rawValue)
-//    }
-//
-//    func createOwnerGroup(cellphoneNumber: String?, email: String?, firstName: String?, lastName: String?) {
-//        delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "try to create OwnerGroup thread with ContactId", lineNumbers: 1)
-//        createContactWithContactIdThenCreateThread(on: "(on createOwnerGroupWithContactId)", cellphoneNumber: cellphoneNumber, email: email, firstName: firstName, lastName: lastName, threadType: ThreadTypes.OWNER_GROUP.rawValue)
-//    }
-//
-//    func createPublicGroup(cellphoneNumber: String?, email: String?, firstName: String?, lastName: String?) {
-//        delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "try to create PublicGroup thread with ContactId", lineNumbers: 1)
-//        createContactWithContactIdThenCreateThread(on: "(on createPublicGroupWithContactId)", cellphoneNumber: cellphoneNumber, email: email, firstName: firstName, lastName: lastName, threadType: ThreadTypes.PUBLIC_GROUP.rawValue)
-//    }
-//
-//    func createContactWithContactIdThenCreateThread(on: String, cellphoneNumber: String?, email: String?, firstName: String?, lastName: String?, threadType: String) {
-//
-//        let addContact = AddContactAutomation(cellphoneNumber: cellphoneNumber, email: email, firstName: firstName, lastName: lastName)
-//        addContact.create(uniqueId: { _ in }) { (contactModel) in
-//
-//            if let myContact = contactModel.contacts.first {
-//                if let contactId = myContact.id {
-//
-//                    let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-//
-//                    self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "\(on) New Contact has been created, now try to create thread with some fake params and this contactId = \(contactId).", lineNumbers: 2)
-//
-//                    let myInvitee = Invitee(id: "\(contactId)", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")
-//                    self.sendRequest(on: on, theDescription: fakeParams.description, theImage: self.image, theInvitees: [myInvitee], theMetadata: self.metadata, theTitle: fakeParams.title, theType: threadType, theRequestUniqueId: nil)
-//
-//                } else {
-//                    // handle error that didn't get contact id in the contact model
-//                    self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "\(on) contact id inside the contact model is not correct! (or it's nil)", lineNumbers: 1)
-//                }
-//            } else {
-//                // handle error that didn't add Contact Model
-//                self.delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "AddContact \(on) with this parameters is Failed!\nfirstName = \(firstName ?? "nil") , contactId = \(cellphoneNumber ?? "nil") , lastName = \(lastName ?? "nil")", lineNumbers: 2)
-//            }
-//
-//        }
-//
-//    }
-//
-    
 }
 
 
@@ -320,7 +146,7 @@ extension CreateThreadAutomation {
             
         case let (.none, .none, .none, .some(id)):
             let myInvitee = Invitee(id: "\(id)", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")
-            self.sendRequest(on: section, withDescription: fakeParams.description, withInvitees: [myInvitee], withTitle: fakeParams.title, withType: ofType.rawValue)
+            self.sendRequest(on: section, withDescription: fakeParams.description, withInvitees: [myInvitee], withTitle: fakeParams.title, withType: ofType)
             
         default: return
         }

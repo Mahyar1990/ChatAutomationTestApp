@@ -11,7 +11,7 @@ import SwiftyJSON
 import FanapPodChatSDK
 //import PodChat
 
-var myChatObject: Chat?
+//var myChatObject: Chat?
 
 class MyChatViewController: UIViewController {
     
@@ -20,34 +20,49 @@ class MyChatViewController: UIViewController {
 https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52664cf7de0bda&response_type=token&redirect_uri=https://chat.fanapsoft.ir&scope=profile social:write
 */
     
+
+// Main Addresses
+//    var socketAddress   = "wss://msg.pod.land/ws"
+//    var ssoHost         = "https://accounts.pod.land"
+//    var platformHost    = "https://api.pod.land/srv/core"
+//    var fileServer      = "https://core.pod.land"
+//    var serverName      = "chat-server"
+    
+    
 // SandBox Addresses:
 //    var socketAddress           = "wss://chat-sandbox.pod.land/ws"
 //    var serverName              = "chat-server"
 //    var ssoHost                 = "https://accounts.pod.land"
 //    var platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
 //    var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-//    var token                   = "70523e5f048847108960e3ff8b3b405c"
+//    var token                   = "f90af60f15424213b807d949564bffc6"
     
     
-// Local Addresses
-    
-    var socketAddress           = "ws://172.16.110.131:8003/ws"
-    var serverName              = "chat-server2"
-    var platformHost            = "http://172.16.110.131:8080"
+// Local Addresses 1 (MehrAra)
 //    var socketAddress           = "ws://172.16.106.26:8003/ws"
 //    var serverName              = "chat-server"
 //    var platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
+//    var ssoHost                 = "http://172.16.110.76"
+//    var fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+    
+    
+// Local Addresses 2 (SheikhHosseini)
+    var socketAddress           = "ws://172.16.110.131:8003/ws"
+    var serverName              = "chat-server2"
+    var platformHost            = "http://172.16.110.131:8080"
     var ssoHost                 = "http://172.16.110.76"
     var fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
-    var token                   = "fbd4ecedb898426394646e65c6b1d5d1"    // JiJi
     
+    
+// Local Tokens:
+//    var token                   = "fbd4ecedb898426394646e65c6b1d5d1"    // JiJi
+    var token                   = "7cba09ff83554fc98726430c30afcfc6"    // ZiZi
 //    var token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
-//    var token                   = "7cba09ff83554fc98726430c30afcfc6"    // ZiZi
-//    let token = "fbd4ecedb898426394646e65c6b1d5d1" //  {**REQUIRED**} SSO Token JiJi
-//    let token = "5fb88da4c6914d07a501a76d68a62363" // {**REQUIRED**} SSO Token FiFi
-//    let token = "bebc31c4ead6458c90b607496dae25c6" // {**REQUIRED**} SSO Token Alexi
-//    let token = "e4f1d5da7b254d9381d0487387eabb0a" // {**REQUIRED**} SSO Token Felfeli
+//    let token                   = "5fb88da4c6914d07a501a76d68a62363"    // FiFi
+//    let token                   = "bebc31c4ead6458c90b607496dae25c6"    // Alexi
+//    let token                   = "e4f1d5da7b254d9381d0487387eabb0a"    // Felfeli
+    
     
     let wsConnectionWaitTime    = 1                 // Time out to wait for socket to get ready after open
     let connectionRetryInterval = 5                 // Time interval to retry registering device or registering server
@@ -55,16 +70,13 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let messageTtl              = 86400             // Message time to live
     let reconnectOnClose        = true              // auto connect to socket after socket close
     
+    
+    
     let cellId              = "cellId"
     let uploadCellId        = "uploadCellId"
     var logArr              = [String]()
     var logHeightArr        = [Int]()
     var logBackgroundColor  = [UIColor]()
-//    let pickerData          = ["AddContact", "Block", "GetBlockedList", "GetContacts", "RemoveContact", "SearchContact", "Unblock", "UpdateContact",
-//                               "AddAdmin", "AddParticipants", "ClearHistory", "CreateThread", "CreateThreadWithMessage", "GetAdmins", "GetHistory", "GetThread", "GetThreadParticipants", "LeaveThread", "MuteThread", "UnmuteThread", "RemoveAdmin", "RemoveParticipant", "SpamThread",
-//                               "DeleteMessage", "EditMessage", "ForwardMessage", "MessageDeliveryList" ,"MessageSeenList", "ReplyTextMessage", "SendTextMessage",
-//                               "SendLocationMessage",
-//                               "ReplyFileMessage", "SendFileMessage", "UploadFile", "UploadImage"]
     
     let pickerDataCollection = ["Contact", "Thread", "Message", "Location", "File"]
     let pickerDataContact = ["AddContact", "Block", "GetBlockedList", "GetContacts", "RemoveContact", "SearchContact", "Unblock", "UpdateContact"]
@@ -72,6 +84,28 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let pickerDataMessgae = ["DeleteMessage", "DeleteMultipleMessage", "EditMessage", "ForwardMessage", "MessageDeliveryList" ,"MessageSeenList", "ReplyTextMessage", "SendTextMessage"]
     let pickerDataLocation = ["SendLocationMessage"]
     let pickerDataFile = ["ReplyFileMessage", "SendFileMessage", "UploadFile", "UploadImage"]
+    
+    
+    var uploadImageUniqueId:    String = ""
+    var uploadFileUniqueId:     String = ""
+    var downloadFileUniqueId:   String = ""
+    var isProgressActive = false
+    var progressCell = -1
+    var myProgress: Float = 0.0 {
+        didSet {
+            if progressCell >= 0 {
+                let cellIndexPath = IndexPath(item: progressCell, section: 0)
+                if let cell = myLogCollectionView.cellForItem(at: cellIndexPath) as? MyCollectionViewUploadCell {
+                    cell.spaceProgressView.progress = myProgress
+                }
+            }
+            //            spaceProgressView.progress = myProgress
+        }
+    }
+    
+    var section = 0
+    var picker = 0
+    
     
     /*
     let spaceProgressView: UIProgressView = {
@@ -118,172 +152,32 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     }()
     */
     
-    var uploadImageUniqueId:    String = ""
-    var uploadFileUniqueId:     String = ""
-    var downloadFileUniqueId:   String = ""
-    var isProgressActive = false
-    var progressCell = -1
-    var myProgress: Float = 0.0 {
-        didSet {
-            if progressCell >= 0 {
-                let cellIndexPath = IndexPath(item: progressCell, section: 0)
-                if let cell = myLogCollectionView.cellForItem(at: cellIndexPath) as? MyCollectionViewUploadCell {
-                    cell.spaceProgressView.progress = myProgress
-                }
-            }
-//            spaceProgressView.progress = myProgress
-        }
-    }
-    
-//    let tokenTextField: UITextField = {
-//        let mt = UITextField()
-//        mt.translatesAutoresizingMaskIntoConstraints = false
-//        mt.placeholder = "write your token..."
-//        mt.layer.cornerRadius = 4
-//        mt.autocapitalizationType = UITextAutocapitalizationType.none
-//        mt.autocorrectionType = UITextAutocorrectionType.no
-//        mt.backgroundColor = UIColor(white: 0.8, alpha: 1)
-//        return mt
-//    }()
-//
-//    let setTokenAndConnectChatButton: UIButton = {
-//        let mb = UIButton()
-//        mb.translatesAutoresizingMaskIntoConstraints = false
-//        mb.setTitle("Connect", for: UIControl.State.normal)
-//        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
-//        mb.layer.cornerRadius = 5
-//        mb.layer.borderWidth = 2
-//        mb.layer.borderColor = UIColor.clear.cgColor
-//        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
-//        mb.layer.shadowOpacity = 1
-//        mb.layer.shadowRadius = 1
-//        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
-//        mb.addTarget(self, action: #selector(connectChat), for: UIControl.Event.touchUpInside)
-//        return mb
-//    }()
-    
-    let input1TextField: UITextField = {
-        let mt = UITextField()
-        mt.translatesAutoresizingMaskIntoConstraints = false
-        mt.placeholder = "Input 1"
-        mt.textAlignment = .center
-        mt.layer.cornerRadius = 5
-        mt.layer.borderWidth = 1
-        mt.layer.borderColor = UIColor.gray.cgColor
-        mt.autocapitalizationType = UITextAutocapitalizationType.none
-        mt.autocorrectionType = UITextAutocorrectionType.no
-        mt.backgroundColor = UIColor.init().hexToRGB(hex: "#dfe6e9", alpha: 1)
-        return mt
+    let input1TextField = MZInputTextField()
+    let input2TextField = MZInputTextField()
+    let input3TextField = MZInputTextField()
+    let input4TextField = MZInputTextField()
+    let input5TextField = MZInputTextField()
+    let input6TextField = MZInputTextField()
+    let input7TextField = MZInputTextField()
+    let input8TextField = MZInputTextField()
+    let pickerView = MZPickerView()
+    let logView = MZLogView()
+    let myLogCollectionView = MZCollectionView()
+    let runButton: MZRunButton = {
+        let bt = MZRunButton()
+        bt.addTarget(self, action: #selector(fireRequest), for: UIControl.Event.touchUpInside)
+        return bt
     }()
-    
-    let input2TextField: UITextField = {
-        let mt = UITextField()
-        mt.translatesAutoresizingMaskIntoConstraints = false
-        mt.placeholder = "Input 2"
-        mt.textAlignment = .center
-        mt.layer.cornerRadius = 5
-        mt.layer.borderWidth = 1
-        mt.layer.borderColor = UIColor.gray.cgColor
-        mt.autocapitalizationType = UITextAutocapitalizationType.none
-        mt.autocorrectionType = UITextAutocorrectionType.no
-        mt.backgroundColor = UIColor.init().hexToRGB(hex: "#dfe6e9", alpha: 1)
-        return mt
-    }()
-    
-    let input3TextField: UITextField = {
-        let mt = UITextField()
-        mt.translatesAutoresizingMaskIntoConstraints = false
-        mt.placeholder = "Input 3"
-        mt.textAlignment = .center
-        mt.layer.cornerRadius = 5
-        mt.layer.borderWidth = 1
-        mt.layer.borderColor = UIColor.gray.cgColor
-        mt.autocapitalizationType = UITextAutocapitalizationType.none
-        mt.autocorrectionType = UITextAutocorrectionType.no
-        mt.backgroundColor = UIColor.init().hexToRGB(hex: "#dfe6e9", alpha: 1)
-        return mt
-    }()
-    
-    let input4TextField: UITextField = {
-        let mt = UITextField()
-        mt.translatesAutoresizingMaskIntoConstraints = false
-        mt.placeholder = "Input 4"
-        mt.textAlignment = .center
-        mt.layer.cornerRadius = 5
-        mt.layer.borderWidth = 1
-        mt.layer.borderColor = UIColor.gray.cgColor
-        mt.autocapitalizationType = UITextAutocapitalizationType.none
-        mt.autocorrectionType = UITextAutocorrectionType.no
-        mt.backgroundColor = UIColor.init().hexToRGB(hex: "#dfe6e9", alpha: 1)
-        return mt
-    }()
-    
-    let pickerView: UIPickerView = {
-        let pv = UIPickerView()
-        pv.translatesAutoresizingMaskIntoConstraints = false
-//        pv.backgroundColor = UIColor(white: 0.9, alpha: 0.8)
-        pv.backgroundColor = UIColor.init().hexToRGB(hex: "#b2bec3", alpha: 1)
-        pv.layer.cornerRadius = 2
-        return pv
-    }()
-    
-    var theAlert = UIAlertController(title: "پارامترهای خواسته شده را به ترتیب وارد کنید", message: "\n socketAddress, \n serverName, \n ssoHost, \n platformHost, \n fileServer, \n token", preferredStyle: .alert)
     var activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.whiteLarge)
-    
-    let runButton: UIButton = {
-        let mb = UIButton()
-        mb.translatesAutoresizingMaskIntoConstraints = false
-        mb.setTitle("Run", for: UIControl.State.normal)
-        mb.backgroundColor = UIColor.init().hexToRGB(hex: "#0984e3", alpha: 1)
-        mb.layer.cornerRadius = 2
-        mb.layer.borderWidth = 2
-        mb.layer.borderColor = UIColor.clear.cgColor
-        mb.layer.shadowColor = UIColor.init().hexToRGB(hex: "#74b9ff", alpha: 1).cgColor
-        mb.layer.shadowOpacity = 1
-        mb.layer.shadowRadius = 1
-        mb.layer.shadowOffset = CGSize(width: 0, height: 2)
-        mb.addTarget(self, action: #selector(fireRequest), for: UIControl.Event.touchUpInside)
-        return mb
-    }()
-    
-    let logView: UIView = {
-        let mv = UIView()
-        mv.translatesAutoresizingMaskIntoConstraints = false
-        mv.backgroundColor = UIColor.init().hexToRGB(hex: "#b2bec3", alpha: 1)
-        mv.layer.cornerRadius = 5
-        mv.layer.borderWidth = 2
-        mv.layer.borderColor = UIColor.clear.cgColor
-        mv.layer.shadowColor = UIColor.darkGray.cgColor
-        mv.layer.shadowOpacity = 2
-        mv.layer.shadowRadius = 1
-        return mv
-    }()
-    
-    let myLogCollectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let mcv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        mcv.translatesAutoresizingMaskIntoConstraints = false
-        mcv.backgroundColor = UIColor.clear
-        return mcv
-    }()
-    
-    var section = 0
-    var picker = 0
-    
     let pickerController = UIImagePickerController()
+    var theAlert = UIAlertController(title: "پارامترهای خواسته شده را به ترتیب وارد کنید", message: "\n socketAddress, \n serverName, \n ssoHost, \n platformHost, \n fileServer, \n token", preferredStyle: .alert)
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let fireButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.play, target: self, action: #selector(fireRequest))
-//        navigationItem.leftBarButtonItem = fireButton
-        
-//        updateText(cellText: " Input 1 = contactId as Int \n Input 2 = threadId as Int \n Input 3 = userId as Int", cellHeight: 60, cellColor: UIColor.white)
-        
         navigationItem.title = "Choose  ->  fill parameters  ->  Run"
-        
         showAlert()
-        
         setupViews()
     }
     
@@ -399,28 +293,30 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 //        setTokenAndConnectChatButton.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 0.4).cgColor
         
         // create Chat object
-        myChatObject = Chat(socketAddress:          socketAddress,
-                            ssoHost:                ssoHost,
-                            platformHost:           platformHost,
-                            fileServer:             fileServer,
-                            serverName:             serverName,
-                            token:                  token,
-                            mapApiKey:              nil,
-                            mapServer:              "https://api.neshan.org/v1",
-                            typeCode:               "default",
-                            enableCache:            false,
-                            cacheTimeStampInSec:    nil,
-                            msgPriority:            1,
-                            msgTTL:                 messageTtl,
-                            httpRequestTimeout:     nil,
-                            actualTimingLog:        nil,
-                            wsConnectionWaitTime:   Double(wsConnectionWaitTime),
-                            connectionRetryInterval: connectionRetryInterval,
-                            connectionCheckTimeout: connectionCheckTimeout,
-                            messageTtl:             messageTtl,
-                            reconnectOnClose:       true)
         
-        myChatObject?.delegate = self
+        Chat.sharedInstance.createChatObject(socketAddress:          socketAddress,
+                                            ssoHost:                ssoHost,
+                                            platformHost:           platformHost,
+                                            fileServer:             fileServer,
+                                            serverName:             serverName,
+                                            token:                  token,
+                                            mapApiKey:              nil,
+                                            mapServer:              "https://api.neshan.org/v1",
+                                            typeCode:               "default",
+                                            enableCache:            false,
+                                            cacheTimeStampInSec:    nil,
+                                            msgPriority:            1,
+                                            msgTTL:                 messageTtl,
+                                            httpRequestTimeout:     nil,
+                                            actualTimingLog:        nil,
+                                            wsConnectionWaitTime:   Double(wsConnectionWaitTime),
+                                            connectionRetryInterval: connectionRetryInterval,
+                                            connectionCheckTimeout: connectionCheckTimeout,
+                                            messageTtl:             messageTtl,
+                                            reconnectOnClose:       true)
+        
+        Chat.sharedInstance.delegate = self
+        
         
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
@@ -428,25 +324,29 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         self.activityIndicator.startAnimating()
         
+        Chat.sharedInstance.deleteCache()
     }
     
     
     @objc func cancelUpload() {
         updateText(cellText: "user tries to Cancel Upload/Download!", cellHeight: 40, cellColor: .gray)
         if uploadImageUniqueId != "" {
-            myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
+            Chat.sharedInstance.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
+//            myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
                 self.logBackgroundColor.append(UIColor.gray)
                 self.logHeightArr.append(40)
                 self.addtext(text: message)
             })
         } else if uploadFileUniqueId != "" {
-            myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
+            Chat.sharedInstance.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
+//            myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
                 self.logBackgroundColor.append(UIColor.gray)
                 self.logHeightArr.append(40)
                 self.addtext(text: message)
             })
         } else if downloadFileUniqueId != "" {
-            myChatObject?.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
+            Chat.sharedInstance.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
+//            myChatObject?.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
                 self.logBackgroundColor.append(UIColor.gray)
                 self.logHeightArr.append(40)
                 self.addtext(text: message)
@@ -464,19 +364,22 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                     cell.pauseUploadButton.setTitle("Resume", for: UIControl.State.normal)
                     updateText(cellText: "user tries to Pause the Upload/Download", cellHeight: 40, cellColor: .gray)
                     if uploadImageUniqueId != "" {
-                        myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
+                        Chat.sharedInstance.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
+//                        myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
                             self.logBackgroundColor.append(UIColor.gray)
                             self.logHeightArr.append(40)
                             self.addtext(text: message)
                         })
                     } else if uploadFileUniqueId != "" {
-                        myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
+                        Chat.sharedInstance.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
+//                        myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
                             self.logBackgroundColor.append(UIColor.gray)
                             self.logHeightArr.append(40)
                             self.addtext(text: message)
                         })
                     } else if downloadFileUniqueId != "" {
-                        myChatObject?.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
+                        Chat.sharedInstance.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
+//                        myChatObject?.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
                             self.logBackgroundColor.append(UIColor.gray)
                             self.logHeightArr.append(40)
                             self.addtext(text: message)
@@ -485,19 +388,22 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                 } else {
                     updateText(cellText: "user tries to Resume the Upload/Download", cellHeight: 40, cellColor: .gray)
                     if uploadImageUniqueId != "" {
-                        myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
+                        Chat.sharedInstance.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
+//                        myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
                             self.logBackgroundColor.append(UIColor.gray)
                             self.logHeightArr.append(40)
                             self.addtext(text: message)
                         })
                     } else if uploadFileUniqueId != "" {
-                        myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
+                        Chat.sharedInstance.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
+//                        myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
                             self.logBackgroundColor.append(UIColor.gray)
                             self.logHeightArr.append(40)
                             self.addtext(text: message)
                         })
                     } else if downloadFileUniqueId != "" {
-                        myChatObject?.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
+                        Chat.sharedInstance.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
+//                        myChatObject?.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
                             self.logBackgroundColor.append(UIColor.gray)
                             self.logHeightArr.append(40)
                             self.addtext(text: message)
@@ -632,24 +538,24 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         if (component == 0) {
             switch row {
             case 0:
-                setPlaceHolderText(Input1: "phoneNumber", Input2: "email", Input3: "firstName", Input4: "lastName")
-                updateText(cellText: " Input 1 = cellphoneNumber as String \n Input 2 = email as String \n Input 3 = firstName as String \n Input 4 = lastName as String", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "phoneNumber", Input2: "email", Input3: "firstName", Input4: "lastName", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " cellphoneNumber as String ,\t email as String ,\t firstName as String ,\t lastName as String", cellHeight: 70, cellColor: .white)
                 
             case 1:
-                setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = threadId as Int, Input 2 = userId as Int", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " threadId as Int ,\t userId as Int", cellHeight: 35, cellColor: .white)
                 
             case 2:
-                setPlaceHolderText(Input1: "subjectId", Input2: "", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = subjectId as Int", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "subjectId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " subjectId as Int", cellHeight: 35, cellColor: .white)
                 
             case 3:
-                setPlaceHolderText(Input1: "lat", Input2: "lon", Input3: "threadId", Input4: "message")
-                updateText(cellText: "Input 1 = lat as Double \n Input 2 = lon as Double \n Input 3 = threadId as Int \n Input 4 = message text as String", cellHeight: 50, cellColor: .white)
+                setPlaceHolderText(Input1: "lat", Input2: "lon", Input3: "threadId", Input4: "message", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " lat as Double ,\t  lon as Double ,\t threadId as Int ,\t message text as String", cellHeight: 50, cellColor: .white)
                 
             case 4:
-                setPlaceHolderText(Input1: "fileName", Input2: "message", Input3: "repliedTo", Input4: "threadId")
-                updateText(cellText: "Input 1 = fileName as String \n Input 2 = message text as String \n Input 3 = repliedTo as Int \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "fileName", Input2: "message", Input3: "repliedTo", Input4: "threadId", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " fileName as String \t message text as String \t repliedTo as Int \t threadId as Int", cellHeight: 70, cellColor: .white)
                 
             default:
                 print("Selected row number \(row) that is not in the correct range!")
@@ -663,157 +569,161 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             switch (section, row) {
             // Contact Managements
             case (0, 0):
-                setPlaceHolderText(Input1: "phoneNumber", Input2: "email", Input3: "firstName", Input4: "lastName")
-                updateText(cellText: " Input 1 = cellphoneNumber as String \n Input 2 = email as String \n Input 3 = firstName as String \n Input 4 = lastName as String", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "phoneNumber", Input2: "email", Input3: "firstName", Input4: "lastName", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " cellphoneNumber as String ,\t email as String ,\t firstName as String ,\t lastName as String", cellHeight: 70, cellColor: .white)
                 
             case (0, 1):
-                setPlaceHolderText(Input1: "contactId", Input2: "threadId", Input3: "userId", Input4: "")
-                updateText(cellText: " Input 1 = contactId as Int \n Input 2 = threadId as Int \n Input 3 = userId as Int", cellHeight: 60, cellColor: .white)
+                setPlaceHolderText(Input1: "contactId", Input2: "threadId", Input3: "userId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " contactId as Int ,\t threadId as Int ,\t userId as Int", cellHeight: 60, cellColor: .white)
                 
             case (0, 2):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int", cellHeight: 50, cellColor: .white)
+                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " count as Int ,\t offset as Int", cellHeight: 50, cellColor: .white)
                 
             case (0, 3):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "")
-                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String", cellHeight: 60, cellColor: .white)
+                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " count as Int ,\t offset as Int ,\t name as String", cellHeight: 60, cellColor: .white)
                 
             case (0, 4):
-                setPlaceHolderText(Input1: "id", Input2: "", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = id as Int", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "id", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " id as Int", cellHeight: 35, cellColor: .white)
                 
             case (0, 5):
-                setPlaceHolderText(Input1: "PhoneNumner", Input2: "firstName", Input3: "lastName", Input4: "id")
-                updateText(cellText: " Input 1 = cellPhoneNumner as String \n Input 2 = firstName as String \n Input 3 = lastName as String \n Input 4 = id as Int", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "PhoneNumner", Input2: "firstName", Input3: "lastName", Input4: "id", Input5: "email", Input6: "offset", Input7: "count", Input8: "")
+//                updateText(cellText: " cellPhoneNumner as String ,\t firstName as String ,\t lastName as String ,\t id as Int", cellHeight: 70, cellColor: .white)
                 
             case (0, 6):
-                setPlaceHolderText(Input1: "blockId", Input2: "contactId", Input3: "threadId", Input4: "userId")
-                updateText(cellText: " Input 1 = blockId as String \n Input 2 = contactId as String \n Input 3 = threadId as String \n Input 4 = userId as String", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "blockId", Input2: "contactId", Input3: "threadId", Input4: "userId", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " blockId as String ,\t contactId as String ,\t threadId as String ,\t userId as String", cellHeight: 70, cellColor: .white)
                 
             case (0, 7):
-                setPlaceHolderText(Input1: "contactId", Input2: "phoneNumber", Input3: "email", Input4: "fullname")
-                updateText(cellText: " Input 1 = contactId as Int \n Input 2 = cellphoneNumber as String \n Input 3 = email as String \n Input 4 = fullname (contain firstname and lastname seperated by cama ',') as String", cellHeight: 90, cellColor: .white)
+                setPlaceHolderText(Input1: "contactId", Input2: "phoneNumber", Input3: "email", Input4: "firstname", Input5: "lastName", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " contactId as Int ,\t cellphoneNumber as String ,\t email as String ,\t firstName as String ,/t lastName as String", cellHeight: 90, cellColor: .white)
             
             
             // Thread Managements
             case (1, 0):
-                setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = threadId as Int, Input 2 = userId as Int", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " threadId as Int ,/t userId as Int", cellHeight: 35, cellColor: .white)
                 
             case (1, 1):
-                setPlaceHolderText(Input1: "threadId", Input2: "ContactId", Input3: "ContactId", Input4: "ContactId")
-                updateText(cellText: " Input 1 = threadId as Int \n Input 2 = ContactId1 as Int \n Input 3 = ContactId2 as Int \n Input 4 = ContactId3 as Int", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "threadId", Input2: "ContactId", Input3: "ContactId", Input4: "ContactId", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " threadId as Int ,\t ContactId1 as Int ,\t ContactId2 as Int ,\t ContactId3 as Int", cellHeight: 70, cellColor: .white)
                 
             case (1, 2):
-                setPlaceHolderText(Input1: "threadId", Input2: "", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = threadId as Int", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "threadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " threadId as Int", cellHeight: 35, cellColor: .white)
                 
             case (1, 3):
-                setPlaceHolderText(Input1: "description", Input2: "title", Input3: "inviteeId", Input4: "inviteeType")
-                updateText(cellText: " Input 1 = description as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "description", Input2: "title", Input3: "inviteeId", Input4: "inviteeType", Input5: "image", Input6: "metadata", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = description as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: .white)
+                updateText(cellText: "inviteeType: \n 0 = TO_BE_USER_ID \n 1 = TO_BE_USER_SSO_ID \n 2 = TO_BE_USER_CONTACT_ID \n 3 = TO_BE_USER_CELLPHONE_NUMBER \n 4 = TO_BE_USER_USERNAME", cellHeight: 70, cellColor: .white)
                 
             case (1, 4):
-                setPlaceHolderText(Input1: "message", Input2: "title", Input3: "inviteeId", Input4: "inviteeType")
-                updateText(cellText: " Input 1 = message text as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "message", Input2: "title", Input3: "inviteeId", Input4: "inviteeType", Input5: "description", Input6: "image", Input7: "metadata", Input8: "")
+//                updateText(cellText: " Input 1 = message text as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: .white)
+                updateText(cellText: "inviteeType: \n 0 = TO_BE_USER_ID \n 1 = TO_BE_USER_SSO_ID \n 2 = TO_BE_USER_CONTACT_ID \n 3 = TO_BE_USER_CELLPHONE_NUMBER \n 4 = TO_BE_USER_USERNAME", cellHeight: 70, cellColor: .white)
                 
             case (1, 5):
-                setPlaceHolderText(Input1: "threadId", Input2: "", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = threadId as Int", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "firstMessageId", Input6: "lastMessageId", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = threadId as Int", cellHeight: 35, cellColor: .white)
                 
             case (1, 6):
-                setPlaceHolderText(Input1: "threadId", Input2: "fromTime", Input3: "toTime", Input4: "query")
-                updateText(cellText: " Input 1 = threadId as Int \n Input 2 = fromTime as UInt \n Input 3 = toTime as UInt \n Input 4 = query as String", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "threadId", Input2: "fromTime", Input3: "toTime", Input4: "query", Input5: "count", Input6: "offset", Input7: "firstMessageId", Input8: "lastMessageId")
+//                updateText(cellText: " Input 1 = threadId as Int \n Input 2 = fromTime as UInt \n Input 3 = toTime as UInt \n Input 4 = query as String", cellHeight: 70, cellColor: .white)
                 
             case (1, 7):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId")
-                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "coreUserId", Input6: "new", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
+                updateText(cellText: "new: \n true or false", cellHeight: 35, cellColor: .white)
                 
             case (1, 8):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId")
-                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "firstMessageId", Input6: "lastMessageId", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
                 
             case (1, 9):
-                setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
                 
             case (1, 10):
-                setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
                 
             case (1, 11):
-                setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
                 
             case (1, 12):
-                setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = threadId as Int, Input 2 = userId as Int", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = threadId as Int, Input 2 = userId as Int", cellHeight: 35, cellColor: .white)
                 
             case (1, 13):
-                setPlaceHolderText(Input1: "ThreadId", Input2: "participant", Input3: "participant", Input4: "participant")
-                updateText(cellText: " Input 1 = ThreadId \n Input 2 = participant as Int \n Input 3 = participant as Int \n Input 4 = participant as Int", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "ThreadId", Input2: "participant", Input3: "participant", Input4: "participant", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = ThreadId \n Input 2 = participant as Int \n Input 3 = participant as Int \n Input 4 = participant as Int", cellHeight: 70, cellColor: .white)
                 
             case (1, 14):
-                setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
                 
                 
                 
             // Message Managements
             case (2, 0):
-                setPlaceHolderText(Input1: "subjectId", Input2: "", Input3: "", Input4: "")
-                updateText(cellText: " Input 1 = subjectId as Int", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "subjectId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = subjectId as Int", cellHeight: 35, cellColor: .white)
                 
             case (2, 1):
-                setPlaceHolderText(Input1: "subjectId", Input2: "subjectId", Input3: "subjectId", Input4: "subjectId")
-                updateText(cellText: " Input 1 = subjectId as Int, Input 2 = subjectId as Int, Input 3 = subjectId as Int, Input 4 = subjectId as Int", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "threadId", Input2: "subjectId", Input3: "subjectId", Input4: "subjectId", Input5: "deleteForAll", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = subjectId as Int,\n Input 2 = subjectId as Int,\n Input 3 = subjectId as Int,\n Input 4 = subjectId as Int", cellHeight: 70, cellColor: .white)
+                updateText(cellText: "deleteForAll: \n true or false", cellHeight: 35, cellColor: .white)
                 
             case (2, 2):
-                setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "subjectId", Input4: "")
-                updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 60, cellColor: .white)
+                setPlaceHolderText(Input1: "content", Input2: "messageId", Input3: "repliedTo", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 60, cellColor: .white)
                 
             case (2, 3):
-                setPlaceHolderText(Input1: "messageIds", Input2: "repliedTo", Input3: "subjectId", Input4: "")
-                updateText(cellText: " Input 1 = messageIds as [Int] \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 60, cellColor: .white)
+                setPlaceHolderText(Input1: "messageIds", Input2: "repliedTo", Input3: "subjectId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = messageIds as [Int] \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 60, cellColor: .white)
                 
             case (2, 4):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "")
-                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = messageId as Int", cellHeight: 60, cellColor: .white)
+                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = messageId as Int", cellHeight: 60, cellColor: .white)
                 
             case (2, 5):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "")
-                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = messageId as Int", cellHeight: 60, cellColor: .white)
+                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = messageId as Int", cellHeight: 60, cellColor: .white)
                 
             case (2, 6):
-                setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "subjectId", Input4: "")
-                updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 60, cellColor: .white)
+                setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "subjectId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 60, cellColor: .white)
                 
             case (2, 7):
-                setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "threadId", Input4: "")
-                updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 60, cellColor: .white)
+                setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "threadId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 60, cellColor: .white)
               
                 
             // Location Managements
             case (3, 0):
-                setPlaceHolderText(Input1: "lat", Input2: "lon", Input3: "threadId", Input4: "message")
-                updateText(cellText: " Input 1 = lat as Double \n Input 2 = lon as Double \n Input 3 = threadId as Int \n Input 4 = message text as String", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "lat", Input2: "lon", Input3: "threadId", Input4: "message", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: " Input 1 = lat as Double \n Input 2 = lon as Double \n Input 3 = threadId as Int \n Input 4 = message text as String", cellHeight: 70, cellColor: .white)
                 
             
             // File Managements
             case (4, 0):
-                setPlaceHolderText(Input1: "fileName", Input2: "message", Input3: "repliedTo", Input4: "threadId")
-                updateText(cellText: "Input 1 = fileName as String \n Input 2 = message text as String \n Input 3 = repliedTo as Int \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
+                setPlaceHolderText(Input1: "fileName", Input2: "message", Input3: "repliedTo", Input4: "threadId", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: "Input 1 = fileName as String \n Input 2 = message text as String \n Input 3 = repliedTo as Int \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
                 
             case (4, 1):
-                setPlaceHolderText(Input1: "fileName", Input2: "message", Input3: "threadId", Input4: "")
-                updateText(cellText: "Input 1 = fileName as String \n Input 2 = message text as String \n Input 3 = threadId as Int", cellHeight: 60, cellColor: .white)
+                setPlaceHolderText(Input1: "fileName", Input2: "message", Input3: "threadId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: "Input 1 = fileName as String \n Input 2 = message text as String \n Input 3 = threadId as Int", cellHeight: 60, cellColor: .white)
                 
             case (4, 2):
-                setPlaceHolderText(Input1: "fileName", Input2: "", Input3: "", Input4: "")
-                updateText(cellText: "Input 1 = fileName", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "fileName", Input2: "threadId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: "Input 1 = fileName", cellHeight: 35, cellColor: .white)
                 
             case (4, 3):
-                setPlaceHolderText(Input1: "imageName", Input2: "", Input3: "", Input4: "")
-                updateText(cellText: "Input 1 = imageName", cellHeight: 35, cellColor: .white)
+                setPlaceHolderText(Input1: "imageName", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+//                updateText(cellText: "Input 1 = imageName", cellHeight: 35, cellColor: .white)
                 
                 
             default:
@@ -824,11 +734,15 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         
     }
     
-    func setPlaceHolderText(Input1: String, Input2: String, Input3: String, Input4: String) {
+    func setPlaceHolderText(Input1: String, Input2: String, Input3: String, Input4: String, Input5: String, Input6: String, Input7: String, Input8: String) {
         input1TextField.placeholder = Input1
         input2TextField.placeholder = Input2
         input3TextField.placeholder = Input3
         input4TextField.placeholder = Input4
+        input5TextField.placeholder = Input5
+        input6TextField.placeholder = Input6
+        input7TextField.placeholder = Input7
+        input8TextField.placeholder = Input8
     }
     
     func updateText(cellText: String, cellHeight: Int, cellColor: UIColor) {
@@ -987,13 +901,13 @@ extension MyChatViewController {
     func implementGetContacts() {
         let count:  Int?    = Int(input1TextField.text ?? "")
         let offst:  Int?    = Int(input2TextField.text ?? "")
-        var name:   String? = nil
+        var query:  String? = nil
         
         if let txt = input3TextField.text {
-            if (txt != "") && (txt.first != " ") { name = txt }
+            if (txt != "") && (txt.first != " ") { query = txt }
         }
         
-        let getContact = GetContactsAutomation(count: count, name: name, offset: offst, typeCode: nil)
+        let getContact = GetContactsAutomation(count: count, offset: offst, query: query, typeCode: nil)
         getContact.delegate = self
         getContact.create(uniqueId: { (getContactUniqueId) in
             let myText = "getContact uniqueId = \(getContactUniqueId)"
@@ -1029,26 +943,33 @@ extension MyChatViewController {
         var cellPhone:  String? = nil
         var firstName:  String? = nil
         var lastName:   String? = nil
-        let id: Int?    = Int(input4TextField.text ?? "")
+        var email:      String? = nil
+        let id:     Int?    = Int(input4TextField.text ?? "")
+        let offset: Int?    = Int(input6TextField.text ?? "")
+        let count:  Int?    = Int(input7TextField.text ?? "")
         
         if let cell = input1TextField.text {
-            cellPhone = cell
+            if (cell != "") { cellPhone = cell }
         }
         if let first = input2TextField.text {
-            firstName = first
+            if (first != "") { firstName = first }
         }
         if let last = input3TextField.text {
-            lastName = last
+            if (last != "") { lastName = last }
+        }
+        if let em = input5TextField.text {
+            if (em != "") { email = em }
         }
         
         let searchContact = SearchContactAutomation(cellphoneNumber: cellPhone,
-                                                    email: nil,
-                                                    firstName: firstName,
-                                                    id: id,
-                                                    lastName: lastName,
-                                                    offset: nil,
-                                                    size: nil,
+                                                    email:          email,
+                                                    firstName:      firstName,
+                                                    id:             id,
+                                                    lastName:       lastName,
+                                                    offset:         offset,
+                                                    size:           count,
                                                     requestUniqueId: nil)
+        
         searchContact.delegate = self
         searchContact.create(uniqueId: { (searchContactUniqueId) in
             let myText = "searchContact uniqueId = \(searchContactUniqueId)"
@@ -1087,6 +1008,8 @@ extension MyChatViewController {
         let contactId:          Int?    = Int(input1TextField.text ?? "")
         var cellPhoneNumber:    String? = nil
         var email:              String? = nil
+        var firstName:          String? = nil
+        var lastName:           String? = nil
         
         if let txt = input2TextField.text {
             if (txt != "") && (txt.first != " ") { cellPhoneNumber = txt }
@@ -1094,22 +1017,25 @@ extension MyChatViewController {
         if let txt = input3TextField.text {
             if (txt != "") && (txt.first != " ") { email = txt }
         }
-        
-        var firstName: String?  = nil
-        var lastName: String?   = nil
-        
-        if let fullName = input4TextField.text {
-            if (fullName != "") && (fullName.first != " ") {
-                let str = fullName.replacingOccurrences(of: " ", with: "") // remove all spaces
-                let fullnameArr = str.components(separatedBy: ",")            // seperate ids
-                if let fn = fullnameArr.first {
-                    firstName = fn
-                }
-                if let ln = fullnameArr.last {
-                    lastName = ln
-                }
-            }
+        if let fn = input4TextField.text {
+            firstName = fn
         }
+        if let ln = input5TextField.text {
+            lastName = ln
+        }
+        
+//        if let fullName = input4TextField.text {
+//            if (fullName != "") && (fullName.first != " ") {
+//                let str = fullName.replacingOccurrences(of: " ", with: "") // remove all spaces
+//                let fullnameArr = str.components(separatedBy: ",")            // seperate ids
+//                if let fn = fullnameArr.first {
+//                    firstName = fn
+//                }
+//                if let ln = fullnameArr.last {
+//                    lastName = ln
+//                }
+//            }
+//        }
         
         let updateContact = UpdateContactAutomation(cellphoneNumber: cellPhoneNumber, email: email, firstName: firstName, id: contactId, lastName: lastName)
         updateContact.delegate = self
@@ -1135,10 +1061,10 @@ extension MyChatViewController {
             let myText = "addAdmin uniqueId = \(addAdminUniqueId)"
             self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverResponse: { (addAdminModelServerResponse) in
-            let myText = "add admin model response = \(addAdminModelServerResponse)"
+            let myText = "add admin model response = \(addAdminModelServerResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (addAdminModelCacheResponse) in
-            let myText = "add admin model response = \(addAdminModelCacheResponse)"
+            let myText = "add admin model response = \(addAdminModelCacheResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#55efc4", alpha: 1))
         }
         
@@ -1185,12 +1111,9 @@ extension MyChatViewController {
         clearHistory.create(uniqueId: { (clearHistoryUniqueId) in
             let myText = "clearHistory uniqueId = \(clearHistoryUniqueId)"
             self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
-        }, serverResponse: { (clearHistoryServerResponse) in
-            let myText = "clear history server model response = \(clearHistoryServerResponse)"
+        }) { (clearHistoryServerResponse) in
+            let myText = "clear history server model response = \(clearHistoryServerResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 140, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
-        }) { (clearHistoryCacheResponse) in
-            let myText = "clear history cache model response = \(clearHistoryCacheResponse)"
-            self.updateText(cellText: myText, cellHeight: 140, cellColor: UIColor.init().hexToRGB(hex: "#55efc4", alpha: 1))
         }
     }
     
@@ -1199,7 +1122,9 @@ extension MyChatViewController {
         var description:    String? = nil
         var title:          String? = nil
         var inviteeId:      String? = nil
-        let inviteeType:    Int? = Int(input4TextField.text ?? "")
+        let inviteeType:    Int?    = Int(input4TextField.text ?? "")
+        var image:          String? = nil
+        var metadata:       String? = nil
         
         if let txt = input1TextField.text {
             if (txt != "") && (txt.first != " ") { description = txt }
@@ -1227,10 +1152,21 @@ extension MyChatViewController {
             default:
                 invitees = [Invitee(id: id, idType: "0")]
             }
-            
+        }
+        if let txt = input5TextField.text {
+            if (txt != "") && (txt.first != " ") { image = txt }
+        }
+        if let txt = input6TextField.text {
+            if (txt != "") && (txt.first != " ") { metadata = txt }
         }
         
-        let createThread = CreateThreadAutomation(description: description, image: nil, invitees: invitees, metadata: nil, title: title, type: ThreadTypes.PUBLIC_GROUP.rawValue, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description:      description,
+                                                  image:            image,
+                                                  invitees:         invitees,
+                                                  metadata:         metadata,
+                                                  title:            title,
+                                                  type:             ThreadTypes.NORMAL,
+                                                  requestUniqueId:  nil)
         createThread.delegate = self
         createThread.create(uniqueId: { (createThreadUniqueId, on) in
             let myText = "createThread uniqueId \(on) = \(createThreadUniqueId)"
@@ -1247,6 +1183,9 @@ extension MyChatViewController {
         var title:          String? = nil
         var inviteeId:      String? = nil
         let inviteeType:    Int? = Int(input4TextField.text ?? "")
+        var description:    String? = nil
+        var image:          String? = nil
+        var metadata:       String? = nil
         
         if let txt = input1TextField.text {
             if (txt != "") && (txt.first != " ") { textMessage = txt }
@@ -1274,14 +1213,22 @@ extension MyChatViewController {
             default:
                 invitees = [Invitee(id: id, idType: "0")]
             }
-            
+        }
+        if let txt = input5TextField.text {
+            if (txt != "") && (txt.first != " ") { description = txt }
+        }
+        if let txt = input6TextField.text {
+            if (txt != "") && (txt.first != " ") { image = txt }
+        }
+        if let txt = input7TextField.text {
+            if (txt != "") && (txt.first != " ") { metadata = txt }
         }
         
-        let createThtradWithMessage = CreateThreadWithMessageAutomation(description:    nil,
-                                                                        image:          nil,
+        let createThtradWithMessage = CreateThreadWithMessageAutomation(description:    description,
+                                                                        image:          image,
                                                                         invitees:       invitees,
                                                                         messageText:    textMessage,
-                                                                        metadata:       nil,
+                                                                        metadata:       metadata,
                                                                         title:          title,
                                                                         type:           nil,
                                                                         requestUniqueId: nil)
@@ -1293,13 +1240,13 @@ extension MyChatViewController {
             let myText = "create thread model response) = \(createThreadModel.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 140, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverSentResponse: { (sent) in
-            let myText = "sendTextMessage sent response = \(sent)"
+            let myText = "sendTextMessage sent response = \(sent.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverDeliverResponse: { (deliver) in
-            let myText = "sendTextMessage deliver response = \(deliver)"
+            let myText = "sendTextMessage deliver response = \(deliver.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (seen) in
-            let myText = "sendTextMessage seen response = \(seen)"
+            let myText = "sendTextMessage seen response = \(seen.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }
         
@@ -1307,34 +1254,65 @@ extension MyChatViewController {
     
     // (1, 5)
     func implementGetAdminList() {
-        let threadId:   Int?    = Int(input1TextField.text ?? "")
+        let count:          Int?    = Int(input1TextField.text ?? "")
+        let offset:         Int?    = Int(input2TextField.text ?? "")
+        var name:           String? = nil
+        let threadId:       Int?    = Int(input4TextField.text ?? "")
+        let firstMessageId: Int?    = Int(input5TextField.text ?? "")
+        let lastMessageId:  Int?    = Int(input6TextField.text ?? "")
         
-        let getAdmins = GetAdminAutomation(threadId: threadId, requestUniqueId: nil)
-        getAdmins.delegate = self
-        getAdmins.create(uniqueId: { (getAdminUniqueId) in
-            let myText = "getAdmins uniqueId = \(getAdminUniqueId)"
+        if let txt = input3TextField.text {
+            if (txt != "") && (txt.first != " ") { name = txt }
+        }
+        
+        let getThreadParticipant = GetAdminAutomation(count:            count,
+                                                      firstMessageId:   firstMessageId,
+                                                      lastMessageId:    lastMessageId,
+                                                      name:             name,
+                                                      offset:           offset,
+                                                      threadId:         threadId,
+                                                      typeCode:         nil)
+        getThreadParticipant.delegate = self
+        getThreadParticipant.create(uniqueId: { (getThreadParticipantUniqueId) in
+            let myText = "getThreadParticipant uniqueId = \(getThreadParticipantUniqueId)"
             self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
-        }, serverResponse: { (getAdminServerModel) in
-            let myText = "get admin model server response = \(getAdminServerModel)"
+        }, serverResponse: { (getThreadParticipantsModel) in
+            let myText = "get thread participant model server response = \(getThreadParticipantsModel.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 140, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
-        }) { (getAdminCacheModel) in
-            let myText = "get admin model cache response = \(getAdminCacheModel)"
+        }) { (getThreadParticipantsModel) in
+            let myText = "get thread participant model cache response = \(getThreadParticipantsModel.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 140, cellColor: UIColor.init().hexToRGB(hex: "#55efc4", alpha: 1))
         }
     }
     
     // (1, 6)
     func implementGetHistory() {
-        let threadId:   Int?    = Int(input1TextField.text ?? "")
-        let fromTime:   UInt?   = UInt(input2TextField.text ?? "")
-        let toTime:     UInt?   = UInt(input3TextField.text ?? "")
-        var query:      String? = nil
+        let threadId:       Int?    = Int(input1TextField.text ?? "")
+        let fromTime:       UInt?   = UInt(input2TextField.text ?? "")
+        let toTime:         UInt?   = UInt(input3TextField.text ?? "")
+        var query:          String? = nil
+        let count:          Int?    = Int(input5TextField.text ?? "")
+        let offset:         Int?    = Int(input6TextField.text ?? "")
+        let firstMessageId: Int?    = Int(input7TextField.text ?? "")
+        let lastMessageId:  Int?    = Int(input8TextField.text ?? "")
         
         if let txt = input4TextField.text {
             if (txt != "") && (txt.first != " ") { query = txt }
         }
         
-        let getHistory = GetHistoryAutomation(count: nil, firstMessageId: nil, fromTime: fromTime, lastMessageId: nil, messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: query, threadId: threadId, toTime: toTime, typeCode: nil, uniqueId: nil)
+        let getHistory = GetHistoryAutomation(count:            count,
+                                              firstMessageId:   firstMessageId,
+                                              fromTime:         fromTime,
+                                              lastMessageId:    lastMessageId,
+                                              messageId:        nil,
+                                              metadataCriteria: nil,
+                                              offset:           offset,
+                                              order:            nil,
+                                              query:            query,
+                                              threadId:         threadId,
+                                              toTime:           toTime,
+                                              typeCode:         nil,
+                                              uniqueId:         nil)
         getHistory.delegate = self
         getHistory.create(uniqueId: { (getHistoryUniqueId) in
             let myText = "getHistory uniqueId = \(getHistoryUniqueId)"
@@ -1354,12 +1332,26 @@ extension MyChatViewController {
         let offset:     Int?    = Int(input2TextField.text ?? "")
         var name:       String? = nil
         let threadId:   Int?    = Int(input4TextField.text ?? "")
+        let coreUserId: Int?    = Int(input5TextField.text ?? "")
+        var new:        Bool?   = nil
         
         if let txt = input3TextField.text {
             if (txt != "") && (txt.first != " ") { name = txt }
         }
+        if let txt = input6TextField.text {
+            if (txt != "") && (txt.first != " ") {
+                (txt == "true") ? (new = true) : (new = false)
+            }
+        }
         
-        let getThread = GetThreadAutomation(count: count, coreUserId: nil, metadataCriteria: nil, name: name, new: nil, offset: offset, threadIds: [threadId ?? 0], typeCode: nil)
+        let getThread = GetThreadAutomation(count:              count,
+                                            coreUserId:         coreUserId,
+                                            metadataCriteria:   nil,
+                                            name:               name,
+                                            new:                new,
+                                            offset:             offset,
+                                            threadIds:          [threadId ?? 0],
+                                            typeCode:           nil)
         getThread.delegate = self
         getThread.create(uniqueId: { (getThreadUniqueId) in
             let myText = "getThread uniqueId = \(getThreadUniqueId)"
@@ -1375,16 +1367,25 @@ extension MyChatViewController {
     
     // (1, 8)
     func implementGetThreadParticipants() {
-        let count:      Int?    = Int(input1TextField.text ?? "")
-        let offset:     Int?    = Int(input2TextField.text ?? "")
-        var name:       String? = nil
-        let threadId:   Int?    = Int(input4TextField.text ?? "")
+        let count:          Int?    = Int(input1TextField.text ?? "")
+        let offset:         Int?    = Int(input2TextField.text ?? "")
+        var name:           String? = nil
+        let threadId:       Int?    = Int(input4TextField.text ?? "")
+        let firstMessageId: Int?    = Int(input5TextField.text ?? "")
+        let lastMessageId:  Int?    = Int(input6TextField.text ?? "")
         
         if let txt = input3TextField.text {
             if (txt != "") && (txt.first != " ") { name = txt }
         }
         
-        let getThreadParticipant = GetThreadParticipantsAutomation(admin: false, count: count, firstMessageId: nil, lastMessageId: nil, name: name, offset: offset, threadId: threadId, typeCode: nil)
+        let getThreadParticipant = GetThreadParticipantsAutomation(admin:           false,
+                                                                   count:           count,
+                                                                   firstMessageId:  firstMessageId,
+                                                                   lastMessageId:   lastMessageId,
+                                                                   name:            name,
+                                                                   offset:          offset,
+                                                                   threadId:        threadId,
+                                                                   typeCode:        nil)
         getThreadParticipant.delegate = self
         getThreadParticipant.create(uniqueId: { (getThreadParticipantUniqueId) in
             let myText = "getThreadParticipant uniqueId = \(getThreadParticipantUniqueId)"
@@ -1454,10 +1455,10 @@ extension MyChatViewController {
             let myText = "remove Admin uniqueId = \(removeAdminUniqueId)"
             self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverResponse: { (removeAdminModelServerResponse) in
-            let myText = "remove admin model response = \(removeAdminModelServerResponse)"
+            let myText = "remove admin model response = \(removeAdminModelServerResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (removeAdminModelCacheResponse) in
-            let myText = "remove admin model response = \(removeAdminModelCacheResponse)"
+            let myText = "remove admin model response = \(removeAdminModelCacheResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#55efc4", alpha: 1))
         }
     }
@@ -1483,9 +1484,9 @@ extension MyChatViewController {
             }
         }
         
-        let removeParticipant = RemoveParticipantAutomation(content: myParticipants,
-                                                            threadId: threadId,
-                                                            typeCode: nil,
+        let removeParticipant = RemoveParticipantAutomation(content:        myParticipants,
+                                                            threadId:       threadId,
+                                                            typeCode:       nil,
                                                             requestUniqueId: nil)
         removeParticipant.delegate = self
         removeParticipant.create(uniqueId: { (removeParticipantUniqueId) in
@@ -1507,7 +1508,17 @@ extension MyChatViewController {
             let myText = "spamThread uniqueId = \(spamThreadUniqueId)"
             self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (spamThreadServerResponse) in
-            let myText = "spamThread response = \(spamThreadServerResponse)"
+            
+            var myText = "spamThread response: \n"
+            
+            if let leaveThreadResponse = spamThreadServerResponse as? ThreadModel {
+                myText += "leaveThreadResponse = \(leaveThreadResponse.returnDataAsJSON())"
+            } else if let blockThreadResponse = spamThreadServerResponse as? BlockedContactModel  {
+                myText += "blockThreadResponse = \(blockThreadResponse.returnDataAsJSON())"
+            } else if let clearHistoryResponse = spamThreadServerResponse as? ClearHistoryModel {
+                myText += "clearHistoryResponse = \(clearHistoryResponse.returnDataAsJSON())"
+            }
+            
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }
     }
@@ -1524,32 +1535,43 @@ extension MyChatViewController {
             let myText = "deleteMessage uniqueId = \(deleteMessageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (deleteMessageResponse) in
-            let myText = "deleteMessage response = \(deleteMessageResponse)"
+            let myText = "deleteMessage response = \(deleteMessageResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }
     }
     
     // (2, 1)
     func implementDeleteMultipleMessages() {
-        let subjectId1:  Int?   = Int(input1TextField.text ?? "")
-        let subjectId2:  Int?   = Int(input2TextField.text ?? "")
-        let subjectId3:  Int?   = Int(input3TextField.text ?? "")
-        let subjectId4:  Int?   = Int(input4TextField.text ?? "")
+        let threadId:       Int?    = Int(input1TextField.text ?? "")
+        let subjectId1:     Int?    = Int(input2TextField.text ?? "")
+        let subjectId2:     Int?    = Int(input3TextField.text ?? "")
+        let subjectId3:     Int?    = Int(input4TextField.text ?? "")
+        var deleteForAll:   Bool?   = nil
         
-        var subIds: [Int]?
+        if let txt = input5TextField.text {
+            if (txt != "") && (txt.first != " ") {
+                (txt == "true") ? (deleteForAll = true) : (deleteForAll = false)
+            }
+        }
         
-        if let _ = subjectId1 { subIds?.append(subjectId1!) }
-        if let _ = subjectId2 { subIds?.append(subjectId2!) }
-        if let _ = subjectId3 { subIds?.append(subjectId3!) }
-        if let _ = subjectId4 { subIds?.append(subjectId4!) }
+        var subIds = [Int]()
         
-        let deleteMessages = DeleteMultipleMessagesAutomation(deleteForAll: nil, subjectIds: subIds, typeCode: nil, requestUniqueIds: nil)
+//        if let _ = threadId   { subIds.append(threadId!) }
+        if let _ = subjectId1 { subIds.append(subjectId1!) }
+        if let _ = subjectId2 { subIds.append(subjectId2!) }
+        if let _ = subjectId3 { subIds.append(subjectId3!) }
+        
+        let deleteMessages = DeleteMultipleMessagesAutomation(deleteForAll:     deleteForAll,
+                                                              threadId:         threadId,
+                                                              messageIds:       subIds,
+                                                              typeCode:         nil,
+                                                              requestUniqueIds: nil)
         deleteMessages.delegate = self
         deleteMessages.create(uniqueId: { (deleteMultipleMessagesUniqueId) in
             let myText = "deleteMultipleMessage uniqueId = \(deleteMultipleMessagesUniqueId)"
             self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (deleteMessageResponse) in
-            let myText = "deleteMultipleMessage response = \(deleteMessageResponse)"
+            let myText = "deleteMultipleMessage response = \(deleteMessageResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }
         
@@ -1558,20 +1580,25 @@ extension MyChatViewController {
     // (2, 2)
     func implementEditMessage() {
         var content:    String? = nil
-        let subjectId:  Int?    = Int(input2TextField.text ?? "")
+        let messageId:  Int?    = Int(input2TextField.text ?? "")
         let repliedId:  Int?    = Int(input3TextField.text ?? "")
         
         if let txt = input1TextField.text {
             if (txt != "") && (txt.first != " ") { content = txt }
         }
         
-        let editMessage = EditMessageAutomation(content: content, metaData: nil, repliedTo: repliedId, subjectId: subjectId, typeCode: nil, requestUniqueId: nil)
+        let editMessage = EditMessageAutomation(content:        content,
+                                                metaData:       nil,
+                                                repliedTo:      repliedId,
+                                                messageId:      messageId,
+                                                typeCode:       nil,
+                                                requestUniqueId: nil)
         editMessage.delegate = self
         editMessage.create(uniqueId: { (editMessageUniqueId) in
             let myText = "editMessage uniqueId = \(editMessageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (editMessageResponse) in
-            let myText = "editMessage response = \(editMessageResponse)"
+            let myText = "editMessage response = \(editMessageResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }
     }
@@ -1594,19 +1621,24 @@ extension MyChatViewController {
         let subjectId:  Int?    = Int(input2TextField.text ?? "")
         let repliedTo:  Int?    = Int(input3TextField.text ?? "")
         
-        let forwardMessage = ForwardMessageAutomation(messageIds: messageIds, metaData: nil, repliedTo: repliedTo, subjectId: subjectId, typeCode: nil, uniqueId: nil)
+        let forwardMessage = ForwardMessageAutomation(messageIds:   messageIds,
+                                                      metaData:     nil,
+                                                      repliedTo:    repliedTo,
+                                                      subjectId:    subjectId,
+                                                      typeCode:     nil,
+                                                      uniqueId:     nil)
         forwardMessage.delegate = self
         forwardMessage.create(uniqueId: { (forwardMessageUniqueId) in
             let myText = "forwardMessage uniqueId = \(forwardMessageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverSentResponse: { (sent) in
-            let myText = "forwardMessage sent response = \(sent)"
+            let myText = "forwardMessage sent response = \(sent.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverDeliverResponse: { (deliver) in
-            let myText = "forwardMessage deliver response = \(deliver)"
+            let myText = "forwardMessage deliver response = \(deliver.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (seen) in
-            let myText = "forwardMessage seen response = \(seen)"
+            let myText = "forwardMessage seen response = \(seen.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }
     }
@@ -1617,7 +1649,10 @@ extension MyChatViewController {
         let offset:     Int?    = Int(input2TextField.text ?? "")
         let messageId:  Int?    = Int(input3TextField.text ?? "")
         
-        let deliveryList = MessageDeliveryListAutomation(count: count, messageId: messageId, offset: offset, typeCode: nil)
+        let deliveryList = MessageDeliveryListAutomation(count:     count,
+                                                         messageId: messageId,
+                                                         offset:    offset,
+                                                         typeCode:  nil)
         deliveryList.delegate = self
         deliveryList.create(uniqueId: { (messageDeliveryListUniqueId) in
             let myText = "MessageDeliveryList uniqueId = \(messageDeliveryListUniqueId)"
@@ -1634,7 +1669,10 @@ extension MyChatViewController {
         let offset:     Int?    = Int(input2TextField.text ?? "")
         let messageId:  Int?    = Int(input3TextField.text ?? "")
         
-        let seenList = MessageSeenListAutomation(count: count, messageId: messageId, offset: offset, typeCode: nil)
+        let seenList = MessageSeenListAutomation(count:     count,
+                                                 messageId: messageId,
+                                                 offset:    offset,
+                                                 typeCode:  nil)
         seenList.delegate = self
         seenList.create(uniqueId: { (messageSeenListUniqueId) in
             let myText = "MessageSeenList uniqueId = \(messageSeenListUniqueId)"
@@ -1655,19 +1693,24 @@ extension MyChatViewController {
             if (txt != "") && (txt.first != " ") { content = txt }
         }
         
-        let replyMessage = ReplyMessageAutomation(content: content, metaData: nil, repliedTo: repliedTo, subjectId: subjectId, typeCode: nil, uniqueId: nil)
+        let replyMessage = ReplyMessageAutomation(content:      content,
+                                                  metaData:     nil,
+                                                  repliedTo:    repliedTo,
+                                                  subjectId:    subjectId,
+                                                  typeCode:     nil,
+                                                  uniqueId:     nil)
         replyMessage.delegate = self
         replyMessage.create(uniqueId: { (replyMessageUniqueId) in
             let myText = "replyTextMessage uniqueId = \(replyMessageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverSentResponse: { (sent) in
-            let myText = "replyTextMessage sent response = \(sent)"
+            let myText = "replyTextMessage sent response = \(sent.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverDeliverResponse: { (deliver) in
-            let myText = "replyTextMessage deliver response = \(deliver)"
+            let myText = "replyTextMessage deliver response = \(deliver.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (seen) in
-            let myText = "replyTextMessage seen response = \(seen)"
+            let myText = "replyTextMessage seen response = \(seen.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }
     }
@@ -1682,19 +1725,25 @@ extension MyChatViewController {
             if (txt != "") && (txt.first != " ") { content = txt }
         }
         
-        let sendTextMessage = SendTextMessageAutomation(content: content, metaData: nil, repliedTo: repliedTo, systemMetadata: nil, threadId: threadId, typeCode: nil, uniqueId: nil)
+        let sendTextMessage = SendTextMessageAutomation(content:        content,
+                                                        metaData:       nil,
+                                                        repliedTo:      repliedTo,
+                                                        systemMetadata: nil,
+                                                        threadId:       threadId,
+                                                        typeCode:       nil,
+                                                        uniqueId:       nil)
         sendTextMessage.delegate = self
         sendTextMessage.create(uniqueId: { (sendTextMessageUniqueId) in
             let myText = "sendTextMessage uniqueId = \(sendTextMessageUniqueId)"
             self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverSentResponse: { (sent) in
-            let myText = "sendTextMessage sent response = \(sent)"
+            let myText = "sendTextMessage sent response = \(sent.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverDeliverResponse: { (deliver) in
-            let myText = "sendTextMessage deliver response = \(deliver)"
+            let myText = "sendTextMessage deliver response = \(deliver.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (seen) in
-            let myText = "sendTextMessage seen response = \(seen)"
+            let myText = "sendTextMessage seen response = \(seen.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }
     }
@@ -1711,7 +1760,10 @@ extension MyChatViewController {
             if (txt != "") && (txt.first != " ") { content = txt }
         }
         
-        let sendLocationMessage = SendLocationMessageAutomation(lat: lat, lon: lon, content: content, threadId: threadId)
+        let sendLocationMessage = SendLocationMessageAutomation(lat:        lat,
+                                                                lon:        lon,
+                                                                content:    content,
+                                                                threadId:   threadId)
         sendLocationMessage.delegate = self
         sendLocationMessage.create(uniqueId: { (sendLocationMessageUniqueId) in
             let myText = "sendLocationMessage uniqueId = \(sendLocationMessageUniqueId)"
@@ -1735,13 +1787,13 @@ extension MyChatViewController {
                 self.updateText(cellText: myText, cellHeight: 70, cellColor: .lightGray)
             }
         }, serverSentResponse: { (sent) in
-            let myText = "sendLocationMessage sent response = \(sent)"
+            let myText = "sendLocationMessage sent response = \(sent.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverDeliverResponse: { (deliver) in
-            let myText = "sendLocationMessage deliver response = \(deliver)"
+            let myText = "sendLocationMessage deliver response = \(deliver.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (seen) in
-            let myText = "sendLocationMessage seen response = \(seen)"
+            let myText = "sendLocationMessage seen response = \(seen.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }
         
@@ -1762,7 +1814,12 @@ extension MyChatViewController {
         if let txt = input2TextField.text {
             if (txt != "") && (txt.first != " ") { content = txt }
         }
-        let sendFileMessage = ReplyFileMessageAutomation(content: content, data: nil, fileName: fileName, threadId: threadId, repliedTo: repliedTo, uniqueId: nil)
+        let sendFileMessage = ReplyFileMessageAutomation(content:   content,
+                                                         data:      nil,
+                                                         fileName:  fileName,
+                                                         threadId:  threadId,
+                                                         repliedTo: repliedTo,
+                                                         uniqueId:  nil)
         sendFileMessage.delegate = self
         sendFileMessage.create(uniqueId: { (replyFileMessageUniqueId) in
             let myText = "replyFileMessage uniqueId = \(replyFileMessageUniqueId)"
@@ -1777,13 +1834,13 @@ extension MyChatViewController {
                 self.updateText(cellText: myText, cellHeight: 70, cellColor: .lightGray)
             }
         }, serverSentResponse: { (sent) in
-            let myText = "replyFileMessage sent response = \(sent)"
+            let myText = "replyFileMessage sent response = \(sent.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverDeliverResponse: { (deliver) in
-            let myText = "replyFileMessage deliver response = \(deliver)"
+            let myText = "replyFileMessage deliver response = \(deliver.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (seen) in
-            let myText = "replyFileMessage seen response = \(seen)"
+            let myText = "replyFileMessage seen response = \(seen.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }
     }
@@ -1801,7 +1858,11 @@ extension MyChatViewController {
         if let txt = input2TextField.text {
             if (txt != "") && (txt.first != " ") { content = txt }
         }
-        let sendFileMessage = SendFileMessageAutomation(content: content, data: nil, fileName: fileName, threadId: threadId, uniqueId: nil)
+        let sendFileMessage = SendFileMessageAutomation(content:    content,
+                                                        data:       nil,
+                                                        fileName:   fileName,
+                                                        threadId:   threadId,
+                                                        uniqueId:   nil)
         sendFileMessage.delegate = self
         sendFileMessage.create(uniqueId: { (sendFileMessageUniqueId) in
             let myText = "sendFileMessage uniqueId = \(sendFileMessageUniqueId)"
@@ -1816,13 +1877,13 @@ extension MyChatViewController {
                 self.updateText(cellText: myText, cellHeight: 70, cellColor: .lightGray)
             }
         }, serverSentResponse: { (sent) in
-            let myText = "sendFileMessage sent response = \(sent)"
+            let myText = "sendFileMessage sent response = \(sent.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverDeliverResponse: { (deliver) in
-            let myText = "sendFileMessage deliver response = \(deliver)"
+            let myText = "sendFileMessage deliver response = \(deliver.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (seen) in
-            let myText = "sendFileMessage seen response = \(seen)"
+            let myText = "sendFileMessage seen response = \(seen.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }
     }
@@ -1833,7 +1894,12 @@ extension MyChatViewController {
         if let txt = input1TextField.text {
             if (txt != "") && (txt.first != " ") { fileName = txt }
         }
-        let uploadFile = UploadFileAutomation(data: nil, fileName: fileName, threadId: nil, uniqueId: nil)
+        let threadId:   Int?    = Int(input2TextField.text ?? "")
+        
+        let uploadFile = UploadFileAutomation(data:     nil,
+                                              fileName: fileName,
+                                              threadId: threadId,
+                                              uniqueId: nil)
         uploadFile.delegate = self
         uploadFile.create(uniqueId: { (uploadFileUniqueId) in
             let myText = "uploadFile uniqueId = \(uploadFileUniqueId)"

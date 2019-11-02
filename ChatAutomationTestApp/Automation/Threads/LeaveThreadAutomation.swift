@@ -24,7 +24,7 @@ class LeaveThreadAutomation {
     let requestUniqueId: String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
-    typealias callbackServerResponseTypeAlias   = (CreateThreadModel) -> ()
+    typealias callbackServerResponseTypeAlias   = (ThreadModel) -> ()
     
     private var uniqueIdCallback:   callbackStringTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
@@ -43,11 +43,12 @@ class LeaveThreadAutomation {
         self.uniqueIdCallback   = uniqueId
         self.responseCallback   = serverResponse
         
-        if let id = threadId {
-            sendRequest(theThreadId: id)
-        } else {
-            sendRequestSenario(contactCellPhone: nil, threadId: nil)
-        }
+        sendRequestSenario(contactCellPhone: nil, threadId: threadId)
+//        if let id = threadId {
+//            sendRequest(theThreadId: id)
+//        } else {
+//            sendRequestSenario(contactCellPhone: nil, threadId: nil)
+//        }
     }
     
     func sendRequest(theThreadId: Int) {
@@ -57,10 +58,12 @@ class LeaveThreadAutomation {
                                                        threadId: theThreadId,
                                                        typeCode: typeCode,
                                                        uniqueId: requestUniqueId)
-        myChatObject?.leaveThread(leaveThreadInput: leaveThreadInput, uniqueId: { (leaveThreadUniqueId) in
+        
+        Chat.sharedInstance.leaveThread(leaveThreadInput: leaveThreadInput, uniqueId: { (leaveThreadUniqueId) in
+//        myChatObject?.leaveThread(leaveThreadInput: leaveThreadInput, uniqueId: { (leaveThreadUniqueId) in
             self.uniqueIdCallback?(leaveThreadUniqueId)
         }, completion: { (leaveThreadServerResponseModel) in
-            self.responseCallback?(leaveThreadServerResponseModel as! CreateThreadModel)
+            self.responseCallback?(leaveThreadServerResponseModel as! ThreadModel)
         })
         
     }
@@ -71,17 +74,19 @@ class LeaveThreadAutomation {
         // 2- create thread with this contact
         // 3- leaveThread
         
-        switch (contactCellPhone, threadId) {
-        case    (.none, .none):
-            addContact()
-            
-        case let (.some(cellPhone), .none):
-            createThread(withCellphoneNumber: cellPhone)
-            
-        case let (_ , .some(id)):
-            self.sendRequest(theThreadId: id)
-            
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            switch (contactCellPhone, threadId) {
+            case    (.none, .none):
+                self.addContact()
+                
+            case let (.some(cellPhone), .none):
+                self.createThread(withCellphoneNumber: cellPhone)
+                
+            case let (_ , .some(id)):
+                self.sendRequest(theThreadId: id)
+            }
         }
+        
     }
     
     
@@ -110,7 +115,13 @@ class LeaveThreadAutomation {
     func createThread(withCellphoneNumber cellphoneNumber: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: self.typeCode, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description,
+                                                  image: nil,
+                                                  invitees: [myInvitee],
+                                                  metadata: nil,
+                                                  title: fakeParams.title,
+                                                  type: nil,
+                                                  requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.LeaveThread.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)

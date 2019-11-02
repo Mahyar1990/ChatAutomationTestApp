@@ -22,7 +22,7 @@ class SendLocationMessageAutomation {
     
     typealias callbackStringTypeAlias           = (String) -> ()
     typealias callbackProgressTypeAlias         = (Float) -> ()
-    typealias callbackServerResponseTypeAlias   = (JSON) -> ()
+    typealias callbackServerResponseTypeAlias   = (SendMessageModel) -> ()
     
     private var uniqueIdCallback:           callbackStringTypeAlias?
     private var uploadProgressCallback:     callbackProgressTypeAlias?
@@ -69,8 +69,8 @@ class SendLocationMessageAutomation {
         case let (.some(id), .none):
             createThread(withContactId: id)
             
-        case (_ , .some(_)):
-            sendRequest()
+        case let (_ , .some(id)):
+            sendRequest(toThreadId: id)
             
         }
     }
@@ -101,7 +101,7 @@ class SendLocationMessageAutomation {
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(contactId)", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP.rawValue, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
         var i = ""
         for item in createThread.invitees! {
             i.append("\(item.formatToJSON()) ,")
@@ -109,7 +109,6 @@ class SendLocationMessageAutomation {
         delegate?.newInfo(type: MoreInfoTypes.SendLocationMessage.rawValue, message: "try to create new PublicGroup thread with this parameters: \n description = \(createThread.description!),\n invitees = \(i),\n title = \(createThread.title!),\n type = \(createThread.type!)", lineNumbers: 6)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
-                self.threadId = id
                 self.delegate?.newInfo(type: MoreInfoTypes.SendLocationMessage.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
                 self.sendRequestSenario(contactId: nil, threadId: id)
                 
@@ -120,7 +119,7 @@ class SendLocationMessageAutomation {
     }
     
     // 3
-    func sendRequest() {
+    func sendRequest(toThreadId: Int) {
         let myContent = content ?? "This is a dummy message"
         delegate?.newInfo(type: MoreInfoTypes.SendLocationMessage.rawValue, message: "send Request SendLocationMessage with this params:\n lat = \(lat ?? 36.310886959563085),\n lon = \(lon ?? 59.53563741408013),\n messageText = \(myContent),\n threadId = \(threadId ?? 0))", lineNumbers: 2)
         
@@ -135,25 +134,27 @@ class SendLocationMessageAutomation {
                                                                    sendMessageYC:       nil,
                                                                    sendMessageHC:       nil,
                                                                    sendMessageWC:       nil,
-                                                                   sendMessageThreadId: threadId,
+                                                                   sendMessageThreadId: toThreadId,
                                                                    sendMessageContent:  content,
                                                                    sendMessageMetaData: nil,
                                                                    sendMessageRepliedTo: nil,
-                                                                   sendMessageSubjectId: threadId,
-                                                                   sendMessageTypeCode: nil)
+                                                                   sendMessageTypeCode: nil,
+                                                                   typeCode:            nil,
+                                                                   uniqueId:            nil)
         
-        myChatObject?.sendLocationMessage(sendLocationMessageRequest: locationMessageInput, uniqueId: { (sentLocationMessageUniqueId) in
+        Chat.sharedInstance.sendLocationMessage(sendLocationMessageRequest: locationMessageInput, uniqueId: { (sentLocationMessageUniqueId) in
+//        myChatObject?.sendLocationMessage(sendLocationMessageRequest: locationMessageInput, uniqueId: { (sentLocationMessageUniqueId) in
             self.uniqueIdCallback?(sentLocationMessageUniqueId)
         }, downloadProgress: { (downloadProgress) in
             self.downloadProgressCallback?(downloadProgress)
         }, uploadProgress: { (uploadFileProgress) in
             self.uploadProgressCallback?(uploadFileProgress)
         }, onSent: { (sent) in
-            self.serverDeliverResponse?(sent as! JSON)
+            self.serverDeliverResponse?(sent as! SendMessageModel)
         }, onDelivere: { (deliver) in
-            self.serverDeliverResponse?(deliver as! JSON)
+            self.serverDeliverResponse?(deliver as! SendMessageModel)
         }, onSeen: { (seen) in
-            self.serverSeenResponse?(seen as! JSON)
+            self.serverSeenResponse?(seen as! SendMessageModel)
         })
         
     }

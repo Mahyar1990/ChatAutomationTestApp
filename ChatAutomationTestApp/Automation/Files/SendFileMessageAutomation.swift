@@ -23,7 +23,7 @@ class SendFileMessageAutomation {
     
     typealias callbackStringTypeAlias           = (String) -> ()
     typealias callbackProgressTypeAlias         = (Float) -> ()
-    typealias callbackServerResponseTypeAlias   = (JSON) -> ()
+    typealias callbackServerResponseTypeAlias   = (SendMessageModel) -> ()
     
     private var uniqueIdCallback:       callbackStringTypeAlias?
     private var progressCallback:       callbackProgressTypeAlias?
@@ -72,8 +72,8 @@ class SendFileMessageAutomation {
         case (_ , .some(_), .none):
             prepareDataToUpload()
             
-        case let (_ , .some(_), .some(myData)):
-            sendRequest(theData: myData)
+        case let (_ , .some(tId), .some(myData)):
+            sendRequest(theData: myData, toThreadId: tId)
             
         }
     }
@@ -104,7 +104,7 @@ class SendFileMessageAutomation {
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(contactId)", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP.rawValue, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
         var i = ""
         for item in createThread.invitees! {
             i.append("\(item.formatToJSON()) ,")
@@ -133,7 +133,7 @@ class SendFileMessageAutomation {
     }
     
     // 4
-    func sendRequest(theData: Data) {
+    func sendRequest(theData: Data, toThreadId: Int) {
         let myFileName =  self.fileName ?? "Image\(Faker.sharedInstance.generateNameAsString(withLength: 3))"
         let myContent = content ?? "This is a dummy message"
         delegate?.newInfo(type: MoreInfoTypes.SendFileMessage.rawValue, message: "send Request SendFileMessage with this params:\n messageText = \(myContent),\n threadId = \(threadId ?? 0), fileName = \(myFileName)", lineNumbers: 2)
@@ -144,25 +144,26 @@ class SendFileMessageAutomation {
                                                            yC:          nil,
                                                            hC:          nil,
                                                            wC:          nil,
-                                                           threadId:    threadId,
+                                                           threadId:    toThreadId,
                                                            content:     myContent,
                                                            metaData:    nil,
                                                            repliedTo:   nil,
-//                                                           subjectId:   threadId,
                                                            typeCode:    nil,
                                                            fileToSend:  theData,
-                                                           imageToSend: nil)
+                                                           imageToSend: nil,
+                                                           uniqueId:    nil)
         
-        myChatObject?.sendFileMessage(sendFileMessageInput: fileMessageInput, uniqueId: { (sentFileMessageUniqueId) in
+        Chat.sharedInstance.sendFileMessage(sendFileMessageInput: fileMessageInput, uniqueId: { (sentFileMessageUniqueId) in
+//        myChatObject?.sendFileMessage(sendFileMessageInput: fileMessageInput, uniqueId: { (sentFileMessageUniqueId) in
             self.uniqueIdCallback?(sentFileMessageUniqueId)
         }, uploadProgress: { (uploadFileProgress) in
             self.progressCallback?(uploadFileProgress)
         }, onSent: { (sent) in
-            self.serverDeliverResponse?(sent as! JSON)
+            self.serverDeliverResponse?(sent as! SendMessageModel)
         }, onDelivered: { (deliver) in
-            self.serverDeliverResponse?(deliver as! JSON)
+            self.serverDeliverResponse?(deliver as! SendMessageModel)
         }, onSeen: { (seen) in
-            self.serverSeenResponse?(seen as! JSON)
+            self.serverSeenResponse?(seen as! SendMessageModel)
         })
         
     }

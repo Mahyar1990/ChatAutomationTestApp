@@ -23,7 +23,7 @@ class SpamThreadAutomation {
     let typeCode:       String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
-    typealias callbackServerResponseTypeAlias   = (JSON) -> ()
+    typealias callbackServerResponseTypeAlias   = (Any) -> ()
     
     private var uniqueIdCallback:   callbackStringTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
@@ -51,12 +51,24 @@ class SpamThreadAutomation {
     func sendRequest(theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.SpamThread.rawValue, message: "send Request to spamThread with this params: \n threadId = \(theThreadId)", lineNumbers: 2)
         
-        let spamThreadInput = SpamPvThreadRequestModel(threadId: theThreadId, typeCode: typeCode)
-        myChatObject?.spamPvThread(spamPvThreadInput: spamThreadInput, uniqueId: { (spamThreadUniqueId) in
+        let spamThreadInput = SpamPvThreadRequestModel(threadId: theThreadId,
+                                                       typeCode: typeCode,
+                                                       uniqueId: nil)
+        
+        Chat.sharedInstance.spamPvThread(spamPvThreadInput: spamThreadInput, uniqueId: { (spamThreadUniqueId) in
+//        myChatObject?.spamPvThread(spamPvThreadInput: spamThreadInput, uniqueId: { (spamThreadUniqueId) in
             self.uniqueIdCallback?(spamThreadUniqueId)
         }, completion: { (spamThreadServerResponseModel) in
-            print("************************\n\(spamThreadServerResponseModel)")
-            self.responseCallback?(spamThreadServerResponseModel as! JSON)
+            
+            self.responseCallback?(spamThreadServerResponseModel)
+//            if let leaveThreadResponse = spamThreadServerResponseModel as? ThreadModel {
+//                self.responseCallback?(leaveThreadResponse)
+//            } else if let blockThreadResponse = spamThreadServerResponseModel as? BlockedContactModel  {
+//                self.responseCallback?(blockThreadResponse)
+//            } else if let clearHistoryResponse = spamThreadServerResponseModel as? ClearHistoryModel {
+//                self.responseCallback?(clearHistoryResponse)
+//            }
+            
         })
         
     }
@@ -67,17 +79,20 @@ class SpamThreadAutomation {
         // 2- create thread with this contact
         // 3- leaveThread
         
-        switch (contactCellPhone, threadId) {
-        case    (.none, .none):
-            addContact()
-            
-        case let (.some(cellPhone), .none):
-            createThread(withCellphoneNumber: cellPhone)
-            
-        case let (_ , .some(id)):
-            self.sendRequest(theThreadId: id)
-            
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            switch (contactCellPhone, threadId) {
+            case    (.none, .none):
+                self.addContact()
+                
+            case let (.some(cellPhone), .none):
+                self.createThread(withCellphoneNumber: cellPhone)
+                
+            case let (_ , .some(id)):
+                self.sendRequest(theThreadId: id)
+                
+            }
         }
+        
     }
     
     
@@ -106,7 +121,7 @@ class SpamThreadAutomation {
     func createThread(withCellphoneNumber cellphoneNumber: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: self.typeCode, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: nil, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.SpamThread.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
