@@ -70,8 +70,7 @@ class BlockAutomation {
     
     func sendRequest(theContactId: Int?, theUserId: Int?, theThreadId: Int?, isAutomation: Bool) {
         delegate?.newInfo(type: MoreInfoTypes.Block.rawValue, message: "send block request with this parameters:\ncontactId = \(theContactId ?? 0) , threadId = \(theThreadId ?? 0) , typeCode = \(typeCode ?? "nil") , userId = \(theUserId ?? 0)", lineNumbers: 2)
-        
-        let blockContactInput = BlockContactsRequestModel(contactId: theContactId, threadId: theThreadId, typeCode: typeCode, userId: theUserId, uniqueId: nil)
+        let blockContactInput = BlockContactsRequestModel(contactId: theContactId, threadId: theThreadId, userId: theUserId, requestTypeCode: typeCode, requestUniqueId: nil)
         
         Chat.sharedInstance.blockContact(blockContactsInput: blockContactInput, uniqueId: { (blockContactUniqueId) in
 //        myChatObject?.blockContact(blockContactsInput: blockContactInput, uniqueId: { (blockContactUniqueId) in

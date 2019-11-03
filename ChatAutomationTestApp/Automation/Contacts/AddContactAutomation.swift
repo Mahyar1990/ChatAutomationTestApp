@@ -72,7 +72,7 @@ class AddContactAutomation {
                                                       email:            theEmail,
                                                       firstName:        theFirstName,
                                                       lastName:         theLastName,
-                                                      uniqueId:         nil)
+                                                      requestUniqueId:  nil)
         Chat.sharedInstance.addContact(addContactsInput: addContactInput, uniqueId: { (addContactsUniqueId) in
 //        myChatObject?.addContact(addContactsInput: addContactInput, uniqueId: { (addContactsUniqueId) in
             self.uniqueIdCallback?(addContactsUniqueId)

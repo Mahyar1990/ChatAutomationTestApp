@@ -30,12 +30,12 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     
     
 // SandBox Addresses:
-//    var socketAddress           = "wss://chat-sandbox.pod.land/ws"
-//    var serverName              = "chat-server"
-//    var ssoHost                 = "https://accounts.pod.land"
-//    var platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-//    var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-//    var token                   = "f90af60f15424213b807d949564bffc6"
+    var socketAddress           = "wss://chat-sandbox.pod.land/ws"
+    var serverName              = "chat-server"
+    var ssoHost                 = "https://accounts.pod.land"
+    var platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+    var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+    var token                   = "e157049f9de249ddad9e7ee0d5bd3005"
     
     
 // Local Addresses 1 (MehrAra)
@@ -47,16 +47,16 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     
     
 // Local Addresses 2 (SheikhHosseini)
-    var socketAddress           = "ws://172.16.110.131:8003/ws"
-    var serverName              = "chat-server2"
-    var platformHost            = "http://172.16.110.131:8080"
-    var ssoHost                 = "http://172.16.110.76"
-    var fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+//    var socketAddress           = "ws://172.16.110.131:8003/ws"
+//    var serverName              = "chat-server2"
+//    var platformHost            = "http://172.16.110.131:8080"
+//    var ssoHost                 = "http://172.16.110.76"
+//    var fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
     
     
 // Local Tokens:
 //    var token                   = "fbd4ecedb898426394646e65c6b1d5d1"    // JiJi
-    var token                   = "7cba09ff83554fc98726430c30afcfc6"    // ZiZi
+//    var token                   = "7cba09ff83554fc98726430c30afcfc6"    // ZiZi
 //    var token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
 //    let token                   = "5fb88da4c6914d07a501a76d68a62363"    // FiFi

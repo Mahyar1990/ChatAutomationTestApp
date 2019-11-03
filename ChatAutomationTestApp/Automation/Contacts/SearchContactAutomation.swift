@@ -59,14 +59,14 @@ class SearchContactAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.SearchContact.rawValue, message: "Send SearchContact request with this param:\n cellphoneNumber = \(cellphoneNumber ?? "nil") , email = \(email ?? "nil") , firstName = \(firstName ?? "nil") , id = \(id ?? 0) , lastName = \(lastName ?? "nil") , offset = \(offset ?? 0) , size = \(size ?? 0) , uniqueId = \(requestUniqueId ?? "nil")", lineNumbers: 3)
         
-        let searchContactInput = SearchContactsRequestModel(cellphoneNumber: cellphoneNumber,
-                                                            email:          email,
-                                                            firstName:      firstName,
-                                                            id:             id,
-                                                            lastName:       lastName,
-                                                            offset:         offset,
-                                                            size:           size,
-                                                            uniqueId:       requestUniqueId)
+        let searchContactInput = SearchContactsRequestModel(cellphoneNumber:    cellphoneNumber,
+                                                            email:              email,
+                                                            firstName:          firstName,
+                                                            id:                 id,
+                                                            lastName:           lastName,
+                                                            offset:             offset,
+                                                            size:               size,
+                                                            requestUniqueId:    requestUniqueId)
         
         Chat.sharedInstance.searchContacts(searchContactsInput: searchContactInput, uniqueId: { (searchContactUniqueId) in
 //        myChatObject?.searchContacts(searchContactsInput: searchContactInput, uniqueId: { (searchContactUniqueId) in

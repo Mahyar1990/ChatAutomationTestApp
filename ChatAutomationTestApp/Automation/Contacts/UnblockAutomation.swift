@@ -84,7 +84,7 @@ class UnblockAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "send Request to Unblock with this params:\nblockId = \(theBlockId ?? 0) , contactId = \(theContactId ?? 0) , threadId = \(theThreadId ?? 0) , typeCode = \(typeCode ?? "nil") , userId = \(theUserId ?? 0)", lineNumbers: 2)
         
-        let unblockInput = UnblockContactsRequestModel(blockId: theBlockId, contactId: theContactId, threadId: theThreadId, typeCode: typeCode, userId: theUserId, uniqueId: nil)
+        let unblockInput = UnblockContactsRequestModel(blockId: theBlockId, contactId: theContactId, threadId: theThreadId, userId: theUserId, requestTypeCode: typeCode, requestUniqueId: nil)
         
         Chat.sharedInstance.unblockContact(unblockContactsInput: unblockInput, uniqueId: { (unblockUniqueId) in
             self.uniqueIdCallback?(unblockUniqueId)

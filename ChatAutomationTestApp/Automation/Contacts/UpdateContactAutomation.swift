@@ -59,7 +59,7 @@ class UpdateContactAutomation {
                                                           firstName:        contactFirstname,
                                                           id:               contactId,
                                                           lastName:         contactLastname,
-                                                          uniqueId:         nil)
+                                                          requestUniqueId:  nil)
             sendRequest(updateContactRequest: requestModel)
         default:
             delegate?.newInfo(type: MoreInfoTypes.UpdateContact.rawValue, message: "there is no contact specified to update. so first, need to addContact", lineNumbers: 1)
@@ -114,7 +114,7 @@ class UpdateContactAutomation {
                                                                         firstName:          contact.first,
                                                                         id:                 contactId,
                                                                         lastName:           contact.last,
-                                                                        uniqueId:           nil)
+                                                                        requestUniqueId:    nil)
                     self.sendRequest(updateContactRequest: updateContactModel)
                     
                 } else {
