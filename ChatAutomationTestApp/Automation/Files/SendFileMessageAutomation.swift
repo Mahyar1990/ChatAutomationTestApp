@@ -103,7 +103,7 @@ class SendFileMessageAutomation {
     // 2
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-        let myInvitee = Invitee(id: "\(contactId)", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")
+        let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
         let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
         var i = ""
         for item in createThread.invitees! {

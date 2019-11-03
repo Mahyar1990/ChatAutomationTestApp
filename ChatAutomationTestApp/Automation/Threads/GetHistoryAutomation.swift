@@ -171,7 +171,7 @@ class GetHistoryAutomation {
     
     // 2
     func createThread(cellPhoneNumber: String) {
-        let myInvitee = Invitee(id: "\(cellPhoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
+        let myInvitee = Invitee(id: "\(cellPhoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
         let createThread = CreateThreadAutomation(description: nil, image: nil, invitees: [myInvitee], metadata: nil, title: "new Chat Thread", type: nil, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModelResponse, on) in
             if let conversationModel = createThreadModelResponse.thread {

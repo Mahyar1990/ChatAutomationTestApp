@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var ssoHost                 = "https://accounts.pod.land"
     var platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = "e157049f9de249ddad9e7ee0d5bd3005"
+    var token                   = "803ce55dd5b34bb3b8ae0a67aee94a17"
     
     
 // Local Addresses 1 (MehrAra)
@@ -1140,15 +1140,15 @@ extension MyChatViewController {
         if let id = inviteeId {
             switch inviteeType {
             case 1:
-                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_SSO_ID)")]
+                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_SSO_ID)]
             case 2:
-                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")]
+                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)]
             case 3:
-                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")]
+                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)]
             case 4:
-                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_USERNAME)")]
+                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_USERNAME)]
             case 0:
-                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_ID)")]
+                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_ID)]
             default:
                 invitees = [Invitee(id: id, idType: "0")]
             }
@@ -1201,17 +1201,17 @@ extension MyChatViewController {
         if let id = inviteeId {
             switch inviteeType {
             case 1:
-                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_SSO_ID)")]
+                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_SSO_ID)]
             case 2:
-                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID)")]
+                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)]
             case 3:
-                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")]
+                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)]
             case 4:
-                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_USERNAME)")]
-            case 0:
-                invitees = [Invitee(id: id, idType: "\(InviteeVOidTypes.TO_BE_USER_ID)")]
+                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_USERNAME)]
+            case 5:
+                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_ID)]
             default:
-                invitees = [Invitee(id: id, idType: "0")]
+                invitees = [Invitee(id: id, idType: "5")]
             }
         }
         if let txt = input5TextField.text {

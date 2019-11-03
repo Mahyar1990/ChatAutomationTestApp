@@ -224,7 +224,7 @@ class ReplyMessageAutomation {
     // 2
     func createThread(withCellphoneNumber cellphoneNumber: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
+        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
         let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: nil, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {

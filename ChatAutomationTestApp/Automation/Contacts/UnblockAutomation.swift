@@ -166,7 +166,7 @@ extension UnblockAutomation {
                     if let cellphoneNumber = myContact.cellphoneNumber {
                         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
                         self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this CellphoneNumber = \(cellphoneNumber).", lineNumbers: 2)
-                        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
+                        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
                         let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: nil, requestUniqueId: nil)
                         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
                             if let threadId = createThreadModel.thread?.id {
