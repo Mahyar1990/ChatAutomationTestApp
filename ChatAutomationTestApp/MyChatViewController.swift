@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var ssoHost                 = "https://accounts.pod.land"
     var platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = "803ce55dd5b34bb3b8ae0a67aee94a17"
+    var token                   = "69ef757f50ef4df3908e68b53aa5f006"
     
     
 // Local Addresses 1 (MehrAra)
