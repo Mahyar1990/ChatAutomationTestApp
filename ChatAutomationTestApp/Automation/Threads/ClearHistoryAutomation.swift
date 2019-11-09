@@ -55,8 +55,8 @@ class ClearHistoryAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "send Request to clearHistory with this params:\n threadId = \(theThreadId) , uniqueId = \(requestUniqueId ?? "nil")", lineNumbers: 2)
         
-        let clearHistoryInput = ClearHistoryRequestModel(threadId: theThreadId,
-                                                         uniqueId: requestUniqueId)
+        let clearHistoryInput = ClearHistoryRequestModel(threadId:          theThreadId,
+                                                         requestUniqueId:   requestUniqueId)
         
         Chat.sharedInstance.clearHistory(clearHistoryInput: clearHistoryInput, uniqueId: { (clearHistoryUniqueId) in
 //        myChatObject?.clearHistory(clearHistoryInput: clearHistoryInput, uniqueId: { (clearHistoryUniqueId) in

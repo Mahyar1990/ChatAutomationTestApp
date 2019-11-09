@@ -50,7 +50,7 @@ class DeleteMultipleMessagesAutomation {
         
         if let tId = threadId {
             if (messageIds.count > 0) {
-                let requestModel = DeleteMultipleMessagesRequestModel(deleteForAll: deleteForAll, threadId: tId, messageIds: messageIds, typeCode: typeCode, uniqueIds: requestUniqueIds)
+                let requestModel = DeleteMultipleMessagesRequestModel(deleteForAll: deleteForAll, threadId: tId, messageIds: messageIds, requestTypeCode: typeCode, uniqueIds: requestUniqueIds)
                 sendRequest(deleteMessageRequest: requestModel)
             } else {
                 sendRequestSenario(contactCellPhone: nil, threadId: tId, messageResponse: nil)
@@ -64,12 +64,12 @@ class DeleteMultipleMessagesAutomation {
     
     func sendRequest(deleteMessageRequest: DeleteMultipleMessagesRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "send Request to DeleteMessage with this params:\n deleteForAll = \(deleteMessageRequest.deleteForAll ?? false) , subjectId = \(deleteMessageRequest.messageIds) , typeCode = \(deleteMessageRequest.typeCode ?? "nil") , uniqueId = \(deleteMessageRequest.uniqueIds ?? ["nil"])", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "send Request to DeleteMessage with this params:\n deleteForAll = \(deleteMessageRequest.deleteForAll ?? false) , subjectId = \(deleteMessageRequest.messageIds) , typeCode = \(deleteMessageRequest.requestTypeCode ?? "nil") , uniqueId = \(deleteMessageRequest.uniqueIds ?? ["nil"])", lineNumbers: 2)
         
         let input = DeleteMultipleMessagesRequestModel(deleteForAll:    deleteMessageRequest.deleteForAll,
                                                        threadId:        deleteMessageRequest.threadId,
                                                        messageIds:      deleteMessageRequest.messageIds,
-                                                       typeCode:        deleteMessageRequest.typeCode,
+                                                       requestTypeCode: deleteMessageRequest.requestTypeCode,
                                                        uniqueIds:       deleteMessageRequest.uniqueIds)
         
         Chat.sharedInstance.deleteMultipleMessages(deleteMessageInput: input, uniqueId: { (deleteMultipleMessagesUniqueId) in
@@ -180,11 +180,11 @@ class DeleteMultipleMessagesAutomation {
     
     // 4
     func createDeleteMessageModel(inThreadId threadId: Int, onMessageIds messageIds: [Int]) {
-        let requestModel = DeleteMultipleMessagesRequestModel(deleteForAll: self.deleteForAll,
-                                                              threadId:     threadId,
-                                                              messageIds:   messageIds,
-                                                              typeCode:     self.typeCode,
-                                                              uniqueIds:    self.requestUniqueIds)
+        let requestModel = DeleteMultipleMessagesRequestModel(deleteForAll:     self.deleteForAll,
+                                                              threadId:         threadId,
+                                                              messageIds:       messageIds,
+                                                              requestTypeCode:  self.typeCode,
+                                                              uniqueIds:        self.requestUniqueIds)
         self.sendRequest(deleteMessageRequest: requestModel)
     }
     

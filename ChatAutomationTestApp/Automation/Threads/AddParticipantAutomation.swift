@@ -60,10 +60,10 @@ class AddParticipantAutomation {
     func sendRequest(theContacts: [Int], theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "send Request addParticipant with this params:\ncontacts = \(theContacts), threadId = \(theThreadId) , typeCode = \(typeCode ?? "nil"), uniqueId = \(requestUniqueId ?? "nil")", lineNumbers: 2)
         
-        let addParticipantInput = AddParticipantsRequestModel(contacts: theContacts,
-                                                              threadId: theThreadId,
-                                                              typeCode: typeCode,
-                                                              uniqueId: requestUniqueId)
+        let addParticipantInput = AddParticipantsRequestModel(contacts:         theContacts,
+                                                              threadId:         theThreadId,
+                                                              requestTypeCode:  typeCode,
+                                                              requestUniqueId:  requestUniqueId)
         
         Chat.sharedInstance.addParticipants(addParticipantsInput: addParticipantInput, uniqueId: { (addParticipantsUniqueId) in
 //        myChatObject?.addParticipants(addParticipantsInput: addParticipantInput, uniqueId: { (addParticipantsUniqueId) in

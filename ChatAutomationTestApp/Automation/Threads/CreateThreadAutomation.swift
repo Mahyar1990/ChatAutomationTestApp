@@ -87,12 +87,12 @@ class CreateThreadAutomation {
         delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "on \(on?.rawValue ?? "") send create thread request with this parameters:\n description = \(withDescription ?? "nil") ,\n image = \(self.image ?? "nil") ,\n invitees = \(i) ,\n metadata = \(self.metadata ?? "nil") ,\n title = \(withTitle) ,\n type = \(withType ?? ThreadTypes.NORMAL) ,\n requestUniqueId = \(self.requestUniqueId ?? "nil")", lineNumbers: 6)
         
         let createThreadInput = CreateThreadRequestModel(description: withDescription,
-                                                         image: self.image,
-                                                         invitees: withInvitees,
-                                                         metadata: self.metadata,
-                                                         title: withTitle,
-                                                         type: withType,
-                                                         uniqueId: self.requestUniqueId)
+                                                         image:             self.image,
+                                                         invitees:          withInvitees,
+                                                         metadata:          self.metadata,
+                                                         title:             withTitle,
+                                                         type:              withType,
+                                                         requestUniqueId:   self.requestUniqueId)
         
         Chat.sharedInstance.createThread(createThreadInput: createThreadInput, uniqueId: { (createThreadUniqueId) in
 //        myChatObject?.createThread(createThreadInput: createThreadInput, uniqueId: { (createThreadUniqueId) in

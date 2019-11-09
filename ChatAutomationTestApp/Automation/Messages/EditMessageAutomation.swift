@@ -52,21 +52,21 @@ class EditMessageAutomation {
         
         switch (content, messageId) {
         case let (.some(myContent) , .some(msgId)):
-            let requestModel = EditTextMessageRequestModel(content: myContent,
-                                                           metaData: metaData,
-                                                           repliedTo: repliedTo,
-                                                           subjectId: msgId,
-                                                           typeCode: typeCode,
-                                                           uniqueId: requestUniqueId)
+            let requestModel = EditTextMessageRequestModel(content:         myContent,
+                                                           metaData:        metaData,
+                                                           repliedTo:       repliedTo,
+                                                           subjectId:       msgId,
+                                                           requestTypeCode: typeCode,
+                                                           requestUniqueId: requestUniqueId)
             sendRequest(editMessageRequest: requestModel)
             
         case let (.none , .some(smgId)):
             let requestModel = EditTextMessageRequestModel(content: "This is Edited Message Text",
-                                                           metaData: metaData,
-                                                           repliedTo: repliedTo,
-                                                           subjectId: smgId,
-                                                           typeCode: typeCode,
-                                                           uniqueId: requestUniqueId)
+                                                           metaData:        metaData,
+                                                           repliedTo:       repliedTo,
+                                                           subjectId:       smgId,
+                                                           requestTypeCode: typeCode,
+                                                           requestUniqueId: requestUniqueId)
             sendRequest(editMessageRequest: requestModel)
             
         default:
@@ -78,7 +78,7 @@ class EditMessageAutomation {
     
     func sendRequest(editMessageRequest: EditTextMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "send Request to EditMessage with this params:\n content = \(editMessageRequest.content) , metaData = \(editMessageRequest.metaData ?? JSON.null) , repliedTo = \(editMessageRequest.repliedTo ?? 0) , subjectId = \(editMessageRequest.subjectId) , typeCode = \(editMessageRequest.typeCode ?? "nil") , uniqueId = \(editMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "send Request to EditMessage with this params:\n content = \(editMessageRequest.content) , metaData = \(editMessageRequest.metaData ?? JSON.null) , repliedTo = \(editMessageRequest.repliedTo ?? 0) , subjectId = \(editMessageRequest.subjectId) , typeCode = \(editMessageRequest.requestTypeCode ?? "nil") , uniqueId = \(editMessageRequest.requestUniqueId ?? "nil")", lineNumbers: 2)
         Chat.sharedInstance.editMessage(editMessageInput: editMessageRequest, uniqueId: { (editMessageUniqueId) in
 //        myChatObject?.editMessage(editMessageInput: editMessageRequest, uniqueId: { (editMessageUniqueId) in
             self.uniqueIdCallback?(editMessageUniqueId)
@@ -170,7 +170,7 @@ class EditMessageAutomation {
             sendMessage(toThread: thread)
             
         case let (_ , _ , .some(msg)):
-            if let thId = msg["subjectId"].int {
+            if let _ = msg["subjectId"].int {
                 if let messageId = Int(msg["content"].stringValue) {
                     self.createEditMessageModel(withMessageId: messageId)
                 }
@@ -240,12 +240,12 @@ class EditMessageAutomation {
     
     // 4
     func createEditMessageModel(withMessageId messageId: Int) {
-        let requestModel = EditTextMessageRequestModel(content:     self.content ?? "This is Edited Text Message",
-                                                       metaData:    self.metaData,
-                                                       repliedTo:   self.repliedTo,
-                                                       subjectId:   messageId,
-                                                       typeCode:    self.typeCode,
-                                                       uniqueId:    self.requestUniqueId)
+        let requestModel = EditTextMessageRequestModel(content:         self.content ?? "This is Edited Text Message",
+                                                       metaData:        self.metaData,
+                                                       repliedTo:       self.repliedTo,
+                                                       subjectId:       messageId,
+                                                       requestTypeCode: self.typeCode,
+                                                       requestUniqueId: self.requestUniqueId)
         self.sendRequest(editMessageRequest: requestModel)
     }
     

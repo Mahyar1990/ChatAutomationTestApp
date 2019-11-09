@@ -61,11 +61,11 @@ class UploadImageAutomation {
                                                        fileSize:        nil,
                                                        originalFileName: nil,
                                                        threadId:        threadId,
-                                                       uniqueId:        requestUniqueId,
                                                        xC:              nil,
                                                        yC:              nil,
                                                        hC:              nil,
-                                                       wC:              nil)
+                                                       wC:              nil,
+                                                       requestUniqueId: requestUniqueId)
         
         Chat.sharedInstance.uploadImage(uploadImageInput: uploadImageInput, uniqueId: { (uploadImageUniqueId) in
 //        myChatObject?.uploadImage(uploadImageInput: uploadImageInput, uniqueId: { (uploadImageUniqueId) in

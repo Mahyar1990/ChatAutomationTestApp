@@ -54,10 +54,10 @@ class LeaveThreadAutomation {
     func sendRequest(theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.LeaveThread.rawValue, message: "send Request to leaveThread with this params: \n threadId = \(theThreadId)", lineNumbers: 2)
         
-        let leaveThreadInput = LeaveThreadRequestModel(content: nil,
-                                                       threadId: theThreadId,
-                                                       typeCode: typeCode,
-                                                       uniqueId: requestUniqueId)
+        let leaveThreadInput = LeaveThreadRequestModel(content:         nil,
+                                                       threadId:        theThreadId,
+                                                       requestTypeCode: typeCode,
+                                                       requestUniqueId: requestUniqueId)
         
         Chat.sharedInstance.leaveThread(leaveThreadInput: leaveThreadInput, uniqueId: { (leaveThreadUniqueId) in
 //        myChatObject?.leaveThread(leaveThreadInput: leaveThreadInput, uniqueId: { (leaveThreadUniqueId) in

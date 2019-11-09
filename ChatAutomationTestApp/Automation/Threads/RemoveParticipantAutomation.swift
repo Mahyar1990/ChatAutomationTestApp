@@ -52,10 +52,10 @@ class RemoveParticipantAutomation {
     func sendRequest(participants: [Int], theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.RemoveParticipant.rawValue, message: "send Request to removeParticipant with this params: \n participants = \(participants) , threadId = \(theThreadId)", lineNumbers: 2)
         
-        let removeParticipantInput = RemoveParticipantsRequestModel(content: participants,
-                                                                    threadId: theThreadId,
-                                                                    typeCode: typeCode,
-                                                                    uniqueId: requestUniqueId)
+        let removeParticipantInput = RemoveParticipantsRequestModel(content:            participants,
+                                                                    threadId:           theThreadId,
+                                                                    requestTypeCode:    typeCode,
+                                                                    requestUniqueId:    requestUniqueId)
         
         Chat.sharedInstance.removeParticipants(removeParticipantsInput: removeParticipantInput, uniqueId: { (removeParticipantUniqueId) in
 //        myChatObject?.removeParticipants(removeParticipantsInput: removeParticipantInput, uniqueId: { (removeParticipantUniqueId) in

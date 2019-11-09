@@ -54,13 +54,13 @@ class UploadFileAutomation {
     func sendRequest(theData: Data, theFileName: String) {
         delegate?.newInfo(type: MoreInfoTypes.UploadFile.rawValue, message: "send Request UploadFile with this params:\n fileName = \(theFileName)", lineNumbers: 2)
         
-        let uploadFileInput = UploadFileRequestModel(dataToSend: theData,
-                                                     fileExtension: nil,
-                                                     fileName: theFileName,
-                                                     fileSize: nil,
-                                                     originalFileName: nil,
-                                                     threadId: threadId,
-                                                     uniqueId: nil)
+        let uploadFileInput = UploadFileRequestModel(dataToSend:        theData,
+                                                     fileExtension:     nil,
+                                                     fileName:          theFileName,
+                                                     fileSize:          nil,
+                                                     originalFileName:  nil,
+                                                     threadId:          threadId,
+                                                     requestUniqueId:   nil)
         
         Chat.sharedInstance.uploadFile(uploadFileInput: uploadFileInput, uniqueId: { (uploadFileUniqueId) in
 //        myChatObject?.uploadFile(uploadFileInput: uploadFileInput, uniqueId: { (uploadFileUniqueId) in

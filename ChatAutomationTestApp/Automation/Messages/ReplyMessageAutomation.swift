@@ -59,21 +59,21 @@ class ReplyMessageAutomation {
         
         switch (repliedTo, subjectId, content) {
         case let (.some(repTo), .some(subTo), .some(myContent)):
-            let inputModel = ReplyTextMessageRequestModel(content: myContent,
-                                                          metaData: metaData,
-                                                          repliedTo: repTo,
-                                                          subjectId: subTo,
-                                                          typeCode: typeCode,
-                                                          uniqueId: requestUniqueId)
+            let inputModel = ReplyTextMessageRequestModel(content:          myContent,
+                                                          metaData:         metaData,
+                                                          repliedTo:        repTo,
+                                                          subjectId:        subTo,
+                                                          requestTypeCode:  typeCode,
+                                                          requestUniqueId:  requestUniqueId)
             sendRequest(replyTextMessageRequest: inputModel)
             
         case let (.some(repTo), .some(subTo), .none):
-            let inputModel = ReplyTextMessageRequestModel(content: "This is ReplyMessage",
-                                                          metaData: metaData,
-                                                          repliedTo: repTo,
-                                                          subjectId: subTo,
-                                                          typeCode: typeCode,
-                                                          uniqueId: requestUniqueId)
+            let inputModel = ReplyTextMessageRequestModel(content:          "This is ReplyMessage",
+                                                          metaData:         metaData,
+                                                          repliedTo:        repTo,
+                                                          subjectId:        subTo,
+                                                          requestTypeCode:  typeCode,
+                                                          requestUniqueId:  requestUniqueId)
             sendRequest(replyTextMessageRequest: inputModel)
             
         default:
@@ -85,7 +85,7 @@ class ReplyMessageAutomation {
     
     func sendRequest(replyTextMessageRequest: ReplyTextMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.ReplyTextMessage.rawValue, message: "send Request to ReplyTextMessage with this params:\n content = \(replyTextMessageRequest.content) , metaData = \(replyTextMessageRequest.metaData ?? JSON.null) , repliedTo = \(replyTextMessageRequest.repliedTo) , subjectId = \(replyTextMessageRequest.subjectId) , typeCode = \(replyTextMessageRequest.typeCode ?? "nil") , uniqueId = \(replyTextMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.ReplyTextMessage.rawValue, message: "send Request to ReplyTextMessage with this params:\n content = \(replyTextMessageRequest.content) , metaData = \(replyTextMessageRequest.metaData ?? JSON.null) , repliedTo = \(replyTextMessageRequest.repliedTo) , subjectId = \(replyTextMessageRequest.subjectId) , typeCode = \(replyTextMessageRequest.requestTypeCode ?? "nil") , uniqueId = \(replyTextMessageRequest.requestUniqueId ?? "nil")", lineNumbers: 2)
         
         Chat.sharedInstance.replyMessage(replyMessageInput: replyTextMessageRequest, uniqueId: { (replyMessageUniqueId) in
 //        myChatObject?.replyMessage(replyMessageInput: replyTextMessageRequest, uniqueId: { (replyMessageUniqueId) in
@@ -257,7 +257,7 @@ class ReplyMessageAutomation {
     
     // 4
     func createReplyTextMessageModel(inThreadId threadId: Int, onMessageId messageId: Int) {
-        let requestModel = ReplyTextMessageRequestModel(content: "This is ReplyMessage", metaData: self.metaData, repliedTo: messageId, subjectId: threadId, typeCode: self.typeCode, uniqueId: self.requestUniqueId)
+        let requestModel = ReplyTextMessageRequestModel(content: "This is ReplyMessage", metaData: self.metaData, repliedTo: messageId, subjectId: threadId, requestTypeCode: self.typeCode, requestUniqueId: self.requestUniqueId)
         self.sendRequest(replyTextMessageRequest: requestModel)
     }
     
