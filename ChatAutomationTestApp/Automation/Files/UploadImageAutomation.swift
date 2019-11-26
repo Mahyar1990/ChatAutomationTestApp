@@ -65,10 +65,10 @@ class UploadImageAutomation {
                                                        yC:              nil,
                                                        hC:              nil,
                                                        wC:              nil,
+                                                       requestTypeCode: nil,
                                                        requestUniqueId: requestUniqueId)
         
         Chat.sharedInstance.uploadImage(uploadImageInput: uploadImageInput, uniqueId: { (uploadImageUniqueId) in
-//        myChatObject?.uploadImage(uploadImageInput: uploadImageInput, uniqueId: { (uploadImageUniqueId) in
             self.uniqueIdCallback?(uploadImageUniqueId)
         }, progress: { (uploadImageProgress) in
             self.progressCallback?(uploadImageProgress)

@@ -67,7 +67,6 @@ class MessageDeliveryListAutomation {
                                                                 requestUniqueId:    nil)
         
         Chat.sharedInstance.messageDeliveryList(messageDeliveryListInput: deliveryInput, uniqueId: { (messageDeliveryListUniqueId) in
-//        myChatObject?.messageDeliveryList(messageDeliveryListInput: deliveryInput, uniqueId: { (messageDeliveryListUniqueId) in
             self.uniqueIdCallback?(messageDeliveryListUniqueId)
         }, completion: { (messageDeliveryListResponse) in
             self.responseCallback?(messageDeliveryListResponse as! GetThreadParticipantsModel)
@@ -82,11 +81,6 @@ class MessageDeliveryListAutomation {
         x.create(uniqueId: { _ in }, serverSentResponse: { (sent) in
             self.delegate?.newInfo(type: MoreInfoTypes.MessageDeliveryList.rawValue, message: "new Message has been sent", lineNumbers: 1)
             print("\n\nSent: \n\(sent)\n\n")
-//            if let messageIdStr = sent["content"].string {
-//                if let mId = Int(messageIdStr) {
-//                    self.sendRequest(theMessageId: mId)
-//                }
-//            }
             if let messageId = sent.message?.id {
                 self.sendRequest(theMessageId: messageId)
             }

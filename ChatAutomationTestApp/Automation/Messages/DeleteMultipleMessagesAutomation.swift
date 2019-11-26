@@ -73,7 +73,6 @@ class DeleteMultipleMessagesAutomation {
                                                        uniqueIds:       deleteMessageRequest.uniqueIds)
         
         Chat.sharedInstance.deleteMultipleMessages(deleteMessageInput: input, uniqueId: { (deleteMultipleMessagesUniqueId) in
-//        myChatObject?.deleteMultipleMessages(deleteMessageInput: input, uniqueId: { (deleteMultipleMessagesUniqueId) in
             self.uniqueIdCallback?(deleteMultipleMessagesUniqueId)
         }, completion: { (deleteMultipleMessageResponse) in
             self.responseCallback?(deleteMultipleMessageResponse as! DeleteMessageModel)
@@ -88,22 +87,12 @@ class DeleteMultipleMessagesAutomation {
         // 3- sendMessage to this thread
         // 4- delete this message
         
-        
         switch (contactCellPhone, threadId, messageResponse) {
-        case    (.none, .none, .none):
-            addContact()
-            
-        case let (.some(cellPhone), .none, .none):
-            createThread(withCellphoneNumber: cellPhone)
-            
-        case let (_ , .some(thread), .none):
-            sendMessages(toThread: thread)
-            
-        case let (_ , .some(tId), .some(msgs)):
-            self.createDeleteMessageModel(inThreadId: tId, onMessageIds: msgs)
-            
-        default:
-            print("Wrong situation...")
+        case    (.none, .none, .none):              addContact()
+        case let (.some(cellPhone), .none, .none):  createThread(withCellphoneNumber: cellPhone)
+        case let (_ , .some(thread), .none):        sendMessages(toThread: thread)
+        case let (_ , .some(tId), .some(msgs)):     self.createDeleteMessageModel(inThreadId: tId, onMessageIds: msgs)
+        default:                                    print("Wrong situation...")
         }
         
     }
@@ -167,11 +156,9 @@ class DeleteMultipleMessagesAutomation {
         let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
-//            if let messageId = Int(sentResponse["content"].stringValue) {
             if let messageId = sentResponse.message?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(messageId)", lineNumbers: 1)
                 messageIdResponse(messageId)
-//                self.sendRequestSenario(contactCellPhone: nil, threadId: nil, messageResponse: sentResponse)
             }
             
         }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })

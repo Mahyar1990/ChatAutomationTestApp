@@ -143,7 +143,6 @@ class SendLocationMessageAutomation {
                                                                    requestUniqueId:     nil)
         
         Chat.sharedInstance.sendLocationMessage(sendLocationMessageRequest: locationMessageInput, uniqueId: { (sentLocationMessageUniqueId) in
-//        myChatObject?.sendLocationMessage(sendLocationMessageRequest: locationMessageInput, uniqueId: { (sentLocationMessageUniqueId) in
             self.uniqueIdCallback?(sentLocationMessageUniqueId)
         }, downloadProgress: { (downloadProgress) in
             self.downloadProgressCallback?(downloadProgress)

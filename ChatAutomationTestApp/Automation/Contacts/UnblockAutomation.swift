@@ -49,33 +49,14 @@ class UnblockAutomation {
         self.responseCallback   = serverResponse
         
         switch (blockId, contactId, userId, threadId) {
-        case let (.some(bId), _, _, _):
-            sendRequest(theBlockId: bId, theContactId: nil, theUserId: nil, theThreadId: nil, isAutomation: false)
-        case let (_, .some(cId), _, _):
-            sendRequest(theBlockId: nil, theContactId: cId, theUserId: nil, theThreadId: nil, isAutomation: false)
-        case let ( _, _, .some(uId), _):
-            sendRequest(theBlockId: nil, theContactId: nil, theUserId: uId, theThreadId: nil, isAutomation: false)
-        case let (_, _, _, .some(tId)):
-            sendRequest(theBlockId: nil, theContactId: nil, theUserId: nil, theThreadId: tId, isAutomation: false)
+        case let (.some(bId), _, _, _):     sendRequest(theBlockId: bId, theContactId: nil, theUserId: nil, theThreadId: nil, isAutomation: false)
+        case let (_, .some(cId), _, _):     sendRequest(theBlockId: nil, theContactId: cId, theUserId: nil, theThreadId: nil, isAutomation: false)
+        case let ( _, _, .some(uId), _):    sendRequest(theBlockId: nil, theContactId: nil, theUserId: uId, theThreadId: nil, isAutomation: false)
+        case let (_, _, _, .some(tId)):     sendRequest(theBlockId: nil, theContactId: nil, theUserId: nil, theThreadId: tId, isAutomation: false)
         default:
             delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "there is no id to unblock, so we have to implement all the possible cases to unblock", lineNumbers: 2)
             unblockSenario(withBlockId: nil, withContactId: nil, withUserId: nil, withThreadId: nil)
         }
-        
-//        if let block = blockId {
-//            sendRequest(theBlockId: block, theContactId: nil, theThreadId: nil, theUserId: nil)
-//        } else if let contact = contactId {
-//            sendRequest(theBlockId: nil, theContactId: contact, theThreadId: nil, theUserId: nil)
-//        } else if let thread = threadId {
-//            sendRequest(theBlockId: nil, theContactId: nil, theThreadId: thread, theUserId: nil)
-//        } else if let user = userId {
-//            sendRequest(theBlockId: nil, theContactId: nil, theThreadId: nil, theUserId: user)
-//        } else {
-//            addContactAndBlockItWithContactId()
-//            addContactAndBlockItWithUserId()
-//            createThreadAndBlockIt()
-//        }
-        
         
     }
     
@@ -88,18 +69,13 @@ class UnblockAutomation {
         
         Chat.sharedInstance.unblockContact(unblockContactsInput: unblockInput, uniqueId: { (unblockUniqueId) in
             self.uniqueIdCallback?(unblockUniqueId)
-//        myChatObject?.unblockContact(unblockContactsInput: unblockInput, uniqueId: { (unblockUniqueId) in
-//            self.uniqueIdCallback?(unblockUniqueId)
         }, completion: { (unblockResponse) in
             self.responseCallback?(unblockResponse as! BlockedContactModel)
             if isAutomation {
                 switch (theBlockId, theContactId, theUserId, theThreadId) {
-                case let (.some(id), .none, .none, .none):
-                    self.unblockSenario(withBlockId: id, withContactId: nil, withUserId: nil, withThreadId: nil)
-                case let (.none, .some(id), .none, .none):
-                    self.unblockSenario(withBlockId: nil, withContactId: id, withUserId: nil, withThreadId: nil)
-                case let (.none, .none, .some(id), .none):
-                    self.unblockSenario(withBlockId: nil, withContactId: nil, withUserId: id, withThreadId: nil)
+                case let (.some(id), .none, .none, .none):  self.unblockSenario(withBlockId: id, withContactId: nil, withUserId: nil, withThreadId: nil)
+                case let (.none, .some(id), .none, .none):  self.unblockSenario(withBlockId: nil, withContactId: id, withUserId: nil, withThreadId: nil)
+                case let (.none, .none, .some(id), .none):  self.unblockSenario(withBlockId: nil, withContactId: nil, withUserId: id, withThreadId: nil)
                 default: return
                 }
             }
@@ -122,10 +98,11 @@ class UnblockAutomation {
 }
 
 
+
 extension UnblockAutomation {
     
     func addContactThenBlock(withContactId: Bool, withUserId: Bool, withThreadId: Bool) {
-        delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "try to add contact, then block it with contactId!!", lineNumbers: 1)
+        delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "try to add contact, then block it with \(withContactId ? "ContactId" : (withUserId ? "UserId" : (withThreadId) ? "threadId" : "blockId"))!!", lineNumbers: 1)
         
         let mehdi = Faker.sharedInstance.mehdiAsContact
         let addContact = AddContactAutomation(cellphoneNumber: mehdi.cellphoneNumber, email: mehdi.email, firstName: mehdi.firstName, lastName: mehdi.lastName)
@@ -154,13 +131,24 @@ extension UnblockAutomation {
                     }
                     
                 case (false, true, false):
-                    if let id = myContact.linkedUser?.coreUserId {
-                        self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new conract has been created, user id = \(id)", lineNumbers: 1)
-                        self.blockWith(contactId: myContact.id, userId: id, threadId: nil, needBlockList: false)
-                    } else {
-                        // handle error that the contact doesn't have linkedUser, or coreUserId
-                        self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "the contact doesn't have linkedUser, or coreUserId in its Model", lineNumbers: 1)
+                    let getContactRequestInputs = GetContactsRequestModel(count: 1, offset: 0, query: mehdi.firstName, requestTypeCode: nil, requestUniqueId: nil)
+                    self.getContact(withInput: getContactRequestInputs) { (contact) in
+                        if let id = contact.userId {
+                            self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new conract has been created, user id = \(id)", lineNumbers: 1)
+                            self.blockWith(contactId: myContact.id, userId: id, threadId: nil, needBlockList: false)
+                        } else {
+                            // handle error that the contact doesn't have UserId
+                            self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "Error: this contact doesn't have UserId!!", lineNumbers: 1)
+                        }
                     }
+                    
+//                    if let id = myContact.linkedUser?.coreUserId {
+//                        self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new conract has been created, user id = \(id)", lineNumbers: 1)
+//                        self.blockWith(contactId: myContact.id, userId: id, threadId: nil, needBlockList: false)
+//                    } else {
+//                        // handle error that the contact doesn't have linkedUser, or coreUserId
+//                        self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "the contact doesn't have linkedUser, or coreUserId in its Model", lineNumbers: 1)
+//                    }
                     
                 case (false, false, true):
                     if let cellphoneNumber = myContact.cellphoneNumber {
@@ -190,10 +178,18 @@ extension UnblockAutomation {
         }
     }
     
+    private func getContact(withInput requestModel: GetContactsRequestModel, completion: @escaping (Contact)->() ) {
+        Chat.sharedInstance.getContacts(getContactsInput: requestModel, uniqueId: { (_) in
+        }, completion: { (cotactM) in
+            let contactModel = cotactM as! GetContactsModel
+            if let firstContact = contactModel.contacts.first {
+                completion(firstContact)
+            }
+        }) { (_) in }
+    }
     
     
     func blockWith(contactId: Int?, userId: Int?, threadId: Int?, needBlockList: Bool) {
-        
         
         switch (contactId, userId, threadId) {
         case let (.some(contact), .none, .none):
@@ -210,7 +206,6 @@ extension UnblockAutomation {
         
         case let (.some(contact), .some(user), .none):
             delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new try to block contact with userId = \(user)", lineNumbers: 1)
-//            let block = BlockAutomation(contactId: nil, threadId: nil, typeCode: typeCode, userId: user)
             let block = BlockAutomation(contactId: contact, threadId: nil, typeCode: typeCode, userId: nil)
             block.create(uniqueId: { _ in }) { (blockedContactModel) in
                 self.sendRequest(theBlockId: nil, theContactId: nil, theUserId: user, theThreadId: nil, isAutomation: true)

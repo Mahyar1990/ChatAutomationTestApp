@@ -66,11 +66,9 @@ class AddParticipantAutomation {
                                                               requestUniqueId:  requestUniqueId)
         
         Chat.sharedInstance.addParticipants(addParticipantsInput: addParticipantInput, uniqueId: { (addParticipantsUniqueId) in
-//        myChatObject?.addParticipants(addParticipantsInput: addParticipantInput, uniqueId: { (addParticipantsUniqueId) in
             print("uniqueId = \(addParticipantsUniqueId)")
             self.uniqueIdCallback?(addParticipantsUniqueId)
         }, completion: { (addParticipantServerResponse) in
-//            print("response = \((addParticipantServerResponse as! AddParticipantModel).returnDataAsJSON())")
             self.responseCallback?(addParticipantServerResponse as! AddParticipantModel)
         })
         
@@ -85,20 +83,11 @@ class AddParticipantAutomation {
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             switch (contactId, threadId, contacts) {
-            case (.none, .none, .none):
-                self.addContact()
-                
-            case let (.some(id), .none, .none):
-                self.createThread(withContactId: id)
-                
-            case let (_ , .some(id), .none):
-                self.addContactToThread(threadId: id)
-                
-            case let (_ , .some(id), .some(cntcts)):
-                self.sendRequest(theContacts: cntcts, theThreadId: id)
-                
-            case (_, .none, .some(_)):
-                print("wrong situation")
+            case (.none, .none, .none):                 self.addContact()
+            case let (.some(id), .none, .none):         self.createThread(withContactId: id)
+            case let (_ , .some(id), .none):            self.addContactToThread(threadId: id)
+            case let (_ , .some(id), .some(cntcts)):    self.sendRequest(theContacts: cntcts, theThreadId: id)
+            case (_, .none, .some(_)):                  print("wrong situation")
             }
         }
         
@@ -107,7 +96,7 @@ class AddParticipantAutomation {
     
     func addContact() {
         // 1
-        let arvin = Faker.sharedInstance.ArvinAsContact
+        let arvin = Faker.sharedInstance.MehranAsContact
         let addContact = AddContactAutomation(cellphoneNumber: arvin.cellphoneNumber, email: arvin.email, firstName: arvin.firstName, lastName: arvin.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {

@@ -58,11 +58,12 @@ class GetThreadAutomation {
         self.cacheCallback      = cacheResponse
         self.responseCallback   = serverResponse
         
-        if threadIds?.first == 0 {
-            sendRequest(theThreadIds: nil)
-        } else {
-            sendRequest(theThreadIds: threadIds)
-        }
+        self.sendRequestSenario(contactCellPhone: nil, threadId: (threadIds?.first == 0) ? nil : threadIds?.first)
+//        if threadIds?.first == 0 {
+//            sendRequest(theThreadIds: nil)
+//        } else {
+//            sendRequest(theThreadIds: threadIds)
+//        }
         
     }
     
@@ -84,18 +85,77 @@ class GetThreadAutomation {
                                                     requestUniqueId:    nil)
         
         Chat.sharedInstance.getThreads(getThreadsInput: getThreadInput, uniqueId: { (getThreadUniqueId) in
-//        myChatObject?.getThreads(getThreadsInput: getThreadInput, uniqueId: { (getThreadUniqueId) in
-//            self.delegate?.newInfo(type: MoreInfoTypes.GetThread.rawValue, message: "uniqueId = \(getThreadUniqueId)", lineNumbers: 1)
             self.uniqueIdCallback?(getThreadUniqueId)
         }, completion: { (getThreadsServerResponse) in
-//            self.delegate?.newInfo(type: MoreInfoTypes.GetThread.rawValue, message: "server response = \(getThreadsServerResponse as! GetThreadsModel)", lineNumbers: 1)
             self.responseCallback?(getThreadsServerResponse as! GetThreadsModel)
         }, cacheResponse: { (getThreadsCacheResponse) in
-//            self.delegate?.newInfo(type: MoreInfoTypes.GetThread.rawValue, message: "cache response = \(getThreadsCacheResponse as! GetThreadsModel)", lineNumbers: 1)
             self.cacheCallback?(getThreadsCacheResponse)
         })
         
     }
+    
+    
+    
+    
+    func sendRequestSenario(contactCellPhone: String?, threadId: Int?) {
+        // 1- create contact
+        // 2- create new thread with this contact, and get the threadId
+        // 3- send a message
+        // 4- sendRequest
+        
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+            switch (contactCellPhone, threadId) {
+            case    (.none, .none):              self.addContact()
+            case let (.some(cellPhone), .none):  self.createThread(cellPhoneNumber: cellPhone)
+            case let (_ , .some(thread)):        self.sendRequest(theThreadIds: [thread])
+            }
+        }
+        
+    }
+    
+    
+    // 1
+    func addContact() {
+        let mehdi = Faker.sharedInstance.mehdiAsContact
+        let addContact = AddContactAutomation(cellphoneNumber: mehdi.cellphoneNumber, email: mehdi.email, firstName: mehdi.firstName, lastName: mehdi.lastName)
+        addContact.create(uniqueId: { _ in }) { (contactModel) in
+            if let myContact = contactModel.contacts.first {
+                if let cellPhone = myContact.cellphoneNumber {
+                    self.delegate?.newInfo(type: MoreInfoTypes.GetThread.rawValue, message: "new conract has been created, cellphone number = \(cellPhone)", lineNumbers: 1)
+                    self.sendRequestSenario(contactCellPhone: cellPhone, threadId: nil)
+                } else {
+                    // handle error that didn't get contactId in the contact model
+                }
+                
+            } else {
+                // handle error that didn't add Contact Model
+            }
+        }
+    }
+    
+    
+    // 2
+    func createThread(cellPhoneNumber: String) {
+        let myInvitee = Invitee(id: "\(cellPhoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
+        let createThread = CreateThreadAutomation(description: nil, image: nil, invitees: [myInvitee], metadata: nil, title: "new Chat Thread", type: nil, requestUniqueId: nil)
+        createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModelResponse, on) in
+            if let conversationModel = createThreadModelResponse.thread {
+                if let thId = conversationModel.id {
+                    self.delegate?.newInfo(type: MoreInfoTypes.GetThread.rawValue, message: "new thread has been created, threadId = \(thId)", lineNumbers: 1)
+                    self.sendRequestSenario(contactCellPhone: nil, threadId: thId)
+                } else {
+                    // handle error that the conversation model doesn't have id (threadId)
+                }
+            } else {
+                // handle error that the response of createThread doesn't have Conversation Model
+            }
+            
+        })
+        
+    }
+    
+    
+    
     
     
 }

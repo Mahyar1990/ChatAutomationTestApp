@@ -75,16 +75,10 @@ class RemoveAdminAutomation {
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             switch (threadId, theUserId, addedAsAdmin) {
-            case    (.none, .none, _):
-                self.createThreadAndAddParticipant()
-                
-            case let (.some(tId), .some(uID), false):
-                self.addAdmin(theThreadId: tId, theUserId: uID)
-                
-            case let (.some(tId), .some(uID), true):
-                self.sendRequest(theThreadId: tId, theUserId: uID)
-                
-            default: print("Wrong situation!!!")
+            case    (.none, .none, _):                  self.createThreadAndAddParticipant()
+            case let (.some(tId), .some(uID), false):   self.addAdmin(theThreadId: tId, theUserId: uID)
+            case let (.some(tId), .some(uID), true):    self.sendRequest(theThreadId: tId, theUserId: uID)
+            default:                                    print("Wrong situation!!!")
             }
         }
         
@@ -99,7 +93,6 @@ class RemoveAdminAutomation {
                 if let myThreadId = threadModel.id {
                     if let participants = threadModel.participants {
                         if participants.count > 0 {
-                            //                            self.sendRequest(theThreadId: myThreadId)
                             if let threadParticipants = threadModel.participants {
                                 var found = false
                                 for item in threadParticipants {
@@ -107,14 +100,10 @@ class RemoveAdminAutomation {
                                         switch (item.admin, item.id) {
                                         case let (.none, .some(participantId)):
                                             self.sendRequestSenario(threadId: myThreadId, theUserId: participantId, addedAsAdmin: false)
-//                                            self.addAdmin(theThreadId: myThreadId, theUserId: participantId)
-//                                            self.sendRequest(theThreadId: myThreadId, theUserId: participantId)
                                             found = true
                                         case let (.some(isTrue), .some(participantId)):
                                             if !isTrue {
                                                 self.sendRequestSenario(threadId: myThreadId, theUserId: participantId, addedAsAdmin: false)
-//                                                self.addAdmin(theThreadId: myThreadId, theUserId: participantId)
-//                                                self.sendRequest(theThreadId: myThreadId, theUserId: participantId)
                                                 found = true
                                             }
                                         default: return

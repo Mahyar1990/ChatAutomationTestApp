@@ -53,7 +53,6 @@ class GetBlockedListAutomation {
         
         let getBlockedListInput = GetBlockedContactListRequestModel(count: theCount, offset: theOffset, requestTypeCode: self.typeCode, requestUniqueId: nil)
         Chat.sharedInstance.getBlockedContacts(getBlockedContactsInput: getBlockedListInput, uniqueId: { (getBlockedListUniqueId) in
-//        myChatObject?.getBlockedContacts(getBlockedContactsInput: getBlockedListInput, uniqueId: { (getBlockedListUniqueId) in
             self.uniqueIdCallback?(getBlockedListUniqueId)
         }, completion: { (getBlockedListResponse) in
             self.responseCallback?(getBlockedListResponse as! GetBlockedContactListModel)

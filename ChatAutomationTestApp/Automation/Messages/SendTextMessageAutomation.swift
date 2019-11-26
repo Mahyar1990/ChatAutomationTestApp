@@ -94,7 +94,6 @@ class SendTextMessageAutomation {
                                                           requestUniqueId:  theUniqueId)
         
         Chat.sharedInstance.sendTextMessage(sendTextMessageInput: sendTextMessage, uniqueId: { (sentTextMessageUniqueId) in
-//        myChatObject?.sendTextMessage(sendTextMessageInput: sendTextMessage, uniqueId: { (sentTextMessageUniqueId) in
             self.uniqueIdCallback?(sentTextMessageUniqueId)
         }, onSent: { (sent) in
             self.serverSentResponse?(sent as! SendMessageModel)

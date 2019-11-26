@@ -19,7 +19,7 @@ class MyChatViewController: UIViewController {
 /*
 https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52664cf7de0bda&response_type=token&redirect_uri=https://chat.fanapsoft.ir&scope=profile social:write
 */
-    
+
 
 // Main Addresses
 //    var socketAddress   = "wss://msg.pod.land/ws"
@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var ssoHost                 = "https://accounts.pod.land"
     var platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = "69ef757f50ef4df3908e68b53aa5f006"
+    var token                   = "99f7b1eaae5540feb3f20d6b84af2651"
     
     
 // Local Addresses 1 (MehrAra)
@@ -187,7 +187,6 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         theAlert.addTextField(configurationHandler: { (textField) -> Void in
             textField.placeholder = "socketAddress"
             textField.text = self.socketAddress
-//            textField.addTarget(self, action: #selector(self.alertTextFieldDidChange(_:)), for: .editingChanged)
         })
         theAlert.addTextField(configurationHandler: { (textField) -> Void in
             textField.placeholder = "serverName"
@@ -210,7 +209,6 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
             textField.text = self.token
         })
         
-//        let cancelAction = UIAlertAction(title: "انصراف", style: .default, handler: nil)
         let textFieldAction = UIAlertAction(title: "تایید", style: .default, handler: { (action) -> Void in
             let textField0 = self.theAlert.textFields![0]
             let textField1 = self.theAlert.textFields![1]
@@ -240,60 +238,14 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
             self.createChat()
             
         })
-//        textFieldAction.isEnabled = true
         
         self.theAlert.addAction(textFieldAction)
-//        self.theAlert.addAction(cancelAction)
-        
         self.present(self.theAlert, animated: true, completion: nil)
-        
     }
-    
-    
-    
-    /*
-    @objc func connectChat() {
-        
-//        if let myToken = UserDefaults.standard.value(forKey: MyUserDefaultKeys.token) as? String {
-//            if myToken.count > 30 {
-//                token = myToken
-//                createChat()
-//            } else {
-//                updateText(cellText: "your token is less than 30 characters!, get valid token!", cellHeight: 60, cellColor: UIColor.orange)
-//            }
-//        } else {
-//            updateText(cellText: "your token is invalid!, get valid token!", cellHeight: 60, cellColor: UIColor.orange)
-//        }
-        
-        
-        if (tokenTextField.text?.count)! > 30 {
-            print("my token is : \(tokenTextField.text ?? "nil")")
-            token = tokenTextField.text!
-            createChat()
-        } else {
-            // error! Please inter your token
-            updateText(cellText: "your token is invalid, write down valid token", cellHeight: 50, cellColor: UIColor.orange)
-/*
-https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52664cf7de0bda&response_type=token&redirect_uri=https://chat.fanapsoft.ir&scope=profile social:write
- */
-//            token = "bafecdae36164827bca4f425cfc6c06a"
-//            token = "7a18deb4a4b64339a81056089f5e5922"
-            token = "fbd4ecedb898426394646e65c6b1d5d1"
-            
-            createChat()
-        }
-        
-    }
-    */
     
     
     func createChat() {
-//        setTokenAndConnectChatButton.isEnabled = false
-//        setTokenAndConnectChatButton.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 0.2)
-//        setTokenAndConnectChatButton.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 0.4).cgColor
-        
         // create Chat object
-        
         Chat.sharedInstance.createChatObject(socketAddress:          socketAddress,
                                             ssoHost:                ssoHost,
                                             platformHost:           platformHost,
@@ -332,21 +284,18 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         updateText(cellText: "user tries to Cancel Upload/Download!", cellHeight: 40, cellColor: .gray)
         if uploadImageUniqueId != "" {
             Chat.sharedInstance.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
-//            myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
                 self.logBackgroundColor.append(UIColor.gray)
                 self.logHeightArr.append(40)
                 self.addtext(text: message)
             })
         } else if uploadFileUniqueId != "" {
             Chat.sharedInstance.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
-//            myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
                 self.logBackgroundColor.append(UIColor.gray)
                 self.logHeightArr.append(40)
                 self.addtext(text: message)
             })
         } else if downloadFileUniqueId != "" {
             Chat.sharedInstance.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
-//            myChatObject?.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.cancel, completion: { (message, state) in
                 self.logBackgroundColor.append(UIColor.gray)
                 self.logHeightArr.append(40)
                 self.addtext(text: message)
@@ -365,21 +314,18 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                     updateText(cellText: "user tries to Pause the Upload/Download", cellHeight: 40, cellColor: .gray)
                     if uploadImageUniqueId != "" {
                         Chat.sharedInstance.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
-//                        myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
                             self.logBackgroundColor.append(UIColor.gray)
                             self.logHeightArr.append(40)
                             self.addtext(text: message)
                         })
                     } else if uploadFileUniqueId != "" {
                         Chat.sharedInstance.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
-//                        myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
                             self.logBackgroundColor.append(UIColor.gray)
                             self.logHeightArr.append(40)
                             self.addtext(text: message)
                         })
                     } else if downloadFileUniqueId != "" {
                         Chat.sharedInstance.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
-//                        myChatObject?.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
                             self.logBackgroundColor.append(UIColor.gray)
                             self.logHeightArr.append(40)
                             self.addtext(text: message)
@@ -389,21 +335,18 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                     updateText(cellText: "user tries to Resume the Upload/Download", cellHeight: 40, cellColor: .gray)
                     if uploadImageUniqueId != "" {
                         Chat.sharedInstance.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
-//                        myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
                             self.logBackgroundColor.append(UIColor.gray)
                             self.logHeightArr.append(40)
                             self.addtext(text: message)
                         })
                     } else if uploadFileUniqueId != "" {
                         Chat.sharedInstance.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
-//                        myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
                             self.logBackgroundColor.append(UIColor.gray)
                             self.logHeightArr.append(40)
                             self.addtext(text: message)
                         })
                     } else if downloadFileUniqueId != "" {
                         Chat.sharedInstance.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
-//                        myChatObject?.manageUpload(image: false, file: true, withUniqueId: downloadFileUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
                             self.logBackgroundColor.append(UIColor.gray)
                             self.logHeightArr.append(40)
                             self.addtext(text: message)
@@ -414,41 +357,6 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                 
             }
         }
-        
-        
-//        if pauseUploadButton.titleLabel?.text == "Pause" {
-//            pauseUploadButton.setTitle("Resume", for: UIControl.State.normal)
-//            updateText(cellText: "user tries to Pause the Upload", cellHeight: 40, cellColor: .gray)
-//            if uploadImageUniqueId != "" {
-//                myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
-//                    self.logBackgroundColor.append(UIColor.gray)
-//                    self.logHeightArr.append(40)
-//                    self.addtext(text: message)
-//                })
-//            } else if uploadFileUniqueId != "" {
-//                myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.suspend, completion: { (message, state) in
-//                    self.logBackgroundColor.append(UIColor.gray)
-//                    self.logHeightArr.append(40)
-//                    self.addtext(text: message)
-//                })
-//            }
-//        } else {
-//            updateText(cellText: "user tries to Resume the Upload", cellHeight: 40, cellColor: .gray)
-//            if uploadImageUniqueId != "" {
-//                myChatObject?.manageUpload(image: true, file: false, withUniqueId: uploadImageUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
-//                    self.logBackgroundColor.append(UIColor.gray)
-//                    self.logHeightArr.append(40)
-//                    self.addtext(text: message)
-//                })
-//            } else if uploadFileUniqueId != "" {
-//                myChatObject?.manageUpload(image: false, file: true, withUniqueId: uploadFileUniqueId, withAction: DownloaUploadAction.resume, completion: { (message, state) in
-//                    self.logBackgroundColor.append(UIColor.gray)
-//                    self.logHeightArr.append(40)
-//                    self.addtext(text: message)
-//                })
-//            }
-//            pauseUploadButton.setTitle("Pause", for: UIControl.State.normal)
-//        }
         
     }
     
@@ -463,17 +371,12 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 extension MyChatViewController: MoreInfoDelegate {
     
     func newInfo(type: String, message: String, lineNumbers: Int) {
-//        self.logBackgroundColor.append(UIColor.gray)
         self.logBackgroundColor.append(UIColor.init().hexToRGB(hex: "#ffeaa7", alpha: 1))
         self.logHeightArr.append(30 + (lineNumbers * 20))
         self.addtext(text: "inside \(type):\n\(message)")
     }
     
 }
-
-
-
-
 
 
 
@@ -517,7 +420,6 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             }
         }
         
-//        return pickerData[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
@@ -537,201 +439,75 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         
         if (component == 0) {
             switch row {
-            case 0:
-                setPlaceHolderText(Input1: "phoneNumber", Input2: "email", Input3: "firstName", Input4: "lastName", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " cellphoneNumber as String ,\t email as String ,\t firstName as String ,\t lastName as String", cellHeight: 70, cellColor: .white)
-                
-            case 1:
-                setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " threadId as Int ,\t userId as Int", cellHeight: 35, cellColor: .white)
-                
-            case 2:
-                setPlaceHolderText(Input1: "subjectId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " subjectId as Int", cellHeight: 35, cellColor: .white)
-                
-            case 3:
-                setPlaceHolderText(Input1: "lat", Input2: "lon", Input3: "threadId", Input4: "message", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " lat as Double ,\t  lon as Double ,\t threadId as Int ,\t message text as String", cellHeight: 50, cellColor: .white)
-                
-            case 4:
-                setPlaceHolderText(Input1: "fileName", Input2: "message", Input3: "repliedTo", Input4: "threadId", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " fileName as String \t message text as String \t repliedTo as Int \t threadId as Int", cellHeight: 70, cellColor: .white)
-                
-            default:
-                print("Selected row number \(row) that is not in the correct range!")
+            case 0:     setPlaceHolderText(Input1: "phoneNumber", Input2: "email", Input3: "firstName", Input4: "lastName", Input5: "", Input6: "", Input7: "", Input8: "")
+            case 1:     setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case 2:     setPlaceHolderText(Input1: "subjectId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case 3:     setPlaceHolderText(Input1: "lat", Input2: "lon", Input3: "threadId", Input4: "message", Input5: "", Input6: "", Input7: "", Input8: "")
+            case 4:     setPlaceHolderText(Input1: "fileName", Input2: "message", Input3: "repliedTo", Input4: "threadId", Input5: "", Input6: "", Input7: "", Input8: "")
+            default:    print("Selected row number \(row) that is not in the correct range!")
             }
             section = row
             picker = 0
             pickerView.reloadComponent(1)
             pickerView.selectRow(0, inComponent: 1, animated: true)
+            
         } else {
             picker = row
             switch (section, row) {
             // Contact Managements
-            case (0, 0):
-                setPlaceHolderText(Input1: "phoneNumber", Input2: "email", Input3: "firstName", Input4: "lastName", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " cellphoneNumber as String ,\t email as String ,\t firstName as String ,\t lastName as String", cellHeight: 70, cellColor: .white)
-                
-            case (0, 1):
-                setPlaceHolderText(Input1: "contactId", Input2: "threadId", Input3: "userId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " contactId as Int ,\t threadId as Int ,\t userId as Int", cellHeight: 60, cellColor: .white)
-                
-            case (0, 2):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " count as Int ,\t offset as Int", cellHeight: 50, cellColor: .white)
-                
-            case (0, 3):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " count as Int ,\t offset as Int ,\t name as String", cellHeight: 60, cellColor: .white)
-                
-            case (0, 4):
-                setPlaceHolderText(Input1: "id", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " id as Int", cellHeight: 35, cellColor: .white)
-                
-            case (0, 5):
-                setPlaceHolderText(Input1: "PhoneNumner", Input2: "firstName", Input3: "lastName", Input4: "id", Input5: "email", Input6: "offset", Input7: "count", Input8: "")
-//                updateText(cellText: " cellPhoneNumner as String ,\t firstName as String ,\t lastName as String ,\t id as Int", cellHeight: 70, cellColor: .white)
-                
-            case (0, 6):
-                setPlaceHolderText(Input1: "blockId", Input2: "contactId", Input3: "threadId", Input4: "userId", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " blockId as String ,\t contactId as String ,\t threadId as String ,\t userId as String", cellHeight: 70, cellColor: .white)
-                
-            case (0, 7):
-                setPlaceHolderText(Input1: "contactId", Input2: "phoneNumber", Input3: "email", Input4: "firstname", Input5: "lastName", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " contactId as Int ,\t cellphoneNumber as String ,\t email as String ,\t firstName as String ,/t lastName as String", cellHeight: 90, cellColor: .white)
-            
-            
+            case (0, 0):    setPlaceHolderText(Input1: "phoneNumber", Input2: "email", Input3: "firstName", Input4: "lastName", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (0, 1):    setPlaceHolderText(Input1: "contactId", Input2: "threadId", Input3: "userId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (0, 2):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (0, 3):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (0, 4):    setPlaceHolderText(Input1: "id", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (0, 5):    setPlaceHolderText(Input1: "PhoneNumner", Input2: "firstName", Input3: "lastName", Input4: "id", Input5: "email", Input6: "offset", Input7: "count", Input8: "")
+            case (0, 6):    setPlaceHolderText(Input1: "blockId", Input2: "contactId", Input3: "threadId", Input4: "userId", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (0, 7):    setPlaceHolderText(Input1: "contactId", Input2: "phoneNumber", Input3: "email", Input4: "firstname", Input5: "lastName", Input6: "", Input7: "", Input8: "")
+
             // Thread Managements
-            case (1, 0):
-                setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " threadId as Int ,/t userId as Int", cellHeight: 35, cellColor: .white)
-                
-            case (1, 1):
-                setPlaceHolderText(Input1: "threadId", Input2: "ContactId", Input3: "ContactId", Input4: "ContactId", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " threadId as Int ,\t ContactId1 as Int ,\t ContactId2 as Int ,\t ContactId3 as Int", cellHeight: 70, cellColor: .white)
-                
-            case (1, 2):
-                setPlaceHolderText(Input1: "threadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " threadId as Int", cellHeight: 35, cellColor: .white)
-                
-            case (1, 3):
-                setPlaceHolderText(Input1: "description", Input2: "title", Input3: "inviteeId", Input4: "inviteeType", Input5: "image", Input6: "metadata", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = description as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: .white)
-                updateText(cellText: "inviteeType: \n 0 = TO_BE_USER_ID \n 1 = TO_BE_USER_SSO_ID \n 2 = TO_BE_USER_CONTACT_ID \n 3 = TO_BE_USER_CELLPHONE_NUMBER \n 4 = TO_BE_USER_USERNAME", cellHeight: 70, cellColor: .white)
-                
-            case (1, 4):
-                setPlaceHolderText(Input1: "message", Input2: "title", Input3: "inviteeId", Input4: "inviteeType", Input5: "description", Input6: "image", Input7: "metadata", Input8: "")
-//                updateText(cellText: " Input 1 = message text as String \n Input 2 = title as String \n Input 3 = inviteeId as String \n Input 4 = inviteeType as String", cellHeight: 70, cellColor: .white)
-                updateText(cellText: "inviteeType: \n 0 = TO_BE_USER_ID \n 1 = TO_BE_USER_SSO_ID \n 2 = TO_BE_USER_CONTACT_ID \n 3 = TO_BE_USER_CELLPHONE_NUMBER \n 4 = TO_BE_USER_USERNAME", cellHeight: 70, cellColor: .white)
-                
-            case (1, 5):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "firstMessageId", Input6: "lastMessageId", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = threadId as Int", cellHeight: 35, cellColor: .white)
-                
-            case (1, 6):
-                setPlaceHolderText(Input1: "threadId", Input2: "fromTime", Input3: "toTime", Input4: "query", Input5: "count", Input6: "offset", Input7: "firstMessageId", Input8: "lastMessageId")
-//                updateText(cellText: " Input 1 = threadId as Int \n Input 2 = fromTime as UInt \n Input 3 = toTime as UInt \n Input 4 = query as String", cellHeight: 70, cellColor: .white)
-                
-            case (1, 7):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "coreUserId", Input6: "new", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
-                updateText(cellText: "new: \n true or false", cellHeight: 35, cellColor: .white)
-                
-            case (1, 8):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "firstMessageId", Input6: "lastMessageId", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = name as String \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
-                
-            case (1, 9):
-                setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
-                
-            case (1, 10):
-                setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
-                
-            case (1, 11):
-                setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
-                
-            case (1, 12):
-                setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = threadId as Int, Input 2 = userId as Int", cellHeight: 35, cellColor: .white)
-                
-            case (1, 13):
-                setPlaceHolderText(Input1: "ThreadId", Input2: "participant", Input3: "participant", Input4: "participant", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = ThreadId \n Input 2 = participant as Int \n Input 3 = participant as Int \n Input 4 = participant as Int", cellHeight: 70, cellColor: .white)
-                
-            case (1, 14):
-                setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = ThreadId", cellHeight: 35, cellColor: .white)
-                
-                
+            case (1, 0):    setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 1):    setPlaceHolderText(Input1: "threadId", Input2: "ContactId", Input3: "ContactId", Input4: "ContactId", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 2):    setPlaceHolderText(Input1: "threadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 3):    setPlaceHolderText(Input1: "description", Input2: "title", Input3: "inviteeId", Input4: "inviteeType", Input5: "image", Input6: "metadata", Input7: "", Input8: "")
+                            updateText(cellText: "inviteeType: \n 0 = TO_BE_USER_ID \n 1 = TO_BE_USER_SSO_ID \n 2 = TO_BE_USER_CONTACT_ID \n 3 = TO_BE_USER_CELLPHONE_NUMBER \n 4 = TO_BE_USER_USERNAME", cellHeight: 70, cellColor: .white)
+            case (1, 4):    setPlaceHolderText(Input1: "message", Input2: "title", Input3: "inviteeId", Input4: "inviteeType", Input5: "description", Input6: "image", Input7: "metadata", Input8: "")
+                            updateText(cellText: "inviteeType: \n 0 = TO_BE_USER_ID \n 1 = TO_BE_USER_SSO_ID \n 2 = TO_BE_USER_CONTACT_ID \n 3 = TO_BE_USER_CELLPHONE_NUMBER \n 4 = TO_BE_USER_USERNAME", cellHeight: 70, cellColor: .white)
+            case (1, 5):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "firstMessageId", Input6: "lastMessageId", Input7: "", Input8: "")
+            case (1, 6):    setPlaceHolderText(Input1: "threadId", Input2: "fromTime", Input3: "toTime", Input4: "query", Input5: "count", Input6: "offset", Input7: "firstMessageId", Input8: "lastMessageId")
+            case (1, 7):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "coreUserId", Input6: "new", Input7: "", Input8: "")
+                            updateText(cellText: "new: \n true or false", cellHeight: 35, cellColor: .white)
+            case (1, 8):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "firstMessageId", Input6: "lastMessageId", Input7: "", Input8: "")
+            case (1, 9):    setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 10):   setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 11):   setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 12):   setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 13):   setPlaceHolderText(Input1: "ThreadId", Input2: "participant", Input3: "participant", Input4: "participant", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 14):   setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
                 
             // Message Managements
-            case (2, 0):
-                setPlaceHolderText(Input1: "subjectId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = subjectId as Int", cellHeight: 35, cellColor: .white)
-                
-            case (2, 1):
-                setPlaceHolderText(Input1: "threadId", Input2: "subjectId", Input3: "subjectId", Input4: "subjectId", Input5: "deleteForAll", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = subjectId as Int,\n Input 2 = subjectId as Int,\n Input 3 = subjectId as Int,\n Input 4 = subjectId as Int", cellHeight: 70, cellColor: .white)
-                updateText(cellText: "deleteForAll: \n true or false", cellHeight: 35, cellColor: .white)
-                
-            case (2, 2):
-                setPlaceHolderText(Input1: "content", Input2: "messageId", Input3: "repliedTo", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 60, cellColor: .white)
-                
-            case (2, 3):
-                setPlaceHolderText(Input1: "messageIds", Input2: "repliedTo", Input3: "subjectId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = messageIds as [Int] \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 60, cellColor: .white)
-                
-            case (2, 4):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = messageId as Int", cellHeight: 60, cellColor: .white)
-                
-            case (2, 5):
-                setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = count as Int \n Input 2 = offset as Int \n Input 3 = messageId as Int", cellHeight: 60, cellColor: .white)
-                
-            case (2, 6):
-                setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "subjectId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = subjectId as Int", cellHeight: 60, cellColor: .white)
-                
-            case (2, 7):
-                setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "threadId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = content as String \n Input 2 = repliedTo as Int \n Input 3 = threadId as Int", cellHeight: 60, cellColor: .white)
-              
-                
+            case (2, 0):    setPlaceHolderText(Input1: "subjectId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (2, 1):    setPlaceHolderText(Input1: "threadId", Input2: "subjectId", Input3: "subjectId", Input4: "subjectId", Input5: "deleteForAll", Input6: "", Input7: "", Input8: "")
+                            updateText(cellText: "deleteForAll: \n true or false", cellHeight: 35, cellColor: .white)
+            case (2, 2):    setPlaceHolderText(Input1: "content", Input2: "messageId", Input3: "repliedTo", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (2, 3):    setPlaceHolderText(Input1: "messageIds", Input2: "repliedTo", Input3: "subjectId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (2, 4):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (2, 5):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (2, 6):    setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "subjectId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (2, 7):    setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "threadId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            
             // Location Managements
-            case (3, 0):
-                setPlaceHolderText(Input1: "lat", Input2: "lon", Input3: "threadId", Input4: "message", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: " Input 1 = lat as Double \n Input 2 = lon as Double \n Input 3 = threadId as Int \n Input 4 = message text as String", cellHeight: 70, cellColor: .white)
-                
+            case (3, 0):    setPlaceHolderText(Input1: "lat", Input2: "lon", Input3: "threadId", Input4: "message", Input5: "", Input6: "", Input7: "", Input8: "")
             
             // File Managements
-            case (4, 0):
-                setPlaceHolderText(Input1: "fileName", Input2: "message", Input3: "repliedTo", Input4: "threadId", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: "Input 1 = fileName as String \n Input 2 = message text as String \n Input 3 = repliedTo as Int \n Input 4 = threadId as Int", cellHeight: 70, cellColor: .white)
-                
-            case (4, 1):
-                setPlaceHolderText(Input1: "fileName", Input2: "message", Input3: "threadId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: "Input 1 = fileName as String \n Input 2 = message text as String \n Input 3 = threadId as Int", cellHeight: 60, cellColor: .white)
-                
-            case (4, 2):
-                setPlaceHolderText(Input1: "fileName", Input2: "threadId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: "Input 1 = fileName", cellHeight: 35, cellColor: .white)
-                
-            case (4, 3):
-                setPlaceHolderText(Input1: "imageName", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-//                updateText(cellText: "Input 1 = imageName", cellHeight: 35, cellColor: .white)
-                
-                
-            default:
-                print("Selected row number \(row) that is not in the correct range!")
+            case (4, 0):    setPlaceHolderText(Input1: "fileName", Input2: "message", Input3: "repliedTo", Input4: "threadId", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (4, 1):    setPlaceHolderText(Input1: "fileName", Input2: "message", Input3: "threadId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (4, 2):    setPlaceHolderText(Input1: "fileName", Input2: "threadId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (4, 3):    setPlaceHolderText(Input1: "imageName", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            
+            default:        print("Selected row number \(row) that is not in the correct range!")
             }
         }
-        
-        
+           
     }
     
     func setPlaceHolderText(Input1: String, Input2: String, Input3: String, Input4: String, Input5: String, Input6: String, Input7: String, Input8: String) {
@@ -1024,19 +800,6 @@ extension MyChatViewController {
             lastName = ln
         }
         
-//        if let fullName = input4TextField.text {
-//            if (fullName != "") && (fullName.first != " ") {
-//                let str = fullName.replacingOccurrences(of: " ", with: "") // remove all spaces
-//                let fullnameArr = str.components(separatedBy: ",")            // seperate ids
-//                if let fn = fullnameArr.first {
-//                    firstName = fn
-//                }
-//                if let ln = fullnameArr.last {
-//                    lastName = ln
-//                }
-//            }
-//        }
-        
         let updateContact = UpdateContactAutomation(cellphoneNumber: cellPhoneNumber, email: email, firstName: firstName, id: contactId, lastName: lastName)
         updateContact.delegate = self
         updateContact.create(uniqueId: { (updateContactUniqueId) in
@@ -1139,18 +902,12 @@ extension MyChatViewController {
         var invitees: [Invitee]? = nil
         if let id = inviteeId {
             switch inviteeType {
-            case 1:
-                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_SSO_ID)]
-            case 2:
-                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)]
-            case 3:
-                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)]
-            case 4:
-                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_USERNAME)]
-            case 0:
-                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_ID)]
-            default:
-                invitees = [Invitee(id: id, idType: "0")]
+            case 1:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_SSO_ID)]
+            case 2:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)]
+            case 3:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)]
+            case 4:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_USERNAME)]
+            case 0:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_ID)]
+            default:    invitees = [Invitee(id: id, idType: "0")]
             }
         }
         if let txt = input5TextField.text {
@@ -1200,18 +957,12 @@ extension MyChatViewController {
         var invitees: [Invitee]? = nil
         if let id = inviteeId {
             switch inviteeType {
-            case 1:
-                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_SSO_ID)]
-            case 2:
-                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)]
-            case 3:
-                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)]
-            case 4:
-                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_USERNAME)]
-            case 5:
-                invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_ID)]
-            default:
-                invitees = [Invitee(id: id, idType: "5")]
+            case 1:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_SSO_ID)]
+            case 2:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)]
+            case 3:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)]
+            case 4:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_USERNAME)]
+            case 5:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_ID)]
+            default:    invitees = [Invitee(id: id, idType: "5")]
             }
         }
         if let txt = input5TextField.text {
@@ -1318,10 +1069,10 @@ extension MyChatViewController {
             let myText = "getHistory uniqueId = \(getHistoryUniqueId)"
             self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }, serverResponse: { (getHistoryServerModel) in
-            let myText = "get thread model server response = \(getHistoryServerModel.returnDataAsJSON())"
+            let myText = "get history model server response = \(getHistoryServerModel.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 140, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }) { (getHistoryCacheModel) in
-            let myText = "get thread model cache response = \(getHistoryCacheModel.returnDataAsJSON())"
+            let myText = "get history model cache response = \(getHistoryCacheModel.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 140, cellColor: UIColor.init().hexToRGB(hex: "#55efc4", alpha: 1))
         }
     }
@@ -1556,7 +1307,6 @@ extension MyChatViewController {
         
         var subIds = [Int]()
         
-//        if let _ = threadId   { subIds.append(threadId!) }
         if let _ = subjectId1 { subIds.append(subjectId1!) }
         if let _ = subjectId2 { subIds.append(subjectId2!) }
         if let _ = subjectId3 { subIds.append(subjectId3!) }
@@ -1849,7 +1599,6 @@ extension MyChatViewController {
     func implementSendFileMessage() {
         var fileName:   String? = nil
         var content:    String? = nil
-//        let repliedTo:  Int?    = Int(input3TextField.text ?? "")
         let threadId:   Int?    = Int(input3TextField.text ?? "")
         
         if let txt = input1TextField.text {
@@ -1932,7 +1681,7 @@ extension MyChatViewController {
 
 
 
-// MARK: CollectionView methods
+// MARK: - CollectionView methods
 extension MyChatViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -1957,32 +1706,6 @@ extension MyChatViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return uploadCell
         }
         
-        
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! MyCollectionViewCell
-//        cell.backgroundColor = logBackgroundColor[indexPath.item]
-//        cell.myTextView.text = logArr[indexPath.item]
-//        if (logBackgroundColor[indexPath.item] == UIColor.lightGray) {
-//            cell.addSubview(spaceProgressView)
-//            cell.addSubview(cancelUploadButton)
-//            cell.addSubview(pauseUploadButton)
-//
-//            spaceProgressView.bottomAnchor.constraint(equalTo: cell.bottomAnchor, constant: -8).isActive = true
-//            spaceProgressView.leftAnchor.constraint(equalTo: cell.leftAnchor, constant: 4).isActive = true
-//            spaceProgressView.rightAnchor.constraint(equalTo: cell.rightAnchor, constant: -4).isActive = true
-//            spaceProgressView.heightAnchor.constraint(equalToConstant: 8).isActive = true
-//
-//            cancelUploadButton.bottomAnchor.constraint(equalTo: spaceProgressView.topAnchor, constant: -4).isActive = true
-//            cancelUploadButton.rightAnchor.constraint(equalTo: spaceProgressView.rightAnchor).isActive = true
-//            cancelUploadButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
-//            cancelUploadButton.heightAnchor.constraint(equalToConstant: 30).isActive = true
-//
-//            pauseUploadButton.bottomAnchor.constraint(equalTo: cancelUploadButton.bottomAnchor).isActive = true
-//            pauseUploadButton.topAnchor.constraint(equalTo: cancelUploadButton.topAnchor).isActive = true
-//            pauseUploadButton.rightAnchor.constraint(equalTo: cancelUploadButton.leftAnchor, constant: -10).isActive = true
-//            pauseUploadButton.widthAnchor.constraint(equalToConstant: 90).isActive = true
-//        }
-//        return cell
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -1994,9 +1717,7 @@ extension MyChatViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 
 
-
-
-
+// MARK: - PickerViewDelegate methods
 extension MyChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         

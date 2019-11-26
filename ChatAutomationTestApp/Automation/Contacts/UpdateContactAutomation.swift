@@ -59,6 +59,7 @@ class UpdateContactAutomation {
                                                           firstName:        contactFirstname,
                                                           id:               contactId,
                                                           lastName:         contactLastname,
+                                                          requestTypeCode:  nil,
                                                           requestUniqueId:  nil)
             sendRequest(updateContactRequest: requestModel)
         default:
@@ -74,7 +75,6 @@ class UpdateContactAutomation {
         delegate?.newInfo(type: MoreInfoTypes.UpdateContact.rawValue, message: "Send UpdateContact request with this params:\n id = \(updateContactRequest.id) , cellPhoneNumber = \(updateContactRequest.cellphoneNumber) , email = \(updateContactRequest.email) , firstName = \(updateContactRequest.firstName) , lastName = \(updateContactRequest.lastName)", lineNumbers: 3)
         
         Chat.sharedInstance.updateContact(updateContactsInput: updateContactRequest, uniqueId: { (updateContactsUniqueId) in
-//        myChatObject?.updateContact(updateContactsInput: updateContactRequest, uniqueId: { (updateContactsUniqueId) in
             self.uniqueIdCallback?(updateContactsUniqueId)
         }, completion: { (updateContactServerResponse) in
             self.responseCallback?(updateContactServerResponse as! ContactModel)
@@ -114,6 +114,7 @@ class UpdateContactAutomation {
                                                                         firstName:          contact.first,
                                                                         id:                 contactId,
                                                                         lastName:           contact.last,
+                                                                        requestTypeCode:    nil,
                                                                         requestUniqueId:    nil)
                     self.sendRequest(updateContactRequest: updateContactModel)
                     

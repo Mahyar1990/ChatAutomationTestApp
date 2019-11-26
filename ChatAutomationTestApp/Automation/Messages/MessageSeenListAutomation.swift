@@ -63,11 +63,8 @@ class MessageSeenListAutomation {
         let seenInput = MessageDeliverySeenListRequestModel(count: count, messageId: theMessageId, offset: offset, requestTypeCode: typeCode, requestUniqueId: nil)
         
         Chat.sharedInstance.messageDeliveryList(messageDeliveryListInput: seenInput, uniqueId: { (messageSeenListUniqueId) in
-//        myChatObject?.messageDeliveryList(messageDeliveryListInput: seenInput, uniqueId: { (messageSeenListUniqueId) in
             self.uniqueIdCallback?(messageSeenListUniqueId)
         }, completion: { (messageSeenListResponse) in
-//            print("*******************\n\n\n\n\(messageSeenListResponse)")
-//            print("*******************\n\n\n\n\((messageSeenListResponse as! GetThreadParticipantsModel).returnDataAsJSON())")
             self.responseCallback?(messageSeenListResponse as! GetThreadParticipantsModel)
         })
         
@@ -80,10 +77,6 @@ class MessageSeenListAutomation {
         x.create(uniqueId: { _ in }, serverSentResponse: { (sent) in
             self.delegate?.newInfo(type: MoreInfoTypes.MessageSeenList.rawValue, message: "new Message has been sent", lineNumbers: 1)
             print("\n\nSent: \n\(sent)\n\n")
-//            if let messageIdStr = sent["content"].string {
-//                if let mId = Int(messageIdStr) {
-//                    self.sendRequest(theMessageId: mId)
-//                }
             if let messageId = sent.message?.id {
                 self.sendRequest(theMessageId: messageId)
             }

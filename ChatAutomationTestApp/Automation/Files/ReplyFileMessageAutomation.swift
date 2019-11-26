@@ -66,20 +66,11 @@ class ReplyFileMessageAutomation {
         // 5- send request
         
         switch (contactId, threadId, repliedTo, data) {
-        case (.none, .none, _, _):
-            addContact()
-            
-        case let (.some(id), .none, _, _):
-            createThread(withContactId: id)
-            
-        case (_, .some(_), .none, _):
-            sendMessage()
-        
-        case (_, .some(_), .some(_), .none):
-            prepareDataToUpload()
-            
-        case let (_, .some(tId), .some(_), .some(myData)):
-            sendRequest(theData: myData, toThreadId: tId)
+        case (.none, .none, _, _):                          addContact()
+        case let (.some(id), .none, _, _):                  createThread(withContactId: id)
+        case (_, .some(_), .none, _):                       sendMessage()
+        case (_, .some(_), .some(_), .none):                prepareDataToUpload()
+        case let (_, .some(tId), .some(_), .some(myData)):  sendRequest(theData: myData, toThreadId: tId)
             
         }
     }
@@ -134,7 +125,6 @@ class ReplyFileMessageAutomation {
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             print("message response = \(sentResponse)")
             
-//            if let messageId = Int(sentResponse["content"].stringValue) {
             if let messageId = sentResponse.message?.id {
                 self.repliedTo = messageId
                 self.delegate?.newInfo(type: MoreInfoTypes.ReplyFileMessage.rawValue, message: "Message has been sent to this threadId = \(self.threadId ?? 0), messageId = \(messageId)", lineNumbers: 1)
@@ -176,7 +166,6 @@ class ReplyFileMessageAutomation {
                                                                 requestUniqueId:    nil)
         
         Chat.sharedInstance.replyFileMessage(replyFileMessageInput: replyFileMessageInput, uniqueId: { (replyFileMessageUniqueId) in
-//        myChatObject?.replyFileMessage(replyFileMessageInput: replyFileMessageInput, uniqueId: { (replyFileMessageUniqueId) in
             self.uniqueIdCallback?(replyFileMessageUniqueId)
         }, uploadProgress: { (uploadFileProgress) in
             self.progressCallback?(uploadFileProgress)

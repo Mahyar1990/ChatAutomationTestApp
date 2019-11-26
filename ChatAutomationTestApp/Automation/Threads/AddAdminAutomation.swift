@@ -56,7 +56,6 @@ class AddAdminAutomation {
         let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Add, threadId: theThreadId, userId: theUserId, requestTypeCode: nil, requestUniqueId: requestUniqueId)
         
         Chat.sharedInstance.setRole(setRoleInput: [addAdminInput], uniqueId: { (addAdminUniqueId) in
-//        myChatObject?.setRole(setRoleInput: [addAdminInput], uniqueId: { (addAdminUniqueId) in
             self.uniqueIdCallback?(addAdminUniqueId)
         }, completion: { (addAdminServerResponseModel) in
             self.serverResponseCallback?(addAdminServerResponseModel as! UserRolesModel)
@@ -87,19 +86,16 @@ class AddAdminAutomation {
                 if let myThreadId = threadModel.id {
                     if let participants = threadModel.participants {
                         if participants.count > 0 {
-//                            self.sendRequest(theThreadId: myThreadId)
                             if let threadParticipants = threadModel.participants {
                                 var found = false
                                 for item in threadParticipants {
                                     if !found {
                                         switch (item.admin, item.id) {
                                         case let (.none, .some(participantId)):
-//                                            self.sendRequest(theThreadId: myThreadId, theUserId: participantId)
                                             self.sendRequestSenario(inThreadId: myThreadId, withUserId: participantId)
                                             found = true
                                         case let (.some(isTrue), .some(participantId)):
                                             if !isTrue {
-//                                                self.sendRequest(theThreadId: myThreadId, theUserId: participantId)
                                                 self.sendRequestSenario(inThreadId: myThreadId, withUserId: participantId)
                                                 found = true
                                             }

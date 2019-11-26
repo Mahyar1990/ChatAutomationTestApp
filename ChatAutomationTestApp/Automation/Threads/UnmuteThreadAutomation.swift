@@ -52,7 +52,6 @@ class UnmuteThreadAutomation {
                                                               requestUniqueId:  nil)
         
         Chat.sharedInstance.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
-//        myChatObject?.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
             self.uniqueIdCallback?(muteThreadUniqueId)
         }, completion: { (muteThreadServerResponseModel) in
             self.responseCallback?(muteThreadServerResponseModel as! MuteUnmuteThreadModel)
@@ -76,12 +75,6 @@ class UnmuteThreadAutomation {
             
             self.delegate?.newInfo(type: MoreInfoTypes.UnmuteThread.rawValue, message: "This thread with id = \(muteThreadResponse.threadId) has been Muted", lineNumbers: 1)
             self.sendRequest(theThreadId: muteThreadResponse.threadId)
-            
-//            if let mutedThread = muteThreadResponse as? MuteUnmuteThreadModel {
-//
-//            } else {
-//                self.delegate?.newInfo(type: MoreInfoTypes.UnmuteThread.rawValue, message: "Response of the Mute Thread does not contain threadId!! (result in the json response)", lineNumbers: 2)
-//            }
         }
     }
     

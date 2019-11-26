@@ -57,11 +57,6 @@ class GetThreadParticipantsAutomation {
         self.responseCallback   = serverResponse
         
         sendRequestSenario(contactCellPhone: nil, threadId: threadId)
-//        if let id = threadId {
-//            sendRequest(theThreadId: id)
-//        } else {
-//            sendRequestSenario(contactCellPhone: nil, threadId: nil)
-//        }
     }
     
     func sendRequest(theThreadId: Int) {
@@ -78,7 +73,6 @@ class GetThreadParticipantsAutomation {
                                                                            requestUniqueId: nil)
         
         Chat.sharedInstance.getThreadParticipants(getThreadParticipantsInput: getThreadParticipantsInput, uniqueId: { (getThreadParticipantsUniqueId) in
-//        myChatObject?.getThreadParticipants(getThreadParticipantsInput: getThreadParticipantsInput, uniqueId: { (getThreadParticipantsUniqueId) in
             self.uniqueIdCallback?(getThreadParticipantsUniqueId)
         }, completion: { (getThreadParticipantsServerResponse) in
             self.responseCallback?(getThreadParticipantsServerResponse as! GetThreadParticipantsModel)
@@ -95,15 +89,9 @@ class GetThreadParticipantsAutomation {
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             switch (contactCellPhone, threadId) {
-            case    (.none, .none):
-                self.addContact()
-                
-            case let (.some(cellPhone), .none):
-                self.createThread(withCellphoneNumber: cellPhone)
-                
-            case let (_ , .some(id)):
-                self.sendRequest(theThreadId: id)
-                
+            case    (.none, .none):             self.addContact()
+            case let (.some(cellPhone), .none): self.createThread(withCellphoneNumber: cellPhone)
+            case let (_ , .some(id)):           self.sendRequest(theThreadId: id)
             }
         }
         

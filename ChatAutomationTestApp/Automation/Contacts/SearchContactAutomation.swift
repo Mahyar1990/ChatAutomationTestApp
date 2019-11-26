@@ -44,7 +44,7 @@ class SearchContactAutomation {
     
     func create(uniqueId:       @escaping callbackStringTypeAlias,
                 serverResponse: @escaping callbackServerResponseTypeAlias,
-                cacheResponse: @escaping (GetContactsModel) -> ()) {
+                cacheResponse:  @escaping (GetContactsModel) -> ()) {
         
         self.uniqueIdCallback       = uniqueId
         self.serverResponseCallback = serverResponse
@@ -66,10 +66,10 @@ class SearchContactAutomation {
                                                             lastName:           lastName,
                                                             offset:             offset,
                                                             size:               size,
+                                                            requestTypeCode:    nil,
                                                             requestUniqueId:    requestUniqueId)
         
         Chat.sharedInstance.searchContacts(searchContactsInput: searchContactInput, uniqueId: { (searchContactUniqueId) in
-//        myChatObject?.searchContacts(searchContactsInput: searchContactInput, uniqueId: { (searchContactUniqueId) in
             self.uniqueIdCallback?(searchContactUniqueId)
         }, completion: { (searchContactServerResponse) in
             self.serverResponseCallback?(searchContactServerResponse as! ContactModel)

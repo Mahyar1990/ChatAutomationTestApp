@@ -52,7 +52,6 @@ extension MyChatViewController: ChatDelegates {
         activityIndicator.stopAnimating()
         
         Chat.sharedInstance.getUserInfo(uniqueId: { (uId) in
-//        myChatObject?.getUserInfo(uniqueId: { (uId) in
             print("UserInfo uniqueId:\n\(uId)")
         }, completion: { (ServerResponse) in
             print("Server UserInfoModel:\n\((ServerResponse as! UserInfoModel).returnDataAsJSON())")

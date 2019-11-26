@@ -44,23 +44,17 @@ class LeaveThreadAutomation {
         self.responseCallback   = serverResponse
         
         sendRequestSenario(contactCellPhone: nil, threadId: threadId)
-//        if let id = threadId {
-//            sendRequest(theThreadId: id)
-//        } else {
-//            sendRequestSenario(contactCellPhone: nil, threadId: nil)
-//        }
     }
     
     func sendRequest(theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.LeaveThread.rawValue, message: "send Request to leaveThread with this params: \n threadId = \(theThreadId)", lineNumbers: 2)
         
-        let leaveThreadInput = LeaveThreadRequestModel(content:         nil,
+        let leaveThreadInput = LeaveThreadRequestModel(//content:         nil,
                                                        threadId:        theThreadId,
                                                        requestTypeCode: typeCode,
                                                        requestUniqueId: requestUniqueId)
         
         Chat.sharedInstance.leaveThread(leaveThreadInput: leaveThreadInput, uniqueId: { (leaveThreadUniqueId) in
-//        myChatObject?.leaveThread(leaveThreadInput: leaveThreadInput, uniqueId: { (leaveThreadUniqueId) in
             self.uniqueIdCallback?(leaveThreadUniqueId)
         }, completion: { (leaveThreadServerResponseModel) in
             self.responseCallback?(leaveThreadServerResponseModel as! ThreadModel)
@@ -76,14 +70,9 @@ class LeaveThreadAutomation {
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             switch (contactCellPhone, threadId) {
-            case    (.none, .none):
-                self.addContact()
-                
-            case let (.some(cellPhone), .none):
-                self.createThread(withCellphoneNumber: cellPhone)
-                
-            case let (_ , .some(id)):
-                self.sendRequest(theThreadId: id)
+            case    (.none, .none):             self.addContact()
+            case let (.some(cellPhone), .none): self.createThread(withCellphoneNumber: cellPhone)
+            case let (_ , .some(id)):           self.sendRequest(theThreadId: id)
             }
         }
         

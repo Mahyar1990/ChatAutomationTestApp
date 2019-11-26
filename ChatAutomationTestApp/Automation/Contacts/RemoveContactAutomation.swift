@@ -59,10 +59,9 @@ class RemoveContactAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.RemoveContact.rawValue, message: "Send RemoveContact request with this param:\nid = \(theId)", lineNumbers: 2)
         
-        let removeContactInput = RemoveContactsRequestModel(contactId: theId, requestUniqueId: nil)
+        let removeContactInput = RemoveContactsRequestModel(contactId: theId, requestTypeCode: nil, requestUniqueId: nil)
         
         Chat.sharedInstance.removeContact(removeContactsInput: removeContactInput, uniqueId: { (removeContactUniqueId) in
-//        myChatObject?.removeContact(removeContactsInput: removeContactInput, uniqueId: { (removeContactUniqueId) in
             self.uniqueIdCallback?(removeContactUniqueId)
         }, completion: { (removeContactServerResponse) in
             self.responseCallback?(removeContactServerResponse as! RemoveContactModel)

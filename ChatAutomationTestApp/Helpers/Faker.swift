@@ -65,15 +65,12 @@ class Faker {
     }
     
     
-    let pouriaAsContact: (cellphoneNumber: String, email: String, firstName: String, lastName: String) = ("09387181694", "p.pahlevani@gmail.com", "Pooria", "Pahlevani")
-    
-    let mehdiAsContact: (cellphoneNumber: String, email: String, firstName: String, lastName: String) = ("09368640180", "mehdi@gmail.com", "Mehdi", "Akbarian")
-    
-    let MohsenAsContact: (cellphoneNumber: String, email: String, firstName: String, lastName: String) = ("09363261694", "mohsen.malekan@gmail.com", "Mohsen", "Malekan")
-    
-    let ArvinAsContact: (cellphoneNumber: String, email: String, firstName: String, lastName: String) = ("09363448861", "Arvin.Rokni@gmail.com", "Arvin", "Rokni")
-    
-    let MehranAsContact: (cellphoneNumber: String, email: String, firstName: String, lastName: String) = ("09363448861", "Mehran.HasanZadeh@gmail.com", "Mehran", "HasanZadeh")
+    let pouriaAsContact:    (cellphoneNumber: String, email: String, firstName: String, lastName: String) = ("09387181694", "p.pahlevani@gmail.com", "Pooria", "Pahlevani")
+    let mehdiAsContact:     (cellphoneNumber: String, email: String, firstName: String, lastName: String) = ("09368640180", "mehdi@gmail.com", "Mehdi", "Akbarian")
+    let MohsenAsContact:    (cellphoneNumber: String, email: String, firstName: String, lastName: String) = ("09363261694", "mohsen.malekan@gmail.com", "Mohsen", "Malekan")
+    let ArvinAsContact:     (cellphoneNumber: String, email: String, firstName: String, lastName: String) = ("09363448861", "Arvin.Rokni@gmail.com", "Arvin", "Rokni")
+    let MehranAsContact:    (cellphoneNumber: String, email: String, firstName: String, lastName: String) = ("09363448861", "Mehran.HasanZadeh@gmail.com", "Mehran", "HasanZadeh")
+    let SaraAsContacts:     (cellphoneNumber: String, email: String, firstName: String, lastName: String) = ("09152567454", "Sara.Golestani@gmail.com", "Sara", "Golestani")
 }
 
 

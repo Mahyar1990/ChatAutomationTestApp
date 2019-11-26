@@ -92,8 +92,6 @@ class CreateThreadWithMessageAutomation {
     }
     
     
-    
-    
     func sendRequest(withDescription: String?, withInvitees: [Invitee], withTitle: String, withType: ThreadTypes, withMessage: String) {
         
         var i = ""
@@ -116,6 +114,7 @@ class CreateThreadWithMessageAutomation {
                                                                                messageSystemMetaData:   nil,
                                                                                messageText:             "This is The Message Text",
                                                                                messageType:             nil,
+                                                                               requestTypeCode:         nil,
                                                                                requestUniqueId:         self.requestUniqueId)
         
         Chat.sharedInstance.createThreadWithMessage(creatThreadWithMessageInput: createThreadWithMessageInput, uniqueId: { (createThreadWithMessageUniqueId) in

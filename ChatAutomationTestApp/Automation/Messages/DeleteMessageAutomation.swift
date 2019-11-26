@@ -65,7 +65,6 @@ class DeleteMessageAutomation {
                                                              requestTypeCode:   deleteMessageRequest.requestTypeCode,
                                                              requestUniqueId:   deleteMessageRequest.requestUniqueId)
         Chat.sharedInstance.deleteMessage(deleteMessageInput: deleteMessageRequest, uniqueId: { (deleteMessageUniqueId) in
-//        myChatObject?.deleteMessage(deleteMessageInput: deleteMessageRequest, uniqueId: { (deleteMessageUniqueId) in
             self.uniqueIdCallback?(deleteMessageUniqueId)
         }, completion: { (deleteMessageResponse) in
             self.responseCallback?(deleteMessageResponse as! DeleteMessageModel)
@@ -73,101 +72,20 @@ class DeleteMessageAutomation {
         
     }
     
-    
-//    func sendMessageThenDeleteIt() {
-//        // 1- add contact
-//        // 2- create thread with this contact
-//        // 3- sendMessage to this thread
-//        // 4- delete this message
-//
-//        delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "try to addContact, then create a thread with it, then send a message to it, at the end, delete this message", lineNumbers: 2)
-//
-//        // 1
-//        let cellphoneNumber = "09387181694"
-//        let firstName       = "Pooria"
-//        let lastName        = "Pahlevani"
-//
-//        let addContact = AddContactAutomation(cellphoneNumber: cellphoneNumber, email: nil, firstName: firstName, lastName: lastName)
-//        addContact.create(uniqueId: { _ in }) { (contactModel) in
-//            if let myContact = contactModel.contacts.first {
-//                if let cellphoneNumber = myContact.cellphoneNumber {
-//
-//                    // 2
-//                    let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-//
-//                    self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this CellphoneNumber = \(cellphoneNumber).", lineNumbers: 2)
-//
-//                    let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
-//                    let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: self.typeCode, requestUniqueId: nil)
-//                    createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
-//                        if let id = createThreadModel.thread?.id {
-//
-//                            // 3
-//                            self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
-//
-//                            let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
-//                            sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
-//
-//                                // 4
-//                                if let messageId = Int(sentResponse["content"].stringValue) {
-//                                    self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(messageId)", lineNumbers: 1)
-//
-//                                    let requestModel = DeleteMessageRequestModel(deleteForAll: self.deleteForAll, subjectId: messageId, typeCode: self.typeCode, uniqueId: self.requestUniqueId)
-//                                    self.sendRequest(deleteMessageRequest: requestModel)
-//
-//                                }
-//
-//
-//                            }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })
-//
-//                        } else {
-//                            // handle error, there is no id in the Conversation model
-//                        }
-//                    })
-//
-//                } else {
-//                    // handle error that didn't get contact id in the contact model
-//                    self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "there is no CellphoneNumber when addContact with this user (firstName = \(firstName) , cellphoneNumber = \(cellphoneNumber))!", lineNumbers: 2)
-//                }
-//            } else {
-//                // handle error that didn't add Contact Model
-//                self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(firstName) , cellphoneNumber = \(cellphoneNumber) , lastName = \(lastName)", lineNumbers: 2)
-//            }
-//        }
-//
-//    }
-    
-    
     func sendRequestSenario(contactCellPhone: String?, threadId: Int?, responseThreadId: Int?, responseMessageId: Int?) {
         // 1- add contact
         // 2- create thread with this contact
         // 3- sendMessage to this thread
         // 4- delete this message
         
-        
-        switch (contactCellPhone, threadId, responseThreadId, responseMessageId) {
-        case    (.none, .none, .none, .none):
-            addContact()
-            
-        case let (.some(cellPhone), .none, .none, .none):
-            createThread(withCellphoneNumber: cellPhone)
-            
-        case let (_ , .some(thread), .none, .none):
-            sendMessage(toThread: thread)
-            
-        case let (_ , _ , .some(tId), .some(mId)):
-            self.createDeleteMessageModel(inThreadId: tId, onMessageId: mId)
-//            if let thId = msg["subjectId"].int {
-//                if let messageId = Int(msg["content"].stringValue) {
-//                    self.createDeleteMessageModel(inThreadId: thId, onMessageId: messageId)
-//                }
-//            }
-        case (_, _, .some(_), .none):
-            print("")
-        case (_, _, .none, .some(_)):
-            print("")
+        switch      (contactCellPhone   , threadId      , responseThreadId  , responseMessageId) {
+        case        (.none              , .none         , .none             , .none):           addContact()
+        case let    (.some(cellPhone)   , .none         , .none             , .none):           createThread(withCellphoneNumber: cellPhone)
+        case let    (_                  , .some(thread) , .none             , .none):           sendMessage(toThread: thread)
+        case let    (_                  , _             , .some(tId)        , .some(mId)):      self.createDeleteMessageModel(inThreadId: tId, onMessageId: mId)
+        case        (_                  , _             , .some(_)          , .none):           print("")
+        case        (_                  , _             , .none             , .some(_)):        print("")
         }
-        
     }
     
     

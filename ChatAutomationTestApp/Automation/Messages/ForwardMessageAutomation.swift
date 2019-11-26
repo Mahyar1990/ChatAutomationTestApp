@@ -77,7 +77,6 @@ class ForwardMessageAutomation {
         delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "send Request to ForwardMessage with this params:\n messageIds = \(forwardMessageRequest.messageIds) , metaData = \(forwardMessageRequest.metaData ?? JSON.null) , repliedTo = \(forwardMessageRequest.repliedTo ?? 0) , subjectId = \(forwardMessageRequest.subjectId) , typeCode = \(forwardMessageRequest.requestTypeCode ?? "nil")", lineNumbers: 2)
         
         Chat.sharedInstance.forwardMessage(forwardMessageInput: forwardMessageRequest, uniqueIds: { (forwardMessageUniqueId) in
-//        myChatObject?.forwardMessage(forwardMessageInput: forwardMessageRequest, uniqueIds: { (forwardMessageUniqueId) in
             self.uniqueIdCallback?(forwardMessageUniqueId)
         }, onSent: { (sent) in
             self.serverSentResponse?(sent as! SendMessageModel)
@@ -89,71 +88,6 @@ class ForwardMessageAutomation {
         
     }
     
-    
-//    func sendMessageThenForwardIt() {
-//        // 1- add contact
-//        // 2- create thread with this contact
-//        // 3- sendMessage to this thread
-//        // 4- forward this message to this thread
-//
-//        delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "try to addContact, then create a thread with it, then send a message to it, at the end, forward this message to this thread", lineNumbers: 2)
-//
-//        // 1
-//        let cellphoneNumber = "09387181694"
-//        let firstName       = "Pooria"
-//        let lastName        = "Pahlevani"
-//
-//        let addContact = AddContactAutomation(cellphoneNumber: cellphoneNumber, email: nil, firstName: firstName, lastName: lastName)
-//        addContact.create(uniqueId: { _ in }) { (contactModel) in
-//            if let myContact = contactModel.contacts.first {
-//                if let cellphoneNumber = myContact.cellphoneNumber {
-//
-//                    // 2
-//                    let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-//
-//                    self.delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this CellphoneNumber = \(cellphoneNumber).", lineNumbers: 2)
-//
-//                    let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")
-//                    let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: self.typeCode, requestUniqueId: nil)
-//                    createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
-//                        if let id = createThreadModel.thread?.id {
-//
-//                            // 3
-//                            self.delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
-//
-//                            let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
-//                            sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
-//
-//                                // 4
-//                                if let messageId = Int(sentResponse["content"].stringValue) {
-//                                    self.delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(messageId)", lineNumbers: 1)
-//
-//                                    let requestModel = ForwardMessageRequestModel(messageIds: [messageId], metaData: self.metaData, repliedTo: self.repliedTo, subjectId: id, typeCode: self.typeCode)
-//                                    self.sendRequest(forwardMessageRequest: requestModel)
-//
-//                                }
-//
-//
-//                            }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })
-//
-//                        } else {
-//                            // handle error, there is no id in the Conversation model
-//                        }
-//                    })
-//
-//                } else {
-//                    // handle error that didn't get contact id in the contact model
-//                    self.delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "there is no CellphoneNumber when addContact with this user (firstName = \(firstName) , cellphoneNumber = \(cellphoneNumber))!", lineNumbers: 2)
-//                }
-//            } else {
-//                // handle error that didn't add Contact Model
-//                self.delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(firstName) , cellphoneNumber = \(cellphoneNumber) , lastName = \(lastName)", lineNumbers: 2)
-//            }
-//        }
-//
-//    }
-    
-    
     func sendRequestSenario(contactCellPhone: String?, threadId: Int?, responseThreadId: Int?, responseMessageId: Int?) {
         // 1- add contact
         // 2- create thread with this contact
@@ -161,26 +95,12 @@ class ForwardMessageAutomation {
         // 4- forward this message to this thread
         
         switch (contactCellPhone, threadId, responseThreadId, responseMessageId) {
-        case    (.none, .none, .none, .none):
-            addContact()
-            
-        case let (.some(cellPhone), .none, .none, .none):
-            createThread(withCellphoneNumber: cellPhone)
-            
-        case let (_ , .some(thread), .none, .none):
-            sendMessage(toThread: thread)
-            
-        case let (_ , _ , .some(tId), .some(mId)):
-            self.createForwardMessageModel(inThreadId: tId, onMessageId: mId)
-//            if let thId = msg["subjectId"].int {
-//                if let messageId = Int(msg["content"].stringValue) {
-//                    self.createForwardMessageModel(inThreadId: thId, onMessageId: messageId)
-//                }
-//            }
-        case (_, _, .some(_), .none):
-            print("")
-        case (_, _, .none, .some(_)):
-            print("")
+        case    (.none, .none, .none, .none):               addContact()
+        case let (.some(cellPhone), .none, .none, .none):   createThread(withCellphoneNumber: cellPhone)
+        case let (_ , .some(thread), .none, .none):         sendMessage(toThread: thread)
+        case let (_ , _ , .some(tId), .some(mId)):          self.createForwardMessageModel(inThreadId: tId, onMessageId: mId)
+        case (_, _, .some(_), .none):                       print("")
+        case (_, _, .none, .some(_)):                       print("")
         }
         
     }
@@ -240,7 +160,6 @@ class ForwardMessageAutomation {
         let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
-//            if let messageId = Int(sentResponse["content"].stringValue) {
             if let messageId = sentResponse.message?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(messageId)", lineNumbers: 1)
                 self.sendRequestSenario(contactCellPhone: nil, threadId: nil, responseThreadId: sentResponse.message?.conversation?.id, responseMessageId: sentResponse.message?.id)

@@ -55,11 +55,6 @@ class GetAdminAutomation {
         self.cacheCallback      = cacheResponse
         self.responseCallback   = serverResponse
         
-//        if let id = threadId {
-//            sendRequest(theThreadId: id)
-//        } else {
-//            sendRequestSenario(contactCellPhone: nil, threadId: nil)
-//        }
         sendRequestSenario(contactCellPhone: nil, threadId: threadId)
     }
     
@@ -77,7 +72,6 @@ class GetAdminAutomation {
                                                                            requestUniqueId: nil)
         
         Chat.sharedInstance.getThreadParticipants(getThreadParticipantsInput: getThreadParticipantsInput, uniqueId: { (getThreadParticipantsUniqueId) in
-            //        myChatObject?.getThreadParticipants(getThreadParticipantsInput: getThreadParticipantsInput, uniqueId: { (getThreadParticipantsUniqueId) in
             self.uniqueIdCallback?(getThreadParticipantsUniqueId)
         }, completion: { (getThreadParticipantsServerResponse) in
             self.responseCallback?(getThreadParticipantsServerResponse as! GetThreadParticipantsModel)
@@ -94,15 +88,9 @@ class GetAdminAutomation {
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             switch (contactCellPhone, threadId) {
-            case    (.none, .none):
-                self.addContact()
-                
-            case let (.some(cellPhone), .none):
-                self.createThread(withCellphoneNumber: cellPhone)
-                
-            case let (_ , .some(id)):
-                self.sendRequest(theThreadId: id)
-                
+            case    (.none, .none):             self.addContact()
+            case let (.some(cellPhone), .none): self.createThread(withCellphoneNumber: cellPhone)
+            case let (_ , .some(id)):           self.sendRequest(theThreadId: id)
             }
         }
         

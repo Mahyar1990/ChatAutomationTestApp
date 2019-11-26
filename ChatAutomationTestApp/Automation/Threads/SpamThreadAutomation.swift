@@ -56,19 +56,9 @@ class SpamThreadAutomation {
                                                        requestUniqueId: nil)
         
         Chat.sharedInstance.spamPvThread(spamPvThreadInput: spamThreadInput, uniqueId: { (spamThreadUniqueId) in
-//        myChatObject?.spamPvThread(spamPvThreadInput: spamThreadInput, uniqueId: { (spamThreadUniqueId) in
             self.uniqueIdCallback?(spamThreadUniqueId)
         }, completion: { (spamThreadServerResponseModel) in
-            
             self.responseCallback?(spamThreadServerResponseModel)
-//            if let leaveThreadResponse = spamThreadServerResponseModel as? ThreadModel {
-//                self.responseCallback?(leaveThreadResponse)
-//            } else if let blockThreadResponse = spamThreadServerResponseModel as? BlockedContactModel  {
-//                self.responseCallback?(blockThreadResponse)
-//            } else if let clearHistoryResponse = spamThreadServerResponseModel as? ClearHistoryModel {
-//                self.responseCallback?(clearHistoryResponse)
-//            }
-            
         })
         
     }

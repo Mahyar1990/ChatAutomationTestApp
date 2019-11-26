@@ -42,12 +42,6 @@ class MuteThreadAutomation {
         self.responseCallback   = serverResponse
         
         sendRequestSenario(contactCellPhone: nil, threadId: threadId)
-        
-//        if let id = threadId {
-//            sendRequest(theThreadId: id)
-//        } else {
-//            sendRequestSenario(contactCellPhone: nil, threadId: nil)
-//        }
     }
     
     func sendRequest(theThreadId: Int) {
@@ -58,7 +52,6 @@ class MuteThreadAutomation {
                                                               requestUniqueId:  nil)
         
         Chat.sharedInstance.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
-//        myChatObject?.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
             self.uniqueIdCallback?(muteThreadUniqueId)
         }, completion: { (muteThreadServerResponseModel) in
             self.responseCallback?(muteThreadServerResponseModel as! MuteUnmuteThreadModel)
@@ -74,14 +67,9 @@ class MuteThreadAutomation {
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             switch (contactCellPhone, threadId) {
-            case    (.none, .none):
-                self.addContact()
-                
-            case let (.some(cellPhone), .none):
-                self.createThread(withCellphoneNumber: cellPhone)
-                
-            case let (_ , .some(id)):
-                self.sendRequest(theThreadId: id)
+            case    (.none, .none):             self.addContact()
+            case let (.some(cellPhone), .none): self.createThread(withCellphoneNumber: cellPhone)
+            case let (_ , .some(id)):           self.sendRequest(theThreadId: id)
             }
         }
         

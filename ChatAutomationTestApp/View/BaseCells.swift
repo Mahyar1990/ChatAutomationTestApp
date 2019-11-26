@@ -57,12 +57,10 @@ class MyCollectionViewUploadCell: UICollectionViewCell {
         let mb = UIButton()
         mb.translatesAutoresizingMaskIntoConstraints = false
         mb.setTitle("Cancel", for: UIControl.State.normal)
-//        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
         mb.backgroundColor = UIColor.init().hexToRGB(hex: "#fab1a0", alpha: 1)
         mb.layer.cornerRadius = 5
         mb.layer.borderWidth = 1
         mb.layer.borderColor = UIColor.clear.cgColor
-//        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
         mb.layer.shadowColor = UIColor.init().hexToRGB(hex: "#e17055", alpha: 1).cgColor
         mb.layer.shadowOpacity = 1
         mb.layer.shadowRadius = 1
@@ -73,12 +71,10 @@ class MyCollectionViewUploadCell: UICollectionViewCell {
         let mb = UIButton()
         mb.translatesAutoresizingMaskIntoConstraints = false
         mb.setTitle("Pause", for: UIControl.State.normal)
-//        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
         mb.backgroundColor = UIColor.init().hexToRGB(hex: "#a29bfe", alpha: 1)
         mb.layer.cornerRadius = 5
         mb.layer.borderWidth = 1
         mb.layer.borderColor = UIColor.clear.cgColor
-//        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
         mb.layer.shadowColor = UIColor.init().hexToRGB(hex: "#6c5ce7", alpha: 1).cgColor
         mb.layer.shadowOpacity = 1
         mb.layer.shadowRadius = 1

@@ -63,18 +63,10 @@ class SendFileMessageAutomation {
         // 4- send request
         
         switch (contactId, threadId, data) {
-        case (.none, .none, _):
-            addContact()
-            
-        case let (.some(id), .none, _):
-            createThread(withContactId: id)
-            
-        case (_ , .some(_), .none):
-            prepareDataToUpload()
-            
-        case let (_ , .some(tId), .some(myData)):
-            sendRequest(theData: myData, toThreadId: tId)
-            
+        case (.none, .none, _):                     addContact()
+        case let (.some(id), .none, _):             createThread(withContactId: id)
+        case (_ , .some(_), .none):                 prepareDataToUpload()
+        case let (_ , .some(tId), .some(myData)):   sendRequest(theData: myData, toThreadId: tId)
         }
     }
     
@@ -154,7 +146,6 @@ class SendFileMessageAutomation {
                                                            requestUniqueId: nil)
         
         Chat.sharedInstance.sendFileMessage(sendFileMessageInput: fileMessageInput, uniqueId: { (sentFileMessageUniqueId) in
-//        myChatObject?.sendFileMessage(sendFileMessageInput: fileMessageInput, uniqueId: { (sentFileMessageUniqueId) in
             self.uniqueIdCallback?(sentFileMessageUniqueId)
         }, uploadProgress: { (uploadFileProgress) in
             self.progressCallback?(uploadFileProgress)

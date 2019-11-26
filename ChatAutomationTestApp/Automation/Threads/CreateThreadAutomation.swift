@@ -62,7 +62,6 @@ class CreateThreadAutomation {
         // if the input parameter didn't filled by the user, first add a contact, then create a thread with this contact
         if ((invitees == nil) || (invitees?.count == 0)) && (title == nil) {
             delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "there is no invitee or title specify to creat thread, so have to implement all the possible cases to create a thread!!", lineNumbers: 2)
-//            self.createThreadSenario(threadType: .NORMAL, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .NormalThreadWithCoreUserId, isCompleted: true)
             self.createThreadSenario(threadType: .NORMAL, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .NormalThreadWithUsername, isCompleted: true)
         
         } else {
@@ -92,29 +91,22 @@ class CreateThreadAutomation {
                                                          metadata:          self.metadata,
                                                          title:             withTitle,
                                                          type:              withType,
+                                                         requestTypeCode:   nil,
                                                          requestUniqueId:   self.requestUniqueId)
         
         Chat.sharedInstance.createThread(createThreadInput: createThreadInput, uniqueId: { (createThreadUniqueId) in
-//        myChatObject?.createThread(createThreadInput: createThreadInput, uniqueId: { (createThreadUniqueId) in
             self.uniqueIdCallback?(createThreadUniqueId, "on \(on?.rawValue ?? "user request")")
         }, completion: { (createThreadModel) in
             self.responseCallback?(createThreadModel as! ThreadModel, "on \(on?.rawValue ?? "user request")")
             if let section = on {
                 switch (section) {
-                case (Section.NormalThreadWithCoreUserId):
-                    self.createThreadSenario(threadType: .NORMAL, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .NormalThreadWithUsername, isCompleted: true)
-                case (Section.NormalThreadWithUsername):
-                    self.createThreadSenario(threadType: .NORMAL, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .NormalThreadWithCellPhoneNumber, isCompleted: true)
-                case (Section.NormalThreadWithCellPhoneNumber):
-                    self.createThreadSenario(threadType: .NORMAL, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .NormalThreadWithContactId, isCompleted: true)
-                case (Section.NormalThreadWithContactId):
-                    self.createThreadSenario(threadType: .CHANNEL, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .ChannelThread, isCompleted: true)
-                case (Section.ChannelThread):
-                    self.createThreadSenario(threadType: .CHANNEL_GROUP, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .ChannelGroupThread, isCompleted: true)
-                case (Section.ChannelGroupThread):
-                    self.createThreadSenario(threadType: .OWNER_GROUP, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .OwnerGroupThread, isCompleted: true)
-                case (Section.OwnerGroupThread):
-                    self.createThreadSenario(threadType: .PUBLIC_GROUP, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .PublicGroupThread, isCompleted: true)
+                case (Section.NormalThreadWithCoreUserId):      self.createThreadSenario(threadType: .NORMAL, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .NormalThreadWithUsername, isCompleted: true)
+                case (Section.NormalThreadWithUsername):        self.createThreadSenario(threadType: .NORMAL, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .NormalThreadWithCellPhoneNumber, isCompleted: true)
+                case (Section.NormalThreadWithCellPhoneNumber): self.createThreadSenario(threadType: .NORMAL, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .NormalThreadWithContactId, isCompleted: true)
+                case (Section.NormalThreadWithContactId):       self.createThreadSenario(threadType: .CHANNEL, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .ChannelThread, isCompleted: true)
+                case (Section.ChannelThread):                   self.createThreadSenario(threadType: .CHANNEL_GROUP, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .ChannelGroupThread, isCompleted: true)
+                case (Section.ChannelGroupThread):              self.createThreadSenario(threadType: .OWNER_GROUP, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .OwnerGroupThread, isCompleted: true)
+                case (Section.OwnerGroupThread):                self.createThreadSenario(threadType: .PUBLIC_GROUP, withCoreUserId: nil, withUsername: nil, withCellPhoneNumber: nil, withContactId: nil, section: .PublicGroupThread, isCompleted: true)
                 default: return
                 }
             }
