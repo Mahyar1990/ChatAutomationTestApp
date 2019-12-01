@@ -19,10 +19,10 @@ class RemoveParticipantAutomation {
     
     public weak var delegate: MoreInfoDelegate?
     
-    let content:        [Int]?
-    let threadId:       Int?
-    let typeCode:       String?
-    let requestUniqueId: String?
+    let content:    [Int]?
+    let threadId:   Int?
+    let typeCode:   String?
+    let requestUniqueId:   String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
     typealias callbackServerResponseTypeAlias   = (RemoveParticipantModel) -> ()
@@ -32,9 +32,9 @@ class RemoveParticipantAutomation {
     
     init(content: [Int]?, threadId: Int?, typeCode: String?, requestUniqueId: String?) {
         
-        self.content        = content
-        self.threadId       = threadId
-        self.typeCode       = typeCode
+        self.content            = content
+        self.threadId           = threadId
+        self.typeCode           = typeCode
         self.requestUniqueId    = requestUniqueId
         
     }
@@ -52,10 +52,10 @@ class RemoveParticipantAutomation {
     func sendRequest(participants: [Int], theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.RemoveParticipant.rawValue, message: "send Request to removeParticipant with this params: \n participants = \(participants) , threadId = \(theThreadId)", lineNumbers: 2)
         
-        let removeParticipantInput = RemoveParticipantsRequestModel(participantIds:     participants,
-                                                                    threadId:           theThreadId,
-                                                                    requestTypeCode:    typeCode,
-                                                                    requestUniqueId:    requestUniqueId)
+        let removeParticipantInput = RemoveParticipantsRequestModel(participantIds: participants,
+                                                                    threadId:       theThreadId,
+                                                                    typeCode:       typeCode,
+                                                                    uniqueId:       requestUniqueId)
         
         Chat.sharedInstance.removeParticipants(removeParticipantsInput: removeParticipantInput, uniqueId: { (removeParticipantUniqueId) in
             self.uniqueIdCallback?(removeParticipantUniqueId)
@@ -79,7 +79,7 @@ class RemoveParticipantAutomation {
     
     func addParticipant() {
         delegate?.newInfo(type: MoreInfoTypes.RemoveParticipant.rawValue, message: "Try to add participant", lineNumbers: 1)
-        let addParticipant = AddParticipantAutomation(contacts: nil, threadId: nil, typeCode: nil, uniqueId: nil)
+        let addParticipant = AddParticipantAutomation(contacts: nil, threadId: nil, typeCode: nil, requestUniqueId: nil)
         addParticipant.create(uniqueId: { _ in }) { (addParticipantResponseModel) in
             if let threadModel = addParticipantResponseModel.thread {
                 if let myThreadId = threadModel.id {

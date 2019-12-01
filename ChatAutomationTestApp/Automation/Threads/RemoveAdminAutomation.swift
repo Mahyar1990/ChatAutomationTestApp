@@ -19,9 +19,10 @@ class RemoveAdminAutomation {
     
     public weak var delegate: MoreInfoDelegate?
     
-    let threadId:       Int?
-    let userId:         Int?
-    let requestUniqueId: String?
+    let threadId:   Int?
+    let userId:     Int?
+    
+    let requestUniqueId:   String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
     typealias callbackServerResponseTypeAlias   = (UserRolesModel) -> ()
@@ -33,9 +34,9 @@ class RemoveAdminAutomation {
     
     init(threadId: Int?, userId: Int?, requestUniqueId: String?) {
         
-        self.threadId       = threadId
-        self.userId         = userId
-        self.requestUniqueId = requestUniqueId
+        self.threadId           = threadId
+        self.userId             = userId
+        self.requestUniqueId    = requestUniqueId
         
     }
     
@@ -54,7 +55,7 @@ class RemoveAdminAutomation {
     func sendRequest(theThreadId: Int, theUserId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.RemoveAdmin.rawValue, message: "send Request to removeAdminRole with this params: \n threadId = \(theThreadId), \n userId = \(theUserId)", lineNumbers: 2)
         
-        let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Remove, threadId: theThreadId, userId: theUserId, requestTypeCode: nil, requestUniqueId: requestUniqueId)
+        let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Remove, threadId: theThreadId, userId: theUserId, typeCode: nil, uniqueId: requestUniqueId)
         
         Chat.sharedInstance.setRole(setRoleInput: [addAdminInput], uniqueId: { (addAdminUniqueId) in
             self.uniqueIdCallback?(addAdminUniqueId)
@@ -87,7 +88,7 @@ class RemoveAdminAutomation {
     
     func createThreadAndAddParticipant() {
         delegate?.newInfo(type: MoreInfoTypes.RemoveAdmin.rawValue, message: "Try to create thread then add an participant to the thread", lineNumbers: 2)
-        let addParticipant = AddParticipantAutomation(contacts: nil, threadId: nil, typeCode: nil, uniqueId: nil)
+        let addParticipant = AddParticipantAutomation(contacts: nil, threadId: nil, typeCode: nil, requestUniqueId: nil)
         addParticipant.create(uniqueId: { _ in }) { (addParticipantResponseModel) in
             if let threadModel = addParticipantResponseModel.thread {
                 if let myThreadId = threadModel.id {
@@ -131,7 +132,7 @@ class RemoveAdminAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.RemoveAdmin.rawValue, message: "try to addAdmin with this params: threadId = \(theThreadId), userId = \(theUserId)", lineNumbers: 2)
         
-        let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Add, threadId: theThreadId, userId: theUserId, requestTypeCode: nil, requestUniqueId: nil)
+        let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Add, threadId: theThreadId, userId: theUserId, typeCode: nil, uniqueId: nil)
         
         Chat.sharedInstance.setRole(setRoleInput: [addAdminInput], uniqueId: { _ in }, completion: { (addAdminServerResponseModel) in
             self.delegate?.newInfo(type: MoreInfoTypes.RemoveAdmin.rawValue, message: "This is addAdmin response from server:\n\(addAdminServerResponseModel)", lineNumbers: 3)

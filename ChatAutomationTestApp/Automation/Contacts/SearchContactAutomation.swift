@@ -21,7 +21,8 @@ class SearchContactAutomation {
     let lastName:       String?
     let offset:         Int?
     let size:           Int?
-    let requestUniqueId: String?
+    
+    let requestUniqueId:       String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
     typealias callbackServerResponseTypeAlias   = (ContactModel) -> ()
@@ -32,14 +33,14 @@ class SearchContactAutomation {
     private var cacheResponseCallback:  callbackCacheResponseTypeAlias?
     
     init(cellphoneNumber: String?, email: String?, firstName: String?, id: Int?, lastName: String?, offset: Int?, size: Int?, requestUniqueId: String?) {
-        self.cellphoneNumber = cellphoneNumber
-        self.email          = email
-        self.firstName      = firstName
-        self.id             = id
-        self.lastName       = lastName
-        self.offset         = offset
-        self.size           = size
-        self.requestUniqueId = requestUniqueId
+        self.cellphoneNumber    = cellphoneNumber
+        self.email              = email
+        self.firstName          = firstName
+        self.id                 = id
+        self.lastName           = lastName
+        self.offset             = offset
+        self.size               = size
+        self.requestUniqueId    = requestUniqueId
     }
     
     func create(uniqueId:       @escaping callbackStringTypeAlias,
@@ -66,8 +67,8 @@ class SearchContactAutomation {
                                                             lastName:           lastName,
                                                             offset:             offset,
                                                             size:               size,
-                                                            requestTypeCode:    nil,
-                                                            requestUniqueId:    requestUniqueId)
+                                                            typeCode:           nil,
+                                                            uniqueId:           requestUniqueId)
         
         Chat.sharedInstance.searchContacts(searchContactsInput: searchContactInput, uniqueId: { (searchContactUniqueId) in
             self.uniqueIdCallback?(searchContactUniqueId)

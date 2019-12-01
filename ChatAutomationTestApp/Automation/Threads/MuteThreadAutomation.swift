@@ -47,9 +47,9 @@ class MuteThreadAutomation {
     func sendRequest(theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.MuteThread.rawValue, message: "send Request to MuteThread with this params: \n threadId = \(theThreadId)", lineNumbers: 2)
         
-        let muteThreadInput = MuteAndUnmuteThreadRequestModel(subjectId:        theThreadId,
-                                                              requestTypeCode:  typeCode,
-                                                              requestUniqueId:  nil)
+        let muteThreadInput = MuteAndUnmuteThreadRequestModel(subjectId:    theThreadId,
+                                                              typeCode:     typeCode,
+                                                              uniqueId:     nil)
         
         Chat.sharedInstance.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
             self.uniqueIdCallback?(muteThreadUniqueId)

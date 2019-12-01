@@ -35,7 +35,7 @@ class CreateThreadAutomation {
     let metadata:       String?
     let title:          String?
     let type:           ThreadTypes?
-    let requestUniqueId: String?
+    let requestUniqueId:       String?
     
     typealias callbackStringTypeAlias            = (String, String) -> ()
     typealias callbackServerResponseTypeAlias    = (ThreadModel, String) -> ()
@@ -85,14 +85,14 @@ class CreateThreadAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.CreateThread.rawValue, message: "on \(on?.rawValue ?? "") send create thread request with this parameters:\n description = \(withDescription ?? "nil") ,\n image = \(self.image ?? "nil") ,\n invitees = \(i) ,\n metadata = \(self.metadata ?? "nil") ,\n title = \(withTitle) ,\n type = \(withType ?? ThreadTypes.NORMAL) ,\n requestUniqueId = \(self.requestUniqueId ?? "nil")", lineNumbers: 6)
         
-        let createThreadInput = CreateThreadRequestModel(description: withDescription,
-                                                         image:             self.image,
-                                                         invitees:          withInvitees,
-                                                         metadata:          self.metadata,
-                                                         title:             withTitle,
-                                                         type:              withType,
-                                                         requestTypeCode:   nil,
-                                                         requestUniqueId:   self.requestUniqueId)
+        let createThreadInput = CreateThreadRequestModel(description:   withDescription,
+                                                         image:         self.image,
+                                                         invitees:      withInvitees,
+                                                         metadata:      self.metadata,
+                                                         title:         withTitle,
+                                                         type:          withType,
+                                                         typeCode:      nil,
+                                                         uniqueId:      self.requestUniqueId)
         
         Chat.sharedInstance.createThread(createThreadInput: createThreadInput, uniqueId: { (createThreadUniqueId) in
             self.uniqueIdCallback?(createThreadUniqueId, "on \(on?.rawValue ?? "user request")")

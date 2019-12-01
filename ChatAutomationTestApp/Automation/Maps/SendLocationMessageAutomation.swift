@@ -139,8 +139,8 @@ class SendLocationMessageAutomation {
                                                                    sendMessageMetaData: nil,
                                                                    sendMessageRepliedTo: nil,
                                                                    sendMessageTypeCode: nil,
-                                                                   requestTypeCode:     nil,
-                                                                   requestUniqueId:     nil)
+                                                                   typeCode:            nil,
+                                                                   uniqueId:            nil)
         
         Chat.sharedInstance.sendLocationMessage(sendLocationMessageRequest: locationMessageInput, uniqueId: { (sentLocationMessageUniqueId) in
             self.uniqueIdCallback?(sentLocationMessageUniqueId)

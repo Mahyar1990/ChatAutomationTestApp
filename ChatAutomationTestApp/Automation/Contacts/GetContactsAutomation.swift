@@ -71,7 +71,7 @@ class GetContactsAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.GetContact.rawValue, message: "send Request to getContacts with this params:\ncount = \(theCount ?? 50) , offset = \(theOffset ?? 0) , query = \(theQuery ?? "nil") , typeCode = \(typeCode ?? "nil")", lineNumbers: 2)
         
-        let getContactInput = GetContactsRequestModel(count: theCount, offset: theOffset, query: theQuery, requestTypeCode: typeCode, requestUniqueId: nil)
+        let getContactInput = GetContactsRequestModel(count: theCount, offset: theOffset, query: theQuery, typeCode: typeCode, uniqueId: nil)
         
         Chat.sharedInstance.getContacts(getContactsInput: getContactInput, uniqueId: { (getContactUniqueId) in
             self.uniqueIdCallback?(getContactUniqueId)

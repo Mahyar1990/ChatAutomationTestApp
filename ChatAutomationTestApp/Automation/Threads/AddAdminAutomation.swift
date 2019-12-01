@@ -19,9 +19,10 @@ class AddAdminAutomation {
     
     public weak var delegate: MoreInfoDelegate?
     
-    let threadId:       Int?
-    let userId:         Int?
-    let requestUniqueId: String?
+    let threadId:   Int?
+    let userId:     Int?
+    
+    let requestUniqueId:   String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
     typealias callbackServerResponseTypeAlias   = (UserRolesModel) -> ()
@@ -33,9 +34,9 @@ class AddAdminAutomation {
     
     init(threadId: Int?, userId: Int?, requestUniqueId: String?) {
         
-        self.threadId       = threadId
-        self.userId         = userId
-        self.requestUniqueId = requestUniqueId
+        self.threadId           = threadId
+        self.userId             = userId
+        self.requestUniqueId    = requestUniqueId
         
     }
     
@@ -53,7 +54,7 @@ class AddAdminAutomation {
     func sendRequest(theThreadId: Int, theUserId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.AddAdmin.rawValue, message: "send Request to getAdmins with this params: \n threadId = \(theThreadId)", lineNumbers: 2)
         
-        let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Add, threadId: theThreadId, userId: theUserId, requestTypeCode: nil, requestUniqueId: requestUniqueId)
+        let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Add, threadId: theThreadId, userId: theUserId, typeCode: nil, uniqueId: requestUniqueId)
         
         Chat.sharedInstance.setRole(setRoleInput: [addAdminInput], uniqueId: { (addAdminUniqueId) in
             self.uniqueIdCallback?(addAdminUniqueId)
@@ -80,7 +81,7 @@ class AddAdminAutomation {
     
     func createThreadAndAddParticipant() {
         delegate?.newInfo(type: MoreInfoTypes.AddAdmin.rawValue, message: "Try to create thread then add an participant to the thread", lineNumbers: 2)
-        let addParticipant = AddParticipantAutomation(contacts: nil, threadId: nil, typeCode: nil, uniqueId: nil)
+        let addParticipant = AddParticipantAutomation(contacts: nil, threadId: nil, typeCode: nil, requestUniqueId: nil)
         addParticipant.create(uniqueId: { _ in }) { (addParticipantResponseModel) in
             if let threadModel = addParticipantResponseModel.thread {
                 if let myThreadId = threadModel.id {

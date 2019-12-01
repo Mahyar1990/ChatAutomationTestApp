@@ -65,8 +65,8 @@ class UploadImageAutomation {
                                                        yC:              nil,
                                                        hC:              nil,
                                                        wC:              nil,
-                                                       requestTypeCode: nil,
-                                                       requestUniqueId: requestUniqueId)
+                                                       typeCode:        nil,
+                                                       uniqueId:        requestUniqueId)
         
         Chat.sharedInstance.uploadImage(uploadImageInput: uploadImageInput, uniqueId: { (uploadImageUniqueId) in
             self.uniqueIdCallback?(uploadImageUniqueId)

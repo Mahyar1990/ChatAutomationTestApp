@@ -19,9 +19,9 @@ class ClearHistoryAutomation {
     
     public weak var delegate: MoreInfoDelegate?
     
+    let threadId:   Int?
     
-    let threadId:           Int?
-    let requestUniqueId:    String?
+    let requestUniqueId:   String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
     typealias callbackServerResponseTypeAlias   = (ClearHistoryModel) -> ()
@@ -55,9 +55,9 @@ class ClearHistoryAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "send Request to clearHistory with this params:\n threadId = \(theThreadId) , uniqueId = \(requestUniqueId ?? "nil")", lineNumbers: 2)
         
-        let clearHistoryInput = ClearHistoryRequestModel(threadId:          theThreadId,
-                                                         requestTypeCode:   nil,
-                                                         requestUniqueId:   requestUniqueId)
+        let clearHistoryInput = ClearHistoryRequestModel(threadId:  theThreadId,
+                                                         typeCode:  nil,
+                                                         uniqueId:  requestUniqueId)
         
         Chat.sharedInstance.clearHistory(clearHistoryInput: clearHistoryInput, uniqueId: { (clearHistoryUniqueId) in
             self.uniqueIdCallback?(clearHistoryUniqueId)

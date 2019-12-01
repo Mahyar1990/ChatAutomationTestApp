@@ -150,20 +150,20 @@ class ReplyFileMessageAutomation {
         let myContent = content ?? "This is a dummy message"
         delegate?.newInfo(type: MoreInfoTypes.ReplyFileMessage.rawValue, message: "send Request ReplyFileMessage with this params:\n messageText = \(myContent),\n threadId = \(threadId ?? 0),\n repliedTo = \(repliedTo ?? 0),\n fileName = \(myFileName),", lineNumbers: 2)
         
-        let replyFileMessageInput = SendFileMessageRequestModel(fileName:           myFileName,
-                                                                imageName:          nil,
-                                                                xC:                 nil,
-                                                                yC:                 nil,
-                                                                hC:                 nil,
-                                                                wC:                 nil,
-                                                                threadId:           toThreadId,
-                                                                content:            myContent,
-                                                                metaData:           nil,
-                                                                repliedTo:          repliedTo,
-                                                                fileToSend:         theData,
-                                                                imageToSend:        nil,
-                                                                requestTypeCode:    nil,
-                                                                requestUniqueId:    nil)
+        let replyFileMessageInput = SendFileMessageRequestModel(fileName:       myFileName,
+                                                                imageName:      nil,
+                                                                xC:             nil,
+                                                                yC:             nil,
+                                                                hC:             nil,
+                                                                wC:             nil,
+                                                                threadId:       toThreadId,
+                                                                content:        myContent,
+                                                                metaData:       nil,
+                                                                repliedTo:      repliedTo,
+                                                                fileToSend:     theData,
+                                                                imageToSend:    nil,
+                                                                typeCode:       nil,
+                                                                uniqueId:       nil)
         
         Chat.sharedInstance.replyFileMessage(replyFileMessageInput: replyFileMessageInput, uniqueId: { (replyFileMessageUniqueId) in
             self.uniqueIdCallback?(replyFileMessageUniqueId)

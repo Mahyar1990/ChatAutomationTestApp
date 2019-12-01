@@ -51,9 +51,9 @@ class SpamThreadAutomation {
     func sendRequest(theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.SpamThread.rawValue, message: "send Request to spamThread with this params: \n threadId = \(theThreadId)", lineNumbers: 2)
         
-        let spamThreadInput = SpamPvThreadRequestModel(threadId:        theThreadId,
-                                                       requestTypeCode: typeCode,
-                                                       requestUniqueId: nil)
+        let spamThreadInput = SpamPvThreadRequestModel(threadId:    theThreadId,
+                                                       typeCode:    typeCode,
+                                                       uniqueId:    nil)
         
         Chat.sharedInstance.spamPvThread(spamPvThreadInput: spamThreadInput, uniqueId: { (spamThreadUniqueId) in
             self.uniqueIdCallback?(spamThreadUniqueId)

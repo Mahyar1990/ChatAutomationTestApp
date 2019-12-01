@@ -47,7 +47,7 @@ class DeleteMessageAutomation {
         self.responseCallback   = serverResponse
         
         if let subId = subjectId {
-            let requestModel = DeleteMessageRequestModel(deleteForAll: deleteForAll, subjectId: subId, requestTypeCode: typeCode, requestUniqueId: requestUniqueId)
+            let requestModel = DeleteMessageRequestModel(deleteForAll: deleteForAll, subjectId: subId, typeCode: typeCode, uniqueId: requestUniqueId)
             sendRequest(deleteMessageRequest: requestModel)
         } else {
             sendRequestSenario(contactCellPhone: nil, threadId: nil, responseThreadId: nil, responseMessageId: nil)
@@ -58,12 +58,12 @@ class DeleteMessageAutomation {
     
     func sendRequest(deleteMessageRequest: DeleteMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "send Request to DeleteMessage with this params:\n deleteForAll = \(deleteMessageRequest.deleteForAll ?? false) , subjectId = \(deleteMessageRequest.subjectId) , typeCode = \(deleteMessageRequest.requestTypeCode ?? "nil") , uniqueId = \(deleteMessageRequest.requestUniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "send Request to DeleteMessage with this params:\n deleteForAll = \(deleteMessageRequest.deleteForAll ?? false) , subjectId = \(deleteMessageRequest.subjectId) , typeCode = \(deleteMessageRequest.typeCode ?? "nil") , uniqueId = \(deleteMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
         
-        let deleteMessageRequest = DeleteMessageRequestModel(deleteForAll:      deleteMessageRequest.deleteForAll,
-                                                             subjectId:         deleteMessageRequest.subjectId,
-                                                             requestTypeCode:   deleteMessageRequest.requestTypeCode,
-                                                             requestUniqueId:   deleteMessageRequest.requestUniqueId)
+        let deleteMessageRequest = DeleteMessageRequestModel(deleteForAll:  deleteMessageRequest.deleteForAll,
+                                                             subjectId:     deleteMessageRequest.subjectId,
+                                                             typeCode:      deleteMessageRequest.typeCode,
+                                                             uniqueId:      deleteMessageRequest.uniqueId)
         Chat.sharedInstance.deleteMessage(deleteMessageInput: deleteMessageRequest, uniqueId: { (deleteMessageUniqueId) in
             self.uniqueIdCallback?(deleteMessageUniqueId)
         }, completion: { (deleteMessageResponse) in
@@ -150,7 +150,7 @@ class DeleteMessageAutomation {
     
     // 4
     func createDeleteMessageModel(inThreadId threadId: Int, onMessageId messageId: Int) {
-        let requestModel = DeleteMessageRequestModel(deleteForAll: self.deleteForAll, subjectId: messageId, requestTypeCode: self.typeCode, requestUniqueId: self.requestUniqueId)
+        let requestModel = DeleteMessageRequestModel(deleteForAll: self.deleteForAll, subjectId: messageId, typeCode: self.typeCode, uniqueId: self.requestUniqueId)
         self.sendRequest(deleteMessageRequest: requestModel)
     }
     

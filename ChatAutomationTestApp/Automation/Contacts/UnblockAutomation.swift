@@ -65,7 +65,7 @@ class UnblockAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "send Request to Unblock with this params:\nblockId = \(theBlockId ?? 0) , contactId = \(theContactId ?? 0) , threadId = \(theThreadId ?? 0) , typeCode = \(typeCode ?? "nil") , userId = \(theUserId ?? 0)", lineNumbers: 2)
         
-        let unblockInput = UnblockContactsRequestModel(blockId: theBlockId, contactId: theContactId, threadId: theThreadId, userId: theUserId, requestTypeCode: typeCode, requestUniqueId: nil)
+        let unblockInput = UnblockContactsRequestModel(blockId: theBlockId, contactId: theContactId, threadId: theThreadId, userId: theUserId, typeCode: typeCode, uniqueId: nil)
         
         Chat.sharedInstance.unblockContact(unblockContactsInput: unblockInput, uniqueId: { (unblockUniqueId) in
             self.uniqueIdCallback?(unblockUniqueId)
@@ -131,7 +131,7 @@ extension UnblockAutomation {
                     }
                     
                 case (false, true, false):
-                    let getContactRequestInputs = GetContactsRequestModel(count: 1, offset: 0, query: mehdi.firstName, requestTypeCode: nil, requestUniqueId: nil)
+                    let getContactRequestInputs = GetContactsRequestModel(count: 1, offset: 0, query: mehdi.firstName, typeCode: nil, uniqueId: nil)
                     self.getContact(withInput: getContactRequestInputs) { (contact) in
                         if let id = contact.userId {
                             self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new conract has been created, user id = \(id)", lineNumbers: 1)

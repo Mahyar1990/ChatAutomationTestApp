@@ -22,20 +22,36 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 
 
 // Main Addresses
+    
 //    var socketAddress   = "wss://msg.pod.land/ws"
 //    var ssoHost         = "https://accounts.pod.land"
 //    var platformHost    = "https://api.pod.land/srv/core"
 //    var fileServer      = "https://core.pod.land"
 //    var serverName      = "chat-server"
     
+//    var socketAddress   = "wss://msg.pod.ir/ws"
+//    var ssoHost         = "https://accounts.pod.ir"
+//    var platformHost    = "https://api.pod.ir/srv/core"
+//    var fileServer      = "https://core.pod.ir"
+//    var serverName      = "chat-server"
+    
     
 // SandBox Addresses:
-    var socketAddress           = "wss://chat-sandbox.pod.land/ws"
+    
+//    var socketAddress           = "wss://chat-sandbox.pod.land/ws"
+//    var serverName              = "chat-server"
+//    var ssoHost                 = "https://accounts.pod.land"
+//    var platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+//    var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+//    var token                   = "99f7b1eaae5540feb3f20d6b84af2651"
+    
+    var socketAddress           = "wss://chat-sandbox.pod.ir/ws"
     var serverName              = "chat-server"
-    var ssoHost                 = "https://accounts.pod.land"
-    var platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+    var ssoHost                 = "https://accounts.pod.ir"
+    var platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = "99f7b1eaae5540feb3f20d6b84af2651"
+    var token                   = "1ea23e857bc24884a2a0b156cbfa4e4c"
+    
     
     
 // Local Addresses 1 (MehrAra)
@@ -737,14 +753,14 @@ extension MyChatViewController {
             if (em != "") { email = em }
         }
         
-        let searchContact = SearchContactAutomation(cellphoneNumber: cellPhone,
-                                                    email:          email,
-                                                    firstName:      firstName,
-                                                    id:             id,
-                                                    lastName:       lastName,
-                                                    offset:         offset,
-                                                    size:           count,
-                                                    requestUniqueId: nil)
+        let searchContact = SearchContactAutomation(cellphoneNumber:    cellPhone,
+                                                    email:              email,
+                                                    firstName:          firstName,
+                                                    id:                 id,
+                                                    lastName:           lastName,
+                                                    offset:             offset,
+                                                    size:               count,
+                                                    requestUniqueId:    nil)
         
         searchContact.delegate = self
         searchContact.create(uniqueId: { (searchContactUniqueId) in
@@ -854,7 +870,7 @@ extension MyChatViewController {
             }
         }
         
-        let addParticipant = AddParticipantAutomation(contacts: myContacts, threadId: threadId, typeCode: nil, uniqueId: nil)
+        let addParticipant = AddParticipantAutomation(contacts: myContacts, threadId: threadId, typeCode: nil, requestUniqueId: nil)
         addParticipant.delegate = self
         addParticipant.create(uniqueId: { (addParticipantUniqueId) in
             let myText = "addThreadParticipant uniqueId) = \(addParticipantUniqueId)"
@@ -975,14 +991,14 @@ extension MyChatViewController {
             if (txt != "") && (txt.first != " ") { metadata = txt }
         }
         
-        let createThtradWithMessage = CreateThreadWithMessageAutomation(description:    description,
-                                                                        image:          image,
-                                                                        invitees:       invitees,
-                                                                        messageText:    textMessage,
-                                                                        metadata:       metadata,
-                                                                        title:          title,
-                                                                        type:           nil,
-                                                                        requestUniqueId: nil)
+        let createThtradWithMessage = CreateThreadWithMessageAutomation(description:        description,
+                                                                        image:              image,
+                                                                        invitees:           invitees,
+                                                                        messageText:        textMessage,
+                                                                        metadata:           metadata,
+                                                                        title:              title,
+                                                                        type:               nil,
+                                                                        requestUniqueId:    nil)
         createThtradWithMessage.delegate = self
         createThtradWithMessage.create(uniqueId: { (createThreadUniqueId) in
             let myText = "createThread uniqueId) = \(createThreadUniqueId)"
@@ -1063,7 +1079,7 @@ extension MyChatViewController {
                                               threadId:         threadId,
                                               toTime:           toTime,
                                               typeCode:         nil,
-                                              uniqueId:         nil)
+                                              requestUniqueId:  nil)
         getHistory.delegate = self
         getHistory.create(uniqueId: { (getHistoryUniqueId) in
             let myText = "getHistory uniqueId = \(getHistoryUniqueId)"
@@ -1235,10 +1251,10 @@ extension MyChatViewController {
             }
         }
         
-        let removeParticipant = RemoveParticipantAutomation(content:        myParticipants,
-                                                            threadId:       threadId,
-                                                            typeCode:       nil,
-                                                            requestUniqueId: nil)
+        let removeParticipant = RemoveParticipantAutomation(content:            myParticipants,
+                                                            threadId:           threadId,
+                                                            typeCode:           nil,
+                                                            requestUniqueId:    nil)
         removeParticipant.delegate = self
         removeParticipant.create(uniqueId: { (removeParticipantUniqueId) in
             let myText = "removeParticipant uniqueId = \(removeParticipantUniqueId)"
@@ -1337,12 +1353,12 @@ extension MyChatViewController {
             if (txt != "") && (txt.first != " ") { content = txt }
         }
         
-        let editMessage = EditMessageAutomation(content:        content,
-                                                metaData:       nil,
-                                                repliedTo:      repliedId,
-                                                messageId:      messageId,
-                                                typeCode:       nil,
-                                                requestUniqueId: nil)
+        let editMessage = EditMessageAutomation(content:            content,
+                                                metaData:           nil,
+                                                repliedTo:          repliedId,
+                                                messageId:          messageId,
+                                                typeCode:           nil,
+                                                requestUniqueId:    nil)
         editMessage.delegate = self
         editMessage.create(uniqueId: { (editMessageUniqueId) in
             let myText = "editMessage uniqueId = \(editMessageUniqueId)"

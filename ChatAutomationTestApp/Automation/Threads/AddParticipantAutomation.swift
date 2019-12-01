@@ -19,10 +19,10 @@ class AddParticipantAutomation {
     
     public weak var delegate: MoreInfoDelegate?
     
-    let contacts:           [Int]?
-    let threadId:           Int?
-    let typeCode:           String?
-    let requestUniqueId:    String?
+    let contacts:   [Int]?
+    let threadId:   Int?
+    let typeCode:   String?
+    let requestUniqueId:   String?
     
     
     typealias callbackStringTypeAlias           = (String) -> ()
@@ -31,12 +31,12 @@ class AddParticipantAutomation {
     private var uniqueIdCallback:   callbackStringTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
     
-    init(contacts: [Int]?, threadId: Int?, typeCode: String?, uniqueId: String?) {
+    init(contacts: [Int]?, threadId: Int?, typeCode: String?, requestUniqueId: String?) {
         
         self.contacts           = contacts
         self.threadId           = threadId
         self.typeCode           = typeCode
-        self.requestUniqueId    = uniqueId
+        self.requestUniqueId    = requestUniqueId
     }
     
     func create(uniqueId:       @escaping (String) -> (),
@@ -60,10 +60,10 @@ class AddParticipantAutomation {
     func sendRequest(theContacts: [Int], theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "send Request addParticipant with this params:\ncontacts = \(theContacts), threadId = \(theThreadId) , typeCode = \(typeCode ?? "nil"), uniqueId = \(requestUniqueId ?? "nil")", lineNumbers: 2)
         
-        let addParticipantInput = AddParticipantsRequestModel(contacts:         theContacts,
-                                                              threadId:         theThreadId,
-                                                              requestTypeCode:  typeCode,
-                                                              requestUniqueId:  requestUniqueId)
+        let addParticipantInput = AddParticipantsRequestModel(contacts: theContacts,
+                                                              threadId: theThreadId,
+                                                              typeCode: typeCode,
+                                                              uniqueId: requestUniqueId)
         
         Chat.sharedInstance.addParticipants(addParticipantsInput: addParticipantInput, uniqueId: { (addParticipantsUniqueId) in
             print("uniqueId = \(addParticipantsUniqueId)")
@@ -120,13 +120,13 @@ class AddParticipantAutomation {
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
-        let createThread = CreateThreadAutomation(description:  fakeParams.description,
-                                                  image:        nil,
-                                                  invitees:     [myInvitee],
-                                                  metadata:     nil,
-                                                  title:        fakeParams.title,
-                                                  type:         ThreadTypes.PUBLIC_GROUP,
-                                                  requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description:      fakeParams.description,
+                                                  image:            nil,
+                                                  invitees:         [myInvitee],
+                                                  metadata:         nil,
+                                                  title:            fakeParams.title,
+                                                  type:             ThreadTypes.PUBLIC_GROUP,
+                                                  requestUniqueId:  nil)
         var i = ""
         for item in createThread.invitees! {
             i.append("\(item.formatToJSON()) ,")

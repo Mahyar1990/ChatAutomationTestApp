@@ -60,11 +60,11 @@ class MessageDeliveryListAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.MessageDeliveryList.rawValue, message: "send Request to get MessageDeliveryList with this params:\n count = \(count ?? 0) , messageId = \(theMessageId) , offset = \(offset ?? 0) , typeCode = \(typeCode ?? "nil")", lineNumbers: 2)
         
-        let deliveryInput = MessageDeliverySeenListRequestModel(count:              count,
-                                                                messageId:          theMessageId,
-                                                                offset:             offset,
-                                                                requestTypeCode:    typeCode,
-                                                                requestUniqueId:    nil)
+        let deliveryInput = MessageDeliverySeenListRequestModel(count:      count,
+                                                                messageId:  theMessageId,
+                                                                offset:     offset,
+                                                                typeCode:   typeCode,
+                                                                uniqueId:   nil)
         
         Chat.sharedInstance.messageDeliveryList(messageDeliveryListInput: deliveryInput, uniqueId: { (messageDeliveryListUniqueId) in
             self.uniqueIdCallback?(messageDeliveryListUniqueId)

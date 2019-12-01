@@ -18,14 +18,14 @@ class CreateThreadWithMessageAutomation {
     
     public weak var delegate: MoreInfoDelegate?
     
-    let description:    String?
-    let image:          String?
-    let invitees:       [Invitee]?
-    let messageText:    String?
-    let metadata:       String?
-    let title:          String?
-    let type:           ThreadTypes?
-    let requestUniqueId: String?
+    let description:        String?
+    let image:              String?
+    let invitees:           [Invitee]?
+    let messageText:        String?
+    let metadata:           String?
+    let title:              String?
+    let type:               ThreadTypes?
+    let requestUniqueId:    String?
     
     typealias callbackStringTypeAlias                   = (String) -> ()
     typealias callbackServerThreadResponseTypeAlias     = (ThreadModel) -> ()
@@ -114,8 +114,8 @@ class CreateThreadWithMessageAutomation {
                                                                                messageSystemMetaData:   nil,
                                                                                messageText:             "This is The Message Text",
                                                                                messageType:             nil,
-                                                                               requestTypeCode:         nil,
-                                                                               requestUniqueId:         self.requestUniqueId)
+                                                                               typeCode:                nil,
+                                                                               uniqueId:                self.requestUniqueId)
         
         Chat.sharedInstance.createThreadWithMessage(creatThreadWithMessageInput: createThreadWithMessageInput, uniqueId: { (createThreadWithMessageUniqueId) in
                 self.uniqueIdCallback?(createThreadWithMessageUniqueId)

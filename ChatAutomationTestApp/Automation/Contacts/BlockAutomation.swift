@@ -66,7 +66,7 @@ class BlockAutomation {
     
     func sendRequest(theContactId: Int?, theUserId: Int?, theThreadId: Int?, isAutomation: Bool) {
         delegate?.newInfo(type: MoreInfoTypes.Block.rawValue, message: "send block request with this parameters:\ncontactId = \(theContactId ?? 0) , threadId = \(theThreadId ?? 0) , typeCode = \(typeCode ?? "nil") , userId = \(theUserId ?? 0)", lineNumbers: 2)
-        let blockContactInput = BlockContactsRequestModel(contactId: theContactId, threadId: theThreadId, userId: theUserId, requestTypeCode: typeCode, requestUniqueId: nil)
+        let blockContactInput = BlockContactsRequestModel(contactId: theContactId, threadId: theThreadId, userId: theUserId, typeCode: typeCode, uniqueId: nil)
         
         Chat.sharedInstance.blockContact(blockContactsInput: blockContactInput, uniqueId: { (blockContactUniqueId) in
             self.uniqueIdCallback?(blockContactUniqueId)
@@ -146,7 +146,7 @@ extension BlockAutomation {
         let addContact = AddContactAutomation(cellphoneNumber: pouria.cellphoneNumber, email: nil, firstName: pouria.firstName, lastName: pouria.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let _ = contactModel.contacts.first {
-                let getContactRequestInputs = GetContactsRequestModel(count: 1, offset: 0, query: pouria.firstName, requestTypeCode: nil, requestUniqueId: nil)
+                let getContactRequestInputs = GetContactsRequestModel(count: 1, offset: 0, query: pouria.firstName, typeCode: nil, uniqueId: nil)
                 self.getContact(withInput: getContactRequestInputs) { (contact) in
                     if let id = contact.userId {
                         self.delegate?.newInfo(type: MoreInfoTypes.Block.rawValue, message: "new conract has been created, user id = \(id)", lineNumbers: 1)

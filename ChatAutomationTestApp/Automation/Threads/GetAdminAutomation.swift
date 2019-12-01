@@ -68,8 +68,8 @@ class GetAdminAutomation {
                                                                            name:            name,
                                                                            offset:          offset,
                                                                            threadId:        theThreadId,
-                                                                           requestTypeCode: typeCode,
-                                                                           requestUniqueId: nil)
+                                                                           typeCode:        typeCode,
+                                                                           uniqueId:        nil)
         
         Chat.sharedInstance.getThreadParticipants(getThreadParticipantsInput: getThreadParticipantsInput, uniqueId: { (getThreadParticipantsUniqueId) in
             self.uniqueIdCallback?(getThreadParticipantsUniqueId)

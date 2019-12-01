@@ -60,8 +60,8 @@ class UploadFileAutomation {
                                                      fileSize:          nil,
                                                      originalFileName:  nil,
                                                      threadId:          threadId,
-                                                     requestTypeCode:   nil,
-                                                     requestUniqueId:   nil)
+                                                     typeCode:          nil,
+                                                     uniqueId:          nil)
         
         Chat.sharedInstance.uploadFile(uploadFileInput: uploadFileInput, uniqueId: { (uploadFileUniqueId) in
             self.uniqueIdCallback?(uploadFileUniqueId)

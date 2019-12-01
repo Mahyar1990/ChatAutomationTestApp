@@ -90,8 +90,8 @@ class SendTextMessageAutomation {
                                                           repliedTo:        theRepliedTo,
                                                           systemMetadata:   theSystemMetadata,
                                                           threadId:         theThreadId,
-                                                          requestTypeCode:  theTypeCode,
-                                                          requestUniqueId:  theUniqueId)
+                                                          typeCode:         theTypeCode,
+                                                          uniqueId:         theUniqueId)
         
         Chat.sharedInstance.sendTextMessage(sendTextMessageInput: sendTextMessage, uniqueId: { (sentTextMessageUniqueId) in
             self.uniqueIdCallback?(sentTextMessageUniqueId)

@@ -58,11 +58,11 @@ class ForwardMessageAutomation {
         switch (messageIds, subjectId) {
         case let (.some(msgIds), .some(subId)):
             
-            let inputModel = ForwardMessageRequestModel(messageIds:         msgIds,
-                                                        metaData:           metaData,
-                                                        repliedTo:          repliedTo,
-                                                        subjectId:          subId,
-                                                        requestTypeCode:    typeCode)
+            let inputModel = ForwardMessageRequestModel(messageIds: msgIds,
+                                                        metaData:   metaData,
+                                                        repliedTo:  repliedTo,
+                                                        subjectId:  subId,
+                                                        typeCode:   typeCode)
             sendRequest(forwardMessageRequest: inputModel)
             
         default:
@@ -74,7 +74,7 @@ class ForwardMessageAutomation {
     
     func sendRequest(forwardMessageRequest: ForwardMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "send Request to ForwardMessage with this params:\n messageIds = \(forwardMessageRequest.messageIds) , metaData = \(forwardMessageRequest.metaData ?? JSON.null) , repliedTo = \(forwardMessageRequest.repliedTo ?? 0) , subjectId = \(forwardMessageRequest.subjectId) , typeCode = \(forwardMessageRequest.requestTypeCode ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "send Request to ForwardMessage with this params:\n messageIds = \(forwardMessageRequest.messageIds) , metaData = \(forwardMessageRequest.metaData ?? JSON.null) , repliedTo = \(forwardMessageRequest.repliedTo ?? 0) , subjectId = \(forwardMessageRequest.subjectId) , typeCode = \(forwardMessageRequest.typeCode ?? "nil")", lineNumbers: 2)
         
         Chat.sharedInstance.forwardMessage(forwardMessageInput: forwardMessageRequest, uniqueIds: { (forwardMessageUniqueId) in
             self.uniqueIdCallback?(forwardMessageUniqueId)
@@ -136,13 +136,13 @@ class ForwardMessageAutomation {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         
         let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
-        let createThread = CreateThreadAutomation(description: fakeParams.description,
-                                                  image: nil,
-                                                  invitees: [myInvitee],
-                                                  metadata: nil,
-                                                  title: fakeParams.title,
-                                                  type: nil,
-                                                  requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description:      fakeParams.description,
+                                                  image:            nil,
+                                                  invitees:         [myInvitee],
+                                                  metadata:         nil,
+                                                  title:            fakeParams.title,
+                                                  type:             nil,
+                                                  requestUniqueId:  nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
@@ -171,7 +171,7 @@ class ForwardMessageAutomation {
     
     // 4
     func createForwardMessageModel(inThreadId threadId: Int, onMessageId messageId: Int) {
-        let requestModel = ForwardMessageRequestModel(messageIds: [messageId], metaData: self.metaData, repliedTo: self.repliedTo, subjectId: threadId, requestTypeCode: self.typeCode)
+        let requestModel = ForwardMessageRequestModel(messageIds: [messageId], metaData: self.metaData, repliedTo: self.repliedTo, subjectId: threadId, typeCode: self.typeCode)
         self.sendRequest(forwardMessageRequest: requestModel)
     }
     

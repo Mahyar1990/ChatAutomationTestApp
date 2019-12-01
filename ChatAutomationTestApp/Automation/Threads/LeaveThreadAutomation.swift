@@ -19,9 +19,10 @@ class LeaveThreadAutomation {
     
     public weak var delegate: MoreInfoDelegate?
     
-    let threadId:       Int?
-    let typeCode:       String?
-    let requestUniqueId: String?
+    let threadId:   Int?
+    
+    let typeCode:   String?
+    let requestUniqueId:   String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
     typealias callbackServerResponseTypeAlias   = (ThreadModel) -> ()
@@ -31,9 +32,9 @@ class LeaveThreadAutomation {
     
     init(threadId: Int?, typeCode: String?, requestUniqueId: String?) {
         
-        self.threadId       = threadId
-        self.typeCode       = typeCode
-        self.requestUniqueId = requestUniqueId
+        self.threadId           = threadId
+        self.typeCode           = typeCode
+        self.requestUniqueId    = requestUniqueId
         
     }
     
@@ -50,9 +51,9 @@ class LeaveThreadAutomation {
         delegate?.newInfo(type: MoreInfoTypes.LeaveThread.rawValue, message: "send Request to leaveThread with this params: \n threadId = \(theThreadId)", lineNumbers: 2)
         
         let leaveThreadInput = LeaveThreadRequestModel(//content:         nil,
-                                                       threadId:        theThreadId,
-                                                       requestTypeCode: typeCode,
-                                                       requestUniqueId: requestUniqueId)
+                                                       threadId:    theThreadId,
+                                                       typeCode:    typeCode,
+                                                       uniqueId:    requestUniqueId)
         
         Chat.sharedInstance.leaveThread(leaveThreadInput: leaveThreadInput, uniqueId: { (leaveThreadUniqueId) in
             self.uniqueIdCallback?(leaveThreadUniqueId)
@@ -104,13 +105,13 @@ class LeaveThreadAutomation {
     func createThread(withCellphoneNumber cellphoneNumber: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
-        let createThread = CreateThreadAutomation(description: fakeParams.description,
-                                                  image: nil,
-                                                  invitees: [myInvitee],
-                                                  metadata: nil,
-                                                  title: fakeParams.title,
-                                                  type: nil,
-                                                  requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description:      fakeParams.description,
+                                                  image:            nil,
+                                                  invitees:         [myInvitee],
+                                                  metadata:         nil,
+                                                  title:            fakeParams.title,
+                                                  type:             nil,
+                                                  requestUniqueId:  nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.LeaveThread.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)

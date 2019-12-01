@@ -81,8 +81,8 @@ class GetThreadAutomation {
                                                     partnerCoreContactId: nil,
                                                     partnerCoreUserId:  nil,
                                                     threadIds:          theThreadIds,
-                                                    requestTypeCode:    typeCode,
-                                                    requestUniqueId:    nil)
+                                                    typeCode:           typeCode,
+                                                    uniqueId:           nil)
         
         Chat.sharedInstance.getThreads(getThreadsInput: getThreadInput, uniqueId: { (getThreadUniqueId) in
             self.uniqueIdCallback?(getThreadUniqueId)
