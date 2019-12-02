@@ -76,10 +76,7 @@ class MessageSeenListAutomation {
         let x = SendTextMessageAutomation(content: "hi", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: nil, typeCode: nil, uniqueId: nil)
         x.create(uniqueId: { _ in }, serverSentResponse: { (sent) in
             self.delegate?.newInfo(type: MoreInfoTypes.MessageSeenList.rawValue, message: "new Message has been sent", lineNumbers: 1)
-            print("\n\nSent: \n\(sent)\n\n")
-            if let messageId = sent.message?.id {
-                self.sendRequest(theMessageId: messageId)
-            }
+            self.sendRequest(theMessageId: sent.messageId)
         }, serverDeliverResponse: { (deliver) in
             print("\n\nDeliver: \n\(deliver)\n\n")
         }) { (seen) in

@@ -50,8 +50,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var ssoHost                 = "https://accounts.pod.ir"
     var platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = "1ea23e857bc24884a2a0b156cbfa4e4c"
-    
+    var token                   = "6fee1b1051514c1ab05d52e2fd4fc880"
     
     
 // Local Addresses 1 (MehrAra)
@@ -505,7 +504,7 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             case (2, 1):    setPlaceHolderText(Input1: "threadId", Input2: "subjectId", Input3: "subjectId", Input4: "subjectId", Input5: "deleteForAll", Input6: "", Input7: "", Input8: "")
                             updateText(cellText: "deleteForAll: \n true or false", cellHeight: 35, cellColor: .white)
             case (2, 2):    setPlaceHolderText(Input1: "content", Input2: "messageId", Input3: "repliedTo", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-            case (2, 3):    setPlaceHolderText(Input1: "messageIds", Input2: "repliedTo", Input3: "subjectId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (2, 3):    setPlaceHolderText(Input1: "messageIds", Input2: "subjectId", Input3: "repliedTo", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
             case (2, 4):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
             case (2, 5):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
             case (2, 6):    setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "subjectId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")

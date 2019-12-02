@@ -50,7 +50,7 @@ class DeleteMultipleMessagesAutomation {
         
         if let tId = threadId {
             if (messageIds.count > 0) {
-                let requestModel = DeleteMultipleMessagesRequestModel(deleteForAll: deleteForAll, threadId: tId, messageIds: messageIds, typeCode: typeCode, uniqueIds: requestUniqueIds)
+                let requestModel = DeleteMultipleMessagesRequestModel(deleteForAll: deleteForAll, threadId: tId, messageIds: messageIds, typeCode: typeCode)
                 sendRequest(deleteMessageRequest: requestModel)
             } else {
                 sendRequestSenario(contactCellPhone: nil, threadId: tId, messageResponse: nil)
@@ -69,8 +69,7 @@ class DeleteMultipleMessagesAutomation {
         let input = DeleteMultipleMessagesRequestModel(deleteForAll:    deleteMessageRequest.deleteForAll,
                                                        threadId:        deleteMessageRequest.threadId,
                                                        messageIds:      deleteMessageRequest.messageIds,
-                                                       typeCode:        deleteMessageRequest.typeCode,
-                                                       uniqueIds:       deleteMessageRequest.uniqueIds)
+                                                       typeCode:        deleteMessageRequest.typeCode)
         
         Chat.sharedInstance.deleteMultipleMessages(deleteMessageInput: input, uniqueId: { (deleteMultipleMessagesUniqueId) in
             self.uniqueIdCallback?(deleteMultipleMessagesUniqueId)
@@ -106,14 +105,14 @@ class DeleteMultipleMessagesAutomation {
         let addContact = AddContactAutomation(cellphoneNumber: mehdi.cellphoneNumber, email: mehdi.email, firstName: mehdi.firstName, lastName: mehdi.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
-                if let cellphoneNumber = myContact.cellphoneNumber {
+                if let contactId = myContact.id {
                     
-                    self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this CellphoneNumber = \(cellphoneNumber).", lineNumbers: 2)
-                    self.sendRequestSenario(contactCellPhone: cellphoneNumber, threadId: nil, messageResponse: nil)
+                    self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this ContactId = \(contactId).", lineNumbers: 2)
+                    self.sendRequestSenario(contactCellPhone: "\(contactId)", threadId: nil, messageResponse: nil)
                     
                 } else {
                     // handle error that didn't get contact id in the contact model
-                    self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "there is no CellphoneNumber when addContact with this user (firstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber))!", lineNumbers: 2)
+                    self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "there is no ContactId when addContact with this user (firstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber))!", lineNumbers: 2)
                 }
             } else {
                 // handle error that didn't add Contact Model
@@ -127,7 +126,7 @@ class DeleteMultipleMessagesAutomation {
     // 2
     func createThread(withCellphoneNumber cellphoneNumber: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
+        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
         let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
@@ -156,10 +155,12 @@ class DeleteMultipleMessagesAutomation {
         let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
-            if let messageId = sentResponse.message?.id {
-                self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(messageId)", lineNumbers: 1)
-                messageIdResponse(messageId)
-            }
+//            if let messageId = sentResponse.message?.id {
+//                self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(messageId)", lineNumbers: 1)
+//                messageIdResponse(messageId)
+//            }
+            self.delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(sentResponse.messageId)", lineNumbers: 1)
+            messageIdResponse(sentResponse.messageId)
             
         }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })
     }
@@ -170,8 +171,7 @@ class DeleteMultipleMessagesAutomation {
         let requestModel = DeleteMultipleMessagesRequestModel(deleteForAll: self.deleteForAll,
                                                               threadId:     threadId,
                                                               messageIds:   messageIds,
-                                                              typeCode:     self.typeCode,
-                                                              uniqueIds:    self.requestUniqueIds)
+                                                              typeCode:     self.typeCode)
         self.sendRequest(deleteMessageRequest: requestModel)
     }
     

@@ -68,7 +68,7 @@ class EditMessageAutomation {
             sendRequest(editMessageRequest: requestModel)
             
         default:
-            sendRequestSenario(contactCellPhone: nil, threadId: nil, messageResponse: nil)
+            sendRequestSenario(contactId: nil, threadId: nil, messageId: nil)
         }
         
     }
@@ -86,22 +86,17 @@ class EditMessageAutomation {
         
     }
     
-    func sendRequestSenario(contactCellPhone: String?, threadId: Int?, messageResponse: JSON?) {
+    func sendRequestSenario(contactId: String?, threadId: Int?, messageId: Int?) {
         // 1- add contact
         // 2- create thread with this contact
         // 3- sendMessage to this thread
         // 4- edit this message
         
-        switch (contactCellPhone, threadId, messageResponse) {
-        case    (.none, .none, .none):              addContact()
-        case let (.some(cellPhone), .none, .none):  createThread(cellPhoneNumber: cellPhone)
-        case let (_ , .some(thread), .none):        sendMessage(toThread: thread)
-        case let (_ , _ , .some(msg)):
-            if let _ = msg["subjectId"].int {
-                if let messageId = Int(msg["content"].stringValue) {
-                    self.createEditMessageModel(withMessageId: messageId)
-                }
-            }
+        switch (contactId, threadId, messageId) {
+        case    (.none,     .none,          .none):         addContact()
+        case let (.some(id), .none,         .none):         createThread(contactId: id)
+        case let (_ ,       .some(thread),  .none):         sendMessage(toThread: thread)
+        case let (_ ,       _ ,             .some(mId)):    createEditMessageModel(withMessageId: mId)
         }
         
     }
@@ -115,33 +110,34 @@ class EditMessageAutomation {
         let addContact = AddContactAutomation(cellphoneNumber: mehdi.cellphoneNumber, email: mehdi.email, firstName: mehdi.firstName, lastName: mehdi.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
-                if let cellphoneNumber = myContact.cellphoneNumber {
+                if let contactId = myContact.id {
                     
-                    self.delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this CellphoneNumber = \(cellphoneNumber).", lineNumbers: 2)
-                    self.sendRequestSenario(contactCellPhone: cellphoneNumber, threadId: nil, messageResponse: nil)
+                    self.delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this ContactId = \(contactId).", lineNumbers: 2)
+                    self.sendRequestSenario(contactId: "\(contactId)", threadId: nil, messageId: nil)
                     
                 } else {
                     // handle error that didn't get contact id in the contact model
-                    self.delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "there is no CellphoneNumber when addContact with this user (firstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber))!", lineNumbers: 2)
+                    self.delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "there is no ContactId when addContact with this user (firstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber))!", lineNumbers: 2)
                 }
             } else {
                 // handle error that didn't add Contact Model
                 self.delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber) , lastName = \(mehdi.lastName)", lineNumbers: 2)
             }
         }
+        
     }
     
     
     // 2
-    func createThread(cellPhoneNumber: String) {
+    func createThread(contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-        let myInvitee = Invitee(id: "\(cellPhoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
+        let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
         let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 
                 self.delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
-                self.sendRequestSenario(contactCellPhone: nil, threadId: id, messageResponse: nil)
+                self.sendRequestSenario(contactId: nil, threadId: id, messageId: nil)
                 
             } else {
                 // handle error, there is no id in the Conversation model
@@ -152,13 +148,12 @@ class EditMessageAutomation {
     
     // 3
     func sendMessage(toThread id: Int) {
+        delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "try to sendMessage to threadId \(id)", lineNumbers: 1)
         let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
-            if let messageId = sentResponse.message?.id {
-                self.delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(messageId)", lineNumbers: 1)
-                
-            }
+            self.delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(sentResponse.messageId)", lineNumbers: 1)
+            self.sendRequestSenario(contactId: nil, threadId: id, messageId: sentResponse.messageId)
             
         }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })
     }
