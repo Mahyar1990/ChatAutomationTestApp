@@ -52,6 +52,7 @@ enum MoreInfoTypes: String {
     case MessageSeenList        = "MessageSeenList"
     case ReplyTextMessage       = "ReplyTextMessage"
     case SendTextMessage        = "SendTextMessage"
+    case SentBotMessage         = "SentBotMessage"
     
     case SendLocationMessage    = "SendLocationMessage"
     

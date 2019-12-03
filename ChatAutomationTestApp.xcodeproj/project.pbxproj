@@ -41,6 +41,7 @@
 		3EAE775A22217AD6005AC3C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3EAE775922217AD6005AC3C3 /* Assets.xcassets */; };
 		3EAE775D22217AD6005AC3C3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3EAE775B22217AD6005AC3C3 /* LaunchScreen.storyboard */; };
 		3EB2EAD522BF2EC800848C62 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB2EAD422BF2EC800848C62 /* Extensions.swift */; };
+		3EB80DEE239650370047AFAF /* SendBotMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB80DED239650370047AFAF /* SendBotMessageAutomation.swift */; };
 		3EBAFA792289975900D9F653 /* ClearHistoryAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBAFA782289975900D9F653 /* ClearHistoryAutomation.swift */; };
 		3EC964E322AF66DD000CE284 /* SendFileMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC964E222AF66DD000CE284 /* SendFileMessageAutomation.swift */; };
 		3EC964FC22AF7B91000CE284 /* ReplyFileMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC964FB22AF7B91000CE284 /* ReplyFileMessageAutomation.swift */; };
@@ -112,6 +113,7 @@
 		3EAE775C22217AD6005AC3C3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3EAE775E22217AD6005AC3C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3EB2EAD422BF2EC800848C62 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		3EB80DED239650370047AFAF /* SendBotMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendBotMessageAutomation.swift; sourceTree = "<group>"; };
 		3EBAFA782289975900D9F653 /* ClearHistoryAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearHistoryAutomation.swift; sourceTree = "<group>"; };
 		3EC964E222AF66DD000CE284 /* SendFileMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFileMessageAutomation.swift; sourceTree = "<group>"; };
 		3EC964FB22AF7B91000CE284 /* ReplyFileMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyFileMessageAutomation.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				3EADF7CE228BD15E009B102C /* MessageSeenListAutomation.swift */,
 				3E8D1482225C594C001C0AE6 /* ReplyMessageAutomation.swift */,
 				3ED3DA87222E930600261DB3 /* SendTextMessageAutomation.swift */,
+				3EB80DED239650370047AFAF /* SendBotMessageAutomation.swift */,
 			);
 			path = Messages;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				3E659B8D2299204C0042B03B /* GetAdminAutomation.swift in Sources */,
 				3EEB0814227EA277009DA162 /* AddParticipantAutomation.swift in Sources */,
 				3EADF7CB228BCF53009B102C /* MessageDeliveryListAutomation.swift in Sources */,
+				3EB80DEE239650370047AFAF /* SendBotMessageAutomation.swift in Sources */,
 				3E5EEDFD2286C8A70026DB58 /* MuteThreadAutomation.swift in Sources */,
 				3EC964E322AF66DD000CE284 /* SendFileMessageAutomation.swift in Sources */,
 				3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */,

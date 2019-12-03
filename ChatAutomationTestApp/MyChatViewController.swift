@@ -50,7 +50,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var ssoHost                 = "https://accounts.pod.ir"
     var platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = "6fee1b1051514c1ab05d52e2fd4fc880"
+    var token                   = "4a40532cf9fb43239dd2a634ea3b986a"
     
     
 // Local Addresses 1 (MehrAra)
@@ -96,7 +96,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let pickerDataCollection = ["Contact", "Thread", "Message", "Location", "File"]
     let pickerDataContact = ["AddContact", "Block", "GetBlockedList", "GetContacts", "RemoveContact", "SearchContact", "Unblock", "UpdateContact"]
     let pickerDataThread = ["AddAdmin", "AddParticipants", "ClearHistory", "CreateThread", "CreateThreadWithMessage", "GetAdmins", "GetHistory", "GetThread", "GetThreadParticipants", "LeaveThread", "MuteThread", "UnmuteThread", "RemoveAdmin", "RemoveParticipant", "SpamThread"]
-    let pickerDataMessgae = ["DeleteMessage", "DeleteMultipleMessage", "EditMessage", "ForwardMessage", "MessageDeliveryList" ,"MessageSeenList", "ReplyTextMessage", "SendTextMessage"]
+    let pickerDataMessgae = ["DeleteMessage", "DeleteMultipleMessage", "EditMessage", "ForwardMessage", "MessageDeliveryList" ,"MessageSeenList", "ReplyTextMessage", "SendTextMessage", "SendBotMessage"]
     let pickerDataLocation = ["SendLocationMessage"]
     let pickerDataFile = ["ReplyFileMessage", "SendFileMessage", "UploadFile", "UploadImage"]
     
@@ -509,6 +509,7 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             case (2, 5):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
             case (2, 6):    setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "subjectId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
             case (2, 7):    setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "threadId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (2, 8):    setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "threadId", Input4: "key, value", Input5: "key, value", Input6: "key, value", Input7: "key, value", Input8: "key, value")
             
             // Location Managements
             case (3, 0):    setPlaceHolderText(Input1: "lat", Input2: "lon", Input3: "threadId", Input4: "message", Input5: "", Input6: "", Input7: "", Input8: "")
@@ -609,6 +610,7 @@ extension MyChatViewController {
         case (2, 5): implementMessageSeenList()         // implement MessageSeenList
         case (2, 6): implementReplyTextMessage()        // implement ReplyTextMessage
         case (2, 7): implementSendTextMessage()         // implement SendTextMessage
+        case (2, 8): implementBotTextMessage()          // implement SentBotMessage
             
         case (3, 0): implementSendLocationMessage()     // implement SendLocationMessage
             
@@ -1513,6 +1515,76 @@ extension MyChatViewController {
         }
     }
     
+    // (2, 8)
+    func implementBotTextMessage() {
+        var content:    String? = nil
+        var metaData:   JSON    = [:]
+        let messageId:  Int?    = Int(input2TextField.text ?? "")
+        let threadId:   Int?    = Int(input3TextField.text ?? "")
+        
+        if let txt = input1TextField.text {
+            if (txt != "") && (txt.first != " ") { content = txt }
+        }
+        
+        if let msgIdsTxt = input4TextField.text {
+            let str = msgIdsTxt.replacingOccurrences(of: " ", with: "") // remove all spaces
+            let stringIds = str.components(separatedBy: ",")            // seperate ids
+            if let key = stringIds.first , let value = stringIds.last {
+                metaData[key] = JSON(value)
+            }
+        }
+        if let msgIdsTxt = input5TextField.text {
+            let str = msgIdsTxt.replacingOccurrences(of: " ", with: "") // remove all spaces
+            let stringIds = str.components(separatedBy: ",")            // seperate ids
+            if let key = stringIds.first , let value = stringIds.last {
+                metaData[key] = JSON(value)
+            }
+        }
+        if let msgIdsTxt = input6TextField.text {
+            let str = msgIdsTxt.replacingOccurrences(of: " ", with: "") // remove all spaces
+            let stringIds = str.components(separatedBy: ",")            // seperate ids
+            if let key = stringIds.first , let value = stringIds.last {
+                metaData[key] = JSON(value)
+            }
+        }
+        if let msgIdsTxt = input7TextField.text {
+            let str = msgIdsTxt.replacingOccurrences(of: " ", with: "") // remove all spaces
+            let stringIds = str.components(separatedBy: ",")            // seperate ids
+            if let key = stringIds.first , let value = stringIds.last {
+                metaData[key] = JSON(value)
+            }
+        }
+        if let msgIdsTxt = input8TextField.text {
+            let str = msgIdsTxt.replacingOccurrences(of: " ", with: "") // remove all spaces
+            let stringIds = str.components(separatedBy: ",")            // seperate ids
+            if let key = stringIds.first , let value = stringIds.last {
+                metaData[key] = JSON(value)
+            }
+        }
+        
+        
+        let sendBotMessage = SendBotMessageAutomation(content:          content,
+                                                      messsageId:       messageId,
+                                                      metaData:         metaData,
+                                                      reciever:         threadId,
+                                                      systemMetadata:   nil,
+                                                      typeCode:         nil,
+                                                      uniqueId:         nil)
+        sendBotMessage.delegate = self
+        sendBotMessage.create(uniqueId: { (sendBotMessageUniqueId) in
+            let myText = "sendBotMessage uniqueId = \(sendBotMessageUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }, serverSentResponse: { (sent) in
+            let myText = "sendBotMessage sent response = \(sent.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }, serverDeliverResponse: { (deliver) in
+            let myText = "sendBotMessage deliver response = \(deliver.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }) { (seen) in
+            let myText = "sendBotMessage seen response = \(seen.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }
+    }
     
     // Location Managements
     // (3, 0)

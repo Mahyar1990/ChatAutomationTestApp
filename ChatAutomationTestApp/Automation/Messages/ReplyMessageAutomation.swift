@@ -10,16 +10,10 @@
 import FanapPodChatSDK
 import SwiftyJSON
 
-/*
- if somebody call this method,
- a ReplyMessage request will send
- */
 
 class ReplyMessageAutomation {
     
-    
     public weak var delegate: MoreInfoDelegate?
-    
     
     let content:            String?
     let metaData:           JSON?
@@ -165,7 +159,7 @@ class ReplyMessageAutomation {
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
             self.delegate?.newInfo(type: MoreInfoTypes.ReplyTextMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(sentResponse.messageId)", lineNumbers: 1)
-            self.sendRequestSenario(contactId: nil, threadId: nil, responseThreadId: sentResponse.threadId, responseMessageId: sentResponse.message?.id)
+            self.sendRequestSenario(contactId: nil, threadId: nil, responseThreadId: sentResponse.threadId, responseMessageId: sentResponse.messageId)
             
         }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })
     }

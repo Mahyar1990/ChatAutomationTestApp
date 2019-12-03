@@ -10,16 +10,9 @@
 import FanapPodChatSDK
 import SwiftyJSON
 
-/*
- if somebody call this method,
- a getThread request will send
- */
-
 class SendTextMessageAutomation {
     
-    
     public weak var delegate: MoreInfoDelegate?
-    
     
     let content:        String?
     let metaData:       JSON?
@@ -83,7 +76,7 @@ class SendTextMessageAutomation {
     
     func sendRequest(theContent: String, theMetaData: JSON?, theRepliedTo: Int?, theSystemMetadata: JSON?, theThreadId: Int, theTypeCode: String?, theUniqueId: String?) {
         
-        delegate?.newInfo(type: MoreInfoTypes.GetThread.rawValue, message: "send Request to SendTextMesssage with this params:\ncount = \(theContent) , metaData = \(theMetaData ?? JSON.null) , repliedTo = \(theRepliedTo ?? 0) , systemMetadata = \(theSystemMetadata ?? JSON.null) , threadId = \(theThreadId) , typeCode = \(theTypeCode ?? "nil") , uniqueId = \(theUniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "send Request to SendTextMesssage with this params:\ncount = \(theContent) , metaData = \(theMetaData ?? JSON.null) , repliedTo = \(theRepliedTo ?? 0) , systemMetadata = \(theSystemMetadata ?? JSON.null) , threadId = \(theThreadId) , typeCode = \(theTypeCode ?? "nil") , uniqueId = \(theUniqueId ?? "nil")", lineNumbers: 2)
         
         let sendTextMessage = SendTextMessageRequestModel(content:          theContent,
                                                           metaData:         theMetaData,
