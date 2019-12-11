@@ -68,7 +68,7 @@ class AddContactAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.AddContact.rawValue, message: "Send AddContact request with this params:\ncellPhoneNumber = \(theCellphoneNumber ?? "nil") , email = \(theEmail ?? "nil") , firstName = \(theFirstName ?? "nil") , lastName = \(theLastName ?? "nil")", lineNumbers: 3)
         
-        let addContactInput = AddContactsRequestModel(cellphoneNumber:  theCellphoneNumber,
+        let addContactInput = AddContactRequestModel(cellphoneNumber:  theCellphoneNumber,
                                                       email:            theEmail,
                                                       firstName:        theFirstName,
                                                       lastName:         theLastName,

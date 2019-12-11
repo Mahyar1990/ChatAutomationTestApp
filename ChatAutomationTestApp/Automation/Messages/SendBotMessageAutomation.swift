@@ -18,7 +18,7 @@ class SendBotMessageAutomation {
     let content:        String?
     let messsageId:     Int?
     let metaData:       JSON
-    let reciever:       Int?
+    let threadId:       Int?
     let systemMetadata: JSON?
     let typeCode:       String?
     let requestUniqueId:  String?
@@ -32,12 +32,12 @@ class SendBotMessageAutomation {
     private var serverDeliverResponse:  callbackServerResponseTypeAlias?
     private var serverSeenResponse:     callbackServerResponseTypeAlias?
     
-    init(content: String?, messsageId: Int?, metaData: JSON, reciever: Int?, systemMetadata: JSON?, typeCode: String?, uniqueId: String?) {
+    init(content: String?, messsageId: Int?, metaData: JSON, threadId: Int?, systemMetadata: JSON?, typeCode: String?, uniqueId: String?) {
         
         self.content        = content
         self.messsageId     = messsageId
         self.metaData       = metaData
-        self.reciever       = reciever
+        self.threadId       = threadId
         self.systemMetadata = systemMetadata
         self.typeCode       = typeCode
         self.requestUniqueId = uniqueId
@@ -55,7 +55,7 @@ class SendBotMessageAutomation {
         self.serverSeenResponse     = serverSeenResponse
         
         
-        switch (messsageId, reciever, content) {
+        switch (messsageId, threadId, content) {
         case let (.some(repTo), .some(_), .some(myContent)):
             let inputModel = SendBotMessageRequestModel(content:        myContent,
                                                         messageId:      repTo,
@@ -90,7 +90,7 @@ class SendBotMessageAutomation {
             self.uniqueIdCallback?(replyMessageUniqueId)
         }, onSent: { (sent) in
             self.serverSentResponse?(sent as! SendMessageModel)
-        }, onDelivere: { (deliver) in
+        }, onDelivered: { (deliver) in
             self.serverDeliverResponse?(deliver as! SendMessageModel)
         }, onSeen: { (seen) in
             self.serverSeenResponse?(seen as! SendMessageModel)

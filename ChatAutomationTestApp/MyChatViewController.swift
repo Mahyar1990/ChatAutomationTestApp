@@ -38,10 +38,10 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     
 // SandBox Addresses:
     
-//    var socketAddress           = "wss://chat-sandbox.pod.land/ws"
+//    var socketAddress           = "wss://chat-sandbox.pod.ir/ws"
 //    var serverName              = "chat-server"
-//    var ssoHost                 = "https://accounts.pod.land"
-//    var platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+//    var ssoHost                 = "https://accounts.pod.ir"
+//    var platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
 //    var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
 //    var token                   = "99f7b1eaae5540feb3f20d6b84af2651"
     
@@ -50,7 +50,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var ssoHost                 = "https://accounts.pod.ir"
     var platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = "4a40532cf9fb43239dd2a634ea3b986a"
+    var token                   = "136c797bf36e47fe93a8c6f990d629c4"
     
     
 // Local Addresses 1 (MehrAra)
@@ -261,7 +261,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     
     func createChat() {
         // create Chat object
-        Chat.sharedInstance.createChatObject(socketAddress:          socketAddress,
+        Chat.sharedInstance.createChatObject(socketAddress:         socketAddress,
                                             ssoHost:                ssoHost,
                                             platformHost:           platformHost,
                                             fileServer:             fileServer,
@@ -270,7 +270,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                                             mapApiKey:              nil,
                                             mapServer:              "https://api.neshan.org/v1",
                                             typeCode:               "default",
-                                            enableCache:            false,
+                                            enableCache:            true,
                                             cacheTimeStampInSec:    nil,
                                             msgPriority:            1,
                                             msgTTL:                 messageTtl,
@@ -283,7 +283,6 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                                             reconnectOnClose:       true)
         
         Chat.sharedInstance.delegate = self
-        
         
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(activityIndicator)
@@ -1566,7 +1565,7 @@ extension MyChatViewController {
         let sendBotMessage = SendBotMessageAutomation(content:          content,
                                                       messsageId:       messageId,
                                                       metaData:         metaData,
-                                                      reciever:         threadId,
+                                                      threadId:         threadId,
                                                       systemMetadata:   nil,
                                                       typeCode:         nil,
                                                       uniqueId:         nil)

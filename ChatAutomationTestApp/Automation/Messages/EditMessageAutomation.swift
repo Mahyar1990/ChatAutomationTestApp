@@ -53,7 +53,7 @@ class EditMessageAutomation {
             let requestModel = EditTextMessageRequestModel(content:     myContent,
                                                            metaData:    metaData,
                                                            repliedTo:   repliedTo,
-                                                           subjectId:   msgId,
+                                                           messageId:   msgId,
                                                            typeCode:    typeCode,
                                                            uniqueId:    requestUniqueId)
             sendRequest(editMessageRequest: requestModel)
@@ -62,7 +62,7 @@ class EditMessageAutomation {
             let requestModel = EditTextMessageRequestModel(content:     "This is Edited Message Text",
                                                            metaData:    metaData,
                                                            repliedTo:   repliedTo,
-                                                           subjectId:   smgId,
+                                                           messageId:   smgId,
                                                            typeCode:    typeCode,
                                                            uniqueId:    requestUniqueId)
             sendRequest(editMessageRequest: requestModel)
@@ -76,7 +76,7 @@ class EditMessageAutomation {
     
     func sendRequest(editMessageRequest: EditTextMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "send Request to EditMessage with this params:\n content = \(editMessageRequest.content) , metaData = \(editMessageRequest.metaData ?? JSON.null) , repliedTo = \(editMessageRequest.repliedTo ?? 0) , subjectId = \(editMessageRequest.subjectId) , typeCode = \(editMessageRequest.typeCode ?? "nil") , uniqueId = \(editMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "send Request to EditMessage with this params:\n content = \(editMessageRequest.content) , metaData = \(editMessageRequest.metaData ?? JSON.null) , repliedTo = \(editMessageRequest.repliedTo ?? 0) , subjectId = \(editMessageRequest.messageId) , typeCode = \(editMessageRequest.typeCode ?? "nil") , uniqueId = \(editMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
         Chat.sharedInstance.editMessage(editMessageInput: editMessageRequest, uniqueId: { (editMessageUniqueId) in
 //        myChatObject?.editMessage(editMessageInput: editMessageRequest, uniqueId: { (editMessageUniqueId) in
             self.uniqueIdCallback?(editMessageUniqueId)
@@ -164,7 +164,7 @@ class EditMessageAutomation {
         let requestModel = EditTextMessageRequestModel(content:     self.content ?? "This is Edited Text Message",
                                                        metaData:    self.metaData,
                                                        repliedTo:   self.repliedTo,
-                                                       subjectId:   messageId,
+                                                       messageId:   messageId,
                                                        typeCode:    self.typeCode,
                                                        uniqueId:    self.requestUniqueId)
         self.sendRequest(editMessageRequest: requestModel)
