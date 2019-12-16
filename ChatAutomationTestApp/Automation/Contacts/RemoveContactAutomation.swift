@@ -61,7 +61,7 @@ class RemoveContactAutomation {
         
         let removeContactInput = RemoveContactsRequestModel(contactId: theId, typeCode: nil, uniqueId: nil)
         
-        Chat.sharedInstance.removeContact(removeContactsInput: removeContactInput, uniqueId: { (removeContactUniqueId) in
+        Chat.sharedInstance.removeContact(inputModel: removeContactInput, uniqueId: { (removeContactUniqueId) in
             self.uniqueIdCallback?(removeContactUniqueId)
         }, completion: { (removeContactServerResponse) in
             self.responseCallback?(removeContactServerResponse as! RemoveContactModel)

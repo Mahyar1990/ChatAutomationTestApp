@@ -57,7 +57,7 @@ class RemoveParticipantAutomation {
                                                                     typeCode:       typeCode,
                                                                     uniqueId:       requestUniqueId)
         
-        Chat.sharedInstance.removeParticipants(removeParticipantsInput: removeParticipantInput, uniqueId: { (removeParticipantUniqueId) in
+        Chat.sharedInstance.removeParticipants(inputModel: removeParticipantInput, uniqueId: { (removeParticipantUniqueId) in
             self.uniqueIdCallback?(removeParticipantUniqueId)
         }, completion: { (removeParticipantServerResponseModel) in
             self.responseCallback?(removeParticipantServerResponseModel as! RemoveParticipantModel)

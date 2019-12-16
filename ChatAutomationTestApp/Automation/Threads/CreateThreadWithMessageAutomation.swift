@@ -109,15 +109,15 @@ class CreateThreadWithMessageAutomation {
                                                                                threadType:              withType,
                                                                                messageForwardedMessageIds:  nil,
                                                                                messageForwardedUniqueIds:   nil,
-                                                                               messageMetaData:         nil,
+                                                                               messageMetadata:         nil,
                                                                                messageRepliedTo:        nil,
-                                                                               messageSystemMetaData:   nil,
+                                                                               messageSystemMetadata:   nil,
                                                                                messageText:             "This is The Message Text",
                                                                                messageType:             nil,
                                                                                typeCode:                nil,
                                                                                uniqueId:                self.requestUniqueId)
         
-        Chat.sharedInstance.createThreadWithMessage(creatThreadWithMessageInput: createThreadWithMessageInput, uniqueId: { (createThreadWithMessageUniqueId) in
+        Chat.sharedInstance.createThreadWithMessage(inputModel: createThreadWithMessageInput, uniqueId: { (createThreadWithMessageUniqueId) in
                 self.uniqueIdCallback?(createThreadWithMessageUniqueId)
             }, completion: { (createThreadModel) in
                 self.completionResponseCallback?(createThreadModel as! ThreadModel)

@@ -71,7 +71,7 @@ class DeleteMultipleMessagesAutomation {
                                                        messageIds:      deleteMessageRequest.messageIds,
                                                        typeCode:        deleteMessageRequest.typeCode)
         
-        Chat.sharedInstance.deleteMultipleMessages(deleteMessageInput: input, uniqueId: { (deleteMultipleMessagesUniqueId) in
+        Chat.sharedInstance.deleteMultipleMessages(inputModel: input, uniqueId: { (deleteMultipleMessagesUniqueId) in
             self.uniqueIdCallback?(deleteMultipleMessagesUniqueId)
         }, completion: { (deleteMultipleMessageResponse) in
             self.responseCallback?(deleteMultipleMessageResponse as! DeleteMessageModel)
@@ -152,7 +152,7 @@ class DeleteMultipleMessagesAutomation {
     
     // 3-2
     func sendMessage(toThread id: Int, messageIdResponse: @escaping (Int)->()) {
-        let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
+        let sendMessage = SendTextMessageAutomation(content: "New Message", metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
 //            if let messageId = sentResponse.message?.id {

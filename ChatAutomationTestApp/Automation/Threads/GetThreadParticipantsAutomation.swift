@@ -72,7 +72,7 @@ class GetThreadParticipantsAutomation {
                                                                            typeCode:        typeCode,
                                                                            uniqueId:        nil)
         
-        Chat.sharedInstance.getThreadParticipants(getThreadParticipantsInput: getThreadParticipantsInput, uniqueId: { (getThreadParticipantsUniqueId) in
+        Chat.sharedInstance.getThreadParticipants(inputModel: getThreadParticipantsInput, uniqueId: { (getThreadParticipantsUniqueId) in
             self.uniqueIdCallback?(getThreadParticipantsUniqueId)
         }, completion: { (getThreadParticipantsServerResponse) in
             self.responseCallback?(getThreadParticipantsServerResponse as! GetThreadParticipantsModel)

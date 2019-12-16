@@ -67,7 +67,7 @@ class UnblockAutomation {
         
         let unblockInput = UnblockContactsRequestModel(blockId: theBlockId, contactId: theContactId, threadId: theThreadId, userId: theUserId, typeCode: typeCode, uniqueId: nil)
         
-        Chat.sharedInstance.unblockContact(unblockContactsInput: unblockInput, uniqueId: { (unblockUniqueId) in
+        Chat.sharedInstance.unblockContact(inputModel: unblockInput, uniqueId: { (unblockUniqueId) in
             self.uniqueIdCallback?(unblockUniqueId)
         }, completion: { (unblockResponse) in
             self.responseCallback?(unblockResponse as! BlockedContactModel)
@@ -179,7 +179,7 @@ extension UnblockAutomation {
     }
     
     private func getContact(withInput requestModel: GetContactsRequestModel, completion: @escaping (Contact)->() ) {
-        Chat.sharedInstance.getContacts(getContactsInput: requestModel, uniqueId: { (_) in
+        Chat.sharedInstance.getContacts(inputModel: requestModel, uniqueId: { (_) in
         }, completion: { (cotactM) in
             let contactModel = cotactM as! GetContactsModel
             if let firstContact = contactModel.contacts.first {

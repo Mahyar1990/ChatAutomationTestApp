@@ -94,7 +94,7 @@ class CreateThreadAutomation {
                                                          typeCode:      nil,
                                                          uniqueId:      self.requestUniqueId)
         
-        Chat.sharedInstance.createThread(createThreadInput: createThreadInput, uniqueId: { (createThreadUniqueId) in
+        Chat.sharedInstance.createThread(inputModel: createThreadInput, uniqueId: { (createThreadUniqueId) in
             self.uniqueIdCallback?(createThreadUniqueId, "on \(on?.rawValue ?? "user request")")
         }, completion: { (createThreadModel) in
             self.responseCallback?(createThreadModel as! ThreadModel, "on \(on?.rawValue ?? "user request")")

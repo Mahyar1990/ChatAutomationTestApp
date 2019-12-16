@@ -16,7 +16,7 @@ class ReplyMessageAutomation {
     public weak var delegate: MoreInfoDelegate?
     
     let content:            String?
-    let metaData:           JSON?
+    let metadata:           JSON?
     let repliedTo:          Int?
     let subjectId:          Int?
     let typeCode:           String?
@@ -30,10 +30,10 @@ class ReplyMessageAutomation {
     private var serverDeliverResponse:  callbackServerResponseTypeAlias?
     private var serverSeenResponse:     callbackServerResponseTypeAlias?
     
-    init(content: String?, metaData: JSON?, repliedTo: Int?, subjectId: Int?, typeCode: String?, uniqueId: String?) {
+    init(content: String?, metadata: JSON?, repliedTo: Int?, subjectId: Int?, typeCode: String?, uniqueId: String?) {
         
         self.content            = content
-        self.metaData           = metaData
+        self.metadata           = metadata
         self.repliedTo          = repliedTo
         self.subjectId          = subjectId
         self.typeCode           = typeCode
@@ -54,7 +54,7 @@ class ReplyMessageAutomation {
         switch (repliedTo, subjectId, content) {
         case let (.some(repTo), .some(subTo), .some(myContent)):
             let inputModel = ReplyTextMessageRequestModel(content:      myContent,
-                                                          metaData:     metaData,
+                                                          metadata:     metadata,
                                                           repliedTo:    repTo,
                                                           subjectId:    subTo,
                                                           typeCode:     typeCode,
@@ -63,7 +63,7 @@ class ReplyMessageAutomation {
             
         case let (.some(repTo), .some(subTo), .none):
             let inputModel = ReplyTextMessageRequestModel(content:      "This is ReplyMessage",
-                                                          metaData:     metaData,
+                                                          metadata:     metadata,
                                                           repliedTo:    repTo,
                                                           subjectId:    subTo,
                                                           typeCode:     typeCode,
@@ -79,9 +79,9 @@ class ReplyMessageAutomation {
     
     func sendRequest(replyTextMessageRequest: ReplyTextMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.ReplyTextMessage.rawValue, message: "send Request to ReplyTextMessage with this params:\n content = \(replyTextMessageRequest.content) , metaData = \(replyTextMessageRequest.metaData ?? JSON.null) , repliedTo = \(replyTextMessageRequest.repliedTo) , subjectId = \(replyTextMessageRequest.subjectId) , typeCode = \(replyTextMessageRequest.typeCode ?? "nil") , uniqueId = \(replyTextMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.ReplyTextMessage.rawValue, message: "send Request to ReplyTextMessage with this params:\n content = \(replyTextMessageRequest.content) , metadata = \(replyTextMessageRequest.metadata ?? JSON.null) , repliedTo = \(replyTextMessageRequest.repliedTo) , subjectId = \(replyTextMessageRequest.subjectId) , typeCode = \(replyTextMessageRequest.typeCode ?? "nil") , uniqueId = \(replyTextMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
         
-        Chat.sharedInstance.replyMessage(replyMessageInput: replyTextMessageRequest, uniqueId: { (replyMessageUniqueId) in
+        Chat.sharedInstance.replyMessage(inputModel: replyTextMessageRequest, uniqueId: { (replyMessageUniqueId) in
             self.uniqueIdCallback?(replyMessageUniqueId)
         }, onSent: { (sent) in
             self.serverSentResponse?(sent as! SendMessageModel)
@@ -155,7 +155,7 @@ class ReplyMessageAutomation {
     
     // 3
     func sendMessage(toThread id: Int) {
-        let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
+        let sendMessage = SendTextMessageAutomation(content: "New Message", metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
             self.delegate?.newInfo(type: MoreInfoTypes.ReplyTextMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(sentResponse.messageId)", lineNumbers: 1)
@@ -167,7 +167,7 @@ class ReplyMessageAutomation {
     
     // 4
     func createReplyTextMessageModel(inThreadId threadId: Int, onMessageId messageId: Int) {
-        let requestModel = ReplyTextMessageRequestModel(content: "This is ReplyMessage", metaData: self.metaData, repliedTo: messageId, subjectId: threadId, typeCode: self.typeCode, uniqueId: self.requestUniqueId)
+        let requestModel = ReplyTextMessageRequestModel(content: "This is ReplyMessage", metadata: self.metadata, repliedTo: messageId, subjectId: threadId, typeCode: self.typeCode, uniqueId: self.requestUniqueId)
         self.sendRequest(replyTextMessageRequest: requestModel)
     }
     

@@ -68,7 +68,7 @@ class BlockAutomation {
         delegate?.newInfo(type: MoreInfoTypes.Block.rawValue, message: "send block request with this parameters:\ncontactId = \(theContactId ?? 0) , threadId = \(theThreadId ?? 0) , typeCode = \(typeCode ?? "nil") , userId = \(theUserId ?? 0)", lineNumbers: 2)
         let blockContactInput = BlockContactsRequestModel(contactId: theContactId, threadId: theThreadId, userId: theUserId, typeCode: typeCode, uniqueId: nil)
         
-        Chat.sharedInstance.blockContact(blockContactsInput: blockContactInput, uniqueId: { (blockContactUniqueId) in
+        Chat.sharedInstance.blockContact(inputModel: blockContactInput, uniqueId: { (blockContactUniqueId) in
             self.uniqueIdCallback?(blockContactUniqueId)
         }, completion: { (blockContactResponse) in
             self.responseCallback?(blockContactResponse as! BlockedContactModel)
@@ -165,7 +165,7 @@ extension BlockAutomation {
     }
     
     private func getContact(withInput requestModel: GetContactsRequestModel, completion: @escaping (Contact)->() ) {
-        Chat.sharedInstance.getContacts(getContactsInput: requestModel, uniqueId: { (_) in
+        Chat.sharedInstance.getContacts(inputModel: requestModel, uniqueId: { (_) in
         }, completion: { (cotactM) in
             let contactModel = cotactM as! GetContactsModel
             if let firstContact = contactModel.contacts.first {

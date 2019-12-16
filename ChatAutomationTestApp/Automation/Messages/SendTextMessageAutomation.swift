@@ -15,7 +15,7 @@ class SendTextMessageAutomation {
     public weak var delegate: MoreInfoDelegate?
     
     let content:        String?
-    let metaData:       JSON?
+    let metadata:       JSON?
     let repliedTo:      Int?
     let systemMetadata: JSON?
     let threadId:       Int?
@@ -31,10 +31,10 @@ class SendTextMessageAutomation {
     private var serverDeliverResponse:  callbackServerResponseTypeAlias?
     private var serverSeenResponse:     callbackServerResponseTypeAlias?
     
-    init(content: String?, metaData: JSON?, repliedTo: Int?, systemMetadata: JSON?, threadId: Int?, typeCode: String?, uniqueId: String?) {
+    init(content: String?, metadata: JSON?, repliedTo: Int?, systemMetadata: JSON?, threadId: Int?, typeCode: String?, uniqueId: String?) {
         
         self.content        = content
-        self.metaData       = metaData
+        self.metadata       = metadata
         self.repliedTo      = repliedTo
         self.systemMetadata = systemMetadata
         self.threadId       = threadId
@@ -54,14 +54,14 @@ class SendTextMessageAutomation {
         
         switch (content, threadId) {
         case let (.some(myContent), .some(myThreadId)):
-            sendRequest(theContent: myContent, theMetaData: metaData, theRepliedTo: repliedTo, theSystemMetadata: systemMetadata, theThreadId: myThreadId, theTypeCode: typeCode, theUniqueId: uniqueIdOfAllRequests)
+            sendRequest(theContent: myContent, theMetadata: metadata, theRepliedTo: repliedTo, theSystemMetadata: systemMetadata, theThreadId: myThreadId, theTypeCode: typeCode, theUniqueId: uniqueIdOfAllRequests)
         case let (.some(myContent), .none):
             // here we have to create a thread, then send a message to this thread Id
             createThreadAndSendMessage(withContent: myContent)
         case let (.none, .some(myThreadId)):
             // here we have to generate a custom message to send, then send a message to this thread Id
             let text = Faker.sharedInstance.generateNameAsString(withLength: 30)
-            sendRequest(theContent: text, theMetaData: metaData, theRepliedTo: repliedTo, theSystemMetadata: systemMetadata, theThreadId: myThreadId, theTypeCode: typeCode, theUniqueId: uniqueIdOfAllRequests)
+            sendRequest(theContent: text, theMetadata: metadata, theRepliedTo: repliedTo, theSystemMetadata: systemMetadata, theThreadId: myThreadId, theTypeCode: typeCode, theUniqueId: uniqueIdOfAllRequests)
         default:
             delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "You have to fill the  Content(iput 1) and threadId(input 3) of the message", lineNumbers: 2)
             createThreadAndSendMessage(withContent: nil)
@@ -74,19 +74,19 @@ class SendTextMessageAutomation {
     }
     
     
-    func sendRequest(theContent: String, theMetaData: JSON?, theRepliedTo: Int?, theSystemMetadata: JSON?, theThreadId: Int, theTypeCode: String?, theUniqueId: String?) {
+    func sendRequest(theContent: String, theMetadata: JSON?, theRepliedTo: Int?, theSystemMetadata: JSON?, theThreadId: Int, theTypeCode: String?, theUniqueId: String?) {
         
-        delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "send Request to SendTextMesssage with this params:\ncount = \(theContent) , metaData = \(theMetaData ?? JSON.null) , repliedTo = \(theRepliedTo ?? 0) , systemMetadata = \(theSystemMetadata ?? JSON.null) , threadId = \(theThreadId) , typeCode = \(theTypeCode ?? "nil") , uniqueId = \(theUniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "send Request to SendTextMesssage with this params:\ncount = \(theContent) , metadata = \(theMetadata ?? JSON.null) , repliedTo = \(theRepliedTo ?? 0) , systemMetadata = \(theSystemMetadata ?? JSON.null) , threadId = \(theThreadId) , typeCode = \(theTypeCode ?? "nil") , uniqueId = \(theUniqueId ?? "nil")", lineNumbers: 2)
         
         let sendTextMessage = SendTextMessageRequestModel(content:          theContent,
-                                                          metaData:         theMetaData,
+                                                          metadata:         theMetadata,
                                                           repliedTo:        theRepliedTo,
                                                           systemMetadata:   theSystemMetadata,
                                                           threadId:         theThreadId,
                                                           typeCode:         theTypeCode,
                                                           uniqueId:         theUniqueId)
         
-        Chat.sharedInstance.sendTextMessage(sendTextMessageInput: sendTextMessage, uniqueId: { (sentTextMessageUniqueId) in
+        Chat.sharedInstance.sendTextMessage(inputModel: sendTextMessage, uniqueId: { (sentTextMessageUniqueId) in
             self.uniqueIdCallback?(sentTextMessageUniqueId)
         }, onSent: { (sent) in
             self.serverSentResponse?(sent as! SendMessageModel)
@@ -124,7 +124,7 @@ class SendTextMessageAutomation {
                         if let id = createThreadModel.thread?.id {
                             self.delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
                             
-                            self.sendRequest(theContent: withContent ?? "This is a dummy message", theMetaData: self.metaData, theRepliedTo: self.repliedTo, theSystemMetadata: self.systemMetadata, theThreadId: id, theTypeCode: self.typeCode, theUniqueId: self.uniqueIdOfAllRequests)
+                            self.sendRequest(theContent: withContent ?? "This is a dummy message", theMetadata: self.metadata, theRepliedTo: self.repliedTo, theSystemMetadata: self.systemMetadata, theThreadId: id, theTypeCode: self.typeCode, theUniqueId: self.uniqueIdOfAllRequests)
                         }
                     })
                     

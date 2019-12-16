@@ -73,7 +73,7 @@ class GetContactsAutomation {
         
         let getContactInput = GetContactsRequestModel(count: theCount, offset: theOffset, query: theQuery, typeCode: typeCode, uniqueId: nil)
         
-        Chat.sharedInstance.getContacts(getContactsInput: getContactInput, uniqueId: { (getContactUniqueId) in
+        Chat.sharedInstance.getContacts(inputModel: getContactInput, uniqueId: { (getContactUniqueId) in
             self.uniqueIdCallback?(getContactUniqueId)
         }, completion: { (getContactsResponse) in
             self.responseCallback?(getContactsResponse as! GetContactsModel)

@@ -74,7 +74,7 @@ class AddContactAutomation {
                                                       lastName:         theLastName,
                                                       typeCode:         nil,
                                                       uniqueId:         nil)
-        Chat.sharedInstance.addContact(addContactsInput: addContactInput, uniqueId: { (addContactsUniqueId) in
+        Chat.sharedInstance.addContact(inputModel: addContactInput, uniqueId: { (addContactsUniqueId) in
             self.uniqueIdCallback?(addContactsUniqueId)
         }, completion: { (addContactServerResponse) in
             self.responseCallback?(addContactServerResponse as! ContactModel)

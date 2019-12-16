@@ -51,7 +51,7 @@ class UnmuteThreadAutomation {
                                                               typeCode:     typeCode,
                                                               uniqueId:     nil)
         
-        Chat.sharedInstance.muteThread(muteThreadInput: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
+        Chat.sharedInstance.muteThread(inputModel: muteThreadInput, uniqueId: { (muteThreadUniqueId) in
             self.uniqueIdCallback?(muteThreadUniqueId)
         }, completion: { (muteThreadServerResponseModel) in
             self.responseCallback?(muteThreadServerResponseModel as! MuteUnmuteThreadModel)

@@ -138,14 +138,14 @@ class SendFileMessageAutomation {
                                                            wC:          nil,
                                                            threadId:    toThreadId,
                                                            content:     myContent,
-                                                           metaData:    nil,
+                                                           metadata:    nil,
                                                            repliedTo:   nil,
                                                            fileToSend:  theData,
                                                            imageToSend: nil,
                                                            typeCode:    nil,
                                                            uniqueId:    nil)
         
-        Chat.sharedInstance.sendFileMessage(sendFileMessageInput: fileMessageInput, uniqueId: { (sentFileMessageUniqueId) in
+        Chat.sharedInstance.sendFileMessage(inputModel: fileMessageInput, uniqueId: { (sentFileMessageUniqueId) in
             self.uniqueIdCallback?(sentFileMessageUniqueId)
         }, uploadProgress: { (uploadFileProgress) in
             self.progressCallback?(uploadFileProgress)

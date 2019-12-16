@@ -20,7 +20,7 @@ class EditMessageAutomation {
     public weak var delegate: MoreInfoDelegate?
     
     let content:    String?
-    let metaData:   JSON?
+    let metadata:   JSON?
     let repliedTo:  Int?
     let messageId:  Int?
     let typeCode:   String?
@@ -32,10 +32,10 @@ class EditMessageAutomation {
     private var uniqueIdCallback:   callbackStringTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
     
-    init(content: String?, metaData: JSON?, repliedTo: Int?, messageId: Int?, typeCode: String?, requestUniqueId: String?) {
+    init(content: String?, metadata: JSON?, repliedTo: Int?, messageId: Int?, typeCode: String?, requestUniqueId: String?) {
         
         self.content            = content
-        self.metaData           = metaData
+        self.metadata           = metadata
         self.repliedTo          = repliedTo
         self.messageId          = messageId
         self.typeCode           = typeCode
@@ -51,7 +51,7 @@ class EditMessageAutomation {
         switch (content, messageId) {
         case let (.some(myContent) , .some(msgId)):
             let requestModel = EditTextMessageRequestModel(content:     myContent,
-                                                           metaData:    metaData,
+                                                           metadata:    metadata,
                                                            repliedTo:   repliedTo,
                                                            messageId:   msgId,
                                                            typeCode:    typeCode,
@@ -60,7 +60,7 @@ class EditMessageAutomation {
             
         case let (.none , .some(smgId)):
             let requestModel = EditTextMessageRequestModel(content:     "This is Edited Message Text",
-                                                           metaData:    metaData,
+                                                           metadata:    metadata,
                                                            repliedTo:   repliedTo,
                                                            messageId:   smgId,
                                                            typeCode:    typeCode,
@@ -76,8 +76,8 @@ class EditMessageAutomation {
     
     func sendRequest(editMessageRequest: EditTextMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "send Request to EditMessage with this params:\n content = \(editMessageRequest.content) , metaData = \(editMessageRequest.metaData ?? JSON.null) , repliedTo = \(editMessageRequest.repliedTo ?? 0) , subjectId = \(editMessageRequest.messageId) , typeCode = \(editMessageRequest.typeCode ?? "nil") , uniqueId = \(editMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
-        Chat.sharedInstance.editMessage(editMessageInput: editMessageRequest, uniqueId: { (editMessageUniqueId) in
+        delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "send Request to EditMessage with this params:\n content = \(editMessageRequest.content) , metadata = \(editMessageRequest.metadata ?? JSON.null) , repliedTo = \(editMessageRequest.repliedTo ?? 0) , subjectId = \(editMessageRequest.messageId) , typeCode = \(editMessageRequest.typeCode ?? "nil") , uniqueId = \(editMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
+        Chat.sharedInstance.editMessage(inputModel: editMessageRequest, uniqueId: { (editMessageUniqueId) in
 //        myChatObject?.editMessage(editMessageInput: editMessageRequest, uniqueId: { (editMessageUniqueId) in
             self.uniqueIdCallback?(editMessageUniqueId)
         }, completion: { (editMessageResponse) in
@@ -149,7 +149,7 @@ class EditMessageAutomation {
     // 3
     func sendMessage(toThread id: Int) {
         delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "try to sendMessage to threadId \(id)", lineNumbers: 1)
-        let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
+        let sendMessage = SendTextMessageAutomation(content: "New Message", metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
             self.delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(sentResponse.messageId)", lineNumbers: 1)
@@ -162,7 +162,7 @@ class EditMessageAutomation {
     // 4
     func createEditMessageModel(withMessageId messageId: Int) {
         let requestModel = EditTextMessageRequestModel(content:     self.content ?? "This is Edited Text Message",
-                                                       metaData:    self.metaData,
+                                                       metadata:    self.metadata,
                                                        repliedTo:   self.repliedTo,
                                                        messageId:   messageId,
                                                        typeCode:    self.typeCode,

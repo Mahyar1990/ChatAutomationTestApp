@@ -64,7 +64,7 @@ class DeleteMessageAutomation {
                                                              subjectId:     deleteMessageRequest.subjectId,
                                                              typeCode:      deleteMessageRequest.typeCode,
                                                              uniqueId:      deleteMessageRequest.uniqueId)
-        Chat.sharedInstance.deleteMessage(deleteMessageInput: deleteMessageRequest, uniqueId: { (deleteMessageUniqueId) in
+        Chat.sharedInstance.deleteMessage(inputModel: deleteMessageRequest, uniqueId: { (deleteMessageUniqueId) in
             self.uniqueIdCallback?(deleteMessageUniqueId)
         }, completion: { (deleteMessageResponse) in
             self.responseCallback?(deleteMessageResponse as! DeleteMessageModel)
@@ -136,7 +136,7 @@ class DeleteMessageAutomation {
     // 3
     func sendMessage(toThread id: Int) {
         delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "now try to send this textMessage 'New Message' to this threadId '\(id)'", lineNumbers: 1)
-        let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
+        let sendMessage = SendTextMessageAutomation(content: "New Message", metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
 //            if let messageId = Int(sentResponse["content"].stringValue) {

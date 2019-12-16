@@ -17,7 +17,7 @@ class SendBotMessageAutomation {
     
     let content:        String?
     let messsageId:     Int?
-    let metaData:       JSON
+    let metadata:       JSON
     let threadId:       Int?
     let systemMetadata: JSON?
     let typeCode:       String?
@@ -32,11 +32,11 @@ class SendBotMessageAutomation {
     private var serverDeliverResponse:  callbackServerResponseTypeAlias?
     private var serverSeenResponse:     callbackServerResponseTypeAlias?
     
-    init(content: String?, messsageId: Int?, metaData: JSON, threadId: Int?, systemMetadata: JSON?, typeCode: String?, uniqueId: String?) {
+    init(content: String?, messsageId: Int?, metadata: JSON, threadId: Int?, systemMetadata: JSON?, typeCode: String?, uniqueId: String?) {
         
         self.content        = content
         self.messsageId     = messsageId
-        self.metaData       = metaData
+        self.metadata       = metadata
         self.threadId       = threadId
         self.systemMetadata = systemMetadata
         self.typeCode       = typeCode
@@ -57,22 +57,22 @@ class SendBotMessageAutomation {
         
         switch (messsageId, threadId, content) {
         case let (.some(repTo), .some(_), .some(myContent)):
-            let inputModel = SendBotMessageRequestModel(content:        myContent,
-                                                        messageId:      repTo,
-                                                        metaData:       metaData,
-                                                        systemMetadata: nil,
-                                                        typeCode:       nil,
-                                                        uniqueId:       requestUniqueId)
+            let inputModel = SendInteractiveMessageRequestModel(content:        myContent,
+                                                                messageId:      repTo,
+                                                                metadata:       metadata,
+                                                                systemMetadata: nil,
+                                                                typeCode:       nil,
+                                                                uniqueId:       requestUniqueId)
             
             sendRequest(botMessageRequest: inputModel)
             
         case let (.some(repTo), .some(_), .none):
-            let inputModel = SendBotMessageRequestModel(content:        "This is BotMessage",
-                                                        messageId:      repTo,
-                                                        metaData:       metaData,
-                                                        systemMetadata: nil,
-                                                        typeCode:       nil,
-                                                        uniqueId:       requestUniqueId)
+            let inputModel = SendInteractiveMessageRequestModel(content:        "This is BotMessage",
+                                                                messageId:      repTo,
+                                                                metadata:       metadata,
+                                                                systemMetadata: nil,
+                                                                typeCode:       nil,
+                                                                uniqueId:       requestUniqueId)
             sendRequest(botMessageRequest: inputModel)
             
         default:
@@ -82,11 +82,11 @@ class SendBotMessageAutomation {
     }
     
     
-    func sendRequest(botMessageRequest: SendBotMessageRequestModel) {
+    func sendRequest(botMessageRequest: SendInteractiveMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.SentBotMessage.rawValue, message: "send Request to SentBotMessage with this params:\n content = \(botMessageRequest.content) , metaData = \(botMessageRequest.metaData) , messageId = \(botMessageRequest.messageId) , typeCode = \(botMessageRequest.typeCode ?? "nil") , uniqueId = \(botMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.SentBotMessage.rawValue, message: "send Request to SentBotMessage with this params:\n content = \(botMessageRequest.content) , metadata = \(botMessageRequest.metadata) , messageId = \(botMessageRequest.messageId) , typeCode = \(botMessageRequest.typeCode ?? "nil") , uniqueId = \(botMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
         
-        Chat.sharedInstance.sendBotMessage(sendBotMessageInput: botMessageRequest, uniqueId: { (replyMessageUniqueId) in
+        Chat.sharedInstance.sendInteractiveMessage(inputModel: botMessageRequest, uniqueId: { (replyMessageUniqueId) in
             self.uniqueIdCallback?(replyMessageUniqueId)
         }, onSent: { (sent) in
             self.serverSentResponse?(sent as! SendMessageModel)
@@ -159,7 +159,7 @@ class SendBotMessageAutomation {
     
     // 3
     func sendMessage(toThread id: Int) {
-        let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
+        let sendMessage = SendTextMessageAutomation(content: "New Message", metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
             self.delegate?.newInfo(type: MoreInfoTypes.SentBotMessage.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(sentResponse.messageId)", lineNumbers: 1)
@@ -171,12 +171,12 @@ class SendBotMessageAutomation {
     
     // 4
     func createSentBotMessageModel(inThreadId threadId: Int, onMessageId messageId: Int) {
-        let requestModel = SendBotMessageRequestModel(content:          "This is BotMessage",
-                                                      messageId:        messageId,
-                                                      metaData:         self.metaData,
-                                                      systemMetadata:   self.systemMetadata,
-                                                      typeCode:         self.typeCode,
-                                                      uniqueId:         self.requestUniqueId)
+        let requestModel = SendInteractiveMessageRequestModel(content:          "This is BotMessage",
+                                                              messageId:        messageId,
+                                                              metadata:         self.metadata,
+                                                              systemMetadata:   self.systemMetadata,
+                                                              typeCode:         self.typeCode,
+                                                              uniqueId:         self.requestUniqueId)
         self.sendRequest(botMessageRequest: requestModel)
     }
     

@@ -57,7 +57,7 @@ class RemoveAdminAutomation {
         
         let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Remove, threadId: theThreadId, userId: theUserId, typeCode: nil, uniqueId: requestUniqueId)
         
-        Chat.sharedInstance.setRole(setRoleInput: [addAdminInput], uniqueId: { (addAdminUniqueId) in
+        Chat.sharedInstance.setRole(inputModel: [addAdminInput], uniqueId: { (addAdminUniqueId) in
             self.uniqueIdCallback?(addAdminUniqueId)
         }, completion: { (addAdminServerResponseModel) in
             self.serverResponseCallback?(addAdminServerResponseModel as! UserRolesModel)
@@ -134,7 +134,7 @@ class RemoveAdminAutomation {
         
         let addAdminInput = SetRoleRequestModel(roles: [Roles.ADD_RULE_TO_USER], roleOperation: RoleOperations.Add, threadId: theThreadId, userId: theUserId, typeCode: nil, uniqueId: nil)
         
-        Chat.sharedInstance.setRole(setRoleInput: [addAdminInput], uniqueId: { _ in }, completion: { (addAdminServerResponseModel) in
+        Chat.sharedInstance.setRole(inputModel: [addAdminInput], uniqueId: { _ in }, completion: { (addAdminServerResponseModel) in
             self.delegate?.newInfo(type: MoreInfoTypes.RemoveAdmin.rawValue, message: "This is addAdmin response from server:\n\(addAdminServerResponseModel)", lineNumbers: 3)
             self.sendRequestSenario(threadId: theThreadId, theUserId: theUserId, addedAsAdmin: true)
         }, cacheResponse: { _ in })

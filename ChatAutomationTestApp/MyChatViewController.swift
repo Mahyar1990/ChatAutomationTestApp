@@ -50,7 +50,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var ssoHost                 = "https://accounts.pod.ir"
     var platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = "136c797bf36e47fe93a8c6f990d629c4"
+    var token                   = "955b899521a045cd88c67a5f6bd04766"
     
     
 // Local Addresses 1 (MehrAra)
@@ -1354,7 +1354,7 @@ extension MyChatViewController {
         }
         
         let editMessage = EditMessageAutomation(content:            content,
-                                                metaData:           nil,
+                                                metadata:           nil,
                                                 repliedTo:          repliedId,
                                                 messageId:          messageId,
                                                 typeCode:           nil,
@@ -1388,7 +1388,7 @@ extension MyChatViewController {
         let repliedTo:  Int?    = Int(input3TextField.text ?? "")
         
         let forwardMessage = ForwardMessageAutomation(messageIds:   messageIds,
-                                                      metaData:     nil,
+                                                      metadata:     nil,
                                                       repliedTo:    repliedTo,
                                                       subjectId:    subjectId,
                                                       typeCode:     nil,
@@ -1460,7 +1460,7 @@ extension MyChatViewController {
         }
         
         let replyMessage = ReplyMessageAutomation(content:      content,
-                                                  metaData:     nil,
+                                                  metadata:     nil,
                                                   repliedTo:    repliedTo,
                                                   subjectId:    subjectId,
                                                   typeCode:     nil,
@@ -1492,7 +1492,7 @@ extension MyChatViewController {
         }
         
         let sendTextMessage = SendTextMessageAutomation(content:        content,
-                                                        metaData:       nil,
+                                                        metadata:       nil,
                                                         repliedTo:      repliedTo,
                                                         systemMetadata: nil,
                                                         threadId:       threadId,
@@ -1517,7 +1517,7 @@ extension MyChatViewController {
     // (2, 8)
     func implementBotTextMessage() {
         var content:    String? = nil
-        var metaData:   JSON    = [:]
+        var metadata:   JSON    = [:]
         let messageId:  Int?    = Int(input2TextField.text ?? "")
         let threadId:   Int?    = Int(input3TextField.text ?? "")
         
@@ -1529,42 +1529,42 @@ extension MyChatViewController {
             let str = msgIdsTxt.replacingOccurrences(of: " ", with: "") // remove all spaces
             let stringIds = str.components(separatedBy: ",")            // seperate ids
             if let key = stringIds.first , let value = stringIds.last {
-                metaData[key] = JSON(value)
+                metadata[key] = JSON(value)
             }
         }
         if let msgIdsTxt = input5TextField.text {
             let str = msgIdsTxt.replacingOccurrences(of: " ", with: "") // remove all spaces
             let stringIds = str.components(separatedBy: ",")            // seperate ids
             if let key = stringIds.first , let value = stringIds.last {
-                metaData[key] = JSON(value)
+                metadata[key] = JSON(value)
             }
         }
         if let msgIdsTxt = input6TextField.text {
             let str = msgIdsTxt.replacingOccurrences(of: " ", with: "") // remove all spaces
             let stringIds = str.components(separatedBy: ",")            // seperate ids
             if let key = stringIds.first , let value = stringIds.last {
-                metaData[key] = JSON(value)
+                metadata[key] = JSON(value)
             }
         }
         if let msgIdsTxt = input7TextField.text {
             let str = msgIdsTxt.replacingOccurrences(of: " ", with: "") // remove all spaces
             let stringIds = str.components(separatedBy: ",")            // seperate ids
             if let key = stringIds.first , let value = stringIds.last {
-                metaData[key] = JSON(value)
+                metadata[key] = JSON(value)
             }
         }
         if let msgIdsTxt = input8TextField.text {
             let str = msgIdsTxt.replacingOccurrences(of: " ", with: "") // remove all spaces
             let stringIds = str.components(separatedBy: ",")            // seperate ids
             if let key = stringIds.first , let value = stringIds.last {
-                metaData[key] = JSON(value)
+                metadata[key] = JSON(value)
             }
         }
         
         
         let sendBotMessage = SendBotMessageAutomation(content:          content,
                                                       messsageId:       messageId,
-                                                      metaData:         metaData,
+                                                      metadata:         metadata,
                                                       threadId:         threadId,
                                                       systemMetadata:   nil,
                                                       typeCode:         nil,

@@ -121,7 +121,7 @@ class ReplyFileMessageAutomation {
     
     // 3
     func sendMessage() {
-        let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: threadId, typeCode: nil, uniqueId: nil)
+        let sendMessage = SendTextMessageAutomation(content: "New Message", metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: threadId, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             print("message response = \(sentResponse)")
             
@@ -158,14 +158,14 @@ class ReplyFileMessageAutomation {
                                                                 wC:             nil,
                                                                 threadId:       toThreadId,
                                                                 content:        myContent,
-                                                                metaData:       nil,
+                                                                metadata:       nil,
                                                                 repliedTo:      repliedTo,
                                                                 fileToSend:     theData,
                                                                 imageToSend:    nil,
                                                                 typeCode:       nil,
                                                                 uniqueId:       nil)
         
-        Chat.sharedInstance.replyFileMessage(replyFileMessageInput: replyFileMessageInput, uniqueId: { (replyFileMessageUniqueId) in
+        Chat.sharedInstance.replyFileMessage(inputModel: replyFileMessageInput, uniqueId: { (replyFileMessageUniqueId) in
             self.uniqueIdCallback?(replyFileMessageUniqueId)
         }, uploadProgress: { (uploadFileProgress) in
             self.progressCallback?(uploadFileProgress)

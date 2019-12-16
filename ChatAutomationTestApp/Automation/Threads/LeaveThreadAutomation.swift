@@ -55,7 +55,7 @@ class LeaveThreadAutomation {
                                                        typeCode:    typeCode,
                                                        uniqueId:    requestUniqueId)
         
-        Chat.sharedInstance.leaveThread(leaveThreadInput: leaveThreadInput, uniqueId: { (leaveThreadUniqueId) in
+        Chat.sharedInstance.leaveThread(inputModel: leaveThreadInput, uniqueId: { (leaveThreadUniqueId) in
             self.uniqueIdCallback?(leaveThreadUniqueId)
         }, completion: { (leaveThreadServerResponseModel) in
             self.responseCallback?(leaveThreadServerResponseModel as! ThreadModel)

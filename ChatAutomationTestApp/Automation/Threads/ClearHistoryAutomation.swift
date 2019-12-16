@@ -59,7 +59,7 @@ class ClearHistoryAutomation {
                                                          typeCode:  nil,
                                                          uniqueId:  requestUniqueId)
         
-        Chat.sharedInstance.clearHistory(clearHistoryInput: clearHistoryInput, uniqueId: { (clearHistoryUniqueId) in
+        Chat.sharedInstance.clearHistory(inputModel: clearHistoryInput, uniqueId: { (clearHistoryUniqueId) in
             self.uniqueIdCallback?(clearHistoryUniqueId)
         }, completion: { (clearHistoryServerResponse) in
             self.responseCallback?(clearHistoryServerResponse as! ClearHistoryModel)
@@ -136,7 +136,7 @@ extension ClearHistoryAutomation {
     
     // 3
     func sendMessage(toThread id: Int) {
-        let sendMessage = SendTextMessageAutomation(content: "New Message", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
+        let sendMessage = SendTextMessageAutomation(content: "New Message", metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
             if let messageId = sentResponse.message?.id {

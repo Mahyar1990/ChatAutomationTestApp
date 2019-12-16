@@ -74,7 +74,7 @@ class UpdateContactAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.UpdateContact.rawValue, message: "Send UpdateContact request with this params:\n id = \(updateContactRequest.id) , cellPhoneNumber = \(updateContactRequest.cellphoneNumber) , email = \(updateContactRequest.email) , firstName = \(updateContactRequest.firstName) , lastName = \(updateContactRequest.lastName)", lineNumbers: 3)
         
-        Chat.sharedInstance.updateContact(updateContactsInput: updateContactRequest, uniqueId: { (updateContactsUniqueId) in
+        Chat.sharedInstance.updateContact(inputModel: updateContactRequest, uniqueId: { (updateContactsUniqueId) in
             self.uniqueIdCallback?(updateContactsUniqueId)
         }, completion: { (updateContactServerResponse) in
             self.responseCallback?(updateContactServerResponse as! ContactModel)

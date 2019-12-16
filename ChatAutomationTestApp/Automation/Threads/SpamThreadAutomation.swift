@@ -55,7 +55,7 @@ class SpamThreadAutomation {
                                                        typeCode:    typeCode,
                                                        uniqueId:    nil)
         
-        Chat.sharedInstance.spamPvThread(spamPvThreadInput: spamThreadInput, uniqueId: { (spamThreadUniqueId) in
+        Chat.sharedInstance.spamPvThread(inputModel: spamThreadInput, uniqueId: { (spamThreadUniqueId) in
             self.uniqueIdCallback?(spamThreadUniqueId)
         }, completions: { (spamThreadServerResponseModel) in
             self.responseCallback?(spamThreadServerResponseModel)

@@ -76,12 +76,12 @@ class GetHistoryAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.GetHistory.rawValue, message: "send Request to getHistory with this params:\ncount = \(getHistoryRequest.count ?? 50) , fromTime = \(getHistoryRequest.fromTime ?? 0) , metadataCriteria = \(getHistoryRequest.metadataCriteria ?? JSON.null) , offset = \(getHistoryRequest.offset ?? 0) , order = \(getHistoryRequest.order) , query = \(getHistoryRequest.query ?? "nil") , threadId = \(getHistoryRequest.threadId ) , toTime = \(getHistoryRequest.toTime ?? 0) , typeCode = \(getHistoryRequest.typeCode ?? "nil") , uniqueId = \(getHistoryRequest.uniqueId ?? "nil")", lineNumbers: 3)
         
-        Chat.sharedInstance.getHistory(getHistoryInput: getHistoryRequest, uniqueId: { (getHistoryUniqueId) in
+        Chat.sharedInstance.getHistory(inputModel: getHistoryRequest, uniqueId: { (getHistoryUniqueId) in
             self.uniqueIdCallback?(getHistoryUniqueId)
         }, completion: { (getHistoryServerResponse) in
             self.responseCallback?(getHistoryServerResponse as! GetHistoryModel)
         }, cacheResponse: { (getHistoryCahceResponse) in
-            self.responseCallback?(getHistoryCahceResponse)
+            self.cacheCallback?(getHistoryCahceResponse)
         }, textMessagesNotSent: { ([QueueOfWaitTextMessagesModel]) in
 //            <#code#>
         }, editMessagesNotSent: { ([QueueOfWaitEditMessagesModel]) in
@@ -161,7 +161,7 @@ class GetHistoryAutomation {
     // 3
     func sendMessage(toThread thread: Int) {
         let sendMessage = SendTextMessageAutomation(content:        "Hi",
-                                                    metaData:       nil,
+                                                    metadata:       nil,
                                                     repliedTo:      nil,
                                                     systemMetadata: nil,
                                                     threadId:       thread,

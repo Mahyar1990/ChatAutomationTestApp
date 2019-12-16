@@ -65,7 +65,7 @@ class AddParticipantAutomation {
                                                               typeCode: typeCode,
                                                               uniqueId: requestUniqueId)
         
-        Chat.sharedInstance.addParticipants(addParticipantsInput: addParticipantInput, uniqueId: { (addParticipantsUniqueId) in
+        Chat.sharedInstance.addParticipants(inputModel: addParticipantInput, uniqueId: { (addParticipantsUniqueId) in
             print("uniqueId = \(addParticipantsUniqueId)")
             self.uniqueIdCallback?(addParticipantsUniqueId)
         }, completion: { (addParticipantServerResponse) in

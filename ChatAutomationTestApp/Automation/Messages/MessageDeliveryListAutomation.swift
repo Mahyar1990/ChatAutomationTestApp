@@ -66,7 +66,7 @@ class MessageDeliveryListAutomation {
                                                                 typeCode:   typeCode,
                                                                 uniqueId:   nil)
         
-        Chat.sharedInstance.messageDeliveryList(messageDeliveryListInput: deliveryInput, uniqueId: { (messageDeliveryListUniqueId) in
+        Chat.sharedInstance.messageDeliveryList(inputModel: deliveryInput, uniqueId: { (messageDeliveryListUniqueId) in
             self.uniqueIdCallback?(messageDeliveryListUniqueId)
         }, completion: { (messageDeliveryListResponse) in
             self.responseCallback?(messageDeliveryListResponse as! GetThreadParticipantsModel)
@@ -77,7 +77,7 @@ class MessageDeliveryListAutomation {
     
     func sendMessage() {
         
-        let x = SendTextMessageAutomation(content: "hi", metaData: nil, repliedTo: nil, systemMetadata: nil, threadId: nil, typeCode: nil, uniqueId: nil)
+        let x = SendTextMessageAutomation(content: "hi", metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: nil, typeCode: nil, uniqueId: nil)
         x.create(uniqueId: { _ in }, serverSentResponse: { (sent) in
             self.delegate?.newInfo(type: MoreInfoTypes.MessageDeliveryList.rawValue, message: "new Message has been sent", lineNumbers: 1)
             self.sendRequest(theMessageId: sent.messageId)
