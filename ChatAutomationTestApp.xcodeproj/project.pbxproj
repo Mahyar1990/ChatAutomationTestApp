@@ -16,6 +16,9 @@
 		3E5EEDFF2286CA870026DB58 /* UnmuteThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EEDFE2286CA870026DB58 /* UnmuteThreadAutomation.swift */; };
 		3E5EEE012286F4630026DB58 /* SpamThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EEE002286F4630026DB58 /* SpamThreadAutomation.swift */; };
 		3E5EEE032286FD3F0026DB58 /* RemoveParticipantAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EEE022286FD3F0026DB58 /* RemoveParticipantAutomation.swift */; };
+		3E61FFE023A7C7180094813F /* LoginDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E61FFDF23A7C7180094813F /* LoginDelegates.swift */; };
+		3E61FFE423A7C8760094813F /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E61FFE323A7C8760094813F /* Networking.swift */; };
+		3E61FFE623A7CC110094813F /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E61FFE523A7CC110094813F /* File.swift */; };
 		3E6295612225778D002DB51C /* CreateThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E6295602225778D002DB51C /* CreateThreadAutomation.swift */; };
 		3E629565222577B2002DB51C /* BlockAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E629564222577B2002DB51C /* BlockAutomation.swift */; };
 		3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E629566222577CA002DB51C /* GetContactsAutomation.swift */; };
@@ -86,6 +89,9 @@
 		3E5EEDFE2286CA870026DB58 /* UnmuteThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnmuteThreadAutomation.swift; sourceTree = "<group>"; };
 		3E5EEE002286F4630026DB58 /* SpamThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamThreadAutomation.swift; sourceTree = "<group>"; };
 		3E5EEE022286FD3F0026DB58 /* RemoveParticipantAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveParticipantAutomation.swift; sourceTree = "<group>"; };
+		3E61FFDF23A7C7180094813F /* LoginDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginDelegates.swift; sourceTree = "<group>"; };
+		3E61FFE323A7C8760094813F /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
+		3E61FFE523A7CC110094813F /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		3E6295602225778D002DB51C /* CreateThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThreadAutomation.swift; sourceTree = "<group>"; };
 		3E629564222577B2002DB51C /* BlockAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockAutomation.swift; sourceTree = "<group>"; };
 		3E629566222577CA002DB51C /* GetContactsAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetContactsAutomation.swift; sourceTree = "<group>"; };
@@ -314,7 +320,10 @@
 		3EEF6E9522A4F57900B0B560 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				3E61FFE523A7CC110094813F /* File.swift */,
+				3E61FFE323A7C8760094813F /* Networking.swift */,
 				3EEB0817227EC7B2009DA162 /* LoginViewController.swift */,
+				3E61FFDF23A7C7180094813F /* LoginDelegates.swift */,
 				3EEB081B227EC98C009DA162 /* GetTokenWithRefreshToken.swift */,
 			);
 			path = Login;
@@ -464,6 +473,7 @@
 				3E8D1483225C594C001C0AE6 /* ReplyMessageAutomation.swift in Sources */,
 				3EEB0818227EC7B2009DA162 /* LoginViewController.swift in Sources */,
 				3E8E923E22A3FCE00037CD41 /* RemoveAdminAutomation.swift in Sources */,
+				3E61FFE623A7CC110094813F /* File.swift in Sources */,
 				3E1C3584225B600C001A343B /* GetHistoryAutomation.swift in Sources */,
 				3E947249222674DF005D986E /* Faker.swift in Sources */,
 				3EADF7CF228BD15E009B102C /* MessageSeenListAutomation.swift in Sources */,
@@ -477,8 +487,10 @@
 				3EB80DEE239650370047AFAF /* SendBotMessageAutomation.swift in Sources */,
 				3E5EEDFD2286C8A70026DB58 /* MuteThreadAutomation.swift in Sources */,
 				3EC964E322AF66DD000CE284 /* SendFileMessageAutomation.swift in Sources */,
+				3E61FFE023A7C7180094813F /* LoginDelegates.swift in Sources */,
 				3ED3DA84222E629D00261DB3 /* UnblockAutomation.swift in Sources */,
 				3E5EEE032286FD3F0026DB58 /* RemoveParticipantAutomation.swift in Sources */,
+				3E61FFE423A7C8760094813F /* Networking.swift in Sources */,
 				3E5EEDF52286B4210026DB58 /* SearchContactAutomation.swift in Sources */,
 				3ED3DA88222E930600261DB3 /* SendTextMessageAutomation.swift in Sources */,
 				3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */,

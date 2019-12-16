@@ -17,8 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let myViewController = UIViewController()
     
-    /*
-    fileprivate func loginIfNedded() {
+    func createSpliteViewController() {
+        
+        window?.rootViewController = UINavigationController(rootViewController: MyChatViewController())
+//        window!.rootViewController = UINavigationController(rootViewController: splitViewController)
+    }
+    
+    func loginIfNedded() {
+        
         // 1-0 check if user had login befor (there is some value inside UserDefaults)
         // 1-1 if toke expiration has passed, call refreshToken function to get new token
         // 2- if user didn't login yet, push him to the sso login page
@@ -29,8 +35,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         // call referesh token!
                         refereshToken()
                     } else {
-                        //                        window?.rootViewController = myViewController
-                        //                        self.createMenuView()
+//                        window?.rootViewController = myViewController
+//                        self.createMenuView()
                         refereshToken()
                     }
                 }
@@ -38,28 +44,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             let loginPage = LoginViewController()
             window?.rootViewController = loginPage
-            //            window.present(loginPage, animated: true, completion: nil)
+//            window.present(loginPage, animated: true, completion: nil)
         }
     }
-    fileprivate func refereshToken() {
+    func refereshToken() {
         window?.rootViewController = myViewController
         let refreshToken = UserDefaults.standard.value(forKey: MyUserDefaultKeys.refreshToken) as! String
         let codeVerifier = UserDefaults.standard.value(forKey: MyUserDefaultKeys.codeVerifier) as! String
-        GetTokenWithRefreshToken(refreshToken: refreshToken, codeVerifier: codeVerifier).request { (result) in
-            print("request to get New Token result = \(result)")
+        
+        Networking.sharedInstance.getTokenWithRefreshToken(refreshToken:    refreshToken,
+                                                           codeVerifier:    codeVerifier)
+        { (result) in
             if result == true {
                 DispatchQueue.main.async {
-                    self.createChatView()
+                    self.createSpliteViewController()
                 }
             }
         }
-    }
-    */
-    
-    fileprivate func createChatView() {
-        let navigation = UINavigationController(rootViewController: MyChatViewController())
-        myViewController.present(navigation, animated: true, completion: nil)
-//        window?.rootViewController = UINavigationController(rootViewController: MyViewController())
+        
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
