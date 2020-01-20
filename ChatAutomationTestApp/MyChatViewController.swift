@@ -23,10 +23,10 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 
 // Main Addresses
     
-//    var socketAddress   = "wss://msg.pod.land/ws"
-//    var ssoHost         = "https://accounts.pod.land"
-//    var platformHost    = "https://api.pod.land/srv/core"
-//    var fileServer      = "https://core.pod.land"
+//    var socketAddress   = "wss://msg.pod.ir/ws"
+//    var ssoHost         = "https://accounts.pod.ir"
+//    var platformHost    = "https://api.pod.ir/srv/core"
+//    var fileServer      = "https://core.pod.ir"
 //    var serverName      = "chat-server"
     
 //    var socketAddress   = "wss://msg.pod.ir/ws"
@@ -50,7 +50,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var ssoHost                 = "https://accounts.pod.ir"
     var platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = "f1eabc24d35e4588babd9637ebcaeb76"
+    var token                   = "e5e8641eec9e4eb8b062009994994267"
     
     
 // Local Addresses 1 (MehrAra)
@@ -95,8 +95,8 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     
     let pickerDataCollection = ["Contact", "Thread", "Message", "Location", "File"]
     let pickerDataContact = ["AddContact", "Block", "GetBlockedList", "GetContacts", "RemoveContact", "SearchContact", "Unblock", "UpdateContact"]
-    let pickerDataThread = ["AddAdmin", "AddParticipants", "ClearHistory", "CreateThread", "CreateThreadWithMessage", "GetAdmins", "GetHistory", "GetThread", "GetThreadParticipants", "LeaveThread", "MuteThread", "UnmuteThread", "RemoveAdmin", "RemoveParticipant", "SpamThread"]
-    let pickerDataMessgae = ["DeleteMessage", "DeleteMultipleMessage", "EditMessage", "ForwardMessage", "MessageDeliveryList" ,"MessageSeenList", "ReplyTextMessage", "SendTextMessage", "SendBotMessage"]
+    let pickerDataThread = ["AddAdmin", "AddAuditor", "AddParticipants", "ClearHistory", "CreateThread", "CreateThreadWithMessage", "CreateThreadWithFileMessage", "GetAdmins", "GetHistory", "GetThread", "GetThreadParticipants", "LeaveThread", "MuteThread", "UnmuteThread", "RemoveAdmin", "RemoveAuditor", "RemoveParticipant", "SpamThread"]
+    let pickerDataMessgae = ["DeleteMessage", "DeleteMultipleMessage", "EditMessage", "ForwardMessage", "MessageDeliveryList" ,"MessageSeenList", "PinMessage", "UnpinMessage", "ReplyTextMessage", "SendTextMessage", "SendBotMessage"]
     let pickerDataLocation = ["SendLocationMessage"]
     let pickerDataFile = ["ReplyFileMessage", "SendFileMessage", "UploadFile", "UploadImage"]
     
@@ -480,23 +480,27 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
             // Thread Managements
             case (1, 0):    setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-            case (1, 1):    setPlaceHolderText(Input1: "threadId", Input2: "ContactId", Input3: "ContactId", Input4: "ContactId", Input5: "", Input6: "", Input7: "", Input8: "")
-            case (1, 2):    setPlaceHolderText(Input1: "threadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-            case (1, 3):    setPlaceHolderText(Input1: "description", Input2: "title", Input3: "inviteeId", Input4: "inviteeType", Input5: "image", Input6: "metadata", Input7: "", Input8: "")
+            case (1, 1):    setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 2):    setPlaceHolderText(Input1: "threadId", Input2: "ContactId", Input3: "ContactId", Input4: "ContactId", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 3):    setPlaceHolderText(Input1: "threadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 4):    setPlaceHolderText(Input1: "description", Input2: "title", Input3: "inviteeId", Input4: "inviteeType", Input5: "image", Input6: "metadata", Input7: "", Input8: "")
                             updateText(cellText: "inviteeType: \n 0 = TO_BE_USER_ID \n 1 = TO_BE_USER_SSO_ID \n 2 = TO_BE_USER_CONTACT_ID \n 3 = TO_BE_USER_CELLPHONE_NUMBER \n 4 = TO_BE_USER_USERNAME", cellHeight: 70, cellColor: .white)
-            case (1, 4):    setPlaceHolderText(Input1: "message", Input2: "title", Input3: "inviteeId", Input4: "inviteeType", Input5: "description", Input6: "image", Input7: "metadata", Input8: "")
+            case (1, 5):    setPlaceHolderText(Input1: "message", Input2: "title", Input3: "inviteeId", Input4: "inviteeType", Input5: "description", Input6: "image", Input7: "metadata", Input8: "")
                             updateText(cellText: "inviteeType: \n 0 = TO_BE_USER_ID \n 1 = TO_BE_USER_SSO_ID \n 2 = TO_BE_USER_CONTACT_ID \n 3 = TO_BE_USER_CELLPHONE_NUMBER \n 4 = TO_BE_USER_USERNAME", cellHeight: 70, cellColor: .white)
-            case (1, 5):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "firstMessageId", Input6: "lastMessageId", Input7: "", Input8: "")
-            case (1, 6):    setPlaceHolderText(Input1: "threadId", Input2: "fromTime", Input3: "toTime", Input4: "query", Input5: "count", Input6: "offset", Input7: "firstMessageId", Input8: "lastMessageId")
-            case (1, 7):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "coreUserId", Input6: "new", Input7: "", Input8: "")
+            case (1, 6):    setPlaceHolderText(Input1: "message", Input2: "title", Input3: "inviteeId", Input4: "inviteeType", Input5: "description", Input6: "image", Input7: "metadata", Input8: "")
+                            updateText(cellText: "inviteeType: \n 0 = TO_BE_USER_ID \n 1 = TO_BE_USER_SSO_ID \n 2 = TO_BE_USER_CONTACT_ID \n 3 = TO_BE_USER_CELLPHONE_NUMBER \n 4 = TO_BE_USER_USERNAME", cellHeight: 70, cellColor: .white)
+            case (1, 7):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "firstMessageId", Input6: "lastMessageId", Input7: "", Input8: "")
+            case (1, 8):    setPlaceHolderText(Input1: "threadId", Input2: "fromTime", Input3: "toTime", Input4: "query", Input5: "count", Input6: "offset", Input7: "firstMessageId", Input8: "lastMessageId")
+            case (1, 9):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "coreUserId", Input6: "new", Input7: "", Input8: "")
                             updateText(cellText: "new: \n true or false", cellHeight: 35, cellColor: .white)
-            case (1, 8):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "firstMessageId", Input6: "lastMessageId", Input7: "", Input8: "")
-            case (1, 9):    setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-            case (1, 10):   setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-            case (1, 11):   setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-            case (1, 12):   setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-            case (1, 13):   setPlaceHolderText(Input1: "ThreadId", Input2: "participant", Input3: "participant", Input4: "participant", Input5: "", Input6: "", Input7: "", Input8: "")
-            case (1, 14):   setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 10):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "name", Input4: "threadId", Input5: "firstMessageId", Input6: "lastMessageId", Input7: "", Input8: "")
+            case (1, 11):    setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 12):   setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 13):   setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 14):   setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 15):   setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 16):   setPlaceHolderText(Input1: "ThreadId", Input2: "participant", Input3: "participant", Input4: "participant", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 17):   setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
                 
             // Message Managements
             case (2, 0):    setPlaceHolderText(Input1: "subjectId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
@@ -506,9 +510,11 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             case (2, 3):    setPlaceHolderText(Input1: "messageIds", Input2: "subjectId", Input3: "repliedTo", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
             case (2, 4):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
             case (2, 5):    setPlaceHolderText(Input1: "count", Input2: "offset", Input3: "messageId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-            case (2, 6):    setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "subjectId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-            case (2, 7):    setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "threadId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
-            case (2, 8):    setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "threadId", Input4: "key, value", Input5: "key, value", Input6: "key, value", Input7: "key, value", Input8: "key, value")
+            case (2, 6):    setPlaceHolderText(Input1: "messageId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (2, 7):    setPlaceHolderText(Input1: "messageId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (2, 8):    setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "subjectId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (2, 9):    setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "threadId", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (2, 10):   setPlaceHolderText(Input1: "content", Input2: "repliedTo", Input3: "threadId", Input4: "key, value", Input5: "key, value", Input6: "key, value", Input7: "key, value", Input8: "key, value")
             
             // Location Managements
             case (3, 0):    setPlaceHolderText(Input1: "lat", Input2: "lon", Input3: "threadId", Input4: "message", Input5: "", Input6: "", Input7: "", Input8: "")
@@ -586,20 +592,23 @@ extension MyChatViewController {
         case (0,7): implementUpdateContact()            // implement UpdateContact
             
         case (1, 0): implementAddAdmin()                // implement AddAdmin
-        case (1, 1): implementAddParticipant()          // implement AddThreadParticipants
-        case (1, 2): implementClearHistory()            // implement ClearHistory
-        case (1, 3): implementCreateThread()            // implement CreateThread
-        case (1, 4): implementCreateWithMessageThread() // implement CreateThreadWithMessage
-        case (1, 5): implementGetAdminList()            // implement GetAdminList
-        case (1, 6): implementGetHistory()              // implement GetHistory
-        case (1, 7): implementGetThreads()              // implement GetThreads
-        case (1, 8): implementGetThreadParticipants()   // implement GetThreadParticipants
-        case (1, 9): implementLeaveThread()             // implement LeaveThread
-        case (1, 10): implementMuteThread()             // implement MuteThread
-        case (1, 11): implementUnmuteThread()           // implement UnmuteThread
-        case (1, 12): implementRemoveAdmin()            // implement RemoveAdmin
-        case (1, 13): implementRemoveParticipant()      // implement RemoveParticipant
-        case (1, 14): implementSpamThread()             // implement SpamThread
+        case (1, 1): implementAddAuditor()              // implement AddAuditor
+        case (1, 2): implementAddParticipant()          // implement AddThreadParticipants
+        case (1, 3): implementClearHistory()            // implement ClearHistory
+        case (1, 4): implementCreateThread()            // implement CreateThread
+        case (1, 5): implementCreateWithMessageThread() // implement CreateThreadWithMessage
+        case (1, 6): implementCreateWithFileMessageThread() // implement CreateThreadWithFileMessage
+        case (1, 7): implementGetAdminList()            // implement GetAdminList
+        case (1, 8): implementGetHistory()              // implement GetHistory
+        case (1, 9): implementGetThreads()              // implement GetThreads
+        case (1, 10): implementGetThreadParticipants()   // implement GetThreadParticipants
+        case (1, 11): implementLeaveThread()             // implement LeaveThread
+        case (1, 12): implementMuteThread()             // implement MuteThread
+        case (1, 13): implementUnmuteThread()           // implement UnmuteThread
+        case (1, 14): implementRemoveAdmin()            // implement RemoveAdmin
+        case (1, 15): implementRemoveAdmin()            // implement RemoveAdmin
+        case (1, 16): implementRemoveAuditor()          // implement RemoveAuditor
+        case (1, 17): implementSpamThread()             // implement SpamThread
             
         case (2, 0): implementDeleteMessage()           // implement DeletMessage
         case (2, 1): implementDeleteMultipleMessages()  // implement DeletMessage
@@ -607,9 +616,11 @@ extension MyChatViewController {
         case (2, 3): implementForwardMessage()          // implement ForwardMessage
         case (2, 4): implementMessageDeliveryList()     // implement MessgaeDeliveryList
         case (2, 5): implementMessageSeenList()         // implement MessageSeenList
-        case (2, 6): implementReplyTextMessage()        // implement ReplyTextMessage
-        case (2, 7): implementSendTextMessage()         // implement SendTextMessage
-        case (2, 8): implementBotTextMessage()          // implement SentBotMessage
+        case (2, 6): implementPinMessage()              // implement PinMessage
+        case (2, 7): implementUnpinMessage()            // implement UnpinMessage
+        case (2, 8): implementReplyTextMessage()        // implement ReplyTextMessage
+        case (2, 9): implementSendTextMessage()         // implement SendTextMessage
+        case (2, 10): implementBotTextMessage()          // implement SentBotMessage
             
         case (3, 0): implementSendLocationMessage()     // implement SendLocationMessage
             
@@ -842,14 +853,27 @@ extension MyChatViewController {
         }, serverResponse: { (addAdminModelServerResponse) in
             let myText = "add admin model response = \(addAdminModelServerResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
-        }) { (addAdminModelCacheResponse) in
-            let myText = "add admin model response = \(addAdminModelCacheResponse.returnDataAsJSON())"
-            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#55efc4", alpha: 1))
-        }
+        })
         
     }
     
     // (1, 1)
+    func implementAddAuditor() {
+        let threadId:   Int?    = Int(input1TextField.text ?? "")
+        let userId:     Int?    = Int(input2TextField.text ?? "")
+        
+        let addAuditor = AddAuditorAutomation(threadId: threadId, userId: userId, requestUniqueId: nil)
+        addAuditor.delegate = self
+        addAuditor.create(uniqueId: { (addAdminUniqueId) in
+            let myText = "addAuditor uniqueId = \(addAdminUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }, serverResponse: { (addAuditorModelServerResponse) in
+            let myText = "add Auditor model response = \(addAuditorModelServerResponse.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        })
+    }
+    
+    // (1, 2)
     func implementAddParticipant() {
         let threadId: Int? = Int(input1TextField.text ?? "")
         var myContacts: [Int] = []
@@ -881,7 +905,7 @@ extension MyChatViewController {
         }
     }
     
-    // (1,2)
+    // (1,3)
     func implementClearHistory() {
         let threadId:   Int?    = Int(input1TextField.text ?? "")
         
@@ -896,7 +920,7 @@ extension MyChatViewController {
         }
     }
     
-    // (1,3)
+    // (1,4)
     func implementCreateThread() {
         var description:    String? = nil
         var title:          String? = nil
@@ -950,7 +974,7 @@ extension MyChatViewController {
         }
     }
     
-    // (1, 4)
+    // (1, 5)
     func implementCreateWithMessageThread() {
         var textMessage:    String? = nil
         var title:          String? = nil
@@ -1019,7 +1043,86 @@ extension MyChatViewController {
         
     }
     
-    // (1, 5)
+    // (1, 6)
+    func implementCreateWithFileMessageThread() {
+        var textMessage:    String? = nil
+        var title:          String? = nil
+        var inviteeId:      String? = nil
+        let inviteeType:    Int? = Int(input4TextField.text ?? "")
+        var description:    String? = nil
+        var image:          String? = nil
+        var metadata:       String? = nil
+        
+        if let txt = input1TextField.text {
+            if (txt != "") && (txt.first != " ") { textMessage = txt }
+        }
+        if let txt = input2TextField.text {
+            if (txt != "") && (txt.first != " ") { title = txt }
+        }
+        if let txt = input3TextField.text {
+            if (txt != "") && (txt.first != " ") { inviteeId = txt }
+        }
+        
+        var invitees: [Invitee]? = nil
+        if let id = inviteeId {
+            switch inviteeType {
+            case 1:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_SSO_ID)]
+            case 2:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)]
+            case 3:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)]
+            case 4:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_USERNAME)]
+            case 5:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_ID)]
+            default:    invitees = [Invitee(id: id, idType: "5")]
+            }
+        }
+        if let txt = input5TextField.text {
+            if (txt != "") && (txt.first != " ") { description = txt }
+        }
+        if let txt = input6TextField.text {
+            if (txt != "") && (txt.first != " ") { image = txt }
+        }
+        if let txt = input7TextField.text {
+            if (txt != "") && (txt.first != " ") { metadata = txt }
+        }
+        
+        let createThtradWithFileMessage = CreateThreadWithFileMessageAutomation(description:        description,
+                                                                                image:              image,
+                                                                                invitees:           invitees,
+                                                                                messageText:        textMessage,
+                                                                                metadata:           metadata,
+                                                                                title:              title,
+                                                                                type:               nil,
+                                                                                requestUniqueId:    nil)
+        createThtradWithFileMessage.delegate = self
+        createThtradWithFileMessage.create(uniqueId: { (createThreadUniqueId) in
+            let myText = "createThread uniqueId) = \(createThreadUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }, uploadUniqueIdCallback: { (uploadUniqueId) in
+            let myText = "upload uniqueId) = \(uploadUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }, progressCallback: { (progress) in
+            if self.isProgressActive {
+                self.myProgress = progress
+            } else {
+                self.isProgressActive = true
+                let myText = "uploadFile Progress:"
+                self.updateText(cellText: myText, cellHeight: 70, cellColor: .lightGray)
+            }
+        }, serverResponse: { (createThreadModel) in
+            let myText = "create thread model response) = \(createThreadModel.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 140, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }, serverSentResponse: { (sent) in
+            let myText = "sendTextMessage sent response = \(sent.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }, serverDeliverResponse: { (deliver) in
+            let myText = "sendTextMessage deliver response = \(deliver.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }) { (seen) in
+            let myText = "sendTextMessage seen response = \(seen.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }
+    }
+    
+    // (1, 7)
     func implementGetAdminList() {
         let count:          Int?    = Int(input1TextField.text ?? "")
         let offset:         Int?    = Int(input2TextField.text ?? "")
@@ -1052,7 +1155,7 @@ extension MyChatViewController {
         }
     }
     
-    // (1, 6)
+    // (1, 8)
     func implementGetHistory() {
         let threadId:       Int?    = Int(input1TextField.text ?? "")
         let fromTime:       UInt?   = UInt(input2TextField.text ?? "")
@@ -1093,7 +1196,7 @@ extension MyChatViewController {
         }
     }
     
-    // (1, 7)
+    // (1, 9)
     func implementGetThreads() {
         let count:      Int?    = Int(input1TextField.text ?? "")
         let offset:     Int?    = Int(input2TextField.text ?? "")
@@ -1132,7 +1235,7 @@ extension MyChatViewController {
         }
     }
     
-    // (1, 8)
+    // (1, 10)
     func implementGetThreadParticipants() {
         let count:          Int?    = Int(input1TextField.text ?? "")
         let offset:         Int?    = Int(input2TextField.text ?? "")
@@ -1166,7 +1269,7 @@ extension MyChatViewController {
         }
     }
     
-    // (1, 9)
+    // (1, 11)
     func implementLeaveThread() {
         let threadId: Int?  = Int(input1TextField.text ?? "")
         
@@ -1181,7 +1284,7 @@ extension MyChatViewController {
         }
     }
     
-    // (1, 10)
+    // (1, 12)
     func implementMuteThread() {
         let threadId: Int?  = Int(input1TextField.text ?? "")
         
@@ -1196,7 +1299,7 @@ extension MyChatViewController {
         }
     }
     
-    // (1, 11)
+    // (1, 13)
     func implementUnmuteThread() {
         let threadId: Int?  = Int(input1TextField.text ?? "")
         
@@ -1211,7 +1314,7 @@ extension MyChatViewController {
         }
     }
     
-    // (1, 12)
+    // (1, 14)
     func implementRemoveAdmin() {
         let threadId:   Int?    = Int(input1TextField.text ?? "")
         let userId:     Int?    = Int(input2TextField.text ?? "")
@@ -1224,13 +1327,26 @@ extension MyChatViewController {
         }, serverResponse: { (removeAdminModelServerResponse) in
             let myText = "remove admin model response = \(removeAdminModelServerResponse.returnDataAsJSON())"
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
-        }) { (removeAdminModelCacheResponse) in
-            let myText = "remove admin model response = \(removeAdminModelCacheResponse.returnDataAsJSON())"
-            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#55efc4", alpha: 1))
-        }
+        })
     }
     
-    // (1, 13)
+    // (1, 15)
+    func implementRemoveAuditor() {
+        let threadId:   Int?    = Int(input1TextField.text ?? "")
+        let userId:     Int?    = Int(input2TextField.text ?? "")
+        
+        let removeAuditor = RemoveAuditorAutomation(threadId: threadId, userId: userId, requestUniqueId: nil)
+        removeAuditor.delegate = self
+        removeAuditor.create(uniqueId: { (removeAuditorUniqueId) in
+            let myText = "removeAuditor uniqueId = \(removeAuditorUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }, serverResponse: { (removeAuditorModelServerResponse) in
+            let myText = "remove Auditor model response = \(removeAuditorModelServerResponse.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        })
+    }
+    
+    // (1, 16)
     func implementRemoveParticipant() {
         let threadId:       Int?    = Int(input1TextField.text ?? "")
         var myParticipants: [Int] = []
@@ -1265,7 +1381,7 @@ extension MyChatViewController {
         }
     }
     
-    // (1, 14)
+    // (1, 17)
     func implementSpamThread() {
         let threadId: Int?  = Int(input1TextField.text ?? "")
         
@@ -1450,6 +1566,40 @@ extension MyChatViewController {
     }
     
     // (2, 6)
+    func implementPinMessage() {
+        let messageId:  Int?    = Int(input1TextField.text ?? "")
+        
+        let pinMessage = PinMessageAutomation(messageId:        messageId,
+                                              typeCode:         nil,
+                                              requestUniqueId:  nil)
+        pinMessage.delegate = self
+        pinMessage.create(uniqueId: { (pinMessageUniqueId) in
+            let myText = "PinMessage uniqueId = \(pinMessageUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }) { (pinMessageResponse) in
+            let myText = "PinMessage response = \(pinMessageResponse.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }
+    }
+    
+    // (2, 7)
+    func implementUnpinMessage() {
+        let messageId:  Int?    = Int(input1TextField.text ?? "")
+        
+        let unpinMessage = UnpinMessageAutomation(messageId:        messageId,
+                                                  typeCode:         nil,
+                                                  requestUniqueId:  nil)
+        unpinMessage.delegate = self
+        unpinMessage.create(uniqueId: { (unpinMessageUniqueId) in
+            let myText = "UnpinMessage uniqueId = \(unpinMessageUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }) { (unpinMessageResponse) in
+            let myText = "UnpinMessage response = \(unpinMessageResponse.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }
+    }
+    
+    // (2, 8)
     func implementReplyTextMessage() {
         var content:    String? = nil
         let repliedTo:  Int?    = Int(input2TextField.text ?? "")
@@ -1481,7 +1631,7 @@ extension MyChatViewController {
         }
     }
     
-    // (2, 7)
+    // (2, 9)
     func implementSendTextMessage() {
         var content:    String? = nil
         let repliedTo:  Int?    = Int(input2TextField.text ?? "")
@@ -1514,7 +1664,7 @@ extension MyChatViewController {
         }
     }
     
-    // (2, 8)
+    // (2, 10)
     func implementBotTextMessage() {
         var content:    String? = nil
         var metadata:   JSON    = [:]
@@ -1564,7 +1714,7 @@ extension MyChatViewController {
         
         let sendBotMessage = SendBotMessageAutomation(content:          content,
                                                       messsageId:       messageId,
-                                                      metadata:         metadata,
+                                                      metadata:         "\(metadata)",
                                                       threadId:         threadId,
                                                       systemMetadata:   nil,
                                                       typeCode:         nil,
@@ -1725,35 +1875,35 @@ extension MyChatViewController {
     
     // (4, 2)
     func implementUploadFile() {
-        var fileName:    String? = nil
-        if let txt = input1TextField.text {
-            if (txt != "") && (txt.first != " ") { fileName = txt }
-        }
-        let threadId:   Int?    = Int(input2TextField.text ?? "")
-        
-        let uploadFile = UploadFileAutomation(data:     nil,
-                                              fileName: fileName,
-                                              threadId: threadId,
-                                              uniqueId: nil)
-        uploadFile.delegate = self
-        uploadFile.create(uniqueId: { (uploadFileUniqueId) in
-            let myText = "uploadFile uniqueId = \(uploadFileUniqueId)"
-            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
-            self.uploadFileUniqueId = uploadFileUniqueId
-        }, progress: { (progress) in
-            if self.isProgressActive {
-                self.myProgress = progress
-            } else {
-                self.isProgressActive = true
-                let myText = "uploadFile Progress:"
-                self.updateText(cellText: myText, cellHeight: 70, cellColor: .lightGray)
-            }
-        }) { (uploadFileServerResponse) in
-            self.progressCell = -1
-            self.isProgressActive = false
-            let myText = "uploadFile response = \(uploadFileServerResponse.returnDataAsJSON())"
-            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
-        }
+//        var fileName:    String? = nil
+//        if let txt = input1TextField.text {
+//            if (txt != "") && (txt.first != " ") { fileName = txt }
+//        }
+//        let threadId:   Int?    = Int(input2TextField.text ?? "")
+//
+//        let uploadFile = UploadFileAutomation(data:     nil,
+//                                              fileName: fileName,
+//                                              threadId: threadId,
+//                                              uniqueId: nil)
+//        uploadFile.delegate = self
+//        uploadFile.create(uniqueId: { (uploadFileUniqueId) in
+//            let myText = "uploadFile uniqueId = \(uploadFileUniqueId)"
+//            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+//            self.uploadFileUniqueId = uploadFileUniqueId
+//        }, progress: { (progress) in
+//            if self.isProgressActive {
+//                self.myProgress = progress
+//            } else {
+//                self.isProgressActive = true
+//                let myText = "uploadFile Progress:"
+//                self.updateText(cellText: myText, cellHeight: 70, cellColor: .lightGray)
+//            }
+//        }) { (uploadFileServerResponse) in
+//            self.progressCell = -1
+//            self.isProgressActive = false
+//            let myText = "uploadFile response = \(uploadFileServerResponse.returnDataAsJSON())"
+//            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+//        }
     }
     
     // (4, 3)
@@ -1807,39 +1957,39 @@ extension MyChatViewController: UICollectionViewDelegate, UICollectionViewDataSo
 extension MyChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        var selectedImage: UIImage?
-        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            selectedImage = editedImage
-        } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            selectedImage = originalImage
-        }
-        picker.dismiss(animated: true, completion: nil)
-        
-        var fileName:    String? = nil
-        if let txt = input1TextField.text {
-            if (txt != "") && (txt.first != " ") { fileName = txt }
-        }
-        
-        let uploadImge = UploadImageAutomation(image: selectedImage, fileName: fileName, threadId: nil, uniqueId: nil)
-        uploadImge.delegate = self
-        uploadImge.create(uniqueId: { (uploadImageUniqueId) in
-            let myText = "uploadImage uniqueId = \(uploadImageUniqueId)"
-            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
-            self.uploadImageUniqueId = uploadImageUniqueId
-        }, progress: { (progress) in
-            if self.isProgressActive {
-                self.myProgress = progress
-            } else {
-                self.isProgressActive = true
-                let myText = "uploadImage Progress:"
-                self.updateText(cellText: myText, cellHeight: 70, cellColor: .lightGray)
-            }
-        }) { (uploadImageServerResponse) in
-            self.progressCell = -1
-            self.isProgressActive = false
-            let myText = "uploadImage response = \(uploadImageServerResponse.returnDataAsJSON())"
-            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
-        }
+//        var selectedImage: UIImage?
+//        if let editedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
+//            selectedImage = editedImage
+//        } else if let originalImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+//            selectedImage = originalImage
+//        }
+//        picker.dismiss(animated: true, completion: nil)
+//
+//        var fileName:    String? = nil
+//        if let txt = input1TextField.text {
+//            if (txt != "") && (txt.first != " ") { fileName = txt }
+//        }
+//
+//        let uploadImge = UploadImageAutomation(image: selectedImage, fileName: fileName, threadId: nil, uniqueId: nil)
+//        uploadImge.delegate = self
+//        uploadImge.create(uniqueId: { (uploadImageUniqueId) in
+//            let myText = "uploadImage uniqueId = \(uploadImageUniqueId)"
+//            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+//            self.uploadImageUniqueId = uploadImageUniqueId
+//        }, progress: { (progress) in
+//            if self.isProgressActive {
+//                self.myProgress = progress
+//            } else {
+//                self.isProgressActive = true
+//                let myText = "uploadImage Progress:"
+//                self.updateText(cellText: myText, cellHeight: 70, cellColor: .lightGray)
+//            }
+//        }) { (uploadImageServerResponse) in
+//            self.progressCell = -1
+//            self.isProgressActive = false
+//            let myText = "uploadImage response = \(uploadImageServerResponse.returnDataAsJSON())"
+//            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+//        }
         
     }
 }

@@ -15,9 +15,9 @@ class SendTextMessageAutomation {
     public weak var delegate: MoreInfoDelegate?
     
     let content:        String?
-    let metadata:       JSON?
+    let metadata:       String?
     let repliedTo:      Int?
-    let systemMetadata: JSON?
+    let systemMetadata: String?
     let threadId:       Int?
     let typeCode:       String?
     let uniqueIdOfAllRequests:  String?
@@ -31,7 +31,7 @@ class SendTextMessageAutomation {
     private var serverDeliverResponse:  callbackServerResponseTypeAlias?
     private var serverSeenResponse:     callbackServerResponseTypeAlias?
     
-    init(content: String?, metadata: JSON?, repliedTo: Int?, systemMetadata: JSON?, threadId: Int?, typeCode: String?, uniqueId: String?) {
+    init(content: String?, metadata: String?, repliedTo: Int?, systemMetadata: String?, threadId: Int?, typeCode: String?, uniqueId: String?) {
         
         self.content        = content
         self.metadata       = metadata
@@ -74,9 +74,9 @@ class SendTextMessageAutomation {
     }
     
     
-    func sendRequest(theContent: String, theMetadata: JSON?, theRepliedTo: Int?, theSystemMetadata: JSON?, theThreadId: Int, theTypeCode: String?, theUniqueId: String?) {
+    func sendRequest(theContent: String, theMetadata: String?, theRepliedTo: Int?, theSystemMetadata: String?, theThreadId: Int, theTypeCode: String?, theUniqueId: String?) {
         
-        delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "send Request to SendTextMesssage with this params:\ncount = \(theContent) , metadata = \(theMetadata ?? JSON.null) , repliedTo = \(theRepliedTo ?? 0) , systemMetadata = \(theSystemMetadata ?? JSON.null) , threadId = \(theThreadId) , typeCode = \(theTypeCode ?? "nil") , uniqueId = \(theUniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "send Request to SendTextMesssage with this params:\ncount = \(theContent) , metadata = \(theMetadata ?? "nil") , repliedTo = \(theRepliedTo ?? 0) , systemMetadata = \(theSystemMetadata ?? "nil") , threadId = \(theThreadId) , typeCode = \(theTypeCode ?? "nil") , uniqueId = \(theUniqueId ?? "nil")", lineNumbers: 2)
         
         let sendTextMessage = SendTextMessageRequestModel(content:          theContent,
                                                           metadata:         theMetadata,

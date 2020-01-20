@@ -130,25 +130,28 @@ class SendFileMessageAutomation {
         let myContent = content ?? "This is a dummy message"
         delegate?.newInfo(type: MoreInfoTypes.SendFileMessage.rawValue, message: "send Request SendFileMessage with this params:\n messageText = \(myContent),\n threadId = \(threadId ?? 0), fileName = \(myFileName)", lineNumbers: 2)
         
-        let fileMessageInput = SendFileMessageRequestModel(fileName:    myFileName,
-                                                           imageName:   nil,
-                                                           xC:          nil,
-                                                           yC:          nil,
-                                                           hC:          nil,
-                                                           wC:          nil,
-                                                           threadId:    toThreadId,
-                                                           content:     myContent,
-                                                           metadata:    nil,
-                                                           repliedTo:   nil,
-                                                           fileToSend:  theData,
-                                                           imageToSend: nil,
-                                                           typeCode:    nil,
-                                                           uniqueId:    nil)
+        let messageInput = SendTextMessageRequestModel(content:         myContent,
+                                                       metadata:        nil,
+                                                       repliedTo:       nil,
+                                                       systemMetadata:  nil,
+                                                       threadId:        toThreadId,
+                                                       typeCode:        nil,
+                                                       uniqueId:        nil)
+        let uploadInput = UploadFileRequestModel(dataToSend:        theData,
+                                                 fileExtension:     nil,
+                                                 fileName:          myFileName,
+                                                 originalFileName:  nil,
+                                                 threadId:          nil,
+                                                 typeCode:          nil,
+                                                 uniqueId:          nil)
+        let fileMessageInput = SendFileMessageRequestModel(messageInput:    messageInput,
+                                                           uploadInput:     uploadInput)
         
-        Chat.sharedInstance.sendFileMessage(inputModel: fileMessageInput, uniqueId: { (sentFileMessageUniqueId) in
-            self.uniqueIdCallback?(sentFileMessageUniqueId)
+        Chat.sharedInstance.sendFileMessage(inputModel: fileMessageInput, uploadUniqueId: { _ in
         }, uploadProgress: { (uploadFileProgress) in
             self.progressCallback?(uploadFileProgress)
+        }, messageUniqueId: { (sendMessageUniqueId) in
+            self.uniqueIdCallback?(sendMessageUniqueId)
         }, onSent: { (sent) in
             self.serverDeliverResponse?(sent as! SendMessageModel)
         }, onDelivered: { (deliver) in

@@ -27,7 +27,7 @@ class DeleteMultipleMessagesAutomation {
     let typeCode:           String?
     let requestUniqueIds:   [String]?
     
-    typealias callbackStringTypeAlias           = (String) -> ()
+    typealias callbackStringTypeAlias           = ([String]) -> ()
     typealias callbackServerResponseTypeAlias   = (DeleteMessageModel) -> ()
     
     private var uniqueIdCallback:   callbackStringTypeAlias?
@@ -42,7 +42,7 @@ class DeleteMultipleMessagesAutomation {
         self.requestUniqueIds   = requestUniqueIds
     }
     
-    func create(uniqueId:       @escaping (String) -> (),
+    func create(uniqueId:       @escaping ([String]) -> (),
                 serverResponse: @escaping (DeleteMessageModel) -> ()) {
         
         self.uniqueIdCallback   = uniqueId
@@ -71,7 +71,7 @@ class DeleteMultipleMessagesAutomation {
                                                        messageIds:      deleteMessageRequest.messageIds,
                                                        typeCode:        deleteMessageRequest.typeCode)
         
-        Chat.sharedInstance.deleteMultipleMessages(inputModel: input, uniqueId: { (deleteMultipleMessagesUniqueId) in
+        Chat.sharedInstance.deleteMultipleMessages(inputModel: input, uniqueIds: { (deleteMultipleMessagesUniqueId) in
             self.uniqueIdCallback?(deleteMultipleMessagesUniqueId)
         }, completion: { (deleteMultipleMessageResponse) in
             self.responseCallback?(deleteMultipleMessageResponse as! DeleteMessageModel)

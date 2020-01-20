@@ -141,13 +141,13 @@ class SendLocationMessageAutomation {
                                                                    sendMessageTypeCode: nil,
                                                                    typeCode:            nil,
                                                                    uniqueId:            nil)
-        
-        Chat.sharedInstance.sendLocationMessage(inputModel: locationMessageInput, uniqueId: { (sentLocationMessageUniqueId) in
-            self.uniqueIdCallback?(sentLocationMessageUniqueId)
-        }, downloadProgress: { (downloadProgress) in
+        Chat.sharedInstance.sendLocationMessage(inputModel: locationMessageInput, downloadProgress: { (downloadProgress) in
             self.downloadProgressCallback?(downloadProgress)
+        }, uploadUniqueId: { _ in
         }, uploadProgress: { (uploadFileProgress) in
             self.uploadProgressCallback?(uploadFileProgress)
+        }, messageUniqueId: { (sentLocationMessageUniqueId) in
+            self.uniqueIdCallback?(sentLocationMessageUniqueId)
         }, onSent: { (sent) in
             self.serverDeliverResponse?(sent as! SendMessageModel)
         }, onDelivere: { (deliver) in

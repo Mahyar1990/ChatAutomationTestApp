@@ -16,7 +16,7 @@ class ReplyMessageAutomation {
     public weak var delegate: MoreInfoDelegate?
     
     let content:            String?
-    let metadata:           JSON?
+    let metadata:           String?
     let repliedTo:          Int?
     let subjectId:          Int?
     let typeCode:           String?
@@ -30,7 +30,7 @@ class ReplyMessageAutomation {
     private var serverDeliverResponse:  callbackServerResponseTypeAlias?
     private var serverSeenResponse:     callbackServerResponseTypeAlias?
     
-    init(content: String?, metadata: JSON?, repliedTo: Int?, subjectId: Int?, typeCode: String?, uniqueId: String?) {
+    init(content: String?, metadata: String?, repliedTo: Int?, subjectId: Int?, typeCode: String?, uniqueId: String?) {
         
         self.content            = content
         self.metadata           = metadata
@@ -79,7 +79,7 @@ class ReplyMessageAutomation {
     
     func sendRequest(replyTextMessageRequest: ReplyTextMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.ReplyTextMessage.rawValue, message: "send Request to ReplyTextMessage with this params:\n content = \(replyTextMessageRequest.content) , metadata = \(replyTextMessageRequest.metadata ?? JSON.null) , repliedTo = \(replyTextMessageRequest.repliedTo) , subjectId = \(replyTextMessageRequest.subjectId) , typeCode = \(replyTextMessageRequest.typeCode ?? "nil") , uniqueId = \(replyTextMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.ReplyTextMessage.rawValue, message: "send Request to ReplyTextMessage with this params:\n content = \(replyTextMessageRequest.content) , metadata = \(replyTextMessageRequest.metadata ?? "nil") , repliedTo = \(replyTextMessageRequest.repliedTo) , subjectId = \(replyTextMessageRequest.subjectId) , typeCode = \(replyTextMessageRequest.typeCode ?? "nil") , uniqueId = \(replyTextMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
         
         Chat.sharedInstance.replyMessage(inputModel: replyTextMessageRequest, uniqueId: { (replyMessageUniqueId) in
             self.uniqueIdCallback?(replyMessageUniqueId)

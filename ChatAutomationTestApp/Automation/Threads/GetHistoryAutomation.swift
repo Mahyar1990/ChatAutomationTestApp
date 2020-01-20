@@ -25,7 +25,7 @@ class GetHistoryAutomation {
     let fromTime:           UInt?
     let lastMessageId:      Int?
     let messageId:          Int?
-    let metadataCriteria:   JSON?
+    let metadataCriteria:   String?
     let offset:             Int?
     let order:              String?
     let query:              String?
@@ -43,7 +43,7 @@ class GetHistoryAutomation {
     private var cacheCallback:      callbackServerResponseTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
     
-    init(count: Int?, firstMessageId: Int?, fromTime: UInt?, lastMessageId: Int?, messageId: Int?, metadataCriteria: JSON?, offset: Int?, order: String?, query: String?, threadId: Int?, toTime: UInt?, typeCode: String?, requestUniqueId: String?) {
+    init(count: Int?, firstMessageId: Int?, fromTime: UInt?, lastMessageId: Int?, messageId: Int?, metadataCriteria: String?, offset: Int?, order: String?, query: String?, threadId: Int?, toTime: UInt?, typeCode: String?, requestUniqueId: String?) {
         
         self.count              = count
         self.firstMessageId     = firstMessageId
@@ -74,7 +74,7 @@ class GetHistoryAutomation {
     
     func sendRequest(getHistoryRequest: GetHistoryRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.GetHistory.rawValue, message: "send Request to getHistory with this params:\ncount = \(getHistoryRequest.count ?? 50) , fromTime = \(getHistoryRequest.fromTime ?? 0) , metadataCriteria = \(getHistoryRequest.metadataCriteria ?? JSON.null) , offset = \(getHistoryRequest.offset ?? 0) , order = \(getHistoryRequest.order) , query = \(getHistoryRequest.query ?? "nil") , threadId = \(getHistoryRequest.threadId ) , toTime = \(getHistoryRequest.toTime ?? 0) , typeCode = \(getHistoryRequest.typeCode ?? "nil") , uniqueId = \(getHistoryRequest.uniqueId ?? "nil")", lineNumbers: 3)
+        delegate?.newInfo(type: MoreInfoTypes.GetHistory.rawValue, message: "send Request to getHistory with this params:\ncount = \(getHistoryRequest.count ?? 50) , fromTime = \(getHistoryRequest.fromTime ?? 0) , metadataCriteria = \(getHistoryRequest.metadataCriteria ?? "nil") , offset = \(getHistoryRequest.offset ?? 0) , order = \(getHistoryRequest.order) , query = \(getHistoryRequest.query ?? "nil") , threadId = \(getHistoryRequest.threadId ) , toTime = \(getHistoryRequest.toTime ?? 0) , typeCode = \(getHistoryRequest.typeCode ?? "nil") , uniqueId = \(getHistoryRequest.uniqueId ?? "nil")", lineNumbers: 3)
         
         Chat.sharedInstance.getHistory(inputModel: getHistoryRequest, uniqueId: { (getHistoryUniqueId) in
             self.uniqueIdCallback?(getHistoryUniqueId)

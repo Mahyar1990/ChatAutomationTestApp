@@ -94,8 +94,8 @@ extension ClearHistoryAutomation {
     func addContact() {
         delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "try to addContact, then create a thread with it, then send a message to it", lineNumbers: 2)
         
-        let mehdi = Faker.sharedInstance.mehdiAsContact
-        let addContact = AddContactAutomation(cellphoneNumber: mehdi.cellphoneNumber, email: mehdi.email, firstName: mehdi.firstName, lastName: mehdi.lastName)
+        let sara = Faker.sharedInstance.SaraAsContacts
+        let addContact = AddContactAutomation(cellphoneNumber: sara.cellphoneNumber, email: sara.email, firstName: sara.firstName, lastName: sara.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
                 if let cellphoneNumber = myContact.cellphoneNumber {
@@ -105,11 +105,11 @@ extension ClearHistoryAutomation {
                     
                 } else {
                     // handle error that didn't get contact id in the contact model
-                    self.delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "there is no CellphoneNumber when addContact with this user (firstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber))!", lineNumbers: 2)
+                    self.delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "there is no CellphoneNumber when addContact with this user (firstName = \(sara.firstName) , cellphoneNumber = \(sara.cellphoneNumber))!", lineNumbers: 2)
                 }
             } else {
                 // handle error that didn't add Contact Model
-                self.delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(mehdi.firstName) , cellphoneNumber = \(mehdi.cellphoneNumber) , lastName = \(mehdi.lastName)", lineNumbers: 2)
+                self.delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(sara.firstName) , cellphoneNumber = \(sara.cellphoneNumber) , lastName = \(sara.lastName)", lineNumbers: 2)
             }
         }
         
@@ -118,6 +118,7 @@ extension ClearHistoryAutomation {
     
     // 2
     func createThread(withCellphoneNumber cellphoneNumber: String) {
+        delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "try to create Thread with cellphoneNumber: \(cellphoneNumber)", lineNumbers: 1)
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
         let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: nil, requestUniqueId: nil)
@@ -136,13 +137,12 @@ extension ClearHistoryAutomation {
     
     // 3
     func sendMessage(toThread id: Int) {
+        delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "try to send Message to this thread: \(id)", lineNumbers: 1)
         let sendMessage = SendTextMessageAutomation(content: "New Message", metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: id, typeCode: nil, uniqueId: nil)
         sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
             
-            if let messageId = sentResponse.message?.id {
-                self.delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(messageId)", lineNumbers: 1)
-                self.sendRequestSenario(contactCellPhone: nil, threadId: nil, responseThreadId: sentResponse.message?.conversation?.id)
-            }
+            self.delegate?.newInfo(type: MoreInfoTypes.ClearHistory.rawValue, message: "Message has been sent to this threadId = \(id), messageId = \(sentResponse.messageId)", lineNumbers: 1)
+            self.sendRequestSenario(contactCellPhone: nil, threadId: nil, responseThreadId: sentResponse.threadId)
             
         }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })
     }

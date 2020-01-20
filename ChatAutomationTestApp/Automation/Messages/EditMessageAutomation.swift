@@ -20,7 +20,7 @@ class EditMessageAutomation {
     public weak var delegate: MoreInfoDelegate?
     
     let content:    String?
-    let metadata:   JSON?
+    let metadata:   String?
     let repliedTo:  Int?
     let messageId:  Int?
     let typeCode:   String?
@@ -32,7 +32,7 @@ class EditMessageAutomation {
     private var uniqueIdCallback:   callbackStringTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
     
-    init(content: String?, metadata: JSON?, repliedTo: Int?, messageId: Int?, typeCode: String?, requestUniqueId: String?) {
+    init(content: String?, metadata: String?, repliedTo: Int?, messageId: Int?, typeCode: String?, requestUniqueId: String?) {
         
         self.content            = content
         self.metadata           = metadata
@@ -76,7 +76,7 @@ class EditMessageAutomation {
     
     func sendRequest(editMessageRequest: EditTextMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "send Request to EditMessage with this params:\n content = \(editMessageRequest.content) , metadata = \(editMessageRequest.metadata ?? JSON.null) , repliedTo = \(editMessageRequest.repliedTo ?? 0) , subjectId = \(editMessageRequest.messageId) , typeCode = \(editMessageRequest.typeCode ?? "nil") , uniqueId = \(editMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.EditMessage.rawValue, message: "send Request to EditMessage with this params:\n content = \(editMessageRequest.content) , metadata = \(editMessageRequest.metadata ?? "nil") , repliedTo = \(editMessageRequest.repliedTo ?? 0) , subjectId = \(editMessageRequest.messageId) , typeCode = \(editMessageRequest.typeCode ?? "nil") , uniqueId = \(editMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
         Chat.sharedInstance.editMessage(inputModel: editMessageRequest, uniqueId: { (editMessageUniqueId) in
 //        myChatObject?.editMessage(editMessageInput: editMessageRequest, uniqueId: { (editMessageUniqueId) in
             self.uniqueIdCallback?(editMessageUniqueId)

@@ -23,7 +23,7 @@ class GetThreadAutomation {
     
     let count:              Int?
     let coreUserId:         Int?
-    let metadataCriteria:   JSON?
+    let metadataCriteria:   String?
     let name:               String?
     let new:                Bool?
     let offset:             Int?
@@ -38,7 +38,7 @@ class GetThreadAutomation {
     private var cacheCallback:      callbackServerResponseTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
     
-    init(count: Int?, coreUserId: Int?, metadataCriteria: JSON?, name: String?, new: Bool?, offset: Int?, threadIds: [Int]?, typeCode: String?) {
+    init(count: Int?, coreUserId: Int?, metadataCriteria: String?, name: String?, new: Bool?, offset: Int?, threadIds: [Int]?, typeCode: String?) {
         
         self.count              = count
         self.coreUserId         = coreUserId
@@ -70,7 +70,7 @@ class GetThreadAutomation {
     
     func sendRequest(theThreadIds: [Int]?) {
         
-        delegate?.newInfo(type: MoreInfoTypes.GetThread.rawValue, message: "send Request to getThread with this params:\ncount = \(count ?? 50) coreUserId = \(coreUserId ?? 0) , metadataCriteria = \(metadataCriteria ?? JSON.null) , name = \(name ?? "nil") , new = \(new ?? false) , offset = \(offset ?? 0) , threadIds = \(theThreadIds ?? [0]) , typeCode = \(typeCode ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.GetThread.rawValue, message: "send Request to getThread with this params:\ncount = \(count ?? 50) coreUserId = \(coreUserId ?? 0) , metadataCriteria = \(metadataCriteria ?? "nil") , name = \(name ?? "nil") , new = \(new ?? false) , offset = \(offset ?? 0) , threadIds = \(theThreadIds ?? [0]) , typeCode = \(typeCode ?? "nil")", lineNumbers: 2)
         
         let getThreadInput = GetThreadsRequestModel(count: count,
                                                     creatorCoreUserId:  coreUserId,

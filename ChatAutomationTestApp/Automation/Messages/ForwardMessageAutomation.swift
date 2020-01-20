@@ -22,14 +22,14 @@ class ForwardMessageAutomation {
     
     
     let messageIds:         [Int]?
-    let metadata:           JSON?
+    let metadata:           String?
     let repliedTo:          Int?
     let subjectId:          Int?
     let typeCode:           String?
     
     var recievedSendMessageResponse = false
     
-    typealias callbackStringTypeAlias           = (String) -> ()
+    typealias callbackStringTypeAlias           = ([String]) -> ()
     typealias callbackServerResponseTypeAlias   = (SendMessageModel) -> ()
     
     private var uniqueIdCallback:       callbackStringTypeAlias?
@@ -37,7 +37,7 @@ class ForwardMessageAutomation {
     private var serverDeliverResponse:  callbackServerResponseTypeAlias?
     private var serverSeenResponse:     callbackServerResponseTypeAlias?
     
-    init(messageIds: [Int]?, metadata: JSON?, repliedTo: Int?, subjectId: Int?, typeCode: String?, uniqueId: String?) {
+    init(messageIds: [Int]?, metadata: String?, repliedTo: Int?, subjectId: Int?, typeCode: String?, uniqueId: String?) {
         
         self.messageIds         = messageIds
         self.metadata           = metadata
@@ -46,7 +46,7 @@ class ForwardMessageAutomation {
         self.typeCode           = typeCode
     }
     
-    func create(uniqueId:               @escaping (String) -> (),
+    func create(uniqueId:               @escaping ([String]) -> (),
                 serverSentResponse:     @escaping (SendMessageModel) -> (),
                 serverDeliverResponse:  @escaping (SendMessageModel) -> (),
                 serverSeenResponse:     @escaping (SendMessageModel) -> ()) {
@@ -76,7 +76,7 @@ class ForwardMessageAutomation {
     
     func sendRequest(forwardMessageRequest: ForwardMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "send Request to ForwardMessage with this params:\n messageIds = \(forwardMessageRequest.messageIds) , metadata = \(forwardMessageRequest.metadata ?? JSON.null) , repliedTo = \(forwardMessageRequest.repliedTo ?? 0) , subjectId = \(forwardMessageRequest.threadId) , typeCode = \(forwardMessageRequest.typeCode ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "send Request to ForwardMessage with this params:\n messageIds = \(forwardMessageRequest.messageIds) , metadata = \(forwardMessageRequest.metadata ?? "nil") , repliedTo = \(forwardMessageRequest.repliedTo ?? 0) , subjectId = \(forwardMessageRequest.threadId) , typeCode = \(forwardMessageRequest.typeCode ?? "nil")", lineNumbers: 2)
         
         Chat.sharedInstance.forwardMessage(inputModel: forwardMessageRequest, uniqueIds: { (forwardMessageUniqueId) in
             self.uniqueIdCallback?(forwardMessageUniqueId)

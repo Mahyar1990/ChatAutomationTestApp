@@ -67,6 +67,7 @@ class SearchContactAutomation {
                                                             lastName:           lastName,
                                                             offset:             offset,
                                                             size:               size,
+                                                            query:              nil,
                                                             typeCode:           nil,
                                                             uniqueId:           requestUniqueId)
         

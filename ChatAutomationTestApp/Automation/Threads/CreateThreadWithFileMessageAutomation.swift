@@ -1,12 +1,13 @@
 //
-//  CreateThreadWithMessageAutomation.swift
+//  CreateThreadWithFileMessageAutomation.swift
 //  ChatAutomationTestApp
 //
-//  Created by Mahyar Zhiani on 2/18/1398 AP.
+//  Created by MahyarZhiani on 10/28/1398 AP.
 //  Copyright © 1398 Mahyar Zhiani. All rights reserved.
 //
 
 //import PodChat
+import UIKit
 import FanapPodChatSDK
 import SwiftyJSON
 
@@ -14,7 +15,7 @@ import SwiftyJSON
 /*
  
  */
-class CreateThreadWithMessageAutomation {
+class CreateThreadWithFileMessageAutomation {
     
     public weak var delegate: MoreInfoDelegate?
     
@@ -26,12 +27,16 @@ class CreateThreadWithMessageAutomation {
     let title:              String?
     let type:               ThreadTypes?
     let requestUniqueId:    String?
+    var fileData:           Data?
     
     typealias callbackStringTypeAlias                   = (String) -> ()
+    typealias callbackProgressTypeAlias                 = (Float) -> ()
     typealias callbackServerThreadResponseTypeAlias     = (ThreadModel) -> ()
     typealias callbackServerMessageResponseTypeAlias    = (SendMessageModel) -> ()
     
     private var uniqueIdCallback:           callbackStringTypeAlias?
+    private var uploadUniqueIdCallback:     callbackStringTypeAlias?
+    private var progressCallback:           callbackProgressTypeAlias?
     private var completionResponseCallback: callbackServerThreadResponseTypeAlias?
     private var serverSentResponse:         callbackServerMessageResponseTypeAlias?
     private var serverDeliverResponse:      callbackServerMessageResponseTypeAlias?
@@ -58,12 +63,16 @@ class CreateThreadWithMessageAutomation {
     
     
     func create(uniqueId:               @escaping callbackStringTypeAlias,
+                uploadUniqueIdCallback: @escaping callbackStringTypeAlias,
+                progressCallback:       @escaping callbackProgressTypeAlias,
                 serverResponse:         @escaping callbackServerThreadResponseTypeAlias,
                 serverSentResponse:     @escaping callbackServerMessageResponseTypeAlias,
                 serverDeliverResponse:  @escaping callbackServerMessageResponseTypeAlias,
                 serverSeenResponse:     @escaping callbackServerMessageResponseTypeAlias) {
         
-        self.uniqueIdCallback   = uniqueId
+        self.uniqueIdCallback               = uniqueId
+        self.uploadUniqueIdCallback         = uploadUniqueIdCallback
+        self.progressCallback               = progressCallback
         self.completionResponseCallback     = serverResponse
         self.serverSentResponse             = serverSentResponse
         self.serverDeliverResponse          = serverDeliverResponse
@@ -91,8 +100,18 @@ class CreateThreadWithMessageAutomation {
         }
     }
     
+    func prepareDataToUpload() {
+        delegate?.newInfo(type: MoreInfoTypes.SendFileMessage.rawValue, message: "there is no data specified to upload", lineNumbers: 1)
+        let image = UIImage(named: "pic")
+        if let data = image?.jpegData(compressionQuality: 1) {
+            fileData = data
+            delegate?.newInfo(type: MoreInfoTypes.SendFileMessage.rawValue, message: "data has picked from Assets, prepare it to upload", lineNumbers: 1)
+        }
+    }
     
     func sendRequest(withDescription: String?, withInvitees: [Invitee], withTitle: String, withType: ThreadTypes, withMessage: String) {
+        
+        prepareDataToUpload()
         
         var i = ""
         for item in withInvitees {
@@ -101,26 +120,42 @@ class CreateThreadWithMessageAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.CreateThreadWithMessage.rawValue, message: "send create thread with Message request with this parameters:\n message = \(withMessage), description = \(withDescription ?? "nil") , image = \(self.image ?? "nil") , invitees = \(i) , metadata = \(self.metadata ?? "nil") , title = \(withTitle) , type = \(withType) , requestUniqueId = \(self.requestUniqueId ?? "nil")", lineNumbers: 4)
         
-        let createThreadInput = CreateThreadRequestModel(description: withDescription,
-                                                         image: self.image,
-                                                         invitees: withInvitees,
-                                                         metadata: self.metadata,
-                                                         title: withTitle,
-                                                         type: withType,
-                                                         typeCode: nil,
-                                                         uniqueId: nil)
-        let messageInput = MessageInput(forwardedMessageIds: nil, repliedTo: nil, text: "This is The Message Text", type: nil, systemMetadata: nil, uniqueId: self.requestUniqueId)
+        let createThreadInput = CreateThreadRequestModel(description:   withDescription,
+                                                         image:         self.image,
+                                                         invitees:      withInvitees,
+                                                         metadata:      self.metadata,
+                                                         title:         withTitle,
+                                                         type:          withType,
+                                                         typeCode:      nil,
+                                                         uniqueId:      nil)
+        let messageInput = MessageInput(forwardedMessageIds: nil,
+                                        repliedTo:          nil,
+                                        text:               "This is The Message Text",
+                                        type:               nil,
+                                        systemMetadata:     nil,
+                                        uniqueId:           self.requestUniqueId)
         let createThreadWithMessageInput = CreateThreadWithMessageRequestModel(createThreadInput:   createThreadInput,
                                                                                sendMessageInput:    messageInput)
-        
-        Chat.sharedInstance.createThreadWithMessage(inputModel: createThreadWithMessageInput, threadUniqueId: { _ in
-        }, messageUniqueId: { (createThreadWithMessageUniqueId) in
-            self.uniqueIdCallback?(createThreadWithMessageUniqueId)
+        let uploadRequestModel = UploadFileRequestModel(dataToSend:     self.fileData!,
+                                                        fileExtension:  nil,
+                                                        fileName:       nil,
+                                                        originalFileName: nil,
+                                                        threadId:       nil,
+                                                        typeCode:       nil,
+                                                        uniqueId:       nil)
+        let createThreadWithFileMessageInput = CreateThreadWithFileMessageRequestModel(creatThreadWithMessageInput: createThreadWithMessageInput,
+                                                                                       uploadInput:                 uploadRequestModel)
+        Chat.sharedInstance.createThreadWithFileMessage(inputModel: createThreadWithFileMessageInput, uploadUniqueId: { (uploadFileUniqueId) in
+            self.uploadUniqueIdCallback?(uploadFileUniqueId)
+        }, uploadProgress: { (uploadFileProgress) in
+            self.progressCallback?(uploadFileProgress)
+        }, uniqueId: { (createThreadWithFileMessageUniqueId) in
+            self.uniqueIdCallback?(createThreadWithFileMessageUniqueId)
         }, completion: { (createThreadModel) in
             self.completionResponseCallback?(createThreadModel as! ThreadModel)
         }, onSent: { (sent) in
             self.serverSentResponse?(sent as! SendMessageModel)
-        }, onDelivere: { (deliver) in
+        }, onDelivered: { (deliver) in
             self.serverDeliverResponse?(deliver as! SendMessageModel)
         }, onSeen: { (seen) in
             self.serverSeenResponse?(seen as! SendMessageModel)
@@ -131,7 +166,7 @@ class CreateThreadWithMessageAutomation {
 }
 
 
-extension CreateThreadWithMessageAutomation {
+extension CreateThreadWithFileMessageAutomation {
     
     func addContactThenCreateThread() {
         let mehdi = Faker.sharedInstance.mehdiAsContact
@@ -161,5 +196,3 @@ extension CreateThreadWithMessageAutomation {
     }
     
 }
-
-
