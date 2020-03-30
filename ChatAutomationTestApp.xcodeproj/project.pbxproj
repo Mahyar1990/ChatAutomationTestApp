@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3E18D10823D321E000A35BB8 /* CreateThreadWithFileMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E18D10723D321E000A35BB8 /* CreateThreadWithFileMessageAutomation.swift */; };
 		3E1C3584225B600C001A343B /* GetHistoryAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */; };
 		3E2A62DC2287F60B002FB5D7 /* UploadFileAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2A62DB2287F60B002FB5D7 /* UploadFileAutomation.swift */; };
 		3E2A62E422880833002FB5D7 /* UploadImageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2A62E322880833002FB5D7 /* UploadImageAutomation.swift */; };
+		3E35337223D47C6F00731774 /* AddAuditorAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E35337123D47C6F00731774 /* AddAuditorAutomation.swift */; };
+		3E35337623D47C8800731774 /* RemoveAuditorAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E35337523D47C8800731774 /* RemoveAuditorAutomation.swift */; };
+		3E35337823D49FF900731774 /* PinMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E35337723D49FF900731774 /* PinMessageAutomation.swift */; };
+		3E35337A23D4A26C00731774 /* UnpinMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E35337923D4A26C00731774 /* UnpinMessageAutomation.swift */; };
 		3E5EEDF52286B4210026DB58 /* SearchContactAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EEDF42286B4210026DB58 /* SearchContactAutomation.swift */; };
 		3E5EEDF92286C2FC0026DB58 /* LeaveThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EEDF82286C2FC0026DB58 /* LeaveThreadAutomation.swift */; };
 		3E5EEDFD2286C8A70026DB58 /* MuteThreadAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5EEDFC2286C8A70026DB58 /* MuteThreadAutomation.swift */; };
@@ -36,6 +41,7 @@
 		3E9725AF222292210056AD4D /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725AE222292210056AD4D /* Views.swift */; };
 		3E9725B32222925F0056AD4D /* ChatDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725B22222925F0056AD4D /* ChatDelegates.swift */; };
 		3E9725B5222292C80056AD4D /* BaseCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725B4222292C80056AD4D /* BaseCells.swift */; };
+		3E9B842D242FD4210000104C /* IsNameAvailableAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9B842C242FD4210000104C /* IsNameAvailableAutomation.swift */; };
 		3EA5259822A27DD1004ABE11 /* AddAdminAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA5259722A27DD1004ABE11 /* AddAdminAutomation.swift */; };
 		3EADF7CB228BCF53009B102C /* MessageDeliveryListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EADF7CA228BCF53009B102C /* MessageDeliveryListAutomation.swift */; };
 		3EADF7CF228BD15E009B102C /* MessageSeenListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EADF7CE228BD15E009B102C /* MessageSeenListAutomation.swift */; };
@@ -46,6 +52,7 @@
 		3EB2EAD522BF2EC800848C62 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB2EAD422BF2EC800848C62 /* Extensions.swift */; };
 		3EB80DEE239650370047AFAF /* SendBotMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB80DED239650370047AFAF /* SendBotMessageAutomation.swift */; };
 		3EBAFA792289975900D9F653 /* ClearHistoryAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBAFA782289975900D9F653 /* ClearHistoryAutomation.swift */; };
+		3EBEC355242ABCEB00FCDE4A /* GetCurrentUserRolesAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBEC354242ABCEB00FCDE4A /* GetCurrentUserRolesAutomation.swift */; };
 		3EC964E322AF66DD000CE284 /* SendFileMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC964E222AF66DD000CE284 /* SendFileMessageAutomation.swift */; };
 		3EC964FC22AF7B91000CE284 /* ReplyFileMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC964FB22AF7B91000CE284 /* ReplyFileMessageAutomation.swift */; };
 		3EC9650822AFBCAC000CE284 /* SendLocationMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC9650722AFBCAC000CE284 /* SendLocationMessageAutomation.swift */; };
@@ -80,9 +87,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3E18D10723D321E000A35BB8 /* CreateThreadWithFileMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateThreadWithFileMessageAutomation.swift; sourceTree = "<group>"; };
 		3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetHistoryAutomation.swift; sourceTree = "<group>"; };
 		3E2A62DB2287F60B002FB5D7 /* UploadFileAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadFileAutomation.swift; sourceTree = "<group>"; };
 		3E2A62E322880833002FB5D7 /* UploadImageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImageAutomation.swift; sourceTree = "<group>"; };
+		3E35337123D47C6F00731774 /* AddAuditorAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAuditorAutomation.swift; sourceTree = "<group>"; };
+		3E35337523D47C8800731774 /* RemoveAuditorAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAuditorAutomation.swift; sourceTree = "<group>"; };
+		3E35337723D49FF900731774 /* PinMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinMessageAutomation.swift; sourceTree = "<group>"; };
+		3E35337923D4A26C00731774 /* UnpinMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnpinMessageAutomation.swift; sourceTree = "<group>"; };
 		3E5EEDF42286B4210026DB58 /* SearchContactAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchContactAutomation.swift; sourceTree = "<group>"; };
 		3E5EEDF82286C2FC0026DB58 /* LeaveThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveThreadAutomation.swift; sourceTree = "<group>"; };
 		3E5EEDFC2286C8A70026DB58 /* MuteThreadAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MuteThreadAutomation.swift; sourceTree = "<group>"; };
@@ -109,6 +121,7 @@
 		3E9725AE222292210056AD4D /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		3E9725B22222925F0056AD4D /* ChatDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDelegates.swift; sourceTree = "<group>"; };
 		3E9725B4222292C80056AD4D /* BaseCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCells.swift; sourceTree = "<group>"; };
+		3E9B842C242FD4210000104C /* IsNameAvailableAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsNameAvailableAutomation.swift; sourceTree = "<group>"; };
 		3EA5259722A27DD1004ABE11 /* AddAdminAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAdminAutomation.swift; sourceTree = "<group>"; };
 		3EADF7CA228BCF53009B102C /* MessageDeliveryListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDeliveryListAutomation.swift; sourceTree = "<group>"; };
 		3EADF7CE228BD15E009B102C /* MessageSeenListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSeenListAutomation.swift; sourceTree = "<group>"; };
@@ -121,6 +134,7 @@
 		3EB2EAD422BF2EC800848C62 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		3EB80DED239650370047AFAF /* SendBotMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendBotMessageAutomation.swift; sourceTree = "<group>"; };
 		3EBAFA782289975900D9F653 /* ClearHistoryAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearHistoryAutomation.swift; sourceTree = "<group>"; };
+		3EBEC354242ABCEB00FCDE4A /* GetCurrentUserRolesAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentUserRolesAutomation.swift; sourceTree = "<group>"; };
 		3EC964E222AF66DD000CE284 /* SendFileMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFileMessageAutomation.swift; sourceTree = "<group>"; };
 		3EC964FB22AF7B91000CE284 /* ReplyFileMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyFileMessageAutomation.swift; sourceTree = "<group>"; };
 		3EC9650722AFBCAC000CE284 /* SendLocationMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLocationMessageAutomation.swift; sourceTree = "<group>"; };
@@ -172,6 +186,7 @@
 		3E94724C22267C1D005D986E /* Automation */ = {
 			isa = PBXGroup;
 			children = (
+				3E9B8430242FD6320000104C /* User */,
 				3E94724D22267C43005D986E /* Contacts */,
 				3E94724E22267C5C005D986E /* Threads */,
 				3E94724F22267C6A005D986E /* Messages */,
@@ -200,10 +215,13 @@
 			isa = PBXGroup;
 			children = (
 				3EA5259722A27DD1004ABE11 /* AddAdminAutomation.swift */,
+				3E9B842C242FD4210000104C /* IsNameAvailableAutomation.swift */,
+				3E35337123D47C6F00731774 /* AddAuditorAutomation.swift */,
 				3EEB0813227EA277009DA162 /* AddParticipantAutomation.swift */,
 				3EBAFA782289975900D9F653 /* ClearHistoryAutomation.swift */,
 				3E6295602225778D002DB51C /* CreateThreadAutomation.swift */,
 				3ECC15752282F870003B8240 /* CreateThreadWithMessageAutomation.swift */,
+				3E18D10723D321E000A35BB8 /* CreateThreadWithFileMessageAutomation.swift */,
 				3E659B8C2299204C0042B03B /* GetAdminAutomation.swift */,
 				3E1C3583225B600C001A343B /* GetHistoryAutomation.swift */,
 				3ED3DA85222E748600261DB3 /* GetThreadAutomation.swift */,
@@ -212,6 +230,7 @@
 				3E5EEDFC2286C8A70026DB58 /* MuteThreadAutomation.swift */,
 				3E5EEDFE2286CA870026DB58 /* UnmuteThreadAutomation.swift */,
 				3E8E923D22A3FCE00037CD41 /* RemoveAdminAutomation.swift */,
+				3E35337523D47C8800731774 /* RemoveAuditorAutomation.swift */,
 				3E5EEE022286FD3F0026DB58 /* RemoveParticipantAutomation.swift */,
 				3E5EEE002286F4630026DB58 /* SpamThreadAutomation.swift */,
 			);
@@ -227,6 +246,8 @@
 				3E8D1486225C595F001C0AE6 /* ForwardMessageAutomation.swift */,
 				3EADF7CA228BCF53009B102C /* MessageDeliveryListAutomation.swift */,
 				3EADF7CE228BD15E009B102C /* MessageSeenListAutomation.swift */,
+				3E35337723D49FF900731774 /* PinMessageAutomation.swift */,
+				3E35337923D4A26C00731774 /* UnpinMessageAutomation.swift */,
 				3E8D1482225C594C001C0AE6 /* ReplyMessageAutomation.swift */,
 				3ED3DA87222E930600261DB3 /* SendTextMessageAutomation.swift */,
 				3EB80DED239650370047AFAF /* SendBotMessageAutomation.swift */,
@@ -251,6 +272,14 @@
 				3E2A62E322880833002FB5D7 /* UploadImageAutomation.swift */,
 			);
 			path = Files;
+			sourceTree = "<group>";
+		};
+		3E9B8430242FD6320000104C /* User */ = {
+			isa = PBXGroup;
+			children = (
+				3EBEC354242ABCEB00FCDE4A /* GetCurrentUserRolesAutomation.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		3EAE774622217AD4005AC3C3 = {
@@ -455,16 +484,19 @@
 				3EC964FC22AF7B91000CE284 /* ReplyFileMessageAutomation.swift in Sources */,
 				3E2A62DC2287F60B002FB5D7 /* UploadFileAutomation.swift in Sources */,
 				3E5EEDFF2286CA870026DB58 /* UnmuteThreadAutomation.swift in Sources */,
+				3E35337623D47C8800731774 /* RemoveAuditorAutomation.swift in Sources */,
 				3EA5259822A27DD1004ABE11 /* AddAdminAutomation.swift in Sources */,
 				3EEB081C227EC98C009DA162 /* GetTokenWithRefreshToken.swift in Sources */,
 				3EEB081A227EC7DD009DA162 /* Enums.swift in Sources */,
 				3EB2EAD522BF2EC800848C62 /* Extensions.swift in Sources */,
+				3E35337223D47C6F00731774 /* AddAuditorAutomation.swift in Sources */,
 				3E7ACC0022C236B800042168 /* DeleteMultipleMessagesAutomation.swift in Sources */,
 				3EAE775522217AD4005AC3C3 /* MyChatViewController.swift in Sources */,
 				3EC9650822AFBCAC000CE284 /* SendLocationMessageAutomation.swift in Sources */,
 				3E8D1489225C7AE2001C0AE6 /* EditMessageAutomation.swift in Sources */,
 				3E629569222577D9002DB51C /* AddContactAutomation.swift in Sources */,
 				3E8D148B225C7CFF001C0AE6 /* DeleteMessageAutomation.swift in Sources */,
+				3E35337A23D4A26C00731774 /* UnpinMessageAutomation.swift in Sources */,
 				3E6295612225778D002DB51C /* CreateThreadAutomation.swift in Sources */,
 				3EAE775322217AD4005AC3C3 /* AppDelegate.swift in Sources */,
 				3E8D1487225C595F001C0AE6 /* ForwardMessageAutomation.swift in Sources */,
@@ -484,7 +516,9 @@
 				3E659B8D2299204C0042B03B /* GetAdminAutomation.swift in Sources */,
 				3EEB0814227EA277009DA162 /* AddParticipantAutomation.swift in Sources */,
 				3EADF7CB228BCF53009B102C /* MessageDeliveryListAutomation.swift in Sources */,
+				3E18D10823D321E000A35BB8 /* CreateThreadWithFileMessageAutomation.swift in Sources */,
 				3EB80DEE239650370047AFAF /* SendBotMessageAutomation.swift in Sources */,
+				3E35337823D49FF900731774 /* PinMessageAutomation.swift in Sources */,
 				3E5EEDFD2286C8A70026DB58 /* MuteThreadAutomation.swift in Sources */,
 				3EC964E322AF66DD000CE284 /* SendFileMessageAutomation.swift in Sources */,
 				3E61FFE023A7C7180094813F /* LoginDelegates.swift in Sources */,
@@ -495,8 +529,10 @@
 				3ED3DA88222E930600261DB3 /* SendTextMessageAutomation.swift in Sources */,
 				3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */,
 				3ECC15762282F870003B8240 /* CreateThreadWithMessageAutomation.swift in Sources */,
+				3E9B842D242FD4210000104C /* IsNameAvailableAutomation.swift in Sources */,
 				3EBAFA792289975900D9F653 /* ClearHistoryAutomation.swift in Sources */,
 				3E9725AF222292210056AD4D /* Views.swift in Sources */,
+				3EBEC355242ABCEB00FCDE4A /* GetCurrentUserRolesAutomation.swift in Sources */,
 				3E5EEE012286F4630026DB58 /* SpamThreadAutomation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

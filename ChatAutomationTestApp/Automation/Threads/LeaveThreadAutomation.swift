@@ -110,6 +110,7 @@ class LeaveThreadAutomation {
                                                   invitees:         [myInvitee],
                                                   metadata:         nil,
                                                   title:            fakeParams.title,
+                                                  uniqueName:       nil,
                                                   type:             nil,
                                                   requestUniqueId:  nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in

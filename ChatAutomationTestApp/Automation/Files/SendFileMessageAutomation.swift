@@ -96,7 +96,7 @@ class SendFileMessageAutomation {
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
         var i = ""
         for item in createThread.invitees! {
             i.append("\(item.formatToJSON()) ,")
@@ -130,25 +130,30 @@ class SendFileMessageAutomation {
         let myContent = content ?? "This is a dummy message"
         delegate?.newInfo(type: MoreInfoTypes.SendFileMessage.rawValue, message: "send Request SendFileMessage with this params:\n messageText = \(myContent),\n threadId = \(threadId ?? 0), fileName = \(myFileName)", lineNumbers: 2)
         
-        let fileMessageInput = SendFileMessageRequestModel(fileName:    myFileName,
-                                                           imageName:   nil,
-                                                           xC:          nil,
-                                                           yC:          nil,
-                                                           hC:          nil,
-                                                           wC:          nil,
-                                                           threadId:    toThreadId,
-                                                           content:     myContent,
-                                                           metadata:    nil,
-                                                           repliedTo:   nil,
-                                                           fileToSend:  theData,
-                                                           imageToSend: nil,
-                                                           typeCode:    nil,
-                                                           uniqueId:    nil)
+        let messageInput = SendTextMessageRequestModel(content:         myContent,
+                                                       messageType:     MESSAGE_TYPE.file,
+                                                       metadata:        nil,
+                                                       repliedTo:       nil,
+                                                       systemMetadata:  nil,
+                                                       threadId:        toThreadId,
+                                                       typeCode:        nil,
+                                                       uniqueId:        nil)
+        let uploadInput = UploadFileRequestModel(dataToSend:        theData,
+                                                 fileExtension:     nil,
+                                                 fileName:          myFileName,
+                                                 mimeType:          nil,
+                                                 originalFileName:  nil,
+                                                 threadId:          nil,
+                                                 typeCode:          nil,
+                                                 uniqueId:          nil)
+        let fileMessageInput = SendFileMessageRequestModel(messageInput:    messageInput,
+                                                           uploadInput:     uploadInput)
         
-        Chat.sharedInstance.sendFileMessage(inputModel: fileMessageInput, uniqueId: { (sentFileMessageUniqueId) in
-            self.uniqueIdCallback?(sentFileMessageUniqueId)
+        Chat.sharedInstance.sendFileMessage(inputModel: fileMessageInput, uploadUniqueId: { _ in
         }, uploadProgress: { (uploadFileProgress) in
             self.progressCallback?(uploadFileProgress)
+        }, messageUniqueId: { (sendMessageUniqueId) in
+            self.uniqueIdCallback?(sendMessageUniqueId)
         }, onSent: { (sent) in
             self.serverDeliverResponse?(sent as! SendMessageModel)
         }, onDelivered: { (deliver) in

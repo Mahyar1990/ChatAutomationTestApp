@@ -60,7 +60,7 @@ class AddParticipantAutomation {
     func sendRequest(theContacts: [Int], theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "send Request addParticipant with this params:\ncontacts = \(theContacts), threadId = \(theThreadId) , typeCode = \(typeCode ?? "nil"), uniqueId = \(requestUniqueId ?? "nil")", lineNumbers: 2)
         
-        let addParticipantInput = AddParticipantsRequestModel(contacts: theContacts,
+        let addParticipantInput = AddParticipantsRequestModel(contactIds: theContacts,
                                                               threadId: theThreadId,
                                                               typeCode: typeCode,
                                                               uniqueId: requestUniqueId)
@@ -96,8 +96,8 @@ class AddParticipantAutomation {
     
     func addContact() {
         // 1
-        let arvin = Faker.sharedInstance.MehranAsContact
-        let addContact = AddContactAutomation(cellphoneNumber: arvin.cellphoneNumber, email: arvin.email, firstName: arvin.firstName, lastName: arvin.lastName)
+        let sara = Faker.sharedInstance.SaraAsContacts
+        let addContact = AddContactAutomation(cellphoneNumber: sara.cellphoneNumber, email: sara.email, firstName: sara.firstName, lastName: sara.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
                 if let id = myContact.id {
@@ -107,11 +107,11 @@ class AddParticipantAutomation {
                     
                 } else {
                     // handle error that didn't get contact id in the contact model
-                    self.delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "there is no id when addContact with this user (firstName = \(arvin.firstName) , cellphoneNumber = \(arvin.cellphoneNumber))!", lineNumbers: 2)
+                    self.delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "there is no id when addContact with this user (firstName = \(sara.firstName) , cellphoneNumber = \(sara.cellphoneNumber))!", lineNumbers: 2)
                 }
             } else {
                 // handle error that didn't add Contact Model
-                self.delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(arvin.firstName) , cellphoneNumber = \(arvin.cellphoneNumber) , lastName = \(arvin.lastName)", lineNumbers: 2)
+                self.delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(sara.firstName) , cellphoneNumber = \(sara.cellphoneNumber) , lastName = \(sara.lastName)", lineNumbers: 2)
             }
         }
     }
@@ -125,7 +125,8 @@ class AddParticipantAutomation {
                                                   invitees:         [myInvitee],
                                                   metadata:         nil,
                                                   title:            fakeParams.title,
-                                                  type:             ThreadTypes.PUBLIC_GROUP,
+                                                  uniqueName:       nil,
+                                                  type:             ThreadTypes.OWNER_GROUP,
                                                   requestUniqueId:  nil)
         var i = ""
         for item in createThread.invitees! {

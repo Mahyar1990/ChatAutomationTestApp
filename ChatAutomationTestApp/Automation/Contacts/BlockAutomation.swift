@@ -22,7 +22,7 @@ class BlockAutomation {
     let userId:     Int?
     
     typealias callbackStringTypeAlias            = (String) -> ()
-    typealias callbackServerResponseTypeAlias    = (BlockedContactModel) -> ()
+    typealias callbackServerResponseTypeAlias    = (BlockedUserModel) -> ()
     
     private var uniqueIdCallback: callbackStringTypeAlias?
     private var responseCallback: callbackServerResponseTypeAlias?
@@ -38,7 +38,7 @@ class BlockAutomation {
     
     
     func create(uniqueId:       @escaping (String) -> (),
-                serverResponse: @escaping (BlockedContactModel) -> ()) {
+                serverResponse: @escaping (BlockedUserModel) -> ()) {
         
         self.uniqueIdCallback   = uniqueId
         self.responseCallback   = serverResponse
@@ -71,7 +71,7 @@ class BlockAutomation {
         Chat.sharedInstance.blockContact(inputModel: blockContactInput, uniqueId: { (blockContactUniqueId) in
             self.uniqueIdCallback?(blockContactUniqueId)
         }, completion: { (blockContactResponse) in
-            self.responseCallback?(blockContactResponse as! BlockedContactModel)
+            self.responseCallback?(blockContactResponse as! BlockedUserModel)
             if isAutomation {
                 switch (theContactId, theUserId, theThreadId) {
                 case let (.some(id),    .none, .none):      self.sendRequestSenario(theContactId: id, theUserId: nil, theThreadId: nil)
@@ -165,7 +165,7 @@ extension BlockAutomation {
     }
     
     private func getContact(withInput requestModel: GetContactsRequestModel, completion: @escaping (Contact)->() ) {
-        Chat.sharedInstance.getContacts(inputModel: requestModel, uniqueId: { (_) in
+        Chat.sharedInstance.getContacts(inputModel: requestModel, getCacheResponse: nil, uniqueId: { (_) in
         }, completion: { (cotactM) in
             let contactModel = cotactM as! GetContactsModel
             if let firstContact = contactModel.contacts.first {
@@ -210,7 +210,7 @@ extension BlockAutomation {
     
     func createThreadWith(cellPhoneNumber: String) {
         let invitee = Invitee(id: cellPhoneNumber, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
-        let createThread = CreateThreadAutomation(description: "new thread", image: nil, invitees: [invitee], metadata: nil, title: "Thread", type: ThreadTypes.NORMAL, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: "new thread", image: nil, invitees: [invitee], metadata: nil, title: "Thread", uniqueName: nil, type: ThreadTypes.NORMAL, requestUniqueId: nil)
         createThread.create(uniqueId: { _,_  in }, serverResponse: { (createThreadModel, _ )  in
             if let myThreadId = createThreadModel.thread?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.Block.rawValue, message: "new thread has been created, thread id = \(myThreadId)", lineNumbers: 1)

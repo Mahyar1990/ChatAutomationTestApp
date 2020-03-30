@@ -59,6 +59,7 @@ class UpdateContactAutomation {
                                                           firstName:        contactFirstname,
                                                           id:               contactId,
                                                           lastName:         contactLastname,
+                                                          username:         "",
                                                           typeCode:         nil,
                                                           uniqueId:         nil)
             sendRequest(updateContactRequest: requestModel)
@@ -114,6 +115,7 @@ class UpdateContactAutomation {
                                                                         firstName:          contact.first,
                                                                         id:                 contactId,
                                                                         lastName:           contact.last,
+                                                                        username:           "",
                                                                         typeCode:           nil,
                                                                         uniqueId:           nil)
                     self.sendRequest(updateContactRequest: updateContactModel)

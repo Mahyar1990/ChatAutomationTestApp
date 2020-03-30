@@ -17,9 +17,9 @@ class SendBotMessageAutomation {
     
     let content:        String?
     let messsageId:     Int?
-    let metadata:       JSON
+    let metadata:       String
     let threadId:       Int?
-    let systemMetadata: JSON?
+    let systemMetadata: String?
     let typeCode:       String?
     let requestUniqueId:  String?
     
@@ -32,7 +32,7 @@ class SendBotMessageAutomation {
     private var serverDeliverResponse:  callbackServerResponseTypeAlias?
     private var serverSeenResponse:     callbackServerResponseTypeAlias?
     
-    init(content: String?, messsageId: Int?, metadata: JSON, threadId: Int?, systemMetadata: JSON?, typeCode: String?, uniqueId: String?) {
+    init(content: String?, messsageId: Int?, metadata: String, threadId: Int?, systemMetadata: String?, typeCode: String?, uniqueId: String?) {
         
         self.content        = content
         self.messsageId     = messsageId
@@ -143,7 +143,7 @@ class SendBotMessageAutomation {
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: nil, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: nil, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 

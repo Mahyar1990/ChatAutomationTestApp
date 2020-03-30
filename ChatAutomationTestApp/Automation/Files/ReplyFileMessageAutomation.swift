@@ -101,7 +101,7 @@ class ReplyFileMessageAutomation {
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
         var i = ""
         for item in createThread.invitees! {
             i.append("\(item.formatToJSON()) ,")
@@ -150,25 +150,35 @@ class ReplyFileMessageAutomation {
         let myContent = content ?? "This is a dummy message"
         delegate?.newInfo(type: MoreInfoTypes.ReplyFileMessage.rawValue, message: "send Request ReplyFileMessage with this params:\n messageText = \(myContent),\n threadId = \(threadId ?? 0),\n repliedTo = \(repliedTo ?? 0),\n fileName = \(myFileName),", lineNumbers: 2)
         
-        let replyFileMessageInput = SendFileMessageRequestModel(fileName:       myFileName,
-                                                                imageName:      nil,
-                                                                xC:             nil,
-                                                                yC:             nil,
-                                                                hC:             nil,
-                                                                wC:             nil,
-                                                                threadId:       toThreadId,
-                                                                content:        myContent,
-                                                                metadata:       nil,
-                                                                repliedTo:      repliedTo,
-                                                                fileToSend:     theData,
-                                                                imageToSend:    nil,
-                                                                typeCode:       nil,
-                                                                uniqueId:       nil)
         
-        Chat.sharedInstance.replyFileMessage(inputModel: replyFileMessageInput, uniqueId: { (replyFileMessageUniqueId) in
-            self.uniqueIdCallback?(replyFileMessageUniqueId)
+        let messageInput = SendTextMessageRequestModel(content: myContent,
+                                                       messageType: MESSAGE_TYPE.file,
+                                                       metadata: nil,
+                                                       repliedTo: repliedTo,
+                                                       systemMetadata: nil,
+                                                       threadId: toThreadId,
+                                                       typeCode: nil,
+                                                       uniqueId: nil)
+        let uploadInput = UploadImageRequestModel(dataToSend: theData,
+                                                  fileExtension: nil,
+                                                  fileName: myFileName,
+                                                  mimeType: nil,
+                                                  originalFileName: nil,
+                                                  threadId: nil,
+                                                  xC: nil,
+                                                  yC: nil,
+                                                  hC: nil,
+                                                  wC: nil,
+                                                  typeCode: nil,
+                                                  uniqueId: nil)
+        let replyFileMessageInput = SendFileMessageRequestModel(messageInput:   messageInput,
+                                                                uploadInput:    uploadInput)
+        
+        Chat.sharedInstance.replyFileMessage(inputModel: replyFileMessageInput, uploadUniqueId: { _ in
         }, uploadProgress: { (uploadFileProgress) in
             self.progressCallback?(uploadFileProgress)
+        }, messageUniqueId: { (replyFileMessageUniqueId) in
+            self.uniqueIdCallback?(replyFileMessageUniqueId)
         }, onSent: { (sent) in
             self.serverDeliverResponse?(sent as! SendMessageModel)
         }, onDelivered: { (deliver) in

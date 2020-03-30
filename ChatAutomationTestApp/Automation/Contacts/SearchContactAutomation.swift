@@ -67,10 +67,11 @@ class SearchContactAutomation {
                                                             lastName:           lastName,
                                                             offset:             offset,
                                                             size:               size,
+                                                            query:              nil,
                                                             typeCode:           nil,
                                                             uniqueId:           requestUniqueId)
         
-        Chat.sharedInstance.searchContacts(inputModel: searchContactInput, uniqueId: { (searchContactUniqueId) in
+        Chat.sharedInstance.searchContacts(inputModel: searchContactInput, getCacheResponse: nil, uniqueId: { (searchContactUniqueId) in
             self.uniqueIdCallback?(searchContactUniqueId)
         }, completion: { (searchContactServerResponse) in
             self.serverResponseCallback?(searchContactServerResponse as! ContactModel)
