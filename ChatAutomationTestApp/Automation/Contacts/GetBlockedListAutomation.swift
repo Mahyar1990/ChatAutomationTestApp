@@ -25,7 +25,7 @@ class GetBlockedListAutomation {
     let typeCode:   String?
     
     typealias callbackStringTypeAlias           = (String) -> ()
-    typealias callbackServerResponseTypeAlias   = (GetBlockedContactListModel) -> ()
+    typealias callbackServerResponseTypeAlias   = (GetBlockedUserListModel) -> ()
     
     private var uniqueIdCallback:   callbackStringTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
@@ -38,7 +38,7 @@ class GetBlockedListAutomation {
     }
     
     func create(uniqueId:       @escaping (String) -> (),
-                serverResponse: @escaping (GetBlockedContactListModel) -> ()) {
+                serverResponse: @escaping (GetBlockedUserListModel) -> ()) {
         
         self.uniqueIdCallback   = uniqueId
         self.responseCallback   = serverResponse
@@ -52,10 +52,10 @@ class GetBlockedListAutomation {
         delegate?.newInfo(type: MoreInfoTypes.GetBlockedList.rawValue, message: "send Request to GetBlockedList with this params:\ncount = \(theCount ?? 50) , offset = \(theOffset ?? 0) , typeCode = \(self.typeCode ?? "nil")", lineNumbers: 2)
         
         let getBlockedListInput = GetBlockedContactListRequestModel(count: theCount, offset: theOffset, typeCode: self.typeCode, uniqueId: nil)
-        Chat.sharedInstance.getBlockedContacts(inputModel: getBlockedListInput, uniqueId: { (getBlockedListUniqueId) in
+        Chat.sharedInstance.getBlockedContacts(inputModel: getBlockedListInput, getCacheResponse: nil, uniqueId: { (getBlockedListUniqueId) in
             self.uniqueIdCallback?(getBlockedListUniqueId)
         }, completion: { (getBlockedListResponse) in
-            self.responseCallback?(getBlockedListResponse as! GetBlockedContactListModel)
+            self.responseCallback?(getBlockedListResponse as! GetBlockedUserListModel)
         })
         
     }

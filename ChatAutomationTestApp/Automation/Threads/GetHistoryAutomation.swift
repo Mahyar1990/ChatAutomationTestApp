@@ -76,7 +76,7 @@ class GetHistoryAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.GetHistory.rawValue, message: "send Request to getHistory with this params:\ncount = \(getHistoryRequest.count ?? 50) , fromTime = \(getHistoryRequest.fromTime ?? 0) , metadataCriteria = \(getHistoryRequest.metadataCriteria ?? "nil") , offset = \(getHistoryRequest.offset ?? 0) , order = \(getHistoryRequest.order) , query = \(getHistoryRequest.query ?? "nil") , threadId = \(getHistoryRequest.threadId ) , toTime = \(getHistoryRequest.toTime ?? 0) , typeCode = \(getHistoryRequest.typeCode ?? "nil") , uniqueId = \(getHistoryRequest.uniqueId ?? "nil")", lineNumbers: 3)
         
-        Chat.sharedInstance.getHistory(inputModel: getHistoryRequest, uniqueId: { (getHistoryUniqueId) in
+        Chat.sharedInstance.getHistory(inputModel: getHistoryRequest, getCacheResponse: nil, uniqueId: { (getHistoryUniqueId) in
             self.uniqueIdCallback?(getHistoryUniqueId)
         }, completion: { (getHistoryServerResponse) in
             self.responseCallback?(getHistoryServerResponse as! GetHistoryModel)
@@ -140,7 +140,7 @@ class GetHistoryAutomation {
     // 2
     func createThread(cellPhoneNumber: String) {
         let myInvitee = Invitee(id: "\(cellPhoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
-        let createThread = CreateThreadAutomation(description: nil, image: nil, invitees: [myInvitee], metadata: nil, title: "new Chat Thread", type: nil, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: nil, image: nil, invitees: [myInvitee], metadata: nil, title: "new Chat Thread", uniqueName: nil, type: nil, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModelResponse, on) in
             if let conversationModel = createThreadModelResponse.thread {
                 if let thId = conversationModel.id {

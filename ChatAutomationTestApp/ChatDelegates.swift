@@ -52,7 +52,7 @@ extension MyChatViewController: ChatDelegates {
         print(text)
         activityIndicator.stopAnimating()
         
-        Chat.sharedInstance.getUserInfo(uniqueId: { (uId) in
+        Chat.sharedInstance.getUserInfo(getCacheResponse: nil, uniqueId: { (uId) in
             print("UserInfo uniqueId:\n\(uId)")
         }, completion: { (ServerResponse) in
             print("Server UserInfoModel:\n\((ServerResponse as! UserInfoModel).returnDataAsJSON())")
@@ -79,6 +79,16 @@ extension MyChatViewController: ChatDelegates {
     
     func contactEvents(model: ContactEventModel) {
         //
+        print("contactEvent")
+        print("type = \(model.type)")
+        print("lastSeen:")
+        for item in model.contactsLastSeenDuration ?? [] {
+            print("\(item.convertDataToJSON())")
+        }
+        print("Contacts:")
+        for contact in model.contacts ?? [] {
+            print("\(contact.formatToJSON())")
+        }
     }
     
     func fileUploadEvents(model: FileUploadEventModel) {

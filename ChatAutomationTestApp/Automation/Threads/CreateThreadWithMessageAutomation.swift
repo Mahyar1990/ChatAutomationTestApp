@@ -105,11 +105,12 @@ class CreateThreadWithMessageAutomation {
                                                          image: self.image,
                                                          invitees: withInvitees,
                                                          metadata: self.metadata,
+                                                         uniqueName: nil,
                                                          title: withTitle,
                                                          type: withType,
                                                          typeCode: nil,
                                                          uniqueId: nil)
-        let messageInput = MessageInput(forwardedMessageIds: nil, repliedTo: nil, text: "This is The Message Text", type: nil, systemMetadata: nil, uniqueId: self.requestUniqueId)
+        let messageInput = MessageInput(forwardedMessageIds: nil, repliedTo: nil, text: "This is The Message Text", messageType: MESSAGE_TYPE.text, systemMetadata: nil, uniqueId: self.requestUniqueId)
         let createThreadWithMessageInput = CreateThreadWithMessageRequestModel(createThreadInput:   createThreadInput,
                                                                                sendMessageInput:    messageInput)
         

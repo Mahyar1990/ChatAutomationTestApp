@@ -117,6 +117,7 @@ class RemoveAuditorAutomation {
                                                            image:       nil,
                                                            invitees:    [invitee],
                                                            metadata:    nil,
+                                                           uniqueName:  nil,
                                                            title:       "title",
                                                            type:        ThreadTypes.NORMAL,
                                                            typeCode:    nil,

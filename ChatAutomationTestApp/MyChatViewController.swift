@@ -50,8 +50,14 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     var ssoHost                 = "https://accounts.pod.ir"
     var platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = "e5e8641eec9e4eb8b062009994994267"
+    var token                   = "4bf211c541ae4b1982ed4798f0f73b59"
     
+    // Integration Adresses:
+//    var socketAddress           = "ws://172.16.110.235:8003/ws"
+//    var ssoHost                 = "http://172.16.110.76"
+//    var platformHost            = "http://172.16.110.235:8003/srv/bptest-core"
+//    var fileServer              = "http://172.16.110.76:8080"
+//    var serverName              = "chatlocal"
     
 // Local Addresses 1 (MehrAra)
 //    var socketAddress           = "ws://172.16.106.26:8003/ws"
@@ -68,6 +74,11 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 //    var ssoHost                 = "http://172.16.110.76"
 //    var fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
     
+    
+// Integration Tokens:
+//    var token = "f19933ae1b1e424db9965a243bf3bcd3" // SSO Token ZiZi
+//    var token = "81025b3fbc1a4f7184c3600a2f874673" // SSO Token JiJi
+//    var token = "3c4d62b6068043aa898cf7426d5cae68" // SSO Token FiFi
     
 // Local Tokens:
 //    var token                   = "fbd4ecedb898426394646e65c6b1d5d1"    // JiJi
@@ -95,7 +106,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     
     let pickerDataCollection = ["Contact", "Thread", "Message", "Location", "File"]
     let pickerDataContact = ["AddContact", "Block", "GetBlockedList", "GetContacts", "RemoveContact", "SearchContact", "Unblock", "UpdateContact"]
-    let pickerDataThread = ["AddAdmin", "AddAuditor", "AddParticipants", "ClearHistory", "CreateThread", "CreateThreadWithMessage", "CreateThreadWithFileMessage", "GetAdmins", "GetHistory", "GetThread", "GetThreadParticipants", "LeaveThread", "MuteThread", "UnmuteThread", "RemoveAdmin", "RemoveAuditor", "RemoveParticipant", "SpamThread"]
+    let pickerDataThread = ["AddAdmin", "AddAuditor", "AddParticipants", "ClearHistory", "CreateThread", "CreateThreadWithMessage", "CreateThreadWithFileMessage", "GetAdmins", "GetHistory", "GetThread", "GetThreadParticipants", "LeaveThread", "MuteThread", "UnmuteThread", "RemoveAdmin", "RemoveAuditor", "RemoveParticipant", "SpamThread", "CurrentUserRoles", "IsNameAvailable"]
     let pickerDataMessgae = ["DeleteMessage", "DeleteMultipleMessage", "EditMessage", "ForwardMessage", "MessageDeliveryList" ,"MessageSeenList", "PinMessage", "UnpinMessage", "ReplyTextMessage", "SendTextMessage", "SendBotMessage"]
     let pickerDataLocation = ["SendLocationMessage"]
     let pickerDataFile = ["ReplyFileMessage", "SendFileMessage", "UploadFile", "UploadImage"]
@@ -280,7 +291,11 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                                             connectionRetryInterval: connectionRetryInterval,
                                             connectionCheckTimeout: connectionCheckTimeout,
                                             messageTtl:             messageTtl,
-                                            reconnectOnClose:       true)
+                                            maxReconnectTimeInterval: nil,
+                                            reconnectOnClose:       true,
+                                            localImageCustomPath:   nil,
+                                            localFileCustomPath:    nil,
+                                            deviecLimitationSpaceMB: 100)
         
         Chat.sharedInstance.delegate = self
         
@@ -501,6 +516,8 @@ extension MyChatViewController: UIPickerViewDelegate, UIPickerViewDataSource {
             case (1, 15):   setPlaceHolderText(Input1: "threadId", Input2: "userId", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
             case (1, 16):   setPlaceHolderText(Input1: "ThreadId", Input2: "participant", Input3: "participant", Input4: "participant", Input5: "", Input6: "", Input7: "", Input8: "")
             case (1, 17):   setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 18):   setPlaceHolderText(Input1: "ThreadId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
+            case (1, 19):   setPlaceHolderText(Input1: "name", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
                 
             // Message Managements
             case (2, 0):    setPlaceHolderText(Input1: "subjectId", Input2: "", Input3: "", Input4: "", Input5: "", Input6: "", Input7: "", Input8: "")
@@ -606,9 +623,11 @@ extension MyChatViewController {
         case (1, 12): implementMuteThread()             // implement MuteThread
         case (1, 13): implementUnmuteThread()           // implement UnmuteThread
         case (1, 14): implementRemoveAdmin()            // implement RemoveAdmin
-        case (1, 15): implementRemoveAdmin()            // implement RemoveAdmin
-        case (1, 16): implementRemoveAuditor()          // implement RemoveAuditor
+        case (1, 15): implementRemoveAuditor()          // implement RemoveAuditor
+        case (1, 16): implementRemoveParticipant()      // implement RemoveParticipant
         case (1, 17): implementSpamThread()             // implement SpamThread
+        case (1, 18): implementGetCurrentUserRoles()    // implement GetCurrentUserRoles
+        case (1, 19): implementIsNameAvailable()        // implement IsNameAvailable
             
         case (2, 0): implementDeleteMessage()           // implement DeletMessage
         case (2, 1): implementDeleteMultipleMessages()  // implement DeletMessage
@@ -962,7 +981,8 @@ extension MyChatViewController {
                                                   invitees:         invitees,
                                                   metadata:         metadata,
                                                   title:            title,
-                                                  type:             ThreadTypes.NORMAL,
+                                                  uniqueName:       nil,
+                                                  type:             ThreadTypes.PUBLIC_GROUP,
                                                   requestUniqueId:  nil)
         createThread.delegate = self
         createThread.create(uniqueId: { (createThreadUniqueId, on) in
@@ -1396,7 +1416,7 @@ extension MyChatViewController {
             
             if let leaveThreadResponse = spamThreadServerResponse as? ThreadModel {
                 myText += "leaveThreadResponse = \(leaveThreadResponse.returnDataAsJSON())"
-            } else if let blockThreadResponse = spamThreadServerResponse as? BlockedContactModel  {
+            } else if let blockThreadResponse = spamThreadServerResponse as? BlockedUserModel  {
                 myText += "blockThreadResponse = \(blockThreadResponse.returnDataAsJSON())"
             } else if let clearHistoryResponse = spamThreadServerResponse as? ClearHistoryModel {
                 myText += "clearHistoryResponse = \(clearHistoryResponse.returnDataAsJSON())"
@@ -1405,6 +1425,40 @@ extension MyChatViewController {
             self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
         }
     }
+    
+    // (1, 18)
+    func implementGetCurrentUserRoles() {
+        let threadId: Int?  = Int(input1TextField.text ?? "")
+        
+        let getCurrentUserRole = GetCurrentUserRolesAutomation(threadId: threadId, typeCode: nil)
+        getCurrentUserRole.delegate = self
+        getCurrentUserRole.create(uniqueId: { (getCurrentUserRoleUniqueId) in
+            let myText = "getCurrentUserRole uniqueId = \(getCurrentUserRoleUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }, serverResponse: { (getCurrentUserRoleServerResponse) in
+            let myText = "getCurrentUserRole response: \n \(getCurrentUserRoleServerResponse.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }, cacheResponse: { (getCurrentUserRoleCacheResponse) in
+            let myText = "getCurrentUserRole cache response = \(getCurrentUserRoleCacheResponse.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#55efc4", alpha: 1))
+        })
+    }
+    
+    // (1, 19)
+    func implementIsNameAvailable() {
+        let name: String?  = input1TextField.text ?? ""
+        
+        let isNameAvailable = IsNameAvailableAutomation(name: name, typeCode: nil)
+        isNameAvailable.delegate = self
+        isNameAvailable.create(uniqueId: { (isNameAvailableUniqueId) in
+            let myText = "isNameAvailableUniqueId uniqueId = \(isNameAvailableUniqueId)"
+            self.updateText(cellText: myText, cellHeight: 50, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        }, serverResponse: { (isNameAvailableUniqueIdServerResponse) in
+            let myText = "isNameAvailableUniqueId response: \n \(isNameAvailableUniqueIdServerResponse.returnDataAsJSON())"
+            self.updateText(cellText: myText, cellHeight: 120, cellColor: UIColor.init().hexToRGB(hex: "#81ecec", alpha: 1))
+        })
+    }
+    
     
     
     // Message Managements

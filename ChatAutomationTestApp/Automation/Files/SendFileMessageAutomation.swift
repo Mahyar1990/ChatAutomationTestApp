@@ -96,7 +96,7 @@ class SendFileMessageAutomation {
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
         var i = ""
         for item in createThread.invitees! {
             i.append("\(item.formatToJSON()) ,")
@@ -131,6 +131,7 @@ class SendFileMessageAutomation {
         delegate?.newInfo(type: MoreInfoTypes.SendFileMessage.rawValue, message: "send Request SendFileMessage with this params:\n messageText = \(myContent),\n threadId = \(threadId ?? 0), fileName = \(myFileName)", lineNumbers: 2)
         
         let messageInput = SendTextMessageRequestModel(content:         myContent,
+                                                       messageType:     MESSAGE_TYPE.file,
                                                        metadata:        nil,
                                                        repliedTo:       nil,
                                                        systemMetadata:  nil,
@@ -140,6 +141,7 @@ class SendFileMessageAutomation {
         let uploadInput = UploadFileRequestModel(dataToSend:        theData,
                                                  fileExtension:     nil,
                                                  fileName:          myFileName,
+                                                 mimeType:          nil,
                                                  originalFileName:  nil,
                                                  threadId:          nil,
                                                  typeCode:          nil,

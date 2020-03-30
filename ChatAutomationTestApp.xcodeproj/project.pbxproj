@@ -41,6 +41,7 @@
 		3E9725AF222292210056AD4D /* Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725AE222292210056AD4D /* Views.swift */; };
 		3E9725B32222925F0056AD4D /* ChatDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725B22222925F0056AD4D /* ChatDelegates.swift */; };
 		3E9725B5222292C80056AD4D /* BaseCells.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9725B4222292C80056AD4D /* BaseCells.swift */; };
+		3E9B842D242FD4210000104C /* IsNameAvailableAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9B842C242FD4210000104C /* IsNameAvailableAutomation.swift */; };
 		3EA5259822A27DD1004ABE11 /* AddAdminAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA5259722A27DD1004ABE11 /* AddAdminAutomation.swift */; };
 		3EADF7CB228BCF53009B102C /* MessageDeliveryListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EADF7CA228BCF53009B102C /* MessageDeliveryListAutomation.swift */; };
 		3EADF7CF228BD15E009B102C /* MessageSeenListAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EADF7CE228BD15E009B102C /* MessageSeenListAutomation.swift */; };
@@ -51,6 +52,7 @@
 		3EB2EAD522BF2EC800848C62 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB2EAD422BF2EC800848C62 /* Extensions.swift */; };
 		3EB80DEE239650370047AFAF /* SendBotMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB80DED239650370047AFAF /* SendBotMessageAutomation.swift */; };
 		3EBAFA792289975900D9F653 /* ClearHistoryAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBAFA782289975900D9F653 /* ClearHistoryAutomation.swift */; };
+		3EBEC355242ABCEB00FCDE4A /* GetCurrentUserRolesAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBEC354242ABCEB00FCDE4A /* GetCurrentUserRolesAutomation.swift */; };
 		3EC964E322AF66DD000CE284 /* SendFileMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC964E222AF66DD000CE284 /* SendFileMessageAutomation.swift */; };
 		3EC964FC22AF7B91000CE284 /* ReplyFileMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC964FB22AF7B91000CE284 /* ReplyFileMessageAutomation.swift */; };
 		3EC9650822AFBCAC000CE284 /* SendLocationMessageAutomation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC9650722AFBCAC000CE284 /* SendLocationMessageAutomation.swift */; };
@@ -119,6 +121,7 @@
 		3E9725AE222292210056AD4D /* Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Views.swift; sourceTree = "<group>"; };
 		3E9725B22222925F0056AD4D /* ChatDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDelegates.swift; sourceTree = "<group>"; };
 		3E9725B4222292C80056AD4D /* BaseCells.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCells.swift; sourceTree = "<group>"; };
+		3E9B842C242FD4210000104C /* IsNameAvailableAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsNameAvailableAutomation.swift; sourceTree = "<group>"; };
 		3EA5259722A27DD1004ABE11 /* AddAdminAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAdminAutomation.swift; sourceTree = "<group>"; };
 		3EADF7CA228BCF53009B102C /* MessageDeliveryListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageDeliveryListAutomation.swift; sourceTree = "<group>"; };
 		3EADF7CE228BD15E009B102C /* MessageSeenListAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSeenListAutomation.swift; sourceTree = "<group>"; };
@@ -131,6 +134,7 @@
 		3EB2EAD422BF2EC800848C62 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		3EB80DED239650370047AFAF /* SendBotMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendBotMessageAutomation.swift; sourceTree = "<group>"; };
 		3EBAFA782289975900D9F653 /* ClearHistoryAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearHistoryAutomation.swift; sourceTree = "<group>"; };
+		3EBEC354242ABCEB00FCDE4A /* GetCurrentUserRolesAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetCurrentUserRolesAutomation.swift; sourceTree = "<group>"; };
 		3EC964E222AF66DD000CE284 /* SendFileMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendFileMessageAutomation.swift; sourceTree = "<group>"; };
 		3EC964FB22AF7B91000CE284 /* ReplyFileMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyFileMessageAutomation.swift; sourceTree = "<group>"; };
 		3EC9650722AFBCAC000CE284 /* SendLocationMessageAutomation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendLocationMessageAutomation.swift; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 		3E94724C22267C1D005D986E /* Automation */ = {
 			isa = PBXGroup;
 			children = (
+				3E9B8430242FD6320000104C /* User */,
 				3E94724D22267C43005D986E /* Contacts */,
 				3E94724E22267C5C005D986E /* Threads */,
 				3E94724F22267C6A005D986E /* Messages */,
@@ -210,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				3EA5259722A27DD1004ABE11 /* AddAdminAutomation.swift */,
+				3E9B842C242FD4210000104C /* IsNameAvailableAutomation.swift */,
 				3E35337123D47C6F00731774 /* AddAuditorAutomation.swift */,
 				3EEB0813227EA277009DA162 /* AddParticipantAutomation.swift */,
 				3EBAFA782289975900D9F653 /* ClearHistoryAutomation.swift */,
@@ -266,6 +272,14 @@
 				3E2A62E322880833002FB5D7 /* UploadImageAutomation.swift */,
 			);
 			path = Files;
+			sourceTree = "<group>";
+		};
+		3E9B8430242FD6320000104C /* User */ = {
+			isa = PBXGroup;
+			children = (
+				3EBEC354242ABCEB00FCDE4A /* GetCurrentUserRolesAutomation.swift */,
+			);
+			path = User;
 			sourceTree = "<group>";
 		};
 		3EAE774622217AD4005AC3C3 = {
@@ -515,8 +529,10 @@
 				3ED3DA88222E930600261DB3 /* SendTextMessageAutomation.swift in Sources */,
 				3E629567222577CA002DB51C /* GetContactsAutomation.swift in Sources */,
 				3ECC15762282F870003B8240 /* CreateThreadWithMessageAutomation.swift in Sources */,
+				3E9B842D242FD4210000104C /* IsNameAvailableAutomation.swift in Sources */,
 				3EBAFA792289975900D9F653 /* ClearHistoryAutomation.swift in Sources */,
 				3E9725AF222292210056AD4D /* Views.swift in Sources */,
+				3EBEC355242ABCEB00FCDE4A /* GetCurrentUserRolesAutomation.swift in Sources */,
 				3E5EEE012286F4630026DB58 /* SpamThreadAutomation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -101,7 +101,7 @@ class SendLocationMessageAutomation {
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
         var i = ""
         for item in createThread.invitees! {
             i.append("\(item.formatToJSON()) ,")

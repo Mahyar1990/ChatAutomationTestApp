@@ -54,6 +54,7 @@ class ReplyMessageAutomation {
         switch (repliedTo, subjectId, content) {
         case let (.some(repTo), .some(subTo), .some(myContent)):
             let inputModel = ReplyTextMessageRequestModel(content:      myContent,
+                                                          messageType: MESSAGE_TYPE.text,
                                                           metadata:     metadata,
                                                           repliedTo:    repTo,
                                                           subjectId:    subTo,
@@ -63,6 +64,7 @@ class ReplyMessageAutomation {
             
         case let (.some(repTo), .some(subTo), .none):
             let inputModel = ReplyTextMessageRequestModel(content:      "This is ReplyMessage",
+                                                          messageType: MESSAGE_TYPE.text,
                                                           metadata:     metadata,
                                                           repliedTo:    repTo,
                                                           subjectId:    subTo,
@@ -139,7 +141,7 @@ class ReplyMessageAutomation {
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: nil, requestUniqueId: nil)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: nil, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 
@@ -167,7 +169,7 @@ class ReplyMessageAutomation {
     
     // 4
     func createReplyTextMessageModel(inThreadId threadId: Int, onMessageId messageId: Int) {
-        let requestModel = ReplyTextMessageRequestModel(content: "This is ReplyMessage", metadata: self.metadata, repliedTo: messageId, subjectId: threadId, typeCode: self.typeCode, uniqueId: self.requestUniqueId)
+        let requestModel = ReplyTextMessageRequestModel(content: "This is ReplyMessage", messageType: MESSAGE_TYPE.text, metadata: self.metadata, repliedTo: messageId, subjectId: threadId, typeCode: self.typeCode, uniqueId: self.requestUniqueId)
         self.sendRequest(replyTextMessageRequest: requestModel)
     }
     

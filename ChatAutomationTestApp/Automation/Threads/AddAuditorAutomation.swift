@@ -112,6 +112,7 @@ class AddAuditorAutomation {
                                                            image:       nil,
                                                            invitees:    [invitee],
                                                            metadata:    nil,
+                                                           uniqueName:  nil,
                                                            title:       "title",
                                                            type:        ThreadTypes.NORMAL,
                                                            typeCode:    nil,
@@ -130,11 +131,11 @@ class AddAuditorAutomation {
     
     
     func createContactToGetUserId(threadId: Int) {
-        let mehran = Faker.sharedInstance.MehranAsContact
+        let mehran = Faker.sharedInstance.ArvinAsContact
         let addContact = AddContactAutomation(cellphoneNumber: mehran.cellphoneNumber, email: mehran.email, firstName: mehran.firstName, lastName: mehran.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
-                if let id = myContact.id {
+                if let id = myContact.linkedUser?.coreUserId {
                     
                     self.delegate?.newInfo(type: MoreInfoTypes.AddAuditor.rawValue, message: "Another Contact has been created to add it to the thread as Audotor.", lineNumbers: 2)
                     self.sendRequestSenario(contactId: nil, inThreadId: threadId, withUserId: id)

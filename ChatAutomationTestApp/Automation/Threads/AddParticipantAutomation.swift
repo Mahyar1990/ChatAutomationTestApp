@@ -60,7 +60,7 @@ class AddParticipantAutomation {
     func sendRequest(theContacts: [Int], theThreadId: Int) {
         delegate?.newInfo(type: MoreInfoTypes.AddParticipant.rawValue, message: "send Request addParticipant with this params:\ncontacts = \(theContacts), threadId = \(theThreadId) , typeCode = \(typeCode ?? "nil"), uniqueId = \(requestUniqueId ?? "nil")", lineNumbers: 2)
         
-        let addParticipantInput = AddParticipantsRequestModel(contacts: theContacts,
+        let addParticipantInput = AddParticipantsRequestModel(contactIds: theContacts,
                                                               threadId: theThreadId,
                                                               typeCode: typeCode,
                                                               uniqueId: requestUniqueId)
@@ -125,6 +125,7 @@ class AddParticipantAutomation {
                                                   invitees:         [myInvitee],
                                                   metadata:         nil,
                                                   title:            fakeParams.title,
+                                                  uniqueName:       nil,
                                                   type:             ThreadTypes.OWNER_GROUP,
                                                   requestUniqueId:  nil)
         var i = ""

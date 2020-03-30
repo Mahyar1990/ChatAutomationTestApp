@@ -79,6 +79,7 @@ class SendTextMessageAutomation {
         delegate?.newInfo(type: MoreInfoTypes.SendTextMessage.rawValue, message: "send Request to SendTextMesssage with this params:\ncount = \(theContent) , metadata = \(theMetadata ?? "nil") , repliedTo = \(theRepliedTo ?? 0) , systemMetadata = \(theSystemMetadata ?? "nil") , threadId = \(theThreadId) , typeCode = \(theTypeCode ?? "nil") , uniqueId = \(theUniqueId ?? "nil")", lineNumbers: 2)
         
         let sendTextMessage = SendTextMessageRequestModel(content:          theContent,
+                                                          messageType:      MESSAGE_TYPE.text,
                                                           metadata:         theMetadata,
                                                           repliedTo:        theRepliedTo,
                                                           systemMetadata:   theSystemMetadata,
@@ -117,7 +118,7 @@ class SendTextMessageAutomation {
                     
                     let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
                     
-                    let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
+                    let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
                     
                     createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
                         

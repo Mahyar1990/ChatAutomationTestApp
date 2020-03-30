@@ -46,6 +46,8 @@ enum MoreInfoTypes: String {
     case RemoveAuditor          = "RemoveAuditor"
     case RemoveParticipant      = "RemoveParticipant"
     case SpamThread             = "SpamThread"
+    case GetCurrentUserRole     = "GetCurrentUserRole"
+    case IsNameAvailable        = "IsNameAvailable"
     
     case DeleteMessage          = "DeleteMessage"
     case EditMessage            = "EditMessage"

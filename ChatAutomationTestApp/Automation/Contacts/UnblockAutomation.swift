@@ -28,7 +28,7 @@ class UnblockAutomation {
     let userId:     Int?
     
     typealias callbackStringTypeAlias           = (String) -> ()
-    typealias callbackServerResponseTypeAlias   = (BlockedContactModel) -> ()
+    typealias callbackServerResponseTypeAlias   = (BlockedUserModel) -> ()
     
     private var uniqueIdCallback:   callbackStringTypeAlias?
     private var responseCallback:   callbackServerResponseTypeAlias?
@@ -43,7 +43,7 @@ class UnblockAutomation {
     }
     
     func create(uniqueId:       @escaping (String) -> (),
-                serverResponse: @escaping (BlockedContactModel) -> ()) {
+                serverResponse: @escaping (BlockedUserModel) -> ()) {
         
         self.uniqueIdCallback   = uniqueId
         self.responseCallback   = serverResponse
@@ -70,7 +70,7 @@ class UnblockAutomation {
         Chat.sharedInstance.unblockContact(inputModel: unblockInput, uniqueId: { (unblockUniqueId) in
             self.uniqueIdCallback?(unblockUniqueId)
         }, completion: { (unblockResponse) in
-            self.responseCallback?(unblockResponse as! BlockedContactModel)
+            self.responseCallback?(unblockResponse as! BlockedUserModel)
             if isAutomation {
                 switch (theBlockId, theContactId, theUserId, theThreadId) {
                 case let (.some(id), .none, .none, .none):  self.unblockSenario(withBlockId: id, withContactId: nil, withUserId: nil, withThreadId: nil)
@@ -155,7 +155,7 @@ extension UnblockAutomation {
                         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
                         self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this CellphoneNumber = \(cellphoneNumber).", lineNumbers: 2)
                         let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
-                        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, type: nil, requestUniqueId: nil)
+                        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: nil, requestUniqueId: nil)
                         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
                             if let threadId = createThreadModel.thread?.id {
                                 self.delegate?.newInfo(type: MoreInfoTypes.Unblock.rawValue, message: "new Thread has been created, threadId = \(threadId)", lineNumbers: 1)
@@ -179,7 +179,7 @@ extension UnblockAutomation {
     }
     
     private func getContact(withInput requestModel: GetContactsRequestModel, completion: @escaping (Contact)->() ) {
-        Chat.sharedInstance.getContacts(inputModel: requestModel, uniqueId: { (_) in
+        Chat.sharedInstance.getContacts(inputModel: requestModel, getCacheResponse: nil, uniqueId: { (_) in
         }, completion: { (cotactM) in
             let contactModel = cotactM as! GetContactsModel
             if let firstContact = contactModel.contacts.first {

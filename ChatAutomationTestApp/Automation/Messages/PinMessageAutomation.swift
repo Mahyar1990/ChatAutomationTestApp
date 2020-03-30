@@ -121,6 +121,7 @@ class PinMessageAutomation {
                                                   invitees:     [myInvitee],
                                                   metadata:     nil,
                                                   title:        fakeParams.title,
+                                                  uniqueName:   nil,
                                                   type:         ThreadTypes.CHANNEL_GROUP,
                                                   requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
