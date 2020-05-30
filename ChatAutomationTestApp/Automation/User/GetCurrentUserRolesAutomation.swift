@@ -98,17 +98,25 @@ class GetCurrentUserRolesAutomation {
     // 2
     func createThread(withContactId contactId: Int) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-        let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: nil, requestUniqueId: nil)
-        createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
-            if let id = createThreadModel.thread?.id {
+        let myInvitee = Invitee(id: "\(contactId)", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
+        
+        let createThreadInput = CreateThreadRequest(description: fakeParams.description,
+                                                    image:      nil,
+                                                    invitees:   [myInvitee],
+                                                    metadata:   nil,
+                                                    title:      fakeParams.title,
+                                                    type:       ThreadTypes.OWNER_GROUP,
+                                                    uniqueName: nil,
+                                                    typeCode:   nil,
+                                                    uniqueId:   nil)
+        Chat.sharedInstance.createThread(inputModel: createThreadInput, uniqueId: { _ in
+        }) { (createThreadResponse) in
+            if let createThreadModel = createThreadResponse as? ThreadModel, let id = createThreadModel.thread?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.GetCurrentUserRole.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
                 self.sendRequestSenario(contactId: nil, threadId: id)
-                
-            } else {
-                // handle error, there is no id in the Conversation model
             }
-        })
+        }
+        
     }
     
     

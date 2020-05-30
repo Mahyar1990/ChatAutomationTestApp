@@ -209,7 +209,7 @@ extension BlockAutomation {
     }
     
     func createThreadWith(cellPhoneNumber: String) {
-        let invitee = Invitee(id: cellPhoneNumber, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
+        let invitee = Invitee(id: cellPhoneNumber, idType: InviteeVoIdTypes.TO_BE_USER_CELLPHONE_NUMBER)
         let createThread = CreateThreadAutomation(description: "new thread", image: nil, invitees: [invitee], metadata: nil, title: "Thread", uniqueName: nil, type: ThreadTypes.NORMAL, requestUniqueId: nil)
         createThread.create(uniqueId: { _,_  in }, serverResponse: { (createThreadModel, _ )  in
             if let myThreadId = createThreadModel.thread?.id {

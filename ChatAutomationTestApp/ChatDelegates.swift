@@ -40,8 +40,8 @@ extension MyChatViewController: ChatDelegates {
         print(text)
     }
     
-    func chatState(state: Int) {
-        print("chat state changed: \(state)")
+    func chatState(state: AsyncStateType) {
+        print("chat state changed: \(state.stringValue())")
     }
     
     func chatReady(withUserInfo: User) {

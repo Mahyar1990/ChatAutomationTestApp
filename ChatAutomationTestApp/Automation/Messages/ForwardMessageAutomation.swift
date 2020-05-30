@@ -76,7 +76,7 @@ class ForwardMessageAutomation {
     
     func sendRequest(forwardMessageRequest: ForwardMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "send Request to ForwardMessage with this params:\n messageIds = \(forwardMessageRequest.messageIds) , metadata = \(forwardMessageRequest.metadata ?? "nil") , repliedTo = \(forwardMessageRequest.repliedTo ?? 0) , subjectId = \(forwardMessageRequest.threadId) , typeCode = \(forwardMessageRequest.typeCode ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.ForwardMessage.rawValue, message: "send Request to ForwardMessage with this params:\n messageIds = \(forwardMessageRequest.messageIds) , subjectId = \(forwardMessageRequest.threadId) , typeCode = \(forwardMessageRequest.typeCode ?? "nil")", lineNumbers: 2)
         
         Chat.sharedInstance.forwardMessage(inputModel: forwardMessageRequest, uniqueIds: { (forwardMessageUniqueId) in
             self.uniqueIdCallback?(forwardMessageUniqueId)
@@ -137,7 +137,7 @@ class ForwardMessageAutomation {
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         
-        let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
+        let myInvitee = Invitee(id: "\(contactId)", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
         let createThread = CreateThreadAutomation(description:      fakeParams.description,
                                                   image:            nil,
                                                   invitees:         [myInvitee],

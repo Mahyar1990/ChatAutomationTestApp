@@ -115,7 +115,7 @@ class PinMessageAutomation {
     func createThread(contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
         let myInvitee = Invitee(id:     "\(contactId)",
-                                idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
+                                idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
         let createThread = CreateThreadAutomation(description:  fakeParams.description,
                                                   image:        nil,
                                                   invitees:     [myInvitee],

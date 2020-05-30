@@ -58,10 +58,10 @@ class DeleteMessageAutomation {
     
     func sendRequest(deleteMessageRequest: DeleteMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "send Request to DeleteMessage with this params:\n deleteForAll = \(deleteMessageRequest.deleteForAll ?? false) , subjectId = \(deleteMessageRequest.subjectId) , typeCode = \(deleteMessageRequest.typeCode ?? "nil") , uniqueId = \(deleteMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "send Request to DeleteMessage with this params:\n deleteForAll = \(deleteMessageRequest.deleteForAll ?? false) , subjectId = \(deleteMessageRequest.messageId) , typeCode = \(deleteMessageRequest.typeCode ?? "nil") , uniqueId = \(deleteMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
         
         let deleteMessageRequest = DeleteMessageRequestModel(deleteForAll:  deleteMessageRequest.deleteForAll,
-                                                             subjectId:     deleteMessageRequest.subjectId,
+                                                             subjectId:     deleteMessageRequest.messageId,
                                                              typeCode:      deleteMessageRequest.typeCode,
                                                              uniqueId:      deleteMessageRequest.uniqueId)
         Chat.sharedInstance.deleteMessage(inputModel: deleteMessageRequest, uniqueId: { (deleteMessageUniqueId) in
@@ -118,7 +118,7 @@ class DeleteMessageAutomation {
     // 2
     func createThread(withCellphoneNumber cellphoneNumber: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
+        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
         let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.NORMAL, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {

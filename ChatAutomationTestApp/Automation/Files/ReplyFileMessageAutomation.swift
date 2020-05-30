@@ -77,7 +77,7 @@ class ReplyFileMessageAutomation {
     
     // 1
     func addContact() {
-        let arvin = Faker.sharedInstance.ArvinAsContact
+        let arvin = Faker.sharedInstance.mehdiAsContact
         let addContact = AddContactAutomation(cellphoneNumber: arvin.cellphoneNumber, email: arvin.email, firstName: arvin.firstName, lastName: arvin.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
@@ -100,13 +100,13 @@ class ReplyFileMessageAutomation {
     // 2
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-        let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
+        let myInvitee = Invitee(id: "\(contactId)", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.OWNER_GROUP, requestUniqueId: nil)
         var i = ""
         for item in createThread.invitees! {
             i.append("\(item.formatToJSON()) ,")
         }
-        delegate?.newInfo(type: MoreInfoTypes.ReplyFileMessage.rawValue, message: "try to create new PublicGroup thread with this parameters: \n description = \(createThread.description!),\n invitees = \(i),\n title = \(createThread.title!),\n type = \(createThread.type!)", lineNumbers: 6)
+        delegate?.newInfo(type: MoreInfoTypes.ReplyFileMessage.rawValue, message: "try to create new OWNERGroup thread with this parameters: \n description = \(createThread.description!),\n invitees = \(i),\n title = \(createThread.title!),\n type = \(createThread.type!)", lineNumbers: 6)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 self.threadId = id
@@ -121,17 +121,24 @@ class ReplyFileMessageAutomation {
     
     // 3
     func sendMessage() {
-        let sendMessage = SendTextMessageAutomation(content: "New Message", metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: threadId, typeCode: nil, uniqueId: nil)
-        sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
-            print("message response = \(sentResponse)")
-            
-            if let messageId = sentResponse.message?.id {
-                self.repliedTo = messageId
-                self.delegate?.newInfo(type: MoreInfoTypes.ReplyFileMessage.rawValue, message: "Message has been sent to this threadId = \(self.threadId ?? 0), messageId = \(messageId)", lineNumbers: 1)
-                self.sendRequestSenario(contactId: nil, threadId: self.threadId, repliedTo: self.repliedTo, data: self.data)
-            }
-            
-        }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })
+        let messageInput = SendTextMessageRequest(content: "New Message", messageType: MessageType.text, metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: threadId!, typeCode: nil, uniqueId: nil)
+        Chat.sharedInstance.sendTextMessage(inputModel: messageInput, uniqueId: { _ in }, onSent: { (sentResponse) in
+            self.repliedTo = (sentResponse as! SendMessageModel).messageId
+            self.delegate?.newInfo(type: MoreInfoTypes.ReplyFileMessage.rawValue, message: "Message has been sent to this threadId = \(self.threadId ?? 0), messageId = \(self.repliedTo)", lineNumbers: 1)
+            self.sendRequestSenario(contactId: nil, threadId: self.threadId, repliedTo: self.repliedTo, data: self.data)
+        }, onDelivere: { _ in }) { _ in }
+        
+//        let sendMessage = SendTextMessageAutomation(content: "New Message", metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: threadId, typeCode: nil, uniqueId: nil)
+//        sendMessage.create(uniqueId: { (_) in }, serverSentResponse: { (sentResponse) in
+//            print("message response = \(sentResponse)")
+//
+//            if let messageId = sentResponse.message?.id {
+//                self.repliedTo = messageId
+//                self.delegate?.newInfo(type: MoreInfoTypes.ReplyFileMessage.rawValue, message: "Message has been sent to this threadId = \(self.threadId ?? 0), messageId = \(messageId)", lineNumbers: 1)
+//                self.sendRequestSenario(contactId: nil, threadId: self.threadId, repliedTo: self.repliedTo, data: self.data)
+//            }
+//
+//        }, serverDeliverResponse: { (_) in }, serverSeenResponse: { (_) in })
     }
     
     // 4
@@ -152,7 +159,7 @@ class ReplyFileMessageAutomation {
         
         
         let messageInput = SendTextMessageRequestModel(content: myContent,
-                                                       messageType: MESSAGE_TYPE.file,
+                                                       messageType: MessageType.file,
                                                        metadata: nil,
                                                        repliedTo: repliedTo,
                                                        systemMetadata: nil,

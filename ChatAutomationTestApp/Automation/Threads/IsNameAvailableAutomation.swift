@@ -37,7 +37,7 @@ class IsNameAvailableAutomation {
         self.uniqueIdCallback   = uniqueId
         self.responseCallback   = serverResponse
         
-        sendRequest(theName: name ?? Faker.sharedInstance.generateNameAsString(withLength: 8))
+        sendRequest(theName: name ?? Faker.sharedInstance.generateNameAsString(withLength: 14))
     }
     
     func sendRequest(theName: String) {

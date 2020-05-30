@@ -112,7 +112,7 @@ class RemoveAuditorAutomation {
     func createThread(withContact: Int) {
         delegate?.newInfo(type: MoreInfoTypes.RemoveAuditor.rawValue, message: "Try to create thread with contactId = \(withContact)", lineNumbers: 1)
         
-        let invitee = Invitee(id: "\(withContact)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
+        let invitee = Invitee(id: "\(withContact)", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
         let createThreadRequest = CreateThreadRequestModel(description: nil,
                                                            image:       nil,
                                                            invitees:    [invitee],

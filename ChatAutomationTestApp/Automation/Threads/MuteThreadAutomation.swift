@@ -41,7 +41,7 @@ class MuteThreadAutomation {
         self.uniqueIdCallback   = uniqueId
         self.responseCallback   = serverResponse
         
-        sendRequestSenario(contactCellPhone: nil, threadId: threadId)
+        sendRequestSenario(contactId: nil, threadId: threadId)
     }
     
     func sendRequest(theThreadId: Int) {
@@ -60,15 +60,15 @@ class MuteThreadAutomation {
     }
     
     
-    func sendRequestSenario(contactCellPhone: String?, threadId: Int?) {
+    func sendRequestSenario(contactId: Int?, threadId: Int?) {
         // 1- add contact
         // 2- create thread with this contact
         // 3- muteThread
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
-            switch (contactCellPhone, threadId) {
+            switch (contactId, threadId) {
             case    (.none, .none):             self.addContact()
-            case let (.some(cellPhone), .none): self.createThread(withCellphoneNumber: cellPhone)
+            case let (.some(cellPhone), .none): self.createThread(withContactId: cellPhone)
             case let (_ , .some(id)):           self.sendRequest(theThreadId: id)
             }
         }
@@ -82,9 +82,9 @@ class MuteThreadAutomation {
         let addContact = AddContactAutomation(cellphoneNumber: mehdi.cellphoneNumber, email: mehdi.email, firstName: mehdi.firstName, lastName: mehdi.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
-                if let cellphoneNumber = myContact.cellphoneNumber {
-                    self.delegate?.newInfo(type: MoreInfoTypes.MuteThread.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this CellphoneNumber = \(cellphoneNumber).", lineNumbers: 2)
-                    self.sendRequestSenario(contactCellPhone: cellphoneNumber, threadId: nil)
+                if let id = myContact.id {
+                    self.delegate?.newInfo(type: MoreInfoTypes.MuteThread.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this contactId = \(id).", lineNumbers: 2)
+                    self.sendRequestSenario(contactId: id, threadId: nil)
                     
                 } else {
                     // handle error that didn't get contact id in the contact model
@@ -98,14 +98,14 @@ class MuteThreadAutomation {
     }
     
     // 2
-    func createThread(withCellphoneNumber cellphoneNumber: String) {
+    func createThread(withContactId contactId: Int) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
+        let myInvitee = Invitee(id: "\(contactId)", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.OWNER_GROUP, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 self.delegate?.newInfo(type: MoreInfoTypes.MuteThread.rawValue, message: "new Thread has been created, threadId = \(id)", lineNumbers: 1)
-                self.sendRequestSenario(contactCellPhone: nil, threadId: id)
+                self.sendRequestSenario(contactId: nil, threadId: id)
                 
             } else {
                 // handle error, there is no id in the Conversation model

@@ -132,7 +132,7 @@ class CreateThreadWithFileMessageAutomation {
         let messageInput = MessageInput(forwardedMessageIds: nil,
                                         repliedTo:          nil,
                                         text:               "This is The Message Text",
-                                        messageType:        MESSAGE_TYPE.file,
+                                        messageType:        MessageType.file,
                                         systemMetadata:     nil,
                                         uniqueId:           self.requestUniqueId)
         let createThreadWithMessageInput = CreateThreadWithMessageRequestModel(createThreadInput:   createThreadInput,
@@ -179,7 +179,7 @@ extension CreateThreadWithFileMessageAutomation {
                     self.delegate?.newInfo(type: MoreInfoTypes.CreateThreadWithMessage.rawValue, message: "New Contact has been created, now try to create thread with some fake params and this contact Id = \(id).", lineNumbers: 2)
                     
                     let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-                    let myInvitee = Invitee(id: "\(id)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
+                    let myInvitee = Invitee(id: "\(id)", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
                     self.sendRequest(withDescription:   fakeParams.description,
                                      withInvitees:      [myInvitee],
                                      withTitle:         fakeParams.title,

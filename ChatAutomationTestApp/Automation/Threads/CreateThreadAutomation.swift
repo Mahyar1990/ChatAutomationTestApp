@@ -93,7 +93,7 @@ class CreateThreadAutomation {
                                                          metadata:      self.metadata,
                                                          uniqueName:    uniqueName,
                                                          title:         withTitle,
-                                                         type:          withType,
+                                                         type:          withType ?? ThreadTypes.NORMAL,
                                                          typeCode:      nil,
                                                          uniqueId:      self.requestUniqueId)
         
@@ -129,19 +129,19 @@ extension CreateThreadAutomation {
         
         switch (withCoreUserId, withCellPhoneNumber, withUsername, withContactId) {
         case let (.some(id), .none, .none, .none):
-            let myInvitee = Invitee(id: "\(id)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_ID)
+            let myInvitee = Invitee(id: "\(id)", idType: InviteeVoIdTypes.TO_BE_USER_ID)
             self.sendRequest(on: section, withDescription: fakeParams.description, withInvitees: [myInvitee], withTitle: fakeParams.title, withType: fakeParams.type, uniqueName: withUniqueName)
             
         case let (.none, .some(cell), .none, .none):
-            let myInvitee = Invitee(id: "\(cell)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
+            let myInvitee = Invitee(id: "\(cell)", idType: InviteeVoIdTypes.TO_BE_USER_CELLPHONE_NUMBER)
             self.sendRequest(on: section, withDescription: fakeParams.description, withInvitees: [myInvitee], withTitle: fakeParams.title, withType: fakeParams.type, uniqueName: withUniqueName)
             
         case let (.none, .none, .some(name), .none):
-            let myInvitee = Invitee(id: "\(name)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_USERNAME)
+            let myInvitee = Invitee(id: "\(name)", idType: InviteeVoIdTypes.TO_BE_USER_USERNAME)
             self.sendRequest(on: section, withDescription: fakeParams.description, withInvitees: [myInvitee], withTitle: fakeParams.title, withType: fakeParams.type, uniqueName: withUniqueName)
             
         case let (.none, .none, .none, .some(id)):
-            let myInvitee = Invitee(id: "\(id)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
+            let myInvitee = Invitee(id: "\(id)", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
             self.sendRequest(on: section, withDescription: fakeParams.description, withInvitees: [myInvitee], withTitle: fakeParams.title, withType: ofType, uniqueName: withUniqueName)
             
         default: return

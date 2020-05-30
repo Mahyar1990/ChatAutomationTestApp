@@ -66,6 +66,7 @@ class SearchContactAutomation {
                                                             id:                 id,
                                                             lastName:           lastName,
                                                             offset:             offset,
+                                                            ownerId:            nil,
                                                             size:               size,
                                                             query:              nil,
                                                             typeCode:           nil,

@@ -84,7 +84,7 @@ class SendBotMessageAutomation {
     
     func sendRequest(botMessageRequest: SendInteractiveMessageRequestModel) {
         
-        delegate?.newInfo(type: MoreInfoTypes.SentBotMessage.rawValue, message: "send Request to SentBotMessage with this params:\n content = \(botMessageRequest.content) , metadata = \(botMessageRequest.metadata) , messageId = \(botMessageRequest.messageId) , typeCode = \(botMessageRequest.typeCode ?? "nil") , uniqueId = \(botMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
+        delegate?.newInfo(type: MoreInfoTypes.SentBotMessage.rawValue, message: "send Request to SentBotMessage with this params:\n content = \(botMessageRequest.textMessage) , metadata = \(botMessageRequest.metadata) , messageId = \(botMessageRequest.messageId) , typeCode = \(botMessageRequest.typeCode ?? "nil") , uniqueId = \(botMessageRequest.uniqueId ?? "nil")", lineNumbers: 2)
         
         Chat.sharedInstance.sendInteractiveMessage(inputModel: botMessageRequest, uniqueId: { (replyMessageUniqueId) in
             self.uniqueIdCallback?(replyMessageUniqueId)
@@ -142,7 +142,7 @@ class SendBotMessageAutomation {
     // 2
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-        let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
+        let myInvitee = Invitee(id: "\(contactId)", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
         let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: nil, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {

@@ -50,7 +50,7 @@ class DeleteMultipleMessagesAutomation {
         
         if let tId = threadId {
             if (messageIds.count > 0) {
-                let requestModel = DeleteMultipleMessagesRequestModel(deleteForAll: deleteForAll, threadId: tId, messageIds: messageIds, typeCode: typeCode)
+                let requestModel = DeleteMultipleMessagesRequestModel(deleteForAll: deleteForAll, messageIds: messageIds, threadId: tId, typeCode: typeCode)
                 sendRequest(deleteMessageRequest: requestModel)
             } else {
                 sendRequestSenario(contactCellPhone: nil, threadId: tId, messageResponse: nil)
@@ -67,8 +67,8 @@ class DeleteMultipleMessagesAutomation {
         delegate?.newInfo(type: MoreInfoTypes.DeleteMessage.rawValue, message: "send Request to DeleteMessage with this params:\n deleteForAll = \(deleteMessageRequest.deleteForAll ?? false) , subjectId = \(deleteMessageRequest.messageIds) , typeCode = \(deleteMessageRequest.typeCode ?? "nil") , uniqueId = \(deleteMessageRequest.uniqueIds ?? ["nil"])", lineNumbers: 2)
         
         let input = DeleteMultipleMessagesRequestModel(deleteForAll:    deleteMessageRequest.deleteForAll,
-                                                       threadId:        deleteMessageRequest.threadId,
                                                        messageIds:      deleteMessageRequest.messageIds,
+                                                       threadId:        deleteMessageRequest.threadId,
                                                        typeCode:        deleteMessageRequest.typeCode)
         
         Chat.sharedInstance.deleteMultipleMessages(inputModel: input, uniqueIds: { (deleteMultipleMessagesUniqueId) in
@@ -126,8 +126,8 @@ class DeleteMultipleMessagesAutomation {
     // 2
     func createThread(withCellphoneNumber cellphoneNumber: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
+        let myInvitee = Invitee(id: "\(cellphoneNumber)", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.OWNER_GROUP, requestUniqueId: nil)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 
@@ -169,8 +169,8 @@ class DeleteMultipleMessagesAutomation {
     // 4
     func createDeleteMessageModel(inThreadId threadId: Int, onMessageIds messageIds: [Int]) {
         let requestModel = DeleteMultipleMessagesRequestModel(deleteForAll: self.deleteForAll,
-                                                              threadId:     threadId,
                                                               messageIds:   messageIds,
+                                                              threadId:     threadId,
                                                               typeCode:     self.typeCode)
         self.sendRequest(deleteMessageRequest: requestModel)
     }

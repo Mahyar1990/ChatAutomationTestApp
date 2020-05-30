@@ -68,12 +68,13 @@ class AddContactAutomation {
         
         delegate?.newInfo(type: MoreInfoTypes.AddContact.rawValue, message: "Send AddContact request with this params:\ncellPhoneNumber = \(theCellphoneNumber ?? "nil") , email = \(theEmail ?? "nil") , firstName = \(theFirstName ?? "nil") , lastName = \(theLastName ?? "nil")", lineNumbers: 3)
         
-        let addContactInput = AddContactRequestModel(cellphoneNumber:  theCellphoneNumber,
-                                                      email:            theEmail,
-                                                      firstName:        theFirstName,
-                                                      lastName:         theLastName,
-                                                      typeCode:         nil,
-                                                      uniqueId:         nil)
+        let addContactInput = AddContactRequestModel(cellphoneNumber:   theCellphoneNumber,
+                                                     email:             theEmail,
+                                                     firstName:         theFirstName,
+                                                     lastName:          theLastName,
+                                                     ownerId:           nil,
+                                                     typeCode:          nil,
+                                                     uniqueId:          nil)
         Chat.sharedInstance.addContact(inputModel: addContactInput, uniqueId: { (addContactsUniqueId) in
             self.uniqueIdCallback?(addContactsUniqueId)
         }, completion: { (addContactServerResponse) in

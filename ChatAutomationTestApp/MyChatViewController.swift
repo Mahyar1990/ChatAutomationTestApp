@@ -38,19 +38,19 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     
 // SandBox Addresses:
     
-//    var socketAddress           = "wss://chat-sandbox.pod.ir/ws"
-//    var serverName              = "chat-server"
-//    var ssoHost                 = "https://accounts.pod.ir"
-//    var platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-//    var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-//    var token                   = "99f7b1eaae5540feb3f20d6b84af2651"
-    
     var socketAddress           = "wss://chat-sandbox.pod.ir/ws"
     var serverName              = "chat-server"
     var ssoHost                 = "https://accounts.pod.ir"
     var platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    var token                   = "4bf211c541ae4b1982ed4798f0f73b59"
+    var token                   = "cbd589cda67e46509aa99473e47fceec"
+    
+//    var socketAddress           = "wss://chat-sandbox.pod.ir/ws"
+//    var serverName              = "chat-server"
+//    var ssoHost                 = "https://accounts.pod.ir"
+//    var platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+//    var fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+//    var token                   = "4bf211c541ae4b1982ed4798f0f73b59"
     
     // Integration Adresses:
 //    var socketAddress           = "ws://172.16.110.235:8003/ws"
@@ -961,11 +961,11 @@ extension MyChatViewController {
         var invitees: [Invitee]? = nil
         if let id = inviteeId {
             switch inviteeType {
-            case 1:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_SSO_ID)]
-            case 2:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)]
-            case 3:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)]
-            case 4:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_USERNAME)]
-            case 0:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_ID)]
+            case 1:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_SSO_ID)]
+            case 2:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)]
+            case 3:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_CELLPHONE_NUMBER)]
+            case 4:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_USERNAME)]
+            case 0:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_ID)]
             default:    invitees = [Invitee(id: id, idType: "0")]
             }
         }
@@ -1017,11 +1017,11 @@ extension MyChatViewController {
         var invitees: [Invitee]? = nil
         if let id = inviteeId {
             switch inviteeType {
-            case 1:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_SSO_ID)]
-            case 2:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)]
-            case 3:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)]
-            case 4:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_USERNAME)]
-            case 5:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_ID)]
+            case 1:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_SSO_ID)]
+            case 2:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)]
+            case 3:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_CELLPHONE_NUMBER)]
+            case 4:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_USERNAME)]
+            case 5:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_ID)]
             default:    invitees = [Invitee(id: id, idType: "5")]
             }
         }
@@ -1086,11 +1086,11 @@ extension MyChatViewController {
         var invitees: [Invitee]? = nil
         if let id = inviteeId {
             switch inviteeType {
-            case 1:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_SSO_ID)]
-            case 2:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)]
-            case 3:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)]
-            case 4:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_USERNAME)]
-            case 5:     invitees = [Invitee(id: id, idType: INVITEE_VO_ID_TYPES.TO_BE_USER_ID)]
+            case 1:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_SSO_ID)]
+            case 2:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)]
+            case 3:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_CELLPHONE_NUMBER)]
+            case 4:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_USERNAME)]
+            case 5:     invitees = [Invitee(id: id, idType: InviteeVoIdTypes.TO_BE_USER_ID)]
             default:    invitees = [Invitee(id: id, idType: "5")]
             }
         }

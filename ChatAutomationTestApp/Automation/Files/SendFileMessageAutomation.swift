@@ -63,16 +63,16 @@ class SendFileMessageAutomation {
         // 4- send request
         
         switch (contactId, threadId, data) {
-        case (.none, .none, _):                     addContact()
-        case let (.some(id), .none, _):             createThread(withContactId: id)
-        case (_ , .some(_), .none):                 prepareDataToUpload()
-        case let (_ , .some(tId), .some(myData)):   sendRequest(theData: myData, toThreadId: tId)
+        case        (.none      , .none     , _):               addContact()
+        case let    (.some(id)  , .none     , _):               createThread(withContactId: id)
+        case        (_          , .some(_)  , .none):           prepareDataToUpload()
+        case let    (_          , .some(tId), .some(myData)):   sendRequest(theData: myData, toThreadId: tId)
         }
     }
     
     // 1
     func addContact() {
-        let arvin = Faker.sharedInstance.ArvinAsContact
+        let arvin = Faker.sharedInstance.mehdiAsContact
         let addContact = AddContactAutomation(cellphoneNumber: arvin.cellphoneNumber, email: arvin.email, firstName: arvin.firstName, lastName: arvin.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
@@ -95,13 +95,13 @@ class SendFileMessageAutomation {
     // 2
     func createThread(withContactId contactId: String) {
         let fakeParams = Faker.sharedInstance.generateFakeCreateThread()
-        let myInvitee = Invitee(id: "\(contactId)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
-        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.PUBLIC_GROUP, requestUniqueId: nil)
+        let myInvitee = Invitee(id: "\(contactId)", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
+        let createThread = CreateThreadAutomation(description: fakeParams.description, image: nil, invitees: [myInvitee], metadata: nil, title: fakeParams.title, uniqueName: nil, type: ThreadTypes.OWNER_GROUP, requestUniqueId: nil)
         var i = ""
         for item in createThread.invitees! {
             i.append("\(item.formatToJSON()) ,")
         }
-        delegate?.newInfo(type: MoreInfoTypes.SendFileMessage.rawValue, message: "try to create new PublicGroup thread with this parameters: \n description = \(createThread.description!),\n invitees = \(i),\n title = \(createThread.title!),\n type = \(createThread.type!)", lineNumbers: 6)
+        delegate?.newInfo(type: MoreInfoTypes.SendFileMessage.rawValue, message: "try to create new OWNERGroup thread with this parameters: \n description = \(createThread.description!),\n invitees = \(i),\n title = \(createThread.title!),\n type = \(createThread.type!)", lineNumbers: 6)
         createThread.create(uniqueId: { (_, _) in }, serverResponse: { (createThreadModel, _) in
             if let id = createThreadModel.thread?.id {
                 self.threadId = id
@@ -131,7 +131,7 @@ class SendFileMessageAutomation {
         delegate?.newInfo(type: MoreInfoTypes.SendFileMessage.rawValue, message: "send Request SendFileMessage with this params:\n messageText = \(myContent),\n threadId = \(threadId ?? 0), fileName = \(myFileName)", lineNumbers: 2)
         
         let messageInput = SendTextMessageRequestModel(content:         myContent,
-                                                       messageType:     MESSAGE_TYPE.file,
+                                                       messageType:     MessageType.file,
                                                        metadata:        nil,
                                                        repliedTo:       nil,
                                                        systemMetadata:  nil,

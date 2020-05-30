@@ -107,7 +107,7 @@ class AddAuditorAutomation {
     func createThread(withContact: Int) {
         delegate?.newInfo(type: MoreInfoTypes.AddAuditor.rawValue, message: "Try to create thread with contactId = \(withContact)", lineNumbers: 1)
         
-        let invitee = Invitee(id: "\(withContact)", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
+        let invitee = Invitee(id: "\(withContact)", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
         let createThreadRequest = CreateThreadRequestModel(description: nil,
                                                            image:       nil,
                                                            invitees:    [invitee],
@@ -131,8 +131,8 @@ class AddAuditorAutomation {
     
     
     func createContactToGetUserId(threadId: Int) {
-        let mehran = Faker.sharedInstance.ArvinAsContact
-        let addContact = AddContactAutomation(cellphoneNumber: mehran.cellphoneNumber, email: mehran.email, firstName: mehran.firstName, lastName: mehran.lastName)
+        let arvin = Faker.sharedInstance.ArvinAsContact
+        let addContact = AddContactAutomation(cellphoneNumber: arvin.cellphoneNumber, email: arvin.email, firstName: arvin.firstName, lastName: arvin.lastName)
         addContact.create(uniqueId: { _ in }) { (contactModel) in
             if let myContact = contactModel.contacts.first {
                 if let id = myContact.linkedUser?.coreUserId {
@@ -142,11 +142,11 @@ class AddAuditorAutomation {
                     
                 } else {
                     // handle error that didn't get contact id in the contact model
-                    self.delegate?.newInfo(type: MoreInfoTypes.AddAuditor.rawValue, message: "there is no userId on the response of addContact with this params: (firstName = \(mehran.firstName) , cellphoneNumber = \(mehran.cellphoneNumber))!", lineNumbers: 2)
+                    self.delegate?.newInfo(type: MoreInfoTypes.AddAuditor.rawValue, message: "there is no userId on the response of addContact with this params: (firstName = \(arvin.firstName) , cellphoneNumber = \(arvin.cellphoneNumber))!", lineNumbers: 2)
                 }
             } else {
                 // handle error that didn't add Contact Model
-                self.delegate?.newInfo(type: MoreInfoTypes.AddAuditor.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(mehran.firstName) , cellphoneNumber = \(mehran.cellphoneNumber) , lastName = \(mehran.lastName)", lineNumbers: 2)
+                self.delegate?.newInfo(type: MoreInfoTypes.AddAuditor.rawValue, message: "AddContact with this parameters is Failed!\nfirstName = \(arvin.firstName) , cellphoneNumber = \(arvin.cellphoneNumber) , lastName = \(arvin.lastName)", lineNumbers: 2)
             }
         }
     }
